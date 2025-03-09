@@ -1,0 +1,7 @@
+name: Skripsi
+packages:
+  - packages/*
+  - apps/*
+  
+scripts:
+  bootstrap: melos bootstrap

@@ -1,0 +1,5 @@
+name: Skripsi
+environment:
+  sdk: ">=3.5.4 <4.0.0"
+dev_dependencies:
+  melos: ^6.3.2

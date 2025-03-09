@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/apps/android_app/melos_android_app.iml" filepath="$PROJECT_DIR$/apps/android_app/melos_android_app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/packages/mylibs/melos_mylibs.iml" filepath="$PROJECT_DIR$/packages/mylibs/melos_mylibs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/apps/windows_app/melos_windows_app.iml" filepath="$PROJECT_DIR$/apps/windows_app/melos_windows_app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/melos_skripsi.iml" filepath="$PROJECT_DIR$/melos_skripsi.iml" />
+    </modules>
+  </component>
+</project>
