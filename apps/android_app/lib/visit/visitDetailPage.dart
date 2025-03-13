@@ -11,6 +11,6 @@ class VisitDetailPage extends StatefulHookConsumerWidget {
 class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text("VisitDetailPage"));
+    return const Center(child: Text('VisitDetailPage'));
   }
 }

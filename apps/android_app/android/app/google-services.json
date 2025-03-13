@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "218523281816",
+    "firebase_url": "https://kost-noting-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "kost-noting",
+    "storage_bucket": "kost-noting.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218523281816:android:d618a573105c5716f763ed",
+        "android_client_info": {
+          "package_name": "com.android.application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-Y2Pec6tQx8tArfkUBGkdsE16IOv0m6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218523281816:android:aa26c228a9e83fa9f763ed",
+        "android_client_info": {
+          "package_name": "com.example.android_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-Y2Pec6tQx8tArfkUBGkdsE16IOv0m6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

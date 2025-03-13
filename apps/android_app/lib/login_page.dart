@@ -1,4 +1,5 @@
 import 'package:android_app/home_page.dart';
+import 'package:android_app/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -16,54 +17,98 @@ class _LoginPage extends ConsumerState<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       body: Center(
         child: Padding(
-          padding: EdgeInsets.all(16.sp),
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Icon(Icons.lock, size: 80, color: Colors.blue),
-              const SizedBox(height: 20),
-              const TextField(
+              // App Logo
+              Image.asset(
+                'assets/logo.png',
+                width: 100.w,
+                height: 100.h,
+                // fit: BoxFit.contain,
+              ),
+              SizedBox(height: 32.h),
+
+              // Email Field
+              TextField(
                 decoration: InputDecoration(
                   labelText: 'Email',
-                  border: OutlineInputBorder(),
+                  labelStyle: bodyStyle.copyWith(
+                    fontSize: 16.sp,
+                    color: textColor,
+                  ),
+                  prefixIcon: Icon(
+                    Icons.email,
+                    color: textColor.withAlpha(178),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
                 ),
               ),
-              const SizedBox(height: 10),
-              const TextField(
+              SizedBox(height: 16.h),
+
+              // Password Field
+              TextField(
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  border: OutlineInputBorder(),
+                  labelStyle: bodyStyle.copyWith(
+                    fontSize: 16.sp,
+                    color: textColor,
+                  ),
+                  prefixIcon: Icon(Icons.lock, color: textColor.withAlpha(178)),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
                 ),
               ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed:
-                    isLoading
-                        ? null
-                        : () async {
-                          setState(() => isLoading = true);
-                          // Simulating login
-                          // await Future.delayed(
-                          //   const Duration(seconds: 2),
-                          // );
+              SizedBox(height: 8.h),
 
-                          setState(() => isLoading = false);
-                          // Navigate or show success message
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const HomePage(),
-                            ),
-                          );
-                        },
-                child:
-                    isLoading
-                        ? const CircularProgressIndicator(color: Colors.white)
-                        : const Text('Login'),
+              // Forgot Password
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () {
+                    // TODO: Implement forgot password action
+                  },
+                  child: Text(
+                    'Forgot Password?',
+                    style: warningStyle.copyWith(fontSize: 14.sp),
+                  ),
+                ),
+              ),
+              SizedBox(height: 24.h),
+
+              // Login Button
+              SizedBox(
+                width: double.infinity,
+                height: 48.h,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // TODO: Implement login action
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomePage()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: primaryColor,
+                    foregroundColor: backgroundColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
+                  ),
+                  child: Text(
+                    'Login',
+                    style: buttonStyle.copyWith(fontSize: 18.sp),
+                  ),
+                ),
               ),
             ],
           ),

@@ -1,33 +1,51 @@
 import 'package:android_app/login_page.dart';
+import 'package:android_app/variables.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 void main() async {
-  // TODO Setting system
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: backgroundColor, // Use your predefined background color
+      statusBarIconBrightness:
+          Brightness.dark, // Use Brightness.light for white icons
+      systemNavigationBarColor: backgroundColor, // Change nav bar color too
+      systemNavigationBarIconBrightness:
+          Brightness.dark, // Light icons if dark background
+    ),
+  );
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(ProviderScope(child: MainApp()));
+
+  runApp(const ProviderScope(child: Main()));
 }
 
-class MainApp extends StatefulHookConsumerWidget {
-  const MainApp({super.key});
+class Main extends StatefulHookConsumerWidget {
+  const Main({super.key});
 
   @override
-  ConsumerState<MainApp> createState() => _MainApp();
+  ConsumerState<Main> createState() => _MainApp();
 }
 
-class _MainApp extends ConsumerState<MainApp> {
+class _MainApp extends ConsumerState<Main> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp(debugShowCheckedModeBanner: false, home: child);
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(textTheme: GoogleFonts.montserratTextTheme()),
+          home: child,
+        );
       },
-      child: SafeArea(child: const LoginPage()),
+      child: const SafeArea(child: LoginPage()),
     );
   }
 }
