@@ -54,7 +54,7 @@ class _CustomerListPage extends ConsumerState<CustomerListPage> {
                 leading: CircleAvatar(
                   radius: 24.r, // Responsive avatar size
                   backgroundColor: secondaryColor,
-                  child: Icon(Icons.person, size: 24.sp, color: Colors.white),
+                  child: Icon(Icons.person, size: 24.sp, color: dividerColor),
                 ),
                 title: Text(
                   'Customer ${index + 1}',

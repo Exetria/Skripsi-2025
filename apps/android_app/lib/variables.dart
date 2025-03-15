@@ -10,6 +10,8 @@ final Color successColor = const Color.fromRGBO(76, 175, 80, 1);
 final Color warningColor = const Color.fromRGBO(255, 152, 0, 1);
 final Color errorColor = const Color.fromRGBO(244, 67, 54, 1);
 final Color dividerColor = const Color.fromRGBO(204, 204, 204, 1);
+final Color selectedItemColor = primaryColor;
+final Color unselectedItemColor = textColor.withAlpha(150); // Slightly faded
 
 // TEXT STYLES
 final TextStyle titleStyle = TextStyle(
@@ -36,10 +38,10 @@ final TextStyle captionStyle = TextStyle(
   color: textColor.withAlpha(178), // Slightly faded for captions
 );
 
-final TextStyle buttonStyle = const TextStyle(
+final TextStyle buttonStyle = TextStyle(
   fontSize: 16,
   fontWeight: FontWeight.w600,
-  color: Colors.white, // Assuming buttons have a background color
+  color: dividerColor, // Assuming buttons have a background color
 );
 
 final TextStyle successStyle = TextStyle(

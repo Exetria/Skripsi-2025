@@ -3,7 +3,7 @@ import 'package:android_app/order/orderListPage.dart';
 import 'package:android_app/product/productListPage.dart';
 import 'package:android_app/profile/profilePage.dart';
 import 'package:android_app/variables.dart';
-import 'package:android_app/visit/visitDetailPage.dart';
+import 'package:android_app/visit/visitListPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -21,7 +21,7 @@ class _HomePage extends ConsumerState<HomePage> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    const VisitDetailPage(),
+    const VisitListPage(),
     const OrderListPage(),
     const ProfilePage(),
     const CustomerListPage(),
@@ -41,6 +41,7 @@ class _HomePage extends ConsumerState<HomePage> {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('Press back again to exit'),
+              behavior: SnackBarBehavior.floating,
               duration: duration,
             ),
           );
@@ -59,8 +60,8 @@ class _HomePage extends ConsumerState<HomePage> {
             });
           },
           type: BottomNavigationBarType.fixed,
-          selectedItemColor: primaryColor,
-          unselectedItemColor: Colors.grey,
+          selectedItemColor: selectedItemColor,
+          unselectedItemColor: unselectedItemColor,
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.location_on),
