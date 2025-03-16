@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // COLORS
 final Color primaryColor = const Color.fromRGBO(0, 128, 128, 1);
@@ -15,49 +16,49 @@ final Color unselectedItemColor = textColor.withAlpha(150); // Slightly faded
 
 // TEXT STYLES
 final TextStyle titleStyle = TextStyle(
-  fontSize: 24,
+  fontSize: 24.sp,
   fontWeight: FontWeight.bold,
   color: textColor,
 );
 
 final TextStyle subtitleStyle = TextStyle(
-  fontSize: 18,
+  fontSize: 18.sp,
   fontWeight: FontWeight.w600,
   color: textColor,
 );
 
 final TextStyle bodyStyle = TextStyle(
-  fontSize: 16,
+  fontSize: 16.sp,
   fontWeight: FontWeight.normal,
   color: textColor,
 );
 
 final TextStyle captionStyle = TextStyle(
-  fontSize: 14,
+  fontSize: 14.sp,
   fontWeight: FontWeight.w400,
   color: textColor.withAlpha(178), // Slightly faded for captions
 );
 
 final TextStyle buttonStyle = TextStyle(
-  fontSize: 16,
+  fontSize: 16.sp,
   fontWeight: FontWeight.w600,
   color: dividerColor, // Assuming buttons have a background color
 );
 
 final TextStyle successStyle = TextStyle(
-  fontSize: 16,
+  fontSize: 16.sp,
   fontWeight: FontWeight.w500,
   color: successColor,
 );
 
 final TextStyle warningStyle = TextStyle(
-  fontSize: 16,
+  fontSize: 16.sp,
   fontWeight: FontWeight.w500,
   color: warningColor,
 );
 
 final TextStyle errorStyle = TextStyle(
-  fontSize: 16,
+  fontSize: 16.sp,
   fontWeight: FontWeight.w500,
   color: errorColor,
 );

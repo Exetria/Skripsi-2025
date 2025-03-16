@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ProductListPage extends StatefulHookConsumerWidget {
-  const ProductListPage({super.key});
+class CustomerListFragment extends StatefulHookConsumerWidget {
+  const CustomerListFragment({super.key});
 
   @override
-  ConsumerState<ProductListPage> createState() => _ProductListPage();
+  ConsumerState<CustomerListFragment> createState() => _CustomerListFragment();
 }
 
-class _ProductListPage extends ConsumerState<ProductListPage> {
+class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -20,14 +20,16 @@ class _ProductListPage extends ConsumerState<ProductListPage> {
           padding: EdgeInsets.all(16.w), // Responsive padding
           child: TextField(
             decoration: InputDecoration(
-              hintText: 'Search Products...',
+              hintText: 'Search Customers...',
               hintStyle: bodyStyle.copyWith(
                 fontSize: 16.sp,
                 color: textColor.withAlpha(178),
               ), // Faded text
               prefixIcon: Icon(Icons.search, color: textColor.withAlpha(178)),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.r),
+                borderRadius: BorderRadius.circular(
+                  10.r,
+                ), // Responsive border radius
                 borderSide: BorderSide(color: dividerColor),
               ),
               enabledBorder: OutlineInputBorder(
@@ -42,34 +44,24 @@ class _ProductListPage extends ConsumerState<ProductListPage> {
           ),
         ),
 
-        // Product List
+        // Customer List
         Expanded(
           child: ListView.separated(
-            itemCount: 10, // Dummy product count
+            itemCount: 10, // Dummy customer count
             separatorBuilder: (context, index) => Divider(color: dividerColor),
             itemBuilder: (context, index) {
               return ListTile(
-                leading: Container(
-                  width: 50.w, // Responsive width
-                  height: 50.h, // Responsive height
-                  decoration: BoxDecoration(
-                    color: secondaryColor.withAlpha(
-                      51,
-                    ), // Light secondary color
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-                  child: Icon(
-                    Icons.shopping_bag,
-                    size: 24.sp,
-                    color: secondaryColor,
-                  ),
+                leading: CircleAvatar(
+                  radius: 24.r, // Responsive avatar size
+                  backgroundColor: secondaryColor,
+                  child: Icon(Icons.person, size: 24.sp, color: dividerColor),
                 ),
                 title: Text(
-                  'Product ${index + 1}',
+                  'Customer ${index + 1}',
                   style: bodyStyle.copyWith(fontSize: 16.sp),
                 ),
                 subtitle: Text(
-                  '\$99.99', // Dummy price
+                  'customer@example.com',
                   style: captionStyle.copyWith(fontSize: 14.sp),
                 ),
                 trailing: Icon(

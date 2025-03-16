@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class OrderListPage extends StatefulHookConsumerWidget {
-  const OrderListPage({super.key});
+class OrderListFragment extends StatefulHookConsumerWidget {
+  const OrderListFragment({super.key});
 
   @override
-  ConsumerState<OrderListPage> createState() => _OrderListPage();
+  ConsumerState<OrderListFragment> createState() => _OrderListFragment();
 }
 
-class _OrderListPage extends ConsumerState<OrderListPage> {
+class _OrderListFragment extends ConsumerState<OrderListFragment> {
   @override
   Widget build(BuildContext context) {
     return Column(

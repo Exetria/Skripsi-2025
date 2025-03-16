@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ProfilePage extends StatefulHookConsumerWidget {
-  const ProfilePage({super.key});
+class ProfileFragment extends StatefulHookConsumerWidget {
+  const ProfileFragment({super.key});
 
   @override
-  ConsumerState<ProfilePage> createState() => _ProfilePage();
+  ConsumerState<ProfileFragment> createState() => _ProfileFragment();
 }
 
-class _ProfilePage extends ConsumerState<ProfilePage> {
+class _ProfileFragment extends ConsumerState<ProfileFragment> {
   @override
   Widget build(BuildContext context) {
     return Padding(

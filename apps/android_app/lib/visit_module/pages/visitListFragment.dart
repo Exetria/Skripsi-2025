@@ -2,14 +2,14 @@ import 'package:android_app/firebase/produk/produkFirestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class VisitListPage extends StatefulHookConsumerWidget {
-  const VisitListPage({super.key});
+class VisitListFragment extends StatefulHookConsumerWidget {
+  const VisitListFragment({super.key});
 
   @override
-  ConsumerState<VisitListPage> createState() => _VisitListPage();
+  ConsumerState<VisitListFragment> createState() => _VisitListFragment();
 }
 
-class _VisitListPage extends ConsumerState<VisitListPage> {
+class _VisitListFragment extends ConsumerState<VisitListFragment> {
   @override
   Widget build(BuildContext context) {
     return Center(

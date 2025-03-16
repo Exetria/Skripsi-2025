@@ -1,9 +1,9 @@
-import 'package:android_app/customer/customerListPage.dart';
-import 'package:android_app/order/orderListPage.dart';
-import 'package:android_app/product/productListPage.dart';
-import 'package:android_app/profile/profilePage.dart';
+import 'package:android_app/customer_module/pages/customerListFragment.dart';
+import 'package:android_app/order_module/pages/orderListFragment.dart';
+import 'package:android_app/product_module/pages/productListFragment.dart';
+import 'package:android_app/profile_module/pages/profileFragment.dart';
 import 'package:android_app/variables.dart';
-import 'package:android_app/visit/visitListPage.dart';
+import 'package:android_app/visit_module/pages/visitListFragment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -21,11 +21,11 @@ class _HomePage extends ConsumerState<HomePage> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    const VisitListPage(),
-    const OrderListPage(),
-    const ProfilePage(),
-    const CustomerListPage(),
-    const ProductListPage(),
+    const VisitListFragment(),
+    const OrderListFragment(),
+    const ProfileFragment(),
+    const CustomerListFragment(),
+    const ProductListFragment(),
   ];
 
   @override
