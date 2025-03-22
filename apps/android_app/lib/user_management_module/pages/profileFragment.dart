@@ -1,6 +1,7 @@
 import 'package:android_app/user_management_module/data/firebase_auth.dart';
 import 'package:android_app/user_management_module/pages/login_page.dart';
 import 'package:android_app/variables.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -13,8 +14,11 @@ class ProfileFragment extends StatefulHookConsumerWidget {
 }
 
 class _ProfileFragment extends ConsumerState<ProfileFragment> {
+  User? user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
+    print('asds $user');
     return Padding(
       padding: EdgeInsets.all(16.w),
       child: Center(
@@ -31,12 +35,12 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
             // User Information
             Text(
               // TODO: Replace with actual user name
-              'John Doe',
+              user?.displayName ?? 'Not Available',
               style: titleStyle.copyWith(fontSize: 20.sp),
             ),
             Text(
               // TODO: Replace with actual email
-              'johndoe@example.com',
+              user?.email ?? 'Not Available',
               style: bodyStyle.copyWith(
                 fontSize: 16.sp,
                 color: textColor.withAlpha(178),
@@ -83,13 +87,12 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
             // Logout Button
             ElevatedButton(
               onPressed: () {
-                signOut(ref);
-
                 // TODO: Implement sign-out confirmation before navigating
+                signOut(ref);
 
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
                 );
               },
               style: ElevatedButton.styleFrom(
