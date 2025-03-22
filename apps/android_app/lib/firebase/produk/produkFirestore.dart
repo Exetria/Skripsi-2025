@@ -4,13 +4,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final firestoreProvider = Provider((ref) => FirebaseFirestore.instance);
 final collectionProvider = Provider(
-  (ref) => ref.watch(firestoreProvider).collection('produk'),
+  (ref) => ref.watch(firestoreProvider).collection('product'),
 );
 
 // Create
 Future<void> createDocument(WidgetRef ref) async {
   final ProdukModel produkModel = ProdukModel(
-    namaBarang: 'namaBarang',
+    namaBarang: 'barang baru',
     mic: 1,
     ukuran: ['Small', 'Medium', 'Large'],
     isi: 1,

@@ -1,6 +1,5 @@
 name: Skripsi
 packages:
-  - packages/*
   - apps/*
   
 scripts:

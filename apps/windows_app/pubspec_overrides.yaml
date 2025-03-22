@@ -1,4 +1,0 @@
-# melos_managed_dependency_overrides: mylibs
-dependency_overrides:
-  mylibs:
-    path: ..\\..\\packages\\mylibs

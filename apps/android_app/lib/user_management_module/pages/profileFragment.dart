@@ -1,4 +1,5 @@
-import 'package:android_app/login_page.dart';
+import 'package:android_app/user_management_module/data/firebase_auth.dart';
+import 'package:android_app/user_management_module/pages/login_page.dart';
 import 'package:android_app/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -82,10 +83,13 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
             // Logout Button
             ElevatedButton(
               onPressed: () {
-                // TODO: Implement logout functionality
+                signOut(ref);
+
+                // TODO: Implement sign-out confirmation before navigating
+
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                  MaterialPageRoute(builder: (context) => LoginPage()),
                 );
               },
               style: ElevatedButton.styleFrom(

@@ -9,8 +9,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  # mylibs:
-  #   path: ../../packages/mylibs
 
   # FIREBASE
   firebase_core: ^3.12.1
