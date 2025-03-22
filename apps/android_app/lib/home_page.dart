@@ -1,11 +1,11 @@
 import 'package:android_app/customer_module/pages/customerListFragment.dart';
 import 'package:android_app/order_module/pages/orderListFragment.dart';
 import 'package:android_app/product_module/pages/productListFragment.dart';
-import 'package:android_app/user_management_module/data/firebase_auth.dart';
 import 'package:android_app/user_management_module/pages/login_page.dart';
 import 'package:android_app/user_management_module/pages/profileFragment.dart';
 import 'package:android_app/variables.dart';
 import 'package:android_app/visit_module/pages/visitListFragment.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -35,10 +35,10 @@ class _HomePage extends ConsumerState<HomePage> {
     super.initState();
 
     // safeguard kalo belum login
-    if (ref.read(authStateProvider).value == null) {
+    if (FirebaseAuth.instance.currentUser == null) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
+        MaterialPageRoute(builder: (context) => const LoginPage()),
       );
     }
   }
