@@ -6,15 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final buttonEnabledProvider = StateProvider<bool>((ref) => true);
-
-class LoginPage extends HookConsumerWidget {
-  LoginPage({super.key});
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+class LoginPage extends StatefulHookConsumerWidget {
+  const LoginPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<LoginPage> createState() => _LoginPage();
+}
+
+class _LoginPage extends ConsumerState<LoginPage> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool obscurePassword = true;
+  bool buttonEnabled = true;
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
       body: Center(
@@ -56,7 +61,7 @@ class LoginPage extends HookConsumerWidget {
               // Password Field
               TextField(
                 controller: passwordController,
-                obscureText: true,
+                obscureText: obscurePassword,
                 decoration: InputDecoration(
                   labelText: 'Password',
                   labelStyle: bodyStyle.copyWith(
@@ -66,6 +71,17 @@ class LoginPage extends HookConsumerWidget {
                   prefixIcon: Icon(Icons.lock, color: textColor.withAlpha(178)),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.r),
+                  ),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        obscurePassword = !obscurePassword;
+                      });
+                    },
+                    icon: Icon(
+                      obscurePassword ? Icons.visibility_off : Icons.visibility,
+                      color: textColor.withAlpha(178),
+                    ),
                   ),
                 ),
               ),
@@ -92,10 +108,11 @@ class LoginPage extends HookConsumerWidget {
                 height: 48.h,
                 child: ElevatedButton(
                   onPressed:
-                      ref.watch(buttonEnabledProvider)
+                      buttonEnabled
                           ? () async {
-                            ref.read(buttonEnabledProvider.notifier).state =
-                                false;
+                            setState(() {
+                              buttonEnabled = false;
+                            });
 
                             FocusScope.of(context).unfocus();
                             String? result = await signIn(
@@ -103,8 +120,9 @@ class LoginPage extends HookConsumerWidget {
                               passwordController.text,
                               ref,
                             );
-                            ref.read(buttonEnabledProvider.notifier).state =
-                                true;
+                            setState(() {
+                              buttonEnabled = true;
+                            });
 
                             ref
                                 .watch(authStateProvider)
@@ -116,9 +134,6 @@ class LoginPage extends HookConsumerWidget {
                                         'Login Success',
                                         duration: const Duration(seconds: 1),
                                         onClosed: () {
-                                          print(
-                                            'asds fungsi replace jalannnnnnn!!!!!!!!',
-                                          );
                                           Navigator.pushReplacement(
                                             context,
                                             MaterialPageRoute(
@@ -129,7 +144,6 @@ class LoginPage extends HookConsumerWidget {
                                         },
                                       );
                                     } else {
-                                      print('asds gagal');
                                       showCustomDialog(
                                         context,
                                         'Login Failed',
@@ -169,7 +183,7 @@ class LoginPage extends HookConsumerWidget {
                     ),
                   ),
                   child:
-                      ref.watch(buttonEnabledProvider)
+                      buttonEnabled
                           ? Text(
                             'Login',
                             style: buttonStyle.copyWith(fontSize: 18.sp),
