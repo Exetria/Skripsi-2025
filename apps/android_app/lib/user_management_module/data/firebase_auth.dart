@@ -25,12 +25,10 @@ Future<String?> signIn(String email, String password, WidgetRef ref) async {
     await ref
         .read(firebaseAuthProvider)
         .signInWithEmailAndPassword(email: email, password: password);
-    print('asds DONE SIGN IN');
 
     return null;
   } on FirebaseAuthException catch (e) {
-    print('asds FAIL SIGN IN: ${e.message}');
-    return e.message;
+    return e.code;
   } catch (e) {
     return 'An Unknown Error has Occured';
   }

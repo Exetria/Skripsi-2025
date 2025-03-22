@@ -1,5 +1,4 @@
 import 'package:android_app/splash_screen.dart';
-import 'package:android_app/user_management_module/data/firebase_auth.dart';
 import 'package:android_app/variables.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -36,9 +35,6 @@ class Main extends StatefulHookConsumerWidget {
 class _MainApp extends ConsumerState<Main> {
   @override
   Widget build(BuildContext context) {
-    print(
-      'asds HASIL HOME NULL = ${ref.read(authStateProvider).value == null}',
-    );
     return ScreenUtilInit(
       minTextAdapt: true,
       splitScreenMode: true,
