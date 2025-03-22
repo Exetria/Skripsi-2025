@@ -1,6 +1,6 @@
 import 'package:android_app/home_page.dart';
-import 'package:android_app/user_management_module/data/firebase_auth.dart';
 import 'package:android_app/user_management_module/pages/login_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -18,6 +18,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
+  bool navigated = false;
 
   @override
   void initState() {
@@ -33,25 +34,33 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     Future.delayed(const Duration(seconds: 2), () {
-      ref
-          .watch(authStateProvider)
-          .when(
-            data: (user) {
-              if (user == null) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
-                );
-              } else {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HomePage()),
-                );
-              }
-            },
-            error: (error, stackTrace) {},
-            loading: () {},
+      if (FirebaseAuth.instance.currentUser == null && !navigated) {
+        print('asds to login no user');
+        navigated = true;
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginPage()),
+        );
+      } else {
+        print('asds to home');
+        navigated = true;
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+      }
+
+      Future.delayed(const Duration(seconds: 4), () {
+        if (!navigated) {
+          print('asds to login timeout');
+
+          navigated = true;
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const LoginPage()),
           );
+        }
+      });
     });
   }
 
@@ -65,10 +74,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // TODO change to app logo
-              Icon(Icons.shopping_cart, size: 100.sp, color: primaryColor),
+              Image.asset(
+                'assets/logo.png',
+                width: 100.w,
+                height: 100.h,
+                // fit: BoxFit.contain,
+              ),
               SizedBox(height: 20.h),
-              Text('My App', style: titleStyle),
+              Text('My Sales App', style: titleStyle),
             ],
           ),
         ),
