@@ -1,5 +1,5 @@
 import 'package:android_app/home_page.dart';
-import 'package:android_app/user_management_module/data/firebase_auth.dart';
+import 'package:android_app/user_management_module/authentication.dart';
 import 'package:android_app/user_management_module/pages/widgets.dart';
 import 'package:android_app/variables.dart';
 import 'package:flutter/material.dart';

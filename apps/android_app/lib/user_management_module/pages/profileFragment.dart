@@ -1,4 +1,4 @@
-import 'package:android_app/user_management_module/data/firebase_auth.dart';
+import 'package:android_app/user_management_module/authentication.dart';
 import 'package:android_app/user_management_module/pages/login_page.dart';
 import 'package:android_app/variables.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,7 +18,6 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
 
   @override
   Widget build(BuildContext context) {
-    print('asds $user');
     return Padding(
       padding: EdgeInsets.all(16.w),
       child: Center(
@@ -34,12 +33,10 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
             SizedBox(height: 16.h),
             // User Information
             Text(
-              // TODO: Replace with actual user name
               user?.displayName ?? 'Not Available',
               style: titleStyle.copyWith(fontSize: 20.sp),
             ),
             Text(
-              // TODO: Replace with actual email
               user?.email ?? 'Not Available',
               style: bodyStyle.copyWith(
                 fontSize: 16.sp,

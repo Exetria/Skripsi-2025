@@ -16,7 +16,6 @@ void showCustomDialog(
     barrierDismissible: dismissable,
     builder: (context) {
       Future.delayed(duration ?? const Duration(seconds: 2), () {
-        print('asds wait is done');
         if (dialogOpen) {
           Navigator.pop(context);
           dialogOpen = false;
