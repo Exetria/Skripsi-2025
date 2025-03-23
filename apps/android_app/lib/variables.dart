@@ -1,5 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+// PROVIDERS
+final firestoreProvider = Provider((ref) => FirebaseFirestore.instance);
 
 // COLORS
 final Color primaryColor = const Color.fromRGBO(0, 128, 128, 1);
