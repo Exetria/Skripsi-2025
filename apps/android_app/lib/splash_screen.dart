@@ -1,3 +1,4 @@
+import 'package:android_app/demonstrator_page.dart';
 import 'package:android_app/home_page.dart';
 import 'package:android_app/user_management_module/pages/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -33,16 +34,28 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
       end: 1.0,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
+    Future.delayed(const Duration(seconds: 1), () {
+      if (!mounted || navigated) return;
+
+      if (!navigated) {
+        navigated = true;
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const DemonstratorPage()),
+        );
+      }
+    });
+
     Future.delayed(const Duration(seconds: 2), () {
+      if (!mounted || navigated) return;
+
       if (FirebaseAuth.instance.currentUser == null && !navigated) {
-        print('asds to login no user');
         navigated = true;
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const LoginPage()),
         );
       } else {
-        print('asds to home');
         navigated = true;
         Navigator.pushReplacement(
           context,
@@ -50,10 +63,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
         );
       }
 
-      Future.delayed(const Duration(seconds: 4), () {
-        if (!navigated) {
-          print('asds to login timeout');
+      Future.delayed(const Duration(seconds: 3), () {
+        if (!mounted || navigated) return;
 
+        if (!navigated) {
           navigated = true;
           Navigator.pushReplacement(
             context,
