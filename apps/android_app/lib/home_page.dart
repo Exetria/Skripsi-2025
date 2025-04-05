@@ -22,7 +22,7 @@ class _HomePage extends ConsumerState<HomePage> {
 
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = [
+  final List<Widget> pages = [
     const VisitListFragment(),
     const OrderListFragment(),
     const ProfileFragment(),
@@ -66,7 +66,7 @@ class _HomePage extends ConsumerState<HomePage> {
       },
       child: Scaffold(
         appBar: createAppBar(),
-        body: _pages[_selectedIndex],
+        body: pages[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedIndex,
           onTap: (index) {
