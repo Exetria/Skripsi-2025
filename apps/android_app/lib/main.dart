@@ -7,13 +7,57 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+final lightTheme = ThemeData(
+  brightness: Brightness.light,
+  primaryColor: primaryColor,
+  scaffoldBackgroundColor: backgroundColor,
+  cardColor: Colors.white,
+  colorScheme: ColorScheme.light(
+    primary: primaryColor,
+    secondary: accentColor,
+    surface: Colors.white,
+    background: backgroundColor,
+    onPrimary: Colors.white,
+    onSecondary: Colors.white,
+    onSurface: textColor,
+    onBackground: textColor,
+  ),
+  appBarTheme: AppBarTheme(
+    backgroundColor: primaryColor,
+    foregroundColor: Colors.white,
+    elevation: 2,
+  ),
+  iconTheme: IconThemeData(color: textColor),
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    backgroundColor: primaryColor,
+    foregroundColor: Colors.white,
+  ),
+  cardTheme: CardTheme(
+    color: Colors.white,
+    elevation: 4,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+  ),
+  navigationBarTheme: NavigationBarThemeData(
+    backgroundColor: backgroundColor,
+    indicatorColor: primaryColor.withAlpha(30),
+    labelTextStyle: MaterialStateProperty.all(TextStyle(color: primaryColor)),
+    iconTheme: MaterialStateProperty.resolveWith((states) {
+      if (states.contains(MaterialState.selected)) {
+        return IconThemeData(color: primaryColor);
+      }
+      return IconThemeData(color: unselectedItemColor);
+    }),
+  ),
+  textTheme: GoogleFonts.montserratTextTheme(),
+);
+
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarColor: backgroundColor, // Use your predefined background color
       statusBarIconBrightness:
           Brightness.dark, // Use Brightness.light for white icons
-      systemNavigationBarColor: backgroundColor, // Change nav bar color too
+      systemNavigationBarColor: backgroundColor, // Change nav bar color
       systemNavigationBarIconBrightness:
           Brightness.dark, // Light icons if dark background
     ),
