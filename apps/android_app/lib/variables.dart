@@ -22,7 +22,7 @@ final Color unselectedItemColor = textColor.withAlpha(150); // Slightly faded
 // TEXT STYLES
 final TextStyle titleStyle = TextStyle(
   fontSize: 24.sp,
-  fontWeight: FontWeight.bold,
+  fontWeight: FontWeight.w500,
   color: textColor,
 );
 
