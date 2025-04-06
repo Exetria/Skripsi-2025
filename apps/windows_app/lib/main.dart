@@ -46,7 +46,7 @@ final lightTheme = ThemeData(
   cardTheme: CardTheme(
     color: backgroundColor,
     elevation: 4,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
   ),
   textTheme: GoogleFonts.montserratTextTheme(),
 );
