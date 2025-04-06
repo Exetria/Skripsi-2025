@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:windows_app/variables.dart';
 
 class CustomerListFragment extends StatefulHookConsumerWidget {
   const CustomerListFragment({super.key});
@@ -18,26 +19,43 @@ class _CustomerListFragmentState extends ConsumerState<CustomerListFragment> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Customer List',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Customer List', style: titleStyle),
+              SizedBox(
+                width: ScreenUtil().screenWidth / 4,
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Search...',
+                    prefixIcon: const Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    fillColor: fillColor,
+                  ),
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: 16.h),
+          SizedBox(height: 8.h),
           Expanded(
             child: ListView.builder(
-              itemCount: 10, // replace with actual customer count
+              itemCount: 30, // replace with actual customer count
               itemBuilder: (context, index) {
                 return Card(
                   margin: EdgeInsets.symmetric(vertical: 8.h),
                   child: ListTile(
-                    leading: const Icon(Icons.person),
+                    leading: const Icon(Icons.business_sharp),
                     title: Text(
                       'Customer ${index + 1}',
                       style: const TextStyle(fontSize: 14),
                     ),
-                    subtitle: Text('customer${index + 1}@example.com'),
+                    subtitle: Text('Jalan Ahmad Yani No. ${index + 1}'),
                     onTap: () {
-                      // Handle tap
+                      // TODO sales on tap function
                     },
                   ),
                 );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:windows_app/variables.dart';
 
 class OrderListFragment extends StatefulHookConsumerWidget {
   const OrderListFragment({super.key});
@@ -17,13 +18,28 @@ class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Order List',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Order List', style: titleStyle),
+              SizedBox(
+                width: ScreenUtil().screenWidth / 4,
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Search...',
+                    prefixIcon: const Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    fillColor: fillColor,
+                  ),
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: 16.h),
-
-          // Order list
+          SizedBox(height: 8.h),
           Expanded(
             child: ListView.builder(
               itemCount: 10, // Replace with actual order count
@@ -32,11 +48,7 @@ class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
                   margin: EdgeInsets.symmetric(vertical: 8.h),
                   elevation: 2,
                   child: ListTile(
-                    leading: const Icon(
-                      Icons.inventory_2,
-                      size: 24,
-                      color: Colors.blueAccent,
-                    ),
+                    leading: const Icon(Icons.receipt_long, size: 24),
                     title: Text(
                       'Order #ORD-${1000 + index}',
                       style: const TextStyle(fontSize: 14),

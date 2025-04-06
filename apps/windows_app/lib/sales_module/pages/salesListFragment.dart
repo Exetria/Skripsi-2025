@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:windows_app/variables.dart';
 
 class SalesListFragment extends StatefulHookConsumerWidget {
   const SalesListFragment({super.key});
@@ -17,11 +18,28 @@ class _SalesListFragmentState extends ConsumerState<SalesListFragment> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Sales List',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Sales List', style: titleStyle),
+              SizedBox(
+                width: ScreenUtil().screenWidth / 4,
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Search...',
+                    prefixIcon: const Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    fillColor: fillColor,
+                  ),
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: 16.h),
+          SizedBox(height: 8.h),
           Expanded(
             child: ListView.builder(
               itemCount: 12, // replace with actual sales count
@@ -29,20 +47,18 @@ class _SalesListFragmentState extends ConsumerState<SalesListFragment> {
                 return Card(
                   margin: EdgeInsets.symmetric(vertical: 8.h),
                   child: ListTile(
-                    leading: const Icon(Icons.receipt_long),
+                    leading: const Icon(Icons.person_2),
                     title: Text(
-                      'Order #${1000 + index}',
+                      'Sales #${1000 + index}',
                       style: const TextStyle(fontSize: 14),
                     ),
-                    subtitle: Text(
-                      'Customer ${index + 1} • Apr ${index + 1}, 2025',
-                    ),
+                    subtitle: Text('Last Login:  Apr ${index + 1}, 2025'),
                     trailing: Text(
-                      '₱ ${(index + 1) * 150}',
+                      'This Month: ${rupiahFormatter.format((index * 10000) + 100000)}',
                       style: const TextStyle(fontSize: 13),
                     ),
                     onTap: () {
-                      // Handle tap
+                      // TODO sales on tap function
                     },
                   ),
                 );

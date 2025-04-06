@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:windows_app/variables.dart';
 
 class ProductListFragment extends StatefulHookConsumerWidget {
   const ProductListFragment({super.key});
@@ -18,11 +19,28 @@ class _ProductListFragmentState extends ConsumerState<ProductListFragment> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Product List',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Product List', style: titleStyle),
+              SizedBox(
+                width: ScreenUtil().screenWidth / 4,
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Search...',
+                    prefixIcon: const Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    fillColor: fillColor,
+                  ),
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: 16.h),
+          SizedBox(height: 8.h),
           Expanded(
             child: ListView.builder(
               itemCount: 8, // replace with actual product count
@@ -30,7 +48,7 @@ class _ProductListFragmentState extends ConsumerState<ProductListFragment> {
                 return Card(
                   margin: EdgeInsets.symmetric(vertical: 8.h),
                   child: ListTile(
-                    leading: const Icon(Icons.shopping_bag),
+                    leading: const Icon(Icons.inventory_2),
                     title: Text(
                       'Product ${index + 1}',
                       style: const TextStyle(fontSize: 14),
