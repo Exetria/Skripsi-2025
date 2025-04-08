@@ -16,11 +16,9 @@ final lightTheme = ThemeData(
     primary: primaryColor,
     secondary: accentColor,
     surface: Colors.white,
-    background: backgroundColor,
     onPrimary: Colors.white,
     onSecondary: Colors.white,
     onSurface: textColor,
-    onBackground: textColor,
   ),
   appBarTheme: AppBarTheme(
     backgroundColor: primaryColor,
@@ -40,9 +38,9 @@ final lightTheme = ThemeData(
   navigationBarTheme: NavigationBarThemeData(
     backgroundColor: backgroundColor,
     indicatorColor: primaryColor.withAlpha(30),
-    labelTextStyle: MaterialStateProperty.all(TextStyle(color: primaryColor)),
-    iconTheme: MaterialStateProperty.resolveWith((states) {
-      if (states.contains(MaterialState.selected)) {
+    labelTextStyle: WidgetStateProperty.all(TextStyle(color: primaryColor)),
+    iconTheme: WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.selected)) {
         return IconThemeData(color: primaryColor);
       }
       return IconThemeData(color: unselectedItemColor);
@@ -89,14 +87,7 @@ class _MainApp extends ConsumerState<Main> {
           home: child,
         );
       },
-      child: const SafeArea(
-        child:
-            // // kalo sudah login langsung ke home
-            // ref.read(authStateProvider).value == null
-            //     ? LoginPage()
-            //     : const HomePage(),
-            SplashScreen(),
-      ),
+      child: const SplashScreen(),
     );
   }
 }
