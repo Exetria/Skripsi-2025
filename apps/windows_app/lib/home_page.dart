@@ -52,7 +52,7 @@ class _HomePage extends ConsumerState<HomePage> {
               leading: Padding(
                 padding: const EdgeInsets.only(bottom: 8),
                 child: Center(
-                  child: Image.asset('assets/logo.png', height: 50.h),
+                  child: Image.asset('assets/logo.png', height: 40.h),
                 ),
               ),
               destinations: [
