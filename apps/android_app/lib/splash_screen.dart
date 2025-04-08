@@ -42,6 +42,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const LoginPage()),
+            // MaterialPageRoute(builder: (context) => const HomePage()),
           );
         }
       });
@@ -86,7 +87,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
             children: [
               Image.asset('assets/logo.png', width: 100.w, height: 100.h),
               SizedBox(height: 20.h),
-              Text('My Sales App', style: titleStyle),
+              Text('Salesku App', style: titleStyle),
             ],
           ),
         ),
