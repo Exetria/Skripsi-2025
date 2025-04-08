@@ -10,6 +10,8 @@ final firestoreProvider = Provider((ref) => FirebaseFirestore.instance);
 // COLORS
 final Color primaryColor = const Color.fromRGBO(0, 128, 128, 1);
 final Color secondaryColor = const Color.fromRGBO(0, 150, 136, 1);
+final Color tertiaryColor = const Color.fromRGBO(178, 223, 219, 1);
+final Color fillColor = const Color.fromRGBO(238, 238, 238, 1);
 final Color accentColor = const Color.fromRGBO(0, 105, 92, 1);
 final Color backgroundColor = const Color.fromRGBO(245, 245, 245, 1);
 final Color textColor = const Color.fromRGBO(33, 33, 33, 1);
@@ -18,7 +20,8 @@ final Color warningColor = const Color.fromRGBO(255, 152, 0, 1);
 final Color errorColor = const Color.fromRGBO(244, 67, 54, 1);
 final Color dividerColor = const Color.fromRGBO(204, 204, 204, 1);
 final Color selectedItemColor = primaryColor;
-final Color unselectedItemColor = textColor.withAlpha(150); // Slightly faded
+final Color unselectedItemColor = textColor.withAlpha(150);
+final Color transparentColor = Colors.transparent;
 
 // TEXT STYLES
 final TextStyle titleStyle = TextStyle(
@@ -41,6 +44,18 @@ final TextStyle captionStyle = TextStyle(
   fontWeight: FontWeight.w400,
   color: textColor.withAlpha(178), // Slightly faded for captions
 );
+final TextStyle footnoteStyle = TextStyle(
+  fontSize: 12.sp,
+  fontWeight: FontWeight.w400,
+  color: textColor.withAlpha(160), // A bit more faded than captionStyle
+);
+final TextStyle helperStyle = TextStyle(
+  fontSize: 10.sp,
+  fontWeight: FontWeight.w400,
+  color: textColor.withAlpha(140), // Even more subtle for tiny text
+);
+
+// MISC. TEXT STYLES
 final TextStyle buttonStyle = TextStyle(
   fontSize: 16.sp,
   fontWeight: FontWeight.w600,
