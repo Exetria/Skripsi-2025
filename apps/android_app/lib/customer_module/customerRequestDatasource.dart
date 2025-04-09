@@ -1,4 +1,4 @@
-import 'package:android_app/customer_module/customerRequestModel.dart';
+import 'package:android_app/customer_module/customerRequestDomain.dart';
 import 'package:android_app/variables.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
