@@ -74,10 +74,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                     horizontal: 16.w,
                     vertical: 12.h,
                   ),
-                  title: Text(
-                    visits[index],
-                    style: bodyStyle.copyWith(fontWeight: FontWeight.w500),
-                  ),
+                  title: Text(visits[index], style: bodyStyle),
                   trailing: Icon(
                     Icons.arrow_forward_ios,
                     size: 16.sp,

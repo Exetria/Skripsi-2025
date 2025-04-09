@@ -186,11 +186,7 @@ void showAutoClosePopup({
             children: [
               Icon(icon, size: 48.sp, color: primaryColor),
               SizedBox(height: 16.h),
-              Text(
-                message,
-                style: bodyStyle.copyWith(color: textColor, fontSize: 16.sp),
-                textAlign: TextAlign.center,
-              ),
+              Text(message, style: bodyStyle, textAlign: TextAlign.center),
             ],
           ),
         ),

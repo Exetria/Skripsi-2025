@@ -50,20 +50,17 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
               SizedBox(height: 12.h),
               Text(
                 user?.displayName ?? 'Not Available',
-                style: titleStyle.copyWith(fontSize: 18.sp),
+                style: subtitleStyle,
                 textAlign: TextAlign.center,
               ),
               Text(
                 user?.email ?? 'Not Available',
-                style: bodyStyle.copyWith(
-                  fontSize: 14.sp,
-                  color: textColor.withAlpha(178),
-                ),
+                style: captionStyle,
                 textAlign: TextAlign.center,
               ),
               Text(
                 'Sales Representative',
-                style: captionStyle.copyWith(fontSize: 13.sp),
+                style: captionStyle,
                 textAlign: TextAlign.center,
               ),
             ],
@@ -99,7 +96,7 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                   icon: Icon(checked ? Icons.logout : Icons.login, size: 20.sp),
                   label: Text(
                     checked ? 'Check Out' : 'Check In',
-                    style: buttonStyle.copyWith(fontSize: 16.sp),
+                    style: buttonStyle,
                   ),
                 ),
               ),
@@ -127,10 +124,7 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                     ),
                   ),
                   icon: Icon(Icons.exit_to_app, size: 20.sp),
-                  label: Text(
-                    'Logout',
-                    style: buttonStyle.copyWith(fontSize: 16.sp),
-                  ),
+                  label: Text('Logout', style: buttonStyle),
                 ),
               ),
             ],

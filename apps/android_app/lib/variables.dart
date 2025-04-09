@@ -47,6 +47,11 @@ final TextStyle titleStyle = TextStyle(
   fontWeight: FontWeight.bold,
   color: textColor,
 );
+final TextStyle sectionTitleStyle = TextStyle(
+  fontSize: 20.sp,
+  fontWeight: FontWeight.bold,
+  color: textColor,
+);
 final TextStyle subtitleStyle = TextStyle(
   fontSize: 18.sp,
   fontWeight: FontWeight.w600,

@@ -43,10 +43,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
                 controller: emailController,
                 decoration: InputDecoration(
                   labelText: 'Email',
-                  labelStyle: bodyStyle.copyWith(
-                    fontSize: 16.sp,
-                    color: textColor,
-                  ),
+                  labelStyle: bodyStyle,
                   prefixIcon: Icon(
                     Icons.email,
                     color: textColor.withAlpha(178),
@@ -64,10 +61,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
                 obscureText: obscurePassword,
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  labelStyle: bodyStyle.copyWith(
-                    fontSize: 16.sp,
-                    color: textColor,
-                  ),
+                  labelStyle: bodyStyle,
                   prefixIcon: Icon(Icons.lock, color: textColor.withAlpha(178)),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.r),
@@ -96,7 +90,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
                   },
                   child: Text(
                     'Forgot Password?',
-                    style: warningStyle.copyWith(fontSize: 14.sp),
+                    style: captionStyle.copyWith(fontSize: 14.sp),
                   ),
                 ),
               ),

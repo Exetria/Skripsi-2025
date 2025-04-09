@@ -16,16 +16,15 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
   Widget build(BuildContext context) {
     // Placeholder order data – to be passed from constructor later
     final List<Map<String, dynamic>> orderItems = [
-      {'name': 'Product A', 'quantity': 2, 'price': 10.0},
-      {'name': 'Product B', 'quantity': 1, 'price': 25.0},
-      {'name': 'Product C', 'quantity': 3, 'price': 5.0},
+      {'name': 'Product A', 'quantity': 2, 'price': 10000},
+      {'name': 'Product B', 'quantity': 1, 'price': 25000},
+      {'name': 'Product C', 'quantity': 3, 'price': 5000},
     ];
 
     final String orderId = '#ORD123456'; // <-- required
     final double totalPrice = orderItems.fold<double>(
       0,
-      (sum, item) =>
-          sum + (item['price'] as double) * (item['quantity'] as int),
+      (sum, item) => sum + (item['price'] as int) * (item['quantity'] as int),
     );
 
     return Scaffold(
@@ -38,7 +37,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
             // Ordered Items List
             ...orderItems.map((item) {
               final itemTotal =
-                  (item['price'] as double) * (item['quantity'] as int);
+                  (item['price'] as int) * (item['quantity'] as int);
 
               return Container(
                 margin: EdgeInsets.only(bottom: 12.h),
@@ -62,29 +61,16 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          item['name'],
-                          style: bodyStyle.copyWith(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                        Text(item['name'], style: bodyStyle),
                         SizedBox(height: 4.h),
-                        Text(
-                          'Qty: ${item['quantity']}',
-                          style: captionStyle.copyWith(fontSize: 14.sp),
-                        ),
+                        Text('Qty: ${item['quantity']}', style: captionStyle),
                       ],
                     ),
 
                     // Item total price
                     Text(
-                      '\$${itemTotal.toStringAsFixed(2)}',
-                      style: bodyStyle.copyWith(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
-                        color: successColor,
-                      ),
+                      rupiahFormatter.format(itemTotal),
+                      style: bodyStyle.copyWith(color: successColor),
                     ),
                   ],
                 ),
@@ -98,10 +84,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
               padding: EdgeInsets.only(top: 12.h),
               child: Text(
                 'Order ID: $orderId',
-                style: captionStyle.copyWith(
-                  fontSize: 14.sp,
-                  color: unselectedItemColor,
-                ),
+                style: captionStyle.copyWith(color: unselectedItemColor),
               ),
             ),
           ],
@@ -116,11 +99,8 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
             children: [
               const Spacer(),
               Text(
-                'Total: \$${totalPrice.toStringAsFixed(2)}',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
+                'Total: ${rupiahFormatter.format(totalPrice)}',
+                style: bodyStyle.copyWith(fontWeight: FontWeight.bold),
               ),
             ],
           ),

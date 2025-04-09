@@ -84,10 +84,7 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Name
-                  Text(
-                    customerName,
-                    style: titleStyle.copyWith(fontSize: 20.sp),
-                  ),
+                  Text(customerName, style: sectionTitleStyle),
                   SizedBox(height: 16.h),
 
                   // Address

@@ -142,7 +142,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
                 ),
                 child: Text(
                   'Confirm',
-                  style: buttonStyle.copyWith(color: Colors.white),
+                  style: buttonStyle.copyWith(color: invertedTextColor),
                 ),
               ),
             ],
