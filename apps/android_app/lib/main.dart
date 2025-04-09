@@ -2,7 +2,6 @@ import 'package:android_app/splash_screen.dart';
 import 'package:android_app/variables.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -11,7 +10,7 @@ final lightTheme = ThemeData(
   brightness: Brightness.light,
   primaryColor: primaryColor,
   scaffoldBackgroundColor: backgroundColor,
-  cardColor: Colors.white,
+  cardColor: backgroundColor,
   colorScheme: ColorScheme.light(
     primary: primaryColor,
     secondary: accentColor,
@@ -46,20 +45,30 @@ final lightTheme = ThemeData(
       return IconThemeData(color: unselectedItemColor);
     }),
   ),
+  inputDecorationTheme: InputDecorationTheme(
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: primaryColor),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: dividerColor),
+    ),
+    border: OutlineInputBorder(borderSide: BorderSide(color: dividerColor)),
+  ),
   textTheme: GoogleFonts.montserratTextTheme(),
 );
 
 void main() async {
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
-      statusBarColor: backgroundColor, // Use your predefined background color
-      statusBarIconBrightness:
-          Brightness.dark, // Use Brightness.light for white icons
-      systemNavigationBarColor: backgroundColor, // Change nav bar color
-      systemNavigationBarIconBrightness:
-          Brightness.dark, // Light icons if dark background
-    ),
-  );
+  // WARNA NOTIF BAR
+  // SystemChrome.setSystemUIOverlayStyle(
+  //   SystemUiOverlayStyle(
+  //     statusBarColor: backgroundColor, // Use your predefined background color
+  //     statusBarIconBrightness:
+  //         Brightness.dark, // Use Brightness.light for white icons
+  //     systemNavigationBarColor: backgroundColor, // Change nav bar color
+  //     systemNavigationBarIconBrightness:
+  //         Brightness.dark, // Light icons if dark background
+  //   ),
+  // );
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -83,7 +92,7 @@ class _MainApp extends ConsumerState<Main> {
       builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(textTheme: GoogleFonts.montserratTextTheme()),
+          theme: lightTheme,
           home: child,
         );
       },
