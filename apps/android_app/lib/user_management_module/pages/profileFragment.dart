@@ -15,96 +15,130 @@ class ProfileFragment extends StatefulHookConsumerWidget {
 
 class _ProfileFragment extends ConsumerState<ProfileFragment> {
   User? user = FirebaseAuth.instance.currentUser;
+  bool checked = false;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(16.w),
-      child: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Profile Avatar
-            CircleAvatar(
-              radius: 50.r,
-              backgroundColor: secondaryColor.withAlpha(51),
-              child: Icon(Icons.person, size: 50.sp, color: primaryColor),
-            ),
-            SizedBox(height: 16.h),
-            // User Information
-            Text(
-              user?.displayName ?? 'Not Available',
-              style: titleStyle.copyWith(fontSize: 20.sp),
-            ),
-            Text(
-              user?.email ?? 'Not Available',
-              style: bodyStyle.copyWith(
-                fontSize: 16.sp,
-                color: textColor.withAlpha(178),
-              ), // Faded text color
-            ),
-            Text(
-              // TODO: Replace with actual role
-              'Sales Representative',
-              style: captionStyle.copyWith(fontSize: 14.sp),
-            ),
-            SizedBox(height: 24.h),
-
-            // Check-in and Check-out Buttons
-            ElevatedButton(
-              onPressed: () {
-                // TODO: Implement check-in functionality
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: successColor,
-                foregroundColor: backgroundColor,
-                padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 12.h),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        // Profile Card
+        Container(
+          width: double.infinity,
+          margin: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
+          padding: EdgeInsets.all(16.w),
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            borderRadius: BorderRadius.circular(16.r),
+            border: Border.all(color: dividerColor),
+            boxShadow: [
+              BoxShadow(
+                color: dividerColor,
+                blurRadius: 8,
+                offset: Offset(0, 6.h),
               ),
-              child: Text(
-                'Check In',
-                style: buttonStyle.copyWith(fontSize: 16.sp),
+            ],
+          ),
+          child: Column(
+            children: [
+              CircleAvatar(
+                radius: 40.r,
+                backgroundColor: secondaryColor.withAlpha(30),
+                child: Icon(Icons.person, size: 40.sp, color: primaryColor),
               ),
-            ),
-            SizedBox(height: 12.h),
-            ElevatedButton(
-              onPressed: () {
-                // TODO: Implement check-out functionality
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: errorColor,
-                foregroundColor: backgroundColor,
-                padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 12.h),
+              SizedBox(height: 12.h),
+              Text(
+                user?.displayName ?? 'Not Available',
+                style: titleStyle.copyWith(fontSize: 18.sp),
+                textAlign: TextAlign.center,
               ),
-              child: Text(
-                'Check Out',
-                style: buttonStyle.copyWith(fontSize: 16.sp),
+              Text(
+                user?.email ?? 'Not Available',
+                style: bodyStyle.copyWith(
+                  fontSize: 14.sp,
+                  color: textColor.withAlpha(178),
+                ),
+                textAlign: TextAlign.center,
               ),
-            ),
-            SizedBox(height: 24.h),
-            // Logout Button
-            ElevatedButton(
-              onPressed: () {
-                // TODO: Implement sign-out confirmation before navigating
-                signOut(ref);
-
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: warningColor,
-                foregroundColor: backgroundColor,
-                padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 12.h),
+              Text(
+                'Sales Representative',
+                style: captionStyle.copyWith(fontSize: 13.sp),
+                textAlign: TextAlign.center,
               ),
-              child: Text(
-                'Logout',
-                style: buttonStyle.copyWith(fontSize: 16.sp),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+
+        const Spacer(),
+
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.w),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Check In/Out Button
+              SizedBox(
+                width: 150.w,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    if (checked) {
+                      // TODO: Check-Out logic
+                    } else {
+                      // TODO: Check-In logic
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: checked ? warningColor : successColor,
+                    foregroundColor: backgroundColor,
+                    padding: EdgeInsets.symmetric(vertical: 14.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                  ),
+                  icon: Icon(checked ? Icons.logout : Icons.login, size: 20.sp),
+                  label: Text(
+                    checked ? 'Check Out' : 'Check In',
+                    style: buttonStyle.copyWith(fontSize: 16.sp),
+                  ),
+                ),
+              ),
+
+              // Logout Button (Red)
+              SizedBox(
+                width: 150.w,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    // TODO: Confirm Sign Out
+                    signOut(ref);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginPage(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: errorColor,
+                    foregroundColor: backgroundColor,
+                    padding: EdgeInsets.symmetric(vertical: 14.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                  ),
+                  icon: Icon(Icons.exit_to_app, size: 20.sp),
+                  label: Text(
+                    'Logout',
+                    style: buttonStyle.copyWith(fontSize: 16.sp),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        SizedBox(height: 20.h),
+      ],
     );
   }
 }

@@ -1,4 +1,7 @@
+import 'package:android_app/variables.dart';
+import 'package:android_app/visit_module/pages/visitDetailPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -19,85 +22,87 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
       'Visit B',
       'Visit C',
     ]; // Replace this with real data
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        children: [
-          // Date Selector
-          Row(
+
+    return Column(
+      children: [
+        // Date Selector
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+          margin: EdgeInsets.symmetric(vertical: 12.h),
+          decoration: BoxDecoration(
+            color: fillColor,
+            borderRadius: BorderRadius.circular(12.r),
+            border: Border.all(color: dividerColor),
+          ),
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
-                onPressed: () => _changeDate(-1),
-                icon: const Icon(Icons.arrow_left),
+                onPressed: () => changeDate(-1),
+                icon: Icon(Icons.chevron_left, size: 28.sp, color: textColor),
               ),
-              Text(
-                DateFormat.yMMMMd().format(selectedDate),
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+              Expanded(
+                child: Center(
+                  child: Text(
+                    DateFormat.yMMMMd().format(selectedDate),
+                    style: subtitleStyle,
+                  ),
                 ),
               ),
               IconButton(
-                onPressed: () => _changeDate(1),
-                icon: const Icon(Icons.arrow_right),
+                onPressed: () => changeDate(1),
+                icon: Icon(Icons.chevron_right, size: 28.sp, color: textColor),
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          // Visit List
-          Expanded(
-            child: ListView.builder(
-              itemCount: visits.length,
-              itemBuilder: (context, index) {
-                return Card(child: ListTile(title: Text(visits[index])));
-              },
-            ),
+        ),
+        SizedBox(height: 12.h),
+
+        // Visit List
+        Expanded(
+          child: ListView.separated(
+            itemCount: visits.length,
+            separatorBuilder: (_, __) => SizedBox(height: 12.h),
+            itemBuilder: (context, index) {
+              return Card(
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+                child: ListTile(
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 12.h,
+                  ),
+                  title: Text(
+                    visits[index],
+                    style: bodyStyle.copyWith(fontWeight: FontWeight.w500),
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    size: 16.sp,
+                    color: unselectedItemColor,
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const VisitDetailPage(),
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
-  void _changeDate(int offset) {
+  void changeDate(int offset) {
     setState(() {
       selectedDate = selectedDate.add(Duration(days: offset));
     });
   }
 }
-    // Center(
-    //   child: Column(
-    //     mainAxisAlignment: MainAxisAlignment.center,
-    //     children: [
-    //       ElevatedButton(
-    //         onPressed: () async {
-    //           await createDocument(ref);
-    //           ScaffoldMessenger.of(
-    //             context,
-    //           ).showSnackBar(const SnackBar(content: Text('fx1 done')));
-    //         },
-    //         child: const Text('Function 1'),
-    //       ),
-    //       const SizedBox(height: 16),
-    //       ElevatedButton(
-    //         onPressed: () async {
-    //           await Future.delayed(const Duration(seconds: 2));
-    //           ScaffoldMessenger.of(
-    //             context,
-    //           ).showSnackBar(const SnackBar(content: Text('fx2 done')));
-    //         },
-    //         child: const Text('Function 2'),
-    //       ),
-    //       const SizedBox(height: 16),
-    //       ElevatedButton(
-    //         onPressed: () async {
-    //           await Future.delayed(const Duration(seconds: 2));
-    //           ScaffoldMessenger.of(
-    //             context,
-    //           ).showSnackBar(const SnackBar(content: Text('fx3 done')));
-    //         },
-    //         child: const Text('Function 3'),
-    //       ),
-    //     ],
-    //   ),
-    // )
