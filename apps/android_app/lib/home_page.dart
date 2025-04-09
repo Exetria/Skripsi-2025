@@ -1,14 +1,15 @@
 import 'package:android_app/customer_module/pages/customerListFragment.dart';
 import 'package:android_app/order_module/pages/orderListFragment.dart';
 import 'package:android_app/product_module/pages/productListFragment.dart';
-import 'package:android_app/user_management_module/pages/login_page.dart';
 import 'package:android_app/user_management_module/pages/profileFragment.dart';
 import 'package:android_app/variables.dart';
 import 'package:android_app/visit_module/pages/visitListFragment.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:android_app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+final selectedIndexProvider = StateProvider<int>((ref) => 0);
 
 class HomePage extends StatefulHookConsumerWidget {
   const HomePage({super.key});
@@ -19,8 +20,6 @@ class HomePage extends StatefulHookConsumerWidget {
 
 class _HomePage extends ConsumerState<HomePage> {
   DateTime? lastPressed;
-
-  int _selectedIndex = 0;
 
   final List<Widget> pages = [
     const VisitListFragment(),
@@ -35,16 +34,18 @@ class _HomePage extends ConsumerState<HomePage> {
     super.initState();
 
     // safeguard kalo belum login
-    if (FirebaseAuth.instance.currentUser == null) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginPage()),
-      );
-    }
+    // if (FirebaseAuth.instance.currentUser == null) {
+    //   Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => const LoginPage()),
+    //   );
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
+    int selectedIndex = ref.watch(selectedIndexProvider);
+
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
@@ -65,13 +66,20 @@ class _HomePage extends ConsumerState<HomePage> {
         }
       },
       child: Scaffold(
-        appBar: createAppBar(),
-        body: pages[_selectedIndex],
+        appBar: customAppBar(
+          title: 'Salesku App',
+          showBackButton: true,
+          backButtonWidget: Image.asset('assets/logo.png', height: 60.h),
+        ),
+        body: Padding(
+          padding: EdgeInsets.all(8.sp),
+          child: pages[selectedIndex],
+        ),
         bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _selectedIndex,
+          currentIndex: selectedIndex,
           onTap: (index) {
             setState(() {
-              _selectedIndex = index;
+              ref.read(selectedIndexProvider.notifier).state = index;
             });
           },
           type: BottomNavigationBarType.fixed,
@@ -95,48 +103,6 @@ class _HomePage extends ConsumerState<HomePage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.inventory_2),
               label: 'Products',
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  PreferredSize createAppBar() {
-    return PreferredSize(
-      preferredSize: Size.fromHeight(60.h),
-      child: Container(
-        padding: EdgeInsets.only(
-          top: 24.h,
-          bottom: 4.h,
-          left: 16.w,
-          right: 16.w,
-        ),
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          boxShadow: [
-            BoxShadow(
-              color: dividerColor.withAlpha(100),
-              blurRadius: 4,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // App Logo
-            Image.asset('assets/logo.png', width: 40.w, height: 40.h),
-
-            // App Title
-            Text('Sales App', style: titleStyle.copyWith(fontSize: 20.sp)),
-
-            // Menu Button
-            IconButton(
-              icon: Icon(Icons.menu, color: primaryColor),
-              onPressed: () {
-                // TODO: Open drawer or menu
-              },
             ),
           ],
         ),
