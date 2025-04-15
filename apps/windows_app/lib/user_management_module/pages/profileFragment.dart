@@ -233,7 +233,7 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                         // );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: warningColor,
+                        backgroundColor: errorColor,
                         foregroundColor: backgroundColor,
                         padding: const EdgeInsets.symmetric(
                           horizontal: 12,
