@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -38,64 +40,64 @@ final Color darkModeTransparentColor = Colors.transparent;
 
 // TEXT STYLES
 final TextStyle titleStyle = TextStyle(
-  fontSize: 24.sp,
+  fontSize: Platform.isWindows ? 24 : 24.sp,
   fontWeight: FontWeight.bold,
   color: textColor,
 );
 final TextStyle sectionTitleStyle = TextStyle(
-  fontSize: 20.sp,
+  fontSize: Platform.isWindows ? 20 : 20.sp,
   fontWeight: FontWeight.bold,
   color: textColor,
 );
 final TextStyle subtitleStyle = TextStyle(
-  fontSize: 18.sp,
+  fontSize: Platform.isWindows ? 18 : 18.sp,
   fontWeight: FontWeight.w600,
   color: textColor,
 );
 final TextStyle bodyStyle = TextStyle(
-  fontSize: 16.sp,
+  fontSize: Platform.isWindows ? 16 : 16.sp,
   fontWeight: FontWeight.normal,
   color: textColor,
 );
 final TextStyle captionStyle = TextStyle(
-  fontSize: 14.sp,
+  fontSize: Platform.isWindows ? 14 : 14.sp,
   fontWeight: FontWeight.w400,
   color: textColor.withAlpha(178),
 );
 final TextStyle footnoteStyle = TextStyle(
-  fontSize: 12.sp,
+  fontSize: Platform.isWindows ? 12 : 12.sp,
   fontWeight: FontWeight.w400,
   color: textColor.withAlpha(160),
 );
 final TextStyle helperStyle = TextStyle(
-  fontSize: 10.sp,
+  fontSize: Platform.isWindows ? 10 : 10.sp,
   fontWeight: FontWeight.w400,
   color: textColor.withAlpha(140),
 );
 
 // MISC. TEXT STYLES
 final TextStyle hintStyle = TextStyle(
-  fontSize: 16.sp,
+  fontSize: Platform.isWindows ? 16 : 16.sp,
   fontWeight: FontWeight.w600,
   color: unselectedItemColor,
 );
 final TextStyle buttonStyle = TextStyle(
-  fontSize: 16.sp,
+  fontSize: Platform.isWindows ? 16 : 16.sp,
   fontWeight: FontWeight.w600,
   color: dividerColor,
 );
 final TextStyle successStyle = TextStyle(
-  fontSize: 16.sp,
+  fontSize: Platform.isWindows ? 16 : 16.sp,
   fontWeight: FontWeight.w500,
   color: successColor,
 );
 final TextStyle warningStyle = TextStyle(
-  fontSize: 16.sp,
+  fontSize: Platform.isWindows ? 16 : 16.sp,
   fontWeight: FontWeight.w500,
   color: warningColor,
 );
 final TextStyle errorStyle = TextStyle(
-  fontSize: 16.sp,
+  fontSize: Platform.isWindows ? 16 : 16.sp,
   fontWeight: FontWeight.w500,
   color: errorColor,
 );
