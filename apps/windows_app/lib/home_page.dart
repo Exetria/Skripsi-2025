@@ -1,3 +1,4 @@
+import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -7,7 +8,6 @@ import 'package:windows_app/product_module/pages/productListFragment.dart';
 import 'package:windows_app/report_module/pages/mainReportFragment.dart';
 import 'package:windows_app/sales_module/pages/salesListFragment.dart';
 import 'package:windows_app/user_management_module/pages/profileFragment.dart';
-import 'package:windows_app/variables.dart';
 
 final selectedIndexProvider = StateProvider<int>((ref) => 0);
 
