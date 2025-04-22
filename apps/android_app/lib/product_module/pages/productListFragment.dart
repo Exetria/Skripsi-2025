@@ -1,6 +1,6 @@
+import 'package:android_app/functions.dart';
 import 'package:android_app/product_module/pages/productDetailPage.dart';
 import 'package:android_app/variables.dart';
-import 'package:android_app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

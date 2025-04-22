@@ -1,5 +1,5 @@
+import 'package:android_app/functions.dart';
 import 'package:android_app/variables.dart';
-import 'package:android_app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -23,7 +23,7 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
     final String phoneNumber = '+1 555 123 4567'; // <-- required
 
     return Scaffold(
-      appBar: customAppBar(title: 'Customer Detail', showBackButton: true),
+      appBar: customAppBar(title: 'Customer Detail', showLeftButton: true),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.w),
         child: Column(

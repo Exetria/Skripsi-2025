@@ -1,7 +1,7 @@
 import 'dart:io';
 
+import 'package:android_app/functions.dart';
 import 'package:android_app/variables.dart';
-import 'package:android_app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -25,7 +25,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
       appBar: customAppBar(
         title: 'Visit Details',
         subtitle: '8 April 2025',
-        showBackButton: true,
+        showLeftButton: true,
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.w),

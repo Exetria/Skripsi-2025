@@ -1,10 +1,12 @@
+import 'package:android_app/customer_module/pages/addCustomerPage.dart';
 import 'package:android_app/customer_module/pages/customerListFragment.dart';
+import 'package:android_app/functions.dart';
+import 'package:android_app/order_module/pages/addOrderPage.dart';
 import 'package:android_app/order_module/pages/orderListFragment.dart';
 import 'package:android_app/product_module/pages/productListFragment.dart';
 import 'package:android_app/user_management_module/pages/profileFragment.dart';
 import 'package:android_app/variables.dart';
 import 'package:android_app/visit_module/pages/visitListFragment.dart';
-import 'package:android_app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -20,13 +22,15 @@ class HomePage extends StatefulHookConsumerWidget {
 
 class _HomePage extends ConsumerState<HomePage> {
   DateTime? lastPressed;
+  IconData? rightButtonIcon;
+  void Function()? onRightPressed;
 
   final List<Widget> pages = [
     const VisitListFragment(),
     const OrderListFragment(),
-    const ProfileFragment(),
     const CustomerListFragment(),
     const ProductListFragment(),
+    const ProfileFragment(),
   ];
 
   @override
@@ -68,8 +72,10 @@ class _HomePage extends ConsumerState<HomePage> {
       child: Scaffold(
         appBar: customAppBar(
           title: 'Salesku App',
-          showBackButton: true,
-          backButtonWidget: Image.asset('assets/logo.png', height: 60.h),
+          showLeftButton: true,
+          leftButtonWidget: Image.asset('assets/logo.png', height: 60.h),
+          rightButtonIcon: rightButtonIcon,
+          onRightPressed: onRightPressed,
         ),
         body: Padding(
           padding: EdgeInsets.all(8.sp),
@@ -78,6 +84,28 @@ class _HomePage extends ConsumerState<HomePage> {
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: selectedIndex,
           onTap: (index) {
+            if (index == 1 || index == 2) {
+              rightButtonIcon = Icons.add;
+              onRightPressed = () {
+                index == 1
+                    ? Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AddOrderPage(),
+                      ),
+                    )
+                    : Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AddCustomerPage(),
+                      ),
+                    );
+              };
+            } else {
+              rightButtonIcon = null;
+              onRightPressed = null;
+            }
+
             setState(() {
               ref.read(selectedIndexProvider.notifier).state = index;
             });
@@ -94,8 +122,6 @@ class _HomePage extends ConsumerState<HomePage> {
               icon: Icon(Icons.receipt_long),
               label: 'Orders',
             ),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-
             BottomNavigationBarItem(
               icon: Icon(Icons.business),
               label: 'Customers',
@@ -104,6 +130,7 @@ class _HomePage extends ConsumerState<HomePage> {
               icon: Icon(Icons.inventory_2),
               label: 'Products',
             ),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           ],
         ),
       ),

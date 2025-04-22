@@ -1,3 +1,4 @@
+import 'package:android_app/functions.dart';
 import 'package:android_app/user_management_module/authentication.dart';
 import 'package:android_app/user_management_module/pages/login_page.dart';
 import 'package:android_app/variables.dart';
@@ -84,6 +85,15 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                     } else {
                       // TODO: Check-In logic
                     }
+
+                    showFeedbackPopup(
+                      context: context,
+                      icon: Icons.check_circle,
+                      // check_circle
+                      // error_outline
+                      // highlight_off
+                      message: 'Check In Success',
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: checked ? warningColor : successColor,

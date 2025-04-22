@@ -1,5 +1,5 @@
+import 'package:android_app/functions.dart';
 import 'package:android_app/variables.dart';
-import 'package:android_app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -28,7 +28,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
     );
 
     return Scaffold(
-      appBar: customAppBar(title: 'Order Detail', showBackButton: true),
+      appBar: customAppBar(title: 'Order Detail', showLeftButton: true),
       body: Padding(
         padding: EdgeInsets.all(16.w),
         child: Column(
