@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  common_components:
+    path: ../../packages/common_components
 
   # RIVERPOD
   flutter_riverpod: ^2.6.1
