@@ -1,9 +1,8 @@
 import 'package:android_app/user_management_module/pages/login_page.dart';
+import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import 'variables.dart'; // Ensure your color & text styles are used
 
 class SplashScreen extends StatefulHookConsumerWidget {
   const SplashScreen({super.key});

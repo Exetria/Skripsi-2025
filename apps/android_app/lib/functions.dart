@@ -1,4 +1,4 @@
-import 'package:android_app/variables.dart';
+import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

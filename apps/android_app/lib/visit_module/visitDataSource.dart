@@ -1,4 +1,4 @@
-import 'package:android_app/variables.dart';
+import 'package:android_app/firebase/firebase_firestore.dart';
 import 'package:android_app/visit_module/visitDomain.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

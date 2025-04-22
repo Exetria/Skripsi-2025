@@ -1,5 +1,5 @@
+import 'package:android_app/firebase/firebase_firestore.dart';
 import 'package:android_app/order_module/orderDomain.dart';
-import 'package:android_app/variables.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final collectionProvider = Provider(
