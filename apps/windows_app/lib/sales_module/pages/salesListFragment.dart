@@ -2,6 +2,7 @@ import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:windows_app/functions.dart';
 
 class SalesListFragment extends StatefulHookConsumerWidget {
   const SalesListFragment({super.key});
@@ -59,6 +60,16 @@ class _SalesListFragmentState extends ConsumerState<SalesListFragment> {
                     ),
                     onTap: () {
                       // TODO sales on tap function
+                      showSalesDetailDialog(
+                        context: context,
+                        name: 'bambang',
+                        email: 'email',
+                        onEditPressed: () {
+                          print('asds hello tap sales');
+                        },
+                        phone: 'hape',
+                        area: 'area',
+                      );
                     },
                   ),
                 );

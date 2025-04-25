@@ -2,6 +2,7 @@ import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:windows_app/functions.dart';
 
 class OrderListFragment extends StatefulHookConsumerWidget {
   const OrderListFragment({super.key});
@@ -62,7 +63,18 @@ class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
                       ),
                     ),
                     onTap: () {
-                      // Handle tap or navigate to order details
+                      // TODO : Order on tap function
+                      showOrderDetailDialog(
+                        context: context,
+                        orderId: 'abc',
+                        customerName: 'customer 1',
+                        date: 'sabtu gatau kapan',
+                        status: 'pending',
+                        total: '1000000',
+                        onEditPressed: () {
+                          print('asds hello edit order');
+                        },
+                      );
                     },
                   ),
                 );

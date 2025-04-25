@@ -1,95 +1,243 @@
 import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void showSalesDetailDialog({
   required BuildContext context,
   required String name,
   required String email,
-  required String region,
+  required String phone,
+  required String area,
   required VoidCallback onEditPressed,
 }) {
   showDialog(
     context: context,
     barrierDismissible: true,
-    builder: (ctx) {
-      return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.r),
-        ),
-        backgroundColor: backgroundColor,
-        child: ConstrainedBox(
-          constraints: BoxConstraints(minWidth: 300.w, maxWidth: 500.w),
+    builder:
+        (context) => Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          backgroundColor: backgroundColor,
           child: Padding(
-            padding: EdgeInsets.all(24.w),
+            padding: const EdgeInsets.all(24),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Sales Details', style: sectionTitleStyle),
-                SizedBox(height: 16.h),
-
-                // Name
-                Row(
-                  children: [
-                    Icon(Icons.person, color: secondaryColor, size: 20.sp),
-                    SizedBox(width: 8.w),
-                    Text('Name: ', style: bodyStyle),
-                    Expanded(child: Text(name, style: bodyStyle)),
-                  ],
-                ),
-                SizedBox(height: 12.h),
-
-                // Email
-                Row(
-                  children: [
-                    Icon(Icons.email, color: secondaryColor, size: 20.sp),
-                    SizedBox(width: 8.w),
-                    Text('Email: ', style: bodyStyle),
-                    Expanded(child: Text(email, style: bodyStyle)),
-                  ],
-                ),
-                SizedBox(height: 12.h),
-
-                // Region
-                Row(
-                  children: [
-                    Icon(Icons.map, color: secondaryColor, size: 20.sp),
-                    SizedBox(width: 8.w),
-                    Text('Region: ', style: bodyStyle),
-                    Expanded(child: Text(region, style: bodyStyle)),
-                  ],
-                ),
-                SizedBox(height: 24.h),
-
-                // Edit button
+                const SizedBox(height: 16),
+                _detailRow(Icons.person, 'Name', name),
+                _detailRow(Icons.email, 'Email', email),
+                _detailRow(Icons.phone, 'Phone', phone),
+                _detailRow(Icons.map, 'Area', area),
+                const SizedBox(height: 24),
                 Align(
                   alignment: Alignment.centerRight,
                   child: ElevatedButton.icon(
+                    onPressed: onEditPressed,
+                    icon: Icon(Icons.edit, size: 20, color: invertedTextColor),
+                    label: Text('Edit', style: buttonStyle),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primaryColor,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.r),
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 20.w,
-                        vertical: 12.h,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 12,
                       ),
                     ),
-                    icon: Icon(
-                      Icons.edit,
-                      color: invertedTextColor,
-                      size: 20.sp,
-                    ),
-                    label: Text('Edit', style: buttonStyle),
-                    onPressed: onEditPressed,
                   ),
                 ),
               ],
             ),
           ),
         ),
+  );
+}
+
+void showCustomerDetailDialog({
+  required BuildContext context,
+  required String name,
+  required String email,
+  required String phone,
+  required String address,
+  required VoidCallback onEditPressed,
+}) {
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder:
+        (context) => Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          backgroundColor: backgroundColor,
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Customer Details', style: sectionTitleStyle),
+                const SizedBox(height: 16),
+                _detailRow(Icons.person, 'Name', name),
+                _detailRow(Icons.email, 'Email', email),
+                _detailRow(Icons.phone, 'Phone', phone),
+                _detailRow(Icons.location_on, 'Address', address),
+                const SizedBox(height: 24),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: ElevatedButton.icon(
+                    onPressed: onEditPressed,
+                    icon: Icon(Icons.edit, size: 20, color: invertedTextColor),
+                    label: Text('Edit', style: buttonStyle),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 12,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+  );
+}
+
+void showProductDetailDialog({
+  required BuildContext context,
+  required String productName,
+  required String productCode,
+  required String category,
+  required String price,
+  required bool availability,
+  required VoidCallback onEditPressed,
+}) {
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        backgroundColor: backgroundColor,
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Product Details', style: sectionTitleStyle),
+              const SizedBox(height: 16),
+              _detailRow(Icons.inventory_2, 'Product', productName),
+              _detailRow(Icons.qr_code, 'Code', productCode),
+              _detailRow(Icons.category, 'Category', category),
+              _detailRow(Icons.attach_money, 'Price', price),
+              _detailRow(
+                Icons.storage,
+                'Availability',
+                availability ? 'Available' : 'Unavailable',
+              ),
+              const SizedBox(height: 24),
+              Align(
+                alignment: Alignment.centerRight,
+                child: ElevatedButton.icon(
+                  onPressed: onEditPressed,
+                  icon: Icon(Icons.edit, size: 20, color: invertedTextColor),
+                  label: Text('Edit', style: buttonStyle),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 12,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       );
     },
+  );
+}
+
+void showOrderDetailDialog({
+  required BuildContext context,
+  required String orderId,
+  required String customerName,
+  required String date,
+  required String status,
+  required String total,
+  required VoidCallback onEditPressed,
+}) {
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        backgroundColor: backgroundColor,
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Order Details', style: sectionTitleStyle),
+              const SizedBox(height: 16),
+              _detailRow(Icons.receipt_long, 'Order ID', orderId),
+              _detailRow(Icons.person, 'Customer', customerName),
+              _detailRow(Icons.date_range, 'Date', date),
+              _detailRow(Icons.info, 'Status', status),
+              _detailRow(Icons.payments, 'Total', total),
+              const SizedBox(height: 24),
+              Align(
+                alignment: Alignment.centerRight,
+                child: ElevatedButton.icon(
+                  onPressed: onEditPressed,
+                  icon: Icon(Icons.reviews, size: 20, color: invertedTextColor),
+                  label: Text('Review Order', style: buttonStyle),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 12,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
+Widget _detailRow(IconData icon, String label, String value) {
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 12),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, color: secondaryColor, size: 20),
+        const SizedBox(width: 8),
+        Text('$label: ', style: bodyStyle),
+        Expanded(child: Text(value, style: bodyStyle)),
+      ],
+    ),
   );
 }

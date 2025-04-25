@@ -2,6 +2,7 @@ import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:windows_app/functions.dart';
 
 class ProductListFragment extends StatefulHookConsumerWidget {
   const ProductListFragment({super.key});
@@ -59,7 +60,18 @@ class _ProductListFragmentState extends ConsumerState<ProductListFragment> {
                       style: const TextStyle(fontSize: 13),
                     ),
                     onTap: () {
-                      // Handle tap
+                      // TODO : Product on tap function
+                      showProductDetailDialog(
+                        context: context,
+                        productName: 'pensil',
+                        productCode: 'abc',
+                        category: 'atk',
+                        price: '1000',
+                        availability: true,
+                        onEditPressed: () {
+                          print('asds hello edit product');
+                        },
+                      );
                     },
                   ),
                 );

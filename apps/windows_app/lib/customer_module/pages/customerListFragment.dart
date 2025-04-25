@@ -2,6 +2,7 @@ import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:windows_app/functions.dart';
 
 class CustomerListFragment extends StatefulHookConsumerWidget {
   const CustomerListFragment({super.key});
@@ -56,6 +57,16 @@ class _CustomerListFragmentState extends ConsumerState<CustomerListFragment> {
                     subtitle: Text('Jalan Ahmad Yani No. ${index + 1}'),
                     onTap: () {
                       // TODO sales on tap function
+                      showCustomerDetailDialog(
+                        context: context,
+                        name: 'customer 1',
+                        email: 'email',
+                        phone: 'phone',
+                        address: 'address',
+                        onEditPressed: () {
+                          print('asds hello edit customer');
+                        },
+                      );
                     },
                   ),
                 );
