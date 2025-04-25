@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:android_app/home_page.dart';
+import 'package:android_app/homePage.dart';
 import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

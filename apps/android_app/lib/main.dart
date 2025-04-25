@@ -1,4 +1,4 @@
-import 'package:android_app/splash_screen.dart';
+import 'package:android_app/splashScreen.dart';
 import 'package:common_components/variables.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
