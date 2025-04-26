@@ -1,6 +1,8 @@
 import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:windows_app/functions.dart';
+import 'package:windows_app/user_management_module/pages/loginPage.dart';
 
 class ProfileFragment extends StatefulHookConsumerWidget {
   const ProfileFragment({super.key});
@@ -225,12 +227,20 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                         // TODO: Add logout function
 
                         // TODO: Redirect to login page
-                        // Navigator.pushReplacement(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => const LoginPage(),
-                        //   ),
-                        // );
+
+                        showFeedbackPopup(
+                          context: context,
+                          type: 1,
+                          message: 'Log Out Success',
+                          onClose: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginPage(),
+                              ),
+                            );
+                          },
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: errorColor,
