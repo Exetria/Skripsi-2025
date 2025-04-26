@@ -63,7 +63,7 @@ class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
                       ),
                     ),
                     onTap: () {
-                      // TODO : Order on tap function
+                      // TODO: Order on tap function
                       showOrderDetailDialog(
                         context: context,
                         orderId: 'abc',

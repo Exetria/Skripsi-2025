@@ -56,7 +56,7 @@ class _CustomerListFragmentState extends ConsumerState<CustomerListFragment> {
                     ),
                     subtitle: Text('Jalan Ahmad Yani No. ${index + 1}'),
                     onTap: () {
-                      // TODO sales on tap function
+                      // TODO: sales on tap function
                       showCustomerDetailDialog(
                         context: context,
                         name: 'customer 1',

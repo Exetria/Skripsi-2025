@@ -60,7 +60,7 @@ class _ProductListFragmentState extends ConsumerState<ProductListFragment> {
                       style: const TextStyle(fontSize: 13),
                     ),
                     onTap: () {
-                      // TODO : Product on tap function
+                      // TODO: Product on tap function
                       showProductDetailDialog(
                         context: context,
                         productName: 'pensil',
