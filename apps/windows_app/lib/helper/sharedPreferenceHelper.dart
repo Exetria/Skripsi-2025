@@ -31,6 +31,8 @@ class SharedPreferenceHelper {
 
   // Encrypt data
   static String encryptData({required String data}) {
+    if (data == '') return '';
+
     final encrypter = encrypt.Encrypter(encrypt.AES(encryptionHelper.key));
     final encrypted = encrypter.encrypt(data, iv: encryptionHelper.iv);
     return encrypted.base64;

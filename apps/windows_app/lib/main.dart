@@ -1,7 +1,4 @@
-import 'dart:math';
-
 import 'package:common_components/variables.dart';
-import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -59,19 +56,9 @@ void main() async {
   await dotenv.load(fileName: '.env');
 
   // Initialize Encryption Helper
-  const characters =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  Random random = Random();
-  String seed =
-      List.generate(
-        32,
-        (index) => characters[random.nextInt(characters.length)],
-      ).join();
+  encryptionHelper = EncryptionHelper();
 
-  encryptionHelper = EncryptionHelper(
-    key: encrypt.Key.fromUtf8(seed),
-    iv: encrypt.IV.fromUtf8(seed),
-  );
+  // TODO: Check user data in SP
 
   runApp(const ProviderScope(child: Main()));
 }
