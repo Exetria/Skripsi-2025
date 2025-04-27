@@ -2,7 +2,7 @@ import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:windows_app/functions.dart';
-import 'package:windows_app/user_management_module/pages/loginPage.dart';
+import 'package:windows_app/user_management_module/page/loginPage.dart';
 
 class ProfileFragment extends StatefulHookConsumerWidget {
   const ProfileFragment({super.key});

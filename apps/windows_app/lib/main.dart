@@ -8,7 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:windows_app/helper/encryptionHelper.dart';
-import 'package:windows_app/user_management_module/pages/loginPage.dart';
+import 'package:windows_app/user_management_module/page/loginPage.dart';
 
 final lightTheme = ThemeData(
   // light/dark mode
