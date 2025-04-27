@@ -16,7 +16,7 @@ class _ProductListFragmentState extends ConsumerState<ProductListFragment> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(16.w),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -41,13 +41,13 @@ class _ProductListFragmentState extends ConsumerState<ProductListFragment> {
               ),
             ],
           ),
-          SizedBox(height: 8.h),
+          const SizedBox(height: 8),
           Expanded(
             child: ListView.builder(
               itemCount: 8, // replace with actual product count
               itemBuilder: (context, index) {
                 return Card(
-                  margin: EdgeInsets.symmetric(vertical: 8.h),
+                  margin: const EdgeInsets.symmetric(vertical: 8),
                   child: ListTile(
                     leading: const Icon(Icons.inventory_2),
                     title: Text(

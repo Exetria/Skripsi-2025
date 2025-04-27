@@ -15,7 +15,7 @@ class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(16.w),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -40,13 +40,13 @@ class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
               ),
             ],
           ),
-          SizedBox(height: 8.h),
+          const SizedBox(height: 8),
           Expanded(
             child: ListView.builder(
               itemCount: 10, // Replace with actual order count
               itemBuilder: (context, index) {
                 return Card(
-                  margin: EdgeInsets.symmetric(vertical: 8.h),
+                  margin: const EdgeInsets.symmetric(vertical: 8),
                   elevation: 2,
                   child: ListTile(
                     leading: const Icon(Icons.receipt_long, size: 24),

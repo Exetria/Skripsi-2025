@@ -8,7 +8,7 @@ class MainReportFragment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(8.sp),
+      padding: const EdgeInsets.all(8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -21,26 +21,26 @@ class MainReportFragment extends StatelessWidget {
                   height: ScreenUtil().screenHeight / 2,
                   width: ScreenUtil().screenWidth / 3,
                   title: 'Sales Distribution',
-                  child: Center(
+                  child: const Center(
                     child: Placeholder(
-                      fallbackHeight: 200.h,
-                      fallbackWidth: 200.w,
+                      fallbackHeight: 200,
+                      fallbackWidth: 200,
                       color: Colors.blueAccent,
                       strokeWidth: 2,
                     ),
                   ),
                 ),
               ),
-              SizedBox(width: 8.w),
+              const SizedBox(width: 8),
               // Regular Chart
               Expanded(
                 child: buildCard(
                   height: ScreenUtil().screenHeight / 2,
                   width: ScreenUtil().screenWidth / 3,
                   title: 'Monthly Sales',
-                  child: Center(
+                  child: const Center(
                     child: Placeholder(
-                      fallbackHeight: 200.h,
+                      fallbackHeight: 200,
                       color: Colors.green,
                       strokeWidth: 2,
                     ),
@@ -49,7 +49,7 @@ class MainReportFragment extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 12.h),
+          const SizedBox(height: 12),
           // Map Section
           Expanded(
             child: buildCard(
@@ -88,12 +88,12 @@ class MainReportFragment extends StatelessWidget {
       child: Container(
         height: height,
         width: width,
-        padding: EdgeInsets.all(12.sp),
+        padding: const EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(child: Text(title, style: titleStyle)),
-            SizedBox(height: 8.h),
+            const SizedBox(height: 8),
             Expanded(child: child),
           ],
         ),

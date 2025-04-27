@@ -16,7 +16,7 @@ class _CustomerListFragmentState extends ConsumerState<CustomerListFragment> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(16.w),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -41,13 +41,13 @@ class _CustomerListFragmentState extends ConsumerState<CustomerListFragment> {
               ),
             ],
           ),
-          SizedBox(height: 8.h),
+          const SizedBox(height: 8),
           Expanded(
             child: ListView.builder(
               itemCount: 30, // replace with actual customer count
               itemBuilder: (context, index) {
                 return Card(
-                  margin: EdgeInsets.symmetric(vertical: 8.h),
+                  margin: const EdgeInsets.symmetric(vertical: 8),
                   child: ListTile(
                     leading: const Icon(Icons.business_sharp),
                     title: Text(
@@ -63,9 +63,7 @@ class _CustomerListFragmentState extends ConsumerState<CustomerListFragment> {
                         email: 'email',
                         phone: 'phone',
                         address: 'address',
-                        onEditPressed: () {
-                          print('asds hello edit customer');
-                        },
+                        onEditPressed: () {},
                       );
                     },
                   ),

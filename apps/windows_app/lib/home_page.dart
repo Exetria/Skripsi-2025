@@ -1,13 +1,12 @@
 import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:windows_app/customer_module/pages/customerListFragment.dart';
 import 'package:windows_app/order_module/pages/orderListFragment.dart';
 import 'package:windows_app/product_module/pages/productListFragment.dart';
 import 'package:windows_app/report_module/pages/mainReportFragment.dart';
 import 'package:windows_app/sales_module/pages/salesListFragment.dart';
-import 'package:windows_app/user_management_module/pages/profileFragment.dart';
+import 'package:windows_app/user_management_module/page/profileFragment.dart';
 
 final selectedIndexProvider = StateProvider<int>((ref) => 0);
 
@@ -52,7 +51,7 @@ class _HomePage extends ConsumerState<HomePage> {
               leading: Padding(
                 padding: const EdgeInsets.only(bottom: 8),
                 child: Center(
-                  child: Image.asset('assets/logo.png', height: 40.h),
+                  child: Image.asset('assets/logo.png', height: 40),
                 ),
               ),
               destinations: [
