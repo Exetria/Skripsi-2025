@@ -2,6 +2,7 @@ import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:windows_app/functions.dart';
+import 'package:windows_app/helper/sharedPreferenceHelper.dart';
 import 'package:windows_app/user_management_module/page/loginPage.dart';
 
 class ProfileFragment extends StatefulHookConsumerWidget {
@@ -225,12 +226,11 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                       onPressed: () {
                         // TODO: Implement sign-out confirmation before navigating
                         // TODO: Add logout function
+                        SharedPreferenceHelper.clearUserDataInSp();
 
-                        // TODO: Redirect to login page
-
-                        showFeedbackPopup(
+                        showFeedbackDialog(
                           context: context,
-                          type: 1,
+                          type: 2,
                           message: 'Log Out Success',
                           onClose: () {
                             Navigator.pushReplacement(

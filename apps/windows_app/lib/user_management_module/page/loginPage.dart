@@ -36,7 +36,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Container(
-                width: double.infinity,
+                width: MediaQuery.of(context).size.width * 0.3,
                 padding: const EdgeInsets.all(32), // Fixed padding
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
@@ -45,7 +45,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Login', style: titleStyle),
+                    Center(child: Text('Login', style: titleStyle)),
                     const SizedBox(height: 32), // Fixed height spacing
                     // Email TextField
                     TextField(
@@ -136,11 +136,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       // If success
       if (state is AsyncData) {
         final result = state.value;
-        print('asds success $result');
 
         // TODO: Fetch user role
 
-        saveUserDataToSp(
+        SharedPreferenceHelper.saveUserDataToSp(
           email: result?.email ?? '',
           password: password,
           displayName: result?.displayName ?? '',
@@ -157,7 +156,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           idToken: result?.idToken ?? '',
         );
 
-        showFeedbackPopup(
+        showFeedbackDialog(
           context: context,
           type: 1,
           message: 'Login Successful',
@@ -173,12 +172,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       else if (state is AsyncError) {
         final apiException = state.error as ApiException;
         final String message = apiException.responseBody?['error']['message'];
-        showFeedbackPopup(
+        showFeedbackDialog(
           context: context,
           type: 3,
           message:
               message == 'INVALID_LOGIN_CREDENTIALS'
-                  ? 'Wrong Password'
+                  ? 'Wrong Email or Password'
                   : message == 'INVALID_EMAIL'
                   ? 'Invalid Email'
                   : 'An Unknown Error Occured',
@@ -187,11 +186,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     }
     // If email is empty
     else if (email == '') {
-      showFeedbackPopup(context: context, type: 2, message: 'Email is Empty');
+      showFeedbackDialog(context: context, type: 2, message: 'Email is Empty');
     }
     // If password is empty
     else if (password == '') {
-      showFeedbackPopup(
+      showFeedbackDialog(
         context: context,
         type: 2,
         message: 'Password is Empty',
@@ -199,30 +198,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     }
     // Other error
     else {
-      showFeedbackPopup(
+      showFeedbackDialog(
         context: context,
         type: 2,
         message: 'An Unknown Error Occured',
       );
     }
-  }
-
-  void saveUserDataToSp({
-    required String email,
-    required String password,
-    required String displayName,
-    required String role,
-    required String idToken,
-    required String refreshToken,
-  }) {
-    SharedPreferenceHelper.saveDataToSp(key: 'email', data: email);
-    SharedPreferenceHelper.saveDataToSp(key: 'password', data: password);
-    SharedPreferenceHelper.saveDataToSp(key: 'displayName', data: displayName);
-    SharedPreferenceHelper.saveDataToSp(key: 'role', data: role);
-    SharedPreferenceHelper.saveDataToSp(key: 'idToken', data: idToken);
-    SharedPreferenceHelper.saveDataToSp(
-      key: 'refreshToken',
-      data: refreshToken,
-    );
   }
 }

@@ -243,7 +243,7 @@ Widget _detailRow(IconData icon, String label, String value) {
 }
 
 // DIALOG
-void showFeedbackPopup({
+void showFeedbackDialog({
   required BuildContext context,
   required int type,
   required String message,

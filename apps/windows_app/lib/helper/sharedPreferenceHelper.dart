@@ -47,4 +47,30 @@ class SharedPreferenceHelper {
     );
     return decrypted;
   }
+
+  // Save User Data to SP
+  static void saveUserDataToSp({
+    required String email,
+    required String password,
+    required String displayName,
+    required String role,
+    required String idToken,
+    required String refreshToken,
+  }) {
+    SharedPreferenceHelper.saveDataToSp(key: 'email', data: email);
+    SharedPreferenceHelper.saveDataToSp(key: 'password', data: password);
+    SharedPreferenceHelper.saveDataToSp(key: 'displayName', data: displayName);
+    SharedPreferenceHelper.saveDataToSp(key: 'role', data: role);
+    SharedPreferenceHelper.saveDataToSp(key: 'idToken', data: idToken);
+    SharedPreferenceHelper.saveDataToSp(
+      key: 'refreshToken',
+      data: refreshToken,
+    );
+  }
+
+  // Clear User Data in SP
+  static void clearUserDataInSp() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+  }
 }
