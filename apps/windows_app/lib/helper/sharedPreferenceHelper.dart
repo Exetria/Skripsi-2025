@@ -50,6 +50,7 @@ class SharedPreferenceHelper {
 
   // Save User Data to SP
   static void saveUserDataToSp({
+    required String localId,
     required String email,
     required String password,
     required String displayName,
@@ -57,6 +58,7 @@ class SharedPreferenceHelper {
     required String idToken,
     required String refreshToken,
   }) {
+    SharedPreferenceHelper.saveDataToSp(key: 'localId', data: localId);
     SharedPreferenceHelper.saveDataToSp(key: 'email', data: email);
     SharedPreferenceHelper.saveDataToSp(key: 'password', data: password);
     SharedPreferenceHelper.saveDataToSp(key: 'displayName', data: displayName);

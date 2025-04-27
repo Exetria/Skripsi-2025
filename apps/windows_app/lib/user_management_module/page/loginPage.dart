@@ -140,6 +140,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         // TODO: Fetch user role
 
         SharedPreferenceHelper.saveUserDataToSp(
+          localId: result?.localId ?? '',
           email: result?.email ?? '',
           password: password,
           displayName: result?.displayName ?? '',
@@ -149,9 +150,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         );
 
         userDataHelper = UserDataHelper(
+          id: result?.localId ?? '',
           name: result?.displayName ?? '',
           email: result?.email ?? '',
-          password: password,
           role: 'admin',
           idToken: result?.idToken ?? '',
         );
