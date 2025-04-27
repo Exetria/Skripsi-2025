@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:windows_app/functions.dart';
 import 'package:windows_app/helper/sharedPreferenceHelper.dart';
+import 'package:windows_app/helper/userDataHelper.dart';
 import 'package:windows_app/user_management_module/page/loginPage.dart';
 
 class ProfileFragment extends StatefulHookConsumerWidget {
@@ -16,7 +17,7 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(32.0),
+      padding: const EdgeInsets.all(16),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -37,15 +38,26 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
             ),
             child: Column(
               children: [
-                const CircleAvatar(
-                  radius: 50,
-                  backgroundImage: AssetImage(
-                    'assets/profile.jpg',
-                  ), // Change as needed
+                // const CircleAvatar(
+                //   radius: 50,
+                //   backgroundImage: AssetImage(''), // Change as needed
+                // ),
+                // TODO: Display profile picture
+                const SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: ClipOval(
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: Placeholder(
+                        color: Colors.blueAccent,
+                        strokeWidth: 10,
+                      ),
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 16),
-                Text('John Doe', style: Theme.of(context).textTheme.titleLarge),
-                Text('@johndoe', style: TextStyle(color: Colors.grey[600])),
+                Text('John Doe', style: titleStyle),
                 const SizedBox(height: 16),
                 const Divider(),
                 const SizedBox(height: 16),
@@ -53,7 +65,7 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                   children: [
                     Icon(Icons.email, size: 20, color: Colors.grey[700]),
                     const SizedBox(width: 10),
-                    const Expanded(child: Text('john.doe@example.com')),
+                    Expanded(child: Text(userDataHelper.email)),
                   ],
                 ),
                 const SizedBox(height: 12),
@@ -61,7 +73,7 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                   children: [
                     Icon(Icons.security, size: 20, color: Colors.grey[700]),
                     const SizedBox(width: 10),
-                    const Expanded(child: Text('Role: Sales')),
+                    Expanded(child: Text(userDataHelper.role)),
                   ],
                 ),
                 const SizedBox(height: 12),
@@ -69,7 +81,7 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                   children: [
                     Icon(Icons.badge, size: 20, color: Colors.grey[700]),
                     const SizedBox(width: 10),
-                    const Expanded(child: Text('Account ID: 11245')),
+                    Expanded(child: Text(userDataHelper.id)),
                   ],
                 ),
               ],
@@ -101,16 +113,16 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: Colors.grey[200]!),
                   ),
-                  child: const Row(
+                  child: Row(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 150,
                         child: Text(
-                          'Full Name',
+                          'Username',
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
                       ),
-                      Expanded(child: Text('Johnathan Doe')),
+                      Expanded(child: Text(userDataHelper.name)),
                     ],
                   ),
                 ),
@@ -127,16 +139,16 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: Colors.grey[200]!),
                   ),
-                  child: const Row(
+                  child: Row(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 150,
                         child: Text(
-                          'Username',
+                          'Email Address',
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
                       ),
-                      Expanded(child: Text('johndoe')),
+                      Expanded(child: Text(userDataHelper.email)),
                     ],
                   ),
                 ),
@@ -158,11 +170,12 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                       SizedBox(
                         width: 150,
                         child: Text(
-                          'Email Address',
+                          'Phone Number',
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
                       ),
-                      Expanded(child: Text('john.doe@example.com')),
+                      // TODO: Display phone number
+                      Expanded(child: Text('Later')),
                     ],
                   ),
                 ),
@@ -179,42 +192,16 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: Colors.grey[200]!),
                   ),
-                  child: const Row(
+                  child: Row(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 150,
                         child: Text(
-                          'Phone Number',
+                          'Role',
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
                       ),
-                      Expanded(child: Text('+1 (234) 567-8901')),
-                    ],
-                  ),
-                ),
-
-                // Detail Row 5
-                Container(
-                  margin: const EdgeInsets.only(bottom: 16),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 12,
-                    horizontal: 16,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[50],
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.grey[200]!),
-                  ),
-                  child: const Row(
-                    children: [
-                      SizedBox(
-                        width: 150,
-                        child: Text(
-                          'Status',
-                          style: TextStyle(fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                      Expanded(child: Text('Active')),
+                      Expanded(child: Text(userDataHelper.role)),
                     ],
                   ),
                 ),
@@ -225,7 +212,6 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                     ElevatedButton(
                       onPressed: () {
                         // TODO: Implement sign-out confirmation before navigating
-                        // TODO: Add logout function
                         SharedPreferenceHelper.clearUserDataInSp();
 
                         showFeedbackDialog(
