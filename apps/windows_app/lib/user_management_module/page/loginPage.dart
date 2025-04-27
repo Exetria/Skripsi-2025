@@ -4,6 +4,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:windows_app/functions.dart';
 import 'package:windows_app/helper/apiHelper.dart';
+import 'package:windows_app/helper/sharedPreferenceHelper.dart';
+import 'package:windows_app/helper/userDataHelper.dart';
+import 'package:windows_app/home_page.dart';
 import 'package:windows_app/user_management_module/controller/sign_in_controller.dart';
 
 class LoginPage extends StatefulHookConsumerWidget {
@@ -125,29 +128,101 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 
   void doSignIn({required String email, required String password}) async {
-    print('asds login: $email, $password');
     if (email != '' && password != '') {
       final state = await ref
           .watch(signInControllerProvider.notifier)
           .signIn(email: email, password: password);
 
+      // If success
       if (state is AsyncData) {
         final result = state.value;
         print('asds success $result');
-      } else if (state is AsyncError) {
-        final apiException = state.error as ApiException;
-        print('asds error ${apiException.responseBody}');
+
+        // TODO: Fetch user role
+
+        saveUserDataToSp(
+          email: result?.email ?? '',
+          password: password,
+          displayName: result?.displayName ?? '',
+          role: 'admin',
+          idToken: result?.idToken ?? '',
+          refreshToken: result?.refreshToken ?? '',
+        );
+
+        userDataHelper = UserDataHelper(
+          name: result?.displayName ?? '',
+          email: result?.email ?? '',
+          password: password,
+          role: 'admin',
+          idToken: result?.idToken ?? '',
+        );
+
+        showFeedbackPopup(
+          context: context,
+          type: 1,
+          message: 'Login Successful',
+          onClose: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const HomePage()),
+            );
+          },
+        );
       }
-    } else if (email == '') {
+      // If fail (wrong email/password)
+      else if (state is AsyncError) {
+        final apiException = state.error as ApiException;
+        final String message = apiException.responseBody?['error']['message'];
+        showFeedbackPopup(
+          context: context,
+          type: 3,
+          message:
+              message == 'INVALID_LOGIN_CREDENTIALS'
+                  ? 'Wrong Password'
+                  : message == 'INVALID_EMAIL'
+                  ? 'Invalid Email'
+                  : 'An Unknown Error Occured',
+        );
+      }
+    }
+    // If email is empty
+    else if (email == '') {
       showFeedbackPopup(context: context, type: 2, message: 'Email is Empty');
-    } else if (password == '') {
+    }
+    // If password is empty
+    else if (password == '') {
       showFeedbackPopup(
         context: context,
         type: 2,
         message: 'Password is Empty',
       );
-    } else {
-      showFeedbackPopup(context: context, type: 2, message: 'An Error Occured');
     }
+    // Other error
+    else {
+      showFeedbackPopup(
+        context: context,
+        type: 2,
+        message: 'An Unknown Error Occured',
+      );
+    }
+  }
+
+  void saveUserDataToSp({
+    required String email,
+    required String password,
+    required String displayName,
+    required String role,
+    required String idToken,
+    required String refreshToken,
+  }) {
+    SharedPreferenceHelper.saveDataToSp(key: 'email', data: email);
+    SharedPreferenceHelper.saveDataToSp(key: 'password', data: password);
+    SharedPreferenceHelper.saveDataToSp(key: 'displayName', data: displayName);
+    SharedPreferenceHelper.saveDataToSp(key: 'role', data: role);
+    SharedPreferenceHelper.saveDataToSp(key: 'idToken', data: idToken);
+    SharedPreferenceHelper.saveDataToSp(
+      key: 'refreshToken',
+      data: refreshToken,
+    );
   }
 }
