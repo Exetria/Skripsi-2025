@@ -2,7 +2,8 @@ import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:windows_app/functions.dart';
+import 'package:windows_app/sales_module/page/controller/sales_controller.dart';
+import 'package:windows_app/utils/functions.dart';
 
 class SalesListFragment extends StatefulHookConsumerWidget {
   const SalesListFragment({super.key});
@@ -14,6 +15,14 @@ class SalesListFragment extends StatefulHookConsumerWidget {
 class _SalesListFragmentState extends ConsumerState<SalesListFragment> {
   @override
   Widget build(BuildContext context) {
+    final salesListState = ref.watch(salesControllerProvider);
+
+    salesListState.when(
+      loading: () => {print('asds loading')},
+      data: (data) => {print('asds data: $data')},
+      error: (error, stackTrace) => {print('asds error ${error.toString()}')},
+    );
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
