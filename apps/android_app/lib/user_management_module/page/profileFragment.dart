@@ -1,8 +1,6 @@
-import 'package:android_app/functions.dart';
-import 'package:android_app/user_management_module/authentication.dart';
-import 'package:android_app/user_management_module/pages/loginPage.dart';
+import 'package:android_app/user_management_module/page/loginPage.dart';
+import 'package:android_app/utils/functions.dart';
 import 'package:common_components/variables.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -15,7 +13,7 @@ class ProfileFragment extends StatefulHookConsumerWidget {
 }
 
 class _ProfileFragment extends ConsumerState<ProfileFragment> {
-  User? user = FirebaseAuth.instance.currentUser;
+  // User? user = FirebaseAuth.instance.currentUser;
   bool checked = false;
 
   @override
@@ -50,12 +48,12 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
               ),
               SizedBox(height: 12.h),
               Text(
-                user?.displayName ?? 'Not Available',
+                'Not Available',
                 style: subtitleStyle,
                 textAlign: TextAlign.center,
               ),
               Text(
-                user?.email ?? 'Not Available',
+                'Not Available',
                 style: captionStyle,
                 textAlign: TextAlign.center,
               ),
@@ -86,9 +84,9 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                       // TODO: Check-In logic
                     }
 
-                    showFeedbackPopup(
+                    showFeedbackDialog(
                       context: context,
-                      icon: Icons.check_circle,
+                      type: 1,
                       // check_circle
                       // error_outline
                       // highlight_off
@@ -117,7 +115,7 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                 child: ElevatedButton.icon(
                   onPressed: () {
                     // TODO: Confirm Sign Out
-                    signOut(ref);
+                    // signOut(ref);
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
