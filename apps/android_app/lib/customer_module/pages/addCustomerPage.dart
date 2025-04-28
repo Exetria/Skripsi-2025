@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:android_app/functions.dart';
+import 'package:android_app/utils/functions.dart';
 import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

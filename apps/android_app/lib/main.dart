@@ -1,7 +1,7 @@
 import 'package:android_app/splashScreen.dart';
-import 'package:common_components/variables.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -58,20 +58,13 @@ final lightTheme = ThemeData(
 );
 
 void main() async {
-  // WARNA NOTIF BAR
-  // SystemChrome.setSystemUIOverlayStyle(
-  //   SystemUiOverlayStyle(
-  //     statusBarColor: backgroundColor, // Use your predefined background color
-  //     statusBarIconBrightness:
-  //         Brightness.dark, // Use Brightness.light for white icons
-  //     systemNavigationBarColor: backgroundColor, // Change nav bar color
-  //     systemNavigationBarIconBrightness:
-  //         Brightness.dark, // Light icons if dark background
-  //   ),
-  // );
-
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await dotenv.load(fileName: '.env');
+
+  // Initialize Encryption Helper
+  encryptionHelper = EncryptionHelper();
+
+  // TODO: Check user data in SP
 
   runApp(const ProviderScope(child: Main()));
 }

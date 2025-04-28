@@ -176,35 +176,46 @@ InkWell customListItem({
 }
 
 // DIALOG
-void showFeedbackPopup({
+void showFeedbackDialog({
   required BuildContext context,
-  required IconData icon,
+  required int type,
   required String message,
-  Duration duration = const Duration(seconds: 2),
+  Duration duration = const Duration(seconds: 1),
+  VoidCallback? onClose,
 }) {
   showDialog(
     context: context,
     barrierDismissible: false,
-    builder: (ctx) {
+    builder: (context) {
       // Start a delayed pop when the dialog builds
       Future.delayed(duration, () {
-        if (Navigator.of(ctx).canPop()) {
-          Navigator.of(ctx).pop();
+        if (Navigator.of(context).canPop()) {
+          Navigator.of(context).pop();
+
+          if (onClose != null) {
+            onClose();
+          }
         }
       });
 
       return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.r),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         backgroundColor: backgroundColor,
         child: Padding(
-          padding: EdgeInsets.all(24.w),
+          padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon, size: 48.sp, color: primaryColor),
-              SizedBox(height: 16.h),
+              Icon(
+                type == 1
+                    ? Icons.check_circle_outline
+                    : type == 2
+                    ? Icons.error_outline
+                    : Icons.highlight_off,
+                size: 48,
+                color: primaryColor,
+              ),
+              const SizedBox(height: 16),
               Text(message, style: bodyStyle, textAlign: TextAlign.center),
             ],
           ),

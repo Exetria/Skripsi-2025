@@ -1,10 +1,10 @@
 import 'package:android_app/customer_module/pages/addCustomerPage.dart';
 import 'package:android_app/customer_module/pages/customerListFragment.dart';
-import 'package:android_app/functions.dart';
 import 'package:android_app/order_module/pages/addOrderPage.dart';
 import 'package:android_app/order_module/pages/orderListFragment.dart';
 import 'package:android_app/product_module/pages/productListFragment.dart';
-import 'package:android_app/user_management_module/pages/profileFragment.dart';
+import 'package:android_app/user_management_module/page/profileFragment.dart';
+import 'package:android_app/utils/functions.dart';
 import 'package:android_app/visit_module/pages/visitListFragment.dart';
 import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';

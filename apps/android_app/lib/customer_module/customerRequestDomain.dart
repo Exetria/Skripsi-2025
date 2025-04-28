@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class CustomerRequestDomain {
   final String destination;
   final DateTime requestDate;
@@ -67,7 +65,7 @@ class CustomerRequestDomain {
   factory CustomerRequestDomain.fromJson(Map<String, dynamic> json) {
     return CustomerRequestDomain(
       destination: json['destination'] ?? '',
-      requestDate: (json['request_date'] as Timestamp).toDate(),
+      requestDate: (json['request_date']).toDate(),
       carbonCopy: json['carbon_copy'] ?? '',
       companyName: json['company_name'] ?? '',
       storeAddress: json['store_address'] ?? '',
@@ -87,19 +85,19 @@ class CustomerRequestDomain {
       paymentTerm: json['payment_term'] ?? 0,
       grade: json['grade'] ?? '',
       creditLimit: json['credit_limit'] ?? 0,
-      startDate: (json['start_date'] as Timestamp).toDate(),
+      startDate: (json['start_date']).toDate(),
       note: json['note'] ?? '',
       status: json['status'] ?? 'pending',
       salesId: json['sales_id'] ?? '',
-      createdAt: (json['created_at'] as Timestamp).toDate(),
-      updatedAt: (json['updated_at'] as Timestamp).toDate(),
+      createdAt: (json['created_at']).toDate(),
+      updatedAt: (json['updated_at']).toDate(),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'destination': destination,
-      'request_date': Timestamp.fromDate(requestDate),
+      'request_date': requestDate,
       'carbon_copy': carbonCopy,
       'company_name': companyName,
       'store_address': storeAddress,
@@ -119,12 +117,12 @@ class CustomerRequestDomain {
       'payment_term': paymentTerm,
       'grade': grade,
       'credit_limit': creditLimit,
-      'start_date': Timestamp.fromDate(startDate),
+      'start_date': startDate,
       'note': note,
       'status': status,
       'sales_id': salesId,
-      'created_at': Timestamp.fromDate(createdAt),
-      'updated_at': Timestamp.fromDate(updatedAt),
+      'created_at': createdAt,
+      'updated_at': updatedAt,
     };
   }
 }
