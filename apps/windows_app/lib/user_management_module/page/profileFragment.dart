@@ -1,10 +1,8 @@
-import 'package:common_components/variables.dart';
+import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:windows_app/functions.dart';
-import 'package:windows_app/helper/sharedPreferenceHelper.dart';
-import 'package:windows_app/helper/userDataHelper.dart';
 import 'package:windows_app/user_management_module/page/loginPage.dart';
+import 'package:windows_app/utils/functions.dart';
 
 class ProfileFragment extends StatefulHookConsumerWidget {
   const ProfileFragment({super.key});
@@ -212,7 +210,7 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                     ElevatedButton(
                       onPressed: () {
                         // TODO: Implement sign-out confirmation before navigating
-                        SharedPreferenceHelper.clearUserDataInSp();
+                        clearUserDataInSp();
 
                         showFeedbackDialog(
                           context: context,

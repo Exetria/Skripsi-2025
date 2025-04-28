@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'user_sign_in_domain.freezed.dart';
-part 'user_sign_in_domain.g.dart';
+part 'sign_in_domain.freezed.dart';
+part 'sign_in_domain.g.dart';
 
 @freezed
 class SignInDomain with _$SignInDomain {

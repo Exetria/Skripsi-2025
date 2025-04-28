@@ -1,7 +1,7 @@
+import 'package:common_components/common_components.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:windows_app/helper/apiHelper.dart';
 import 'package:windows_app/user_management_module/data/remote_datasource/sign_in_remote_datasource.dart';
-import 'package:windows_app/user_management_module/domain/entities/user_sign_in_domain.dart';
+import 'package:windows_app/user_management_module/domain/entities/sign_in_domain.dart';
 import 'package:windows_app/user_management_module/domain/repository/sign_in_repository.dart';
 
 class SignInRepositoryImpl implements SignInRepository {

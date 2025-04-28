@@ -1,13 +1,10 @@
-import 'package:common_components/variables.dart';
+import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:windows_app/functions.dart';
-import 'package:windows_app/helper/apiHelper.dart';
-import 'package:windows_app/helper/sharedPreferenceHelper.dart';
-import 'package:windows_app/helper/userDataHelper.dart';
 import 'package:windows_app/home_page.dart';
-import 'package:windows_app/user_management_module/controller/sign_in_controller.dart';
+import 'package:windows_app/user_management_module/page/controller/sign_in_controller.dart';
+import 'package:windows_app/utils/functions.dart';
 
 class LoginPage extends StatefulHookConsumerWidget {
   const LoginPage({super.key});
@@ -98,10 +95,18 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     Center(
                       child: ElevatedButton(
                         onPressed: () {
-                          doSignIn(
-                            email: emailController.text,
-                            password: passwordController.text,
+                          // TODO: Enable Login Again
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const HomePage(),
+                            ),
                           );
+
+                          // doSignIn(
+                          //   email: emailController.text,
+                          //   password: passwordController.text,
+                          // );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: primaryColor,
@@ -137,9 +142,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       if (state is AsyncData) {
         final result = state.value;
 
-        // TODO: Fetch user role
+        // TODO: Fetch user role from firestore
 
-        SharedPreferenceHelper.saveUserDataToSp(
+        saveUserDataToSp(
           localId: result?.localId ?? '',
           email: result?.email ?? '',
           password: password,

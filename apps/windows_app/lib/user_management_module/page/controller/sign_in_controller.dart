@@ -1,5 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:windows_app/user_management_module/domain/entities/user_sign_in_domain.dart';
+import 'package:windows_app/user_management_module/domain/entities/sign_in_domain.dart';
 import 'package:windows_app/user_management_module/domain/repository/sign_in_repository.dart';
 
 part 'sign_in_controller.g.dart';
