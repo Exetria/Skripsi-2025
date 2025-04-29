@@ -1,25 +1,25 @@
-import 'package:android_app/customer_module/pages/customerDetailPage.dart';
+import 'package:android_app/order_module/page/order_detail_page.dart';
 import 'package:android_app/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class CustomerListFragment extends StatefulHookConsumerWidget {
-  const CustomerListFragment({super.key});
+class OrderListFragment extends StatefulHookConsumerWidget {
+  const OrderListFragment({super.key});
 
   @override
-  ConsumerState<CustomerListFragment> createState() => _CustomerListFragment();
+  ConsumerState<OrderListFragment> createState() => _OrderListFragment();
 }
 
-class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
+class _OrderListFragment extends ConsumerState<OrderListFragment> {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         // Search Bar
-        customSearchBar(hint: 'Search Customers...'),
+        customSearchBar(hint: 'Search Orders...'),
 
-        // Customer List
+        // Order List
         Expanded(
           child: ListView.separated(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
@@ -31,13 +31,13 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const CustomerDetailPage(),
+                      builder: (context) => const OrderDetailPage(),
                     ),
                   );
                 },
-                leadIcon: Icons.person,
-                title: 'Customer ${index + 1}',
-                subtitle: 'customer${index + 1}@example.com',
+                leadIcon: Icons.receipt_long,
+                title: 'Order #${1000 + index}',
+                subtitle: 'Status: Pending',
                 trailIcon: Icons.arrow_forward_ios,
               );
             },

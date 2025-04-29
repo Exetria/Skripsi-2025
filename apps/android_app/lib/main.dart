@@ -1,4 +1,4 @@
-import 'package:android_app/splashScreen.dart';
+import 'package:android_app/splash_screen.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';

@@ -1,4 +1,4 @@
-import 'package:android_app/homePage.dart';
+import 'package:android_app/home_page.dart';
 import 'package:android_app/user_management_module/page/controller/sign_in_controller.dart';
 import 'package:android_app/utils/functions.dart';
 import 'package:common_components/common_components.dart';
@@ -176,17 +176,26 @@ class _LoginPage extends ConsumerState<LoginPage> {
       // If fail (wrong email/password)
       else if (state is AsyncError) {
         final apiException = state.error as ApiException;
-        final String message = apiException.responseBody?['error']['message'];
-        showFeedbackDialog(
-          context: context,
-          type: 3,
-          message:
-              message == 'INVALID_LOGIN_CREDENTIALS'
-                  ? 'Wrong Email or Password'
-                  : message == 'INVALID_EMAIL'
-                  ? 'Invalid Email'
-                  : 'An Unknown Error Occured',
-        );
+        if (apiException.responseBody?['error']['message'] != null) {
+          showFeedbackDialog(
+            context: context,
+            type: 3,
+            message:
+                apiException.responseBody?['error']['message'] ==
+                        'INVALID_LOGIN_CREDENTIALS'
+                    ? 'Wrong Email or Password'
+                    : apiException.responseBody?['error']['message'] ==
+                        'INVALID_EMAIL'
+                    ? 'Invalid Email'
+                    : 'Unknown Error',
+          );
+        } else {
+          showFeedbackDialog(
+            context: context,
+            type: 3,
+            message: apiException.message,
+          );
+        }
       }
     }
     // If email is empty

@@ -1,4 +1,4 @@
-import 'package:android_app/visit_module/pages/visitDetailPage.dart';
+import 'package:android_app/visit_module/page/visit_detail_page.dart';
 import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

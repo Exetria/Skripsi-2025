@@ -1,4 +1,4 @@
-import 'package:android_app/product_module/pages/productDetailPage.dart';
+import 'package:android_app/product_module/page/product_detail_page.dart';
 import 'package:android_app/utils/functions.dart';
 import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
