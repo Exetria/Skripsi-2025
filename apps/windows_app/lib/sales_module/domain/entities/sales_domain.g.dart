@@ -26,6 +26,16 @@ Map<String, dynamic> _$$SalesDomainImplToJson(_$SalesDomainImpl instance) =>
     };
 
 _$FieldsImpl _$$FieldsImplFromJson(Map<String, dynamic> json) => _$FieldsImpl(
+  assignedCustomers:
+      json['assigned_customers'] == null
+          ? null
+          : Assigned.fromJson(
+            json['assigned_customers'] as Map<String, dynamic>,
+          ),
+  userName:
+      json['user_name'] == null
+          ? null
+          : FullName.fromJson(json['user_name'] as Map<String, dynamic>),
   phoneNumber:
       json['phone_number'] == null
           ? null
@@ -34,41 +44,36 @@ _$FieldsImpl _$$FieldsImplFromJson(Map<String, dynamic> json) => _$FieldsImpl(
       json['photo_url'] == null
           ? null
           : PhotoUrl.fromJson(json['photo_url'] as Map<String, dynamic>),
+  isActive:
+      json['is_active'] == null
+          ? null
+          : IsActive.fromJson(json['is_active'] as Map<String, dynamic>),
   assignedProducts:
       json['assigned_products'] == null
           ? null
           : Assigned.fromJson(
             json['assigned_products'] as Map<String, dynamic>,
           ),
-  role:
-      json['role'] == null
-          ? null
-          : FullName.fromJson(json['role'] as Map<String, dynamic>),
-  assignedCustomers:
-      json['assigned_customers'] == null
-          ? null
-          : Assigned.fromJson(
-            json['assigned_customers'] as Map<String, dynamic>,
-          ),
-  isActive:
-      json['is_active'] == null
-          ? null
-          : IsActive.fromJson(json['is_active'] as Map<String, dynamic>),
   fullName:
       json['full_name'] == null
           ? null
           : FullName.fromJson(json['full_name'] as Map<String, dynamic>),
+  role:
+      json['role'] == null
+          ? null
+          : FullName.fromJson(json['role'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$$FieldsImplToJson(_$FieldsImpl instance) =>
     <String, dynamic>{
+      'assigned_customers': instance.assignedCustomers,
+      'user_name': instance.userName,
       'phone_number': instance.phoneNumber,
       'photo_url': instance.photoUrl,
-      'assigned_products': instance.assignedProducts,
-      'role': instance.role,
-      'assigned_customers': instance.assignedCustomers,
       'is_active': instance.isActive,
+      'assigned_products': instance.assignedProducts,
       'full_name': instance.fullName,
+      'role': instance.role,
     };
 
 _$AssignedImpl _$$AssignedImplFromJson(Map<String, dynamic> json) =>

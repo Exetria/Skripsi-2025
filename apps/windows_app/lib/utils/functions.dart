@@ -6,7 +6,6 @@ void showSalesDetailDialog({
   required String name,
   required String email,
   required String phone,
-  required String area,
   required VoidCallback onEditPressed,
 }) {
   showDialog(
@@ -18,38 +17,44 @@ void showSalesDetailDialog({
             borderRadius: BorderRadius.circular(16),
           ),
           backgroundColor: backgroundColor,
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Sales Details', style: sectionTitleStyle),
-                const SizedBox(height: 16),
-                _detailRow(Icons.person, 'Name', name),
-                _detailRow(Icons.email, 'Email', email),
-                _detailRow(Icons.phone, 'Phone', phone),
-                _detailRow(Icons.map, 'Area', area),
-                const SizedBox(height: 24),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: ElevatedButton.icon(
-                    onPressed: onEditPressed,
-                    icon: Icon(Icons.edit, size: 20, color: invertedTextColor),
-                    label: Text('Edit', style: buttonStyle),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: primaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.3,
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Sales Details', style: sectionTitleStyle),
+                  const SizedBox(height: 16),
+                  _detailRow(Icons.person, 'Name', name),
+                  _detailRow(Icons.email, 'Email', email),
+                  _detailRow(Icons.phone, 'Phone', phone),
+                  const SizedBox(height: 24),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: ElevatedButton.icon(
+                      onPressed: onEditPressed,
+                      icon: Icon(
+                        Icons.edit,
+                        size: 20,
+                        color: invertedTextColor,
                       ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 12,
+                      label: Text('Edit', style: buttonStyle),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 12,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
