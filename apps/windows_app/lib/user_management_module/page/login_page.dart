@@ -158,8 +158,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           id: result?.localId ?? '',
           name: result?.displayName ?? '',
           email: result?.email ?? '',
+          // TODO: Change to real role from FireStore
           role: 'admin',
           idToken: result?.idToken ?? '',
+          refreshToken: result?.refreshToken ?? '',
         );
 
         showFeedbackDialog(

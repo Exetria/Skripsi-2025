@@ -4,6 +4,7 @@ class UserDataHelper {
   final String email;
   final String role;
   final String idToken;
+  final String refreshToken;
 
   UserDataHelper({
     required this.id,
@@ -11,6 +12,7 @@ class UserDataHelper {
     required this.email,
     required this.role,
     required this.idToken,
+    required this.refreshToken,
   });
 }
 

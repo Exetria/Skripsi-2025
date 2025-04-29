@@ -19,14 +19,15 @@ class SalesDomain with _$SalesDomain {
 @freezed
 class Fields with _$Fields {
   const factory Fields({
-    @JsonKey(name: 'assigned_customers') Assigned? assignedCustomers,
-    @JsonKey(name: 'user_name') FullName? userName,
-    @JsonKey(name: 'phone_number') FullName? phoneNumber,
-    @JsonKey(name: 'photo_url') PhotoUrl? photoUrl,
+    @JsonKey(name: 'role') Email? role,
+    @JsonKey(name: 'full_name') Email? fullName,
+    @JsonKey(name: 'email') Email? email,
     @JsonKey(name: 'is_active') IsActive? isActive,
+    @JsonKey(name: 'phone_number') Email? phoneNumber,
+    @JsonKey(name: 'photo_url') PhotoUrl? photoUrl,
     @JsonKey(name: 'assigned_products') Assigned? assignedProducts,
-    @JsonKey(name: 'full_name') FullName? fullName,
-    @JsonKey(name: 'role') FullName? role,
+    @JsonKey(name: 'assigned_customers') Assigned? assignedCustomers,
+    @JsonKey(name: 'user_name') Email? userName,
   }) = _Fields;
   factory Fields.fromJson(Map<String, dynamic> json) => _$FieldsFromJson(json);
 }
@@ -42,18 +43,17 @@ class Assigned with _$Assigned {
 
 @freezed
 class ArrayValue with _$ArrayValue {
-  const factory ArrayValue({@JsonKey(name: 'values') List<FullName>? values}) =
+  const factory ArrayValue({@JsonKey(name: 'values') List<Email>? values}) =
       _ArrayValue;
   factory ArrayValue.fromJson(Map<String, dynamic> json) =>
       _$ArrayValueFromJson(json);
 }
 
 @freezed
-class FullName with _$FullName {
-  const factory FullName({@JsonKey(name: 'stringValue') String? stringValue}) =
-      _FullName;
-  factory FullName.fromJson(Map<String, dynamic> json) =>
-      _$FullNameFromJson(json);
+class Email with _$Email {
+  const factory Email({@JsonKey(name: 'stringValue') String? stringValue}) =
+      _Email;
+  factory Email.fromJson(Map<String, dynamic> json) => _$EmailFromJson(json);
 }
 
 @freezed

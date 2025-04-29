@@ -77,7 +77,7 @@ class _SalesListFragmentState extends ConsumerState<SalesListFragment> {
                           showSalesDetailDialog(
                             context: context,
                             name: data.fields?.fullName?.stringValue ?? '-',
-                            email: data.fields?.phoneNumber?.stringValue ?? '-',
+                            email: data.fields?.email?.stringValue ?? '-',
                             onEditPressed: () {
                               print('Edit sales');
                             },
