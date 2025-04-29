@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:common_components/global/user_data_helper.dart';
 import 'package:common_components/utils/api_exception.dart';
@@ -14,9 +15,9 @@ Future<Either<ApiException, T>> remoteProcess<T>(Future<T> process) async {
     if (e is ApiException) {
       return Left(e);
     } else if (e is Exception) {
-      return Left(ApiException(message: e.toString()));
+      return Left(ApiException(statusCode: -2, message: e.toString()));
     } else {
-      return Left(ApiException(message: 'Unknown error'));
+      return Left(ApiException(statusCode: -2, message: 'Unknown error'));
     }
   }
 }
@@ -36,15 +37,22 @@ Future<Map<String, dynamic>> apiCallGet(
           }
           : {};
 
-  final response = await http.get(uri, headers: headers);
+  try {
+    final response = await http.get(uri, headers: headers);
 
-  if (response.statusCode == 200) {
-    return json.decode(response.body);
-  } else {
-    throw ApiException(
-      statusCode: response.statusCode,
-      responseBody: json.decode(response.body),
-    );
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw ApiException(
+        statusCode: response.statusCode,
+        message: "success",
+        responseBody: json.decode(response.body),
+      );
+    }
+  } on SocketException {
+    throw ApiException(statusCode: 0, message: "Connection Error");
+  } catch (e) {
+    throw ApiException(statusCode: -1, message: "Unknown Error");
   }
 }
 
@@ -64,19 +72,26 @@ Future<Map<String, dynamic>> apiCallPost(
           }
           : {};
 
-  final response = await http.post(
-    uri,
-    headers: headers,
-    body: jsonEncode(body ?? {}),
-  );
-
-  if (response.statusCode == 200) {
-    return json.decode(response.body);
-  } else {
-    throw ApiException(
-      statusCode: response.statusCode,
-      responseBody: json.decode(response.body),
+  try {
+    final response = await http.post(
+      uri,
+      headers: headers,
+      body: jsonEncode(body ?? {}),
     );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw ApiException(
+        statusCode: response.statusCode,
+        message: "success",
+        responseBody: json.decode(response.body),
+      );
+    }
+  } on SocketException {
+    throw ApiException(statusCode: 0, message: "Connection Error");
+  } catch (e) {
+    throw ApiException(statusCode: -1, message: "Unknown Error");
   }
 }
 
@@ -96,19 +111,26 @@ Future<Map<String, dynamic>> apiCallPatch(
           }
           : {};
 
-  final response = await http.patch(
-    uri,
-    headers: headers,
-    body: jsonEncode(body ?? {}),
-  );
-
-  if (response.statusCode == 200) {
-    return json.decode(response.body);
-  } else {
-    throw ApiException(
-      statusCode: response.statusCode,
-      responseBody: json.decode(response.body),
+  try {
+    final response = await http.patch(
+      uri,
+      headers: headers,
+      body: jsonEncode(body ?? {}),
     );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw ApiException(
+        statusCode: response.statusCode,
+        message: "success",
+        responseBody: json.decode(response.body),
+      );
+    }
+  } on SocketException {
+    throw ApiException(statusCode: 0, message: "Connection Error");
+  } catch (e) {
+    throw ApiException(statusCode: -1, message: "Unknown Error");
   }
 }
 
@@ -128,19 +150,26 @@ Future<Map<String, dynamic>> apiCallPut(
           }
           : {};
 
-  final response = await http.put(
-    uri,
-    headers: headers,
-    body: jsonEncode(body ?? {}),
-  );
-
-  if (response.statusCode == 200) {
-    return json.decode(response.body);
-  } else {
-    throw ApiException(
-      statusCode: response.statusCode,
-      responseBody: json.decode(response.body),
+  try {
+    final response = await http.put(
+      uri,
+      headers: headers,
+      body: jsonEncode(body ?? {}),
     );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw ApiException(
+        statusCode: response.statusCode,
+        message: "success",
+        responseBody: json.decode(response.body),
+      );
+    }
+  } on SocketException {
+    throw ApiException(statusCode: 0, message: "Connection Error");
+  } catch (e) {
+    throw ApiException(statusCode: -1, message: "Unknown Error");
   }
 }
 
@@ -159,14 +188,21 @@ Future<Map<String, dynamic>> apiCallDelete(
           }
           : {};
 
-  final response = await http.delete(uri, headers: headers);
+  try {
+    final response = await http.delete(uri, headers: headers);
 
-  if (response.statusCode == 200) {
-    return json.decode(response.body);
-  } else {
-    throw ApiException(
-      statusCode: response.statusCode,
-      responseBody: json.decode(response.body),
-    );
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw ApiException(
+        statusCode: response.statusCode,
+        message: "success",
+        responseBody: json.decode(response.body),
+      );
+    }
+  } on SocketException {
+    throw ApiException(statusCode: 0, message: "Connection Error");
+  } catch (e) {
+    throw ApiException(statusCode: -1, message: "Unknown Error");
   }
 }
