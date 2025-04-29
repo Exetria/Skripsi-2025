@@ -96,17 +96,17 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       child: ElevatedButton(
                         onPressed: () {
                           // TODO: Enable Login Again
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const HomePage(),
-                            ),
-                          );
-
-                          // doSignIn(
-                          //   email: emailController.text,
-                          //   password: passwordController.text,
+                          // Navigator.pushReplacement(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => const HomePage(),
+                          //   ),
                           // );
+
+                          doSignIn(
+                            email: emailController.text,
+                            password: passwordController.text,
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: primaryColor,
@@ -177,17 +177,26 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       // If fail (wrong email/password)
       else if (state is AsyncError) {
         final apiException = state.error as ApiException;
-        final String message = apiException.responseBody?['error']['message'];
-        showFeedbackDialog(
-          context: context,
-          type: 3,
-          message:
-              message == 'INVALID_LOGIN_CREDENTIALS'
-                  ? 'Wrong Email or Password'
-                  : message == 'INVALID_EMAIL'
-                  ? 'Invalid Email'
-                  : 'An Unknown Error Occured',
-        );
+        if (apiException.responseBody?['error']['message'] != null) {
+          showFeedbackDialog(
+            context: context,
+            type: 3,
+            message:
+                apiException.responseBody?['error']['message'] ==
+                        'INVALID_LOGIN_CREDENTIALS'
+                    ? 'Wrong Email or Password'
+                    : apiException.responseBody?['error']['message'] ==
+                        'INVALID_EMAIL'
+                    ? 'Invalid Email'
+                    : 'Unknown Error',
+          );
+        } else {
+          showFeedbackDialog(
+            context: context,
+            type: 3,
+            message: apiException.message,
+          );
+        }
       }
     }
     // If email is empty
