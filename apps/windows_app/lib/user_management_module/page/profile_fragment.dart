@@ -1,7 +1,7 @@
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:windows_app/user_management_module/page/loginPage.dart';
+import 'package:windows_app/user_management_module/page/login_page.dart';
 import 'package:windows_app/utils/functions.dart';
 
 class ProfileFragment extends StatefulHookConsumerWidget {

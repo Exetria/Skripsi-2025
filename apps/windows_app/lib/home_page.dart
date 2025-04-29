@@ -1,12 +1,12 @@
 import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:windows_app/customer_module/page/customerListFragment.dart';
-import 'package:windows_app/order_module/page/orderListFragment.dart';
-import 'package:windows_app/product_module/page/productListFragment.dart';
-import 'package:windows_app/report_module/page/mainReportFragment.dart';
-import 'package:windows_app/sales_module/page/salesListFragment.dart';
-import 'package:windows_app/user_management_module/page/profileFragment.dart';
+import 'package:windows_app/customer_module/page/customer_list_fragment.dart';
+import 'package:windows_app/order_module/page/order_list_fragment.dart';
+import 'package:windows_app/product_module/page/product_list_fragment.dart';
+import 'package:windows_app/report_module/page/main_report_fragment.dart';
+import 'package:windows_app/sales_module/page/sales_list_fragment.dart';
+import 'package:windows_app/user_management_module/page/profile_fragment.dart';
 
 final selectedIndexProvider = StateProvider<int>((ref) => 0);
 
