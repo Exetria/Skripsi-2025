@@ -1,10 +1,10 @@
 import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:windows_app/customer_module/pages/customerListFragment.dart';
-import 'package:windows_app/order_module/pages/orderListFragment.dart';
-import 'package:windows_app/product_module/pages/productListFragment.dart';
-import 'package:windows_app/report_module/pages/mainReportFragment.dart';
+import 'package:windows_app/customer_module/page/customerListFragment.dart';
+import 'package:windows_app/order_module/page/orderListFragment.dart';
+import 'package:windows_app/product_module/page/productListFragment.dart';
+import 'package:windows_app/report_module/page/mainReportFragment.dart';
 import 'package:windows_app/sales_module/page/salesListFragment.dart';
 import 'package:windows_app/user_management_module/page/profileFragment.dart';
 
