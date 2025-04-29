@@ -71,9 +71,7 @@ class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
                         date: 'sabtu gatau kapan',
                         status: 'pending',
                         total: '1000000',
-                        onEditPressed: () {
-                          print('asds hello edit order');
-                        },
+                        onEditPressed: () {},
                       );
                     },
                   ),

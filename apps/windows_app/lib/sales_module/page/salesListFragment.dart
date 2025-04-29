@@ -17,12 +17,6 @@ class _SalesListFragmentState extends ConsumerState<SalesListFragment> {
   Widget build(BuildContext context) {
     final salesListState = ref.watch(salesControllerProvider);
 
-    salesListState.when(
-      loading: () => {print('asds loading')},
-      data: (data) => {print('asds data: $data')},
-      error: (error, stackTrace) => {print('asds error ${error.toString()}')},
-    );
-
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(

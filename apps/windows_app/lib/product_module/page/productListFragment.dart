@@ -68,9 +68,7 @@ class _ProductListFragmentState extends ConsumerState<ProductListFragment> {
                         category: 'atk',
                         price: '1000',
                         availability: true,
-                        onEditPressed: () {
-                          print('asds hello edit product');
-                        },
+                        onEditPressed: () {},
                       );
                     },
                   ),
