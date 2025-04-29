@@ -159,6 +159,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
           email: result?.email ?? '',
           role: 'admin',
           idToken: result?.idToken ?? '',
+          refreshToken: result?.refreshToken ?? '',
         );
 
         showFeedbackDialog(
