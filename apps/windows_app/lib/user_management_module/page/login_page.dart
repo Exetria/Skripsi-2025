@@ -288,6 +288,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         role: userValue?.fields?.role?.stringValue ?? '',
         idToken: result?.idToken ?? '',
         refreshToken: result?.refreshToken ?? '',
+        assignedProducts: [],
+        assignedCustomers: [],
       );
 
       showFeedbackDialog(
