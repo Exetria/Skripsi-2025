@@ -2,7 +2,6 @@ import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:windows_app/user_management_module/page/login_page.dart';
-import 'package:windows_app/utils/functions.dart';
 
 class ProfileFragment extends StatefulHookConsumerWidget {
   const ProfileFragment({super.key});
@@ -63,7 +62,9 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                   children: [
                     Icon(Icons.email, size: 20, color: Colors.grey[700]),
                     const SizedBox(width: 10),
-                    Expanded(child: Text(userDataHelper.email)),
+                    Expanded(
+                      child: Text(userDataHelper?.email ?? 'Not Available'),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 12),
@@ -71,7 +72,9 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                   children: [
                     Icon(Icons.security, size: 20, color: Colors.grey[700]),
                     const SizedBox(width: 10),
-                    Expanded(child: Text(userDataHelper.role)),
+                    Expanded(
+                      child: Text(userDataHelper?.role ?? 'Not Available'),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 12),
@@ -79,7 +82,9 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                   children: [
                     Icon(Icons.badge, size: 20, color: Colors.grey[700]),
                     const SizedBox(width: 10),
-                    Expanded(child: Text(userDataHelper.id)),
+                    Expanded(
+                      child: Text(userDataHelper?.uid ?? 'Not Available'),
+                    ),
                   ],
                 ),
               ],
@@ -120,7 +125,9 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
                       ),
-                      Expanded(child: Text(userDataHelper.name)),
+                      Expanded(
+                        child: Text(userDataHelper?.name ?? 'Not Available'),
+                      ),
                     ],
                   ),
                 ),
@@ -146,7 +153,9 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
                       ),
-                      Expanded(child: Text(userDataHelper.email)),
+                      Expanded(
+                        child: Text(userDataHelper?.email ?? 'Not Available'),
+                      ),
                     ],
                   ),
                 ),
@@ -163,9 +172,9 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: Colors.grey[200]!),
                   ),
-                  child: const Row(
+                  child: Row(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 150,
                         child: Text(
                           'Phone Number',
@@ -173,7 +182,9 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                         ),
                       ),
                       // TODO: Display phone number
-                      Expanded(child: Text('Later')),
+                      Expanded(
+                        child: Text(userDataHelper?.phone ?? 'Not Available'),
+                      ),
                     ],
                   ),
                 ),
@@ -199,7 +210,9 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
                       ),
-                      Expanded(child: Text(userDataHelper.role)),
+                      Expanded(
+                        child: Text(userDataHelper?.role ?? 'Not Available'),
+                      ),
                     ],
                   ),
                 ),
@@ -220,7 +233,7 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const LoginPage(),
+                                builder: (context) => LoginPage(),
                               ),
                             );
                           },
