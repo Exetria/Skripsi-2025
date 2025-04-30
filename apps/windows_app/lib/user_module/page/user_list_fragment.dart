@@ -94,7 +94,7 @@ class _SalesListFragmentState extends ConsumerState<SalesListFragment> {
               error:
                   (error, _) => Center(
                     child: Text(
-                      'Error loading sales list: $error',
+                      'Error Loading Sales List: $error',
                       style: errorStyle,
                     ),
                   ),
