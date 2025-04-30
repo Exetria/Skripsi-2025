@@ -11,7 +11,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // ignore: must_be_immutable
 class LoginPage extends StatefulHookConsumerWidget {
   bool kicked;
-  LoginPage({super.key, this.kicked = false});
+  String reason;
+  LoginPage({super.key, this.kicked = false, this.reason = ''});
 
   @override
   ConsumerState<LoginPage> createState() => _LoginPage();
@@ -28,11 +29,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
     // Handle kicked user from HomePage
     if (widget.kicked) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        showFeedbackDialog(
-          context: context,
-          type: 2,
-          message: 'User Not Signed In',
-        );
+        showFeedbackDialog(context: context, type: 2, message: widget.reason);
       });
     }
   }
@@ -258,6 +255,18 @@ class _LoginPage extends ConsumerState<LoginPage> {
         );
 
     if (userValue?.fields?.role?.stringValue == 'sales') {
+      userDataHelper = UserDataHelper(
+        uid: result?.localId ?? '',
+        name: result?.displayName ?? '',
+        email: result?.email ?? '',
+        phone: userValue?.fields?.phoneNumber?.stringValue ?? '',
+        role: userValue?.fields?.role?.stringValue ?? '',
+        idToken: result?.idToken ?? '',
+        refreshToken: result?.refreshToken ?? '',
+        assignedProducts: [],
+        assignedCustomers: [],
+      );
+
       saveUserDataToSp(
         localId: result?.localId ?? '',
         displayName: result?.displayName ?? '',
@@ -269,15 +278,8 @@ class _LoginPage extends ConsumerState<LoginPage> {
         refreshToken: result?.refreshToken ?? '',
       );
 
-      userDataHelper = UserDataHelper(
-        uid: result?.localId ?? '',
-        name: result?.displayName ?? '',
-        email: result?.email ?? '',
-        phone: userValue?.fields?.phoneNumber?.stringValue ?? '',
-        role: userValue?.fields?.role?.stringValue ?? '',
-        idToken: result?.idToken ?? '',
-        refreshToken: result?.refreshToken ?? '',
-      );
+      // TODO: Implement auto refresh
+      // ref.read(refreshTokenControllerProvider.notifier).startAutoRefreshToken();
 
       showFeedbackDialog(
         context: context,

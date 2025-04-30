@@ -41,36 +41,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => LoginPage()),
-            // MaterialPageRoute(builder: (context) => const HomePage()),
           );
         }
       });
-
-      // if (FirebaseAuth.instance.currentUser == null && !navigated) {
-      //   navigated = true;
-      //   Navigator.pushReplacement(
-      //     context,
-      //     MaterialPageRoute(builder: (context) => const LoginPage()),
-      //   );
-      // } else {
-      //   navigated = true;
-      //   Navigator.pushReplacement(
-      //     context,
-      //     MaterialPageRoute(builder: (context) => const HomePage()),
-      //   );
-      // }
-
-      // Future.delayed(const Duration(seconds: 3), () {
-      //   if (!mounted || navigated) return;
-
-      //   if (!navigated) {
-      //     navigated = true;
-      //     Navigator.pushReplacement(
-      //       context,
-      //       MaterialPageRoute(builder: (context) => const LoginPage()),
-      //     );
-      //   }
-      // });
     });
   }
 

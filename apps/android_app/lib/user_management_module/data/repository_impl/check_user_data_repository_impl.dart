@@ -1,5 +1,6 @@
 import 'package:android_app/user_management_module/data/remote_datasource/check_user_data_remote_datasource.dart';
 import 'package:android_app/user_management_module/domain/entities/check_user_data_domain.dart';
+import 'package:android_app/user_management_module/domain/entities/refresh_token_domain.dart';
 import 'package:android_app/user_management_module/domain/entities/sign_in_domain.dart';
 import 'package:android_app/user_management_module/domain/repository/authentication_repository.dart';
 import 'package:common_components/common_components.dart';
@@ -26,5 +27,12 @@ class CheckUserDataRepositoryImpl implements AuthenticationRepository {
     );
 
     return resp.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  @override
+  Future<Either<ApiException, RefreshTokenDomain?>> refreshToken({
+    required String refreshToken,
+  }) {
+    throw UnimplementedError();
   }
 }
