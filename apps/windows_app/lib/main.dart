@@ -6,6 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:windows_app/user_management_module/page/login_page.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 final lightTheme = ThemeData(
   // light/dark mode
   brightness: Brightness.light,
@@ -74,6 +76,7 @@ class _MainApp extends ConsumerState<Main> {
       splitScreenMode: true,
       builder: (context, child) {
         return MaterialApp(
+          navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
           theme: lightTheme,
           home: child,

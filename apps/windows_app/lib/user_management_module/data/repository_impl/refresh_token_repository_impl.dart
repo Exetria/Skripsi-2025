@@ -1,13 +1,13 @@
 import 'package:common_components/common_components.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:windows_app/user_management_module/data/remote_datasource/check_user_data_remote_datasource.dart';
+import 'package:windows_app/user_management_module/data/remote_datasource/refresh_token_remote_datasource.dart';
 import 'package:windows_app/user_management_module/domain/entities/check_user_data_domain.dart';
 import 'package:windows_app/user_management_module/domain/entities/refresh_token_domain.dart';
 import 'package:windows_app/user_management_module/domain/entities/sign_in_domain.dart';
 import 'package:windows_app/user_management_module/domain/repository/authentication_repository.dart';
 
-class CheckUserDataRepositoryImpl implements AuthenticationRepository {
-  final remoteDataSource = CheckUserDataRemoteDatasourceImpl();
+class RefreshTokenRepositoryImpl implements AuthenticationRepository {
+  final remoteDataSource = RefreshTokenRemoteDatasourceImpl();
 
   @override
   Future<Either<ApiException, SignInDomain?>> signIn({
@@ -21,18 +21,18 @@ class CheckUserDataRepositoryImpl implements AuthenticationRepository {
   Future<Either<ApiException, CheckUserDataDomain?>> checkUserData({
     required String idToken,
     required String uid,
-  }) async {
-    final resp = await remoteProcess(
-      remoteDataSource.checkUserData(idToken: idToken, uid: uid),
-    );
-
-    return resp.fold((l) => Left(l), (r) => Right(r));
+  }) {
+    throw UnimplementedError();
   }
 
   @override
   Future<Either<ApiException, RefreshTokenDomain?>> refreshToken({
     required String refreshToken,
-  }) {
-    throw UnimplementedError();
+  }) async {
+    final resp = await remoteProcess(
+      remoteDataSource.refreshToken(refreshToken: refreshToken),
+    );
+
+    return resp.fold((l) => Left(l), (r) => Right(r));
   }
 }

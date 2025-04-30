@@ -5,12 +5,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:windows_app/home_page.dart';
 import 'package:windows_app/user_management_module/domain/entities/sign_in_domain.dart';
 import 'package:windows_app/user_management_module/page/controller/check_user_data_controller.dart';
+import 'package:windows_app/user_management_module/page/controller/refresh_token_controller.dart';
 import 'package:windows_app/user_management_module/page/controller/sign_in_controller.dart';
 
 // ignore: must_be_immutable
 class LoginPage extends StatefulHookConsumerWidget {
   bool kicked;
-  LoginPage({super.key, this.kicked = false});
+  String reason;
+  LoginPage({super.key, this.kicked = false, this.reason = ''});
 
   @override
   ConsumerState<LoginPage> createState() => _LoginPageState();
@@ -27,11 +29,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     // Handle kicked user from HomePage
     if (widget.kicked) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        showFeedbackDialog(
-          context: context,
-          type: 2,
-          message: 'User Not Signed In',
-        );
+        showFeedbackDialog(context: context, type: 2, message: widget.reason);
       });
     }
   }
@@ -269,17 +267,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         );
 
     if (userValue?.fields?.role?.stringValue == 'admin') {
-      saveUserDataToSp(
-        localId: result?.localId ?? '',
-        displayName: result?.displayName ?? '',
-        email: result?.email ?? '',
-        password: password,
-        phoneNumber: userValue?.fields?.phoneNumber?.stringValue ?? '',
-        role: userValue?.fields?.role?.stringValue ?? '',
-        idToken: result?.idToken ?? '',
-        refreshToken: result?.refreshToken ?? '',
-      );
-
       userDataHelper = UserDataHelper(
         uid: result?.localId ?? '',
         name: result?.displayName ?? '',
@@ -291,6 +278,19 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         assignedProducts: [],
         assignedCustomers: [],
       );
+
+      saveUserDataToSp(
+        localId: result?.localId ?? '',
+        displayName: result?.displayName ?? '',
+        email: result?.email ?? '',
+        password: password,
+        phoneNumber: userValue?.fields?.phoneNumber?.stringValue ?? '',
+        role: userValue?.fields?.role?.stringValue ?? '',
+        idToken: result?.idToken ?? '',
+        refreshToken: result?.refreshToken ?? '',
+      );
+
+      ref.read(refreshTokenControllerProvider.notifier).startAutoRefreshToken();
 
       showFeedbackDialog(
         context: context,

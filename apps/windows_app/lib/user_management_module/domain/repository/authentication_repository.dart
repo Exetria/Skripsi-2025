@@ -2,8 +2,10 @@ import 'package:common_components/common_components.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:windows_app/user_management_module/data/repository_impl/check_user_data_repository_impl.dart';
+import 'package:windows_app/user_management_module/data/repository_impl/refresh_token_repository_impl.dart';
 import 'package:windows_app/user_management_module/data/repository_impl/sign_in_repository_impl.dart';
 import 'package:windows_app/user_management_module/domain/entities/check_user_data_domain.dart';
+import 'package:windows_app/user_management_module/domain/entities/refresh_token_domain.dart';
 import 'package:windows_app/user_management_module/domain/entities/sign_in_domain.dart';
 
 abstract class AuthenticationRepository {
@@ -16,6 +18,10 @@ abstract class AuthenticationRepository {
     required String idToken,
     required String uid,
   });
+
+  Future<Either<ApiException, RefreshTokenDomain?>> refreshToken({
+    required String refreshToken,
+  });
 }
 
 final signInRepositoryProvider = Provider<AuthenticationRepository>(
@@ -24,4 +30,8 @@ final signInRepositoryProvider = Provider<AuthenticationRepository>(
 
 final checkUserRepositoryProvider = Provider<AuthenticationRepository>(
   (ref) => CheckUserDataRepositoryImpl(),
+);
+
+final refreshTokenRepositoryProvider = Provider<AuthenticationRepository>(
+  (ref) => RefreshTokenRepositoryImpl(),
 );
