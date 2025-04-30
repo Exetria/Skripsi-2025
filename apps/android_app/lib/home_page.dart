@@ -3,10 +3,11 @@ import 'package:android_app/customer_module/page/customer_list_fragment.dart';
 import 'package:android_app/order_module/page/add_order_page.dart';
 import 'package:android_app/order_module/page/order_list_fragment.dart';
 import 'package:android_app/product_module/page/product_list_fragment.dart';
+import 'package:android_app/user_management_module/page/login_page.dart';
 import 'package:android_app/user_management_module/page/profile_fragment.dart';
 import 'package:android_app/utils/functions.dart';
 import 'package:android_app/visit_module/page/visit_list_fragment.dart';
-import 'package:common_components/variables.dart';
+import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -37,13 +38,18 @@ class _HomePage extends ConsumerState<HomePage> {
   void initState() {
     super.initState();
 
-    // safeguard kalo belum login
-    // if (FirebaseAuth.instance.currentUser == null) {
-    //   Navigator.pushReplacement(
-    //     context,
-    //     MaterialPageRoute(builder: (context) => const LoginPage()),
-    //   );
-    // }
+    // Check if the user's logged in
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (userDataHelper == null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder:
+                (_) => LoginPage(kicked: true, reason: 'User Not Signed In'),
+          ),
+        );
+      }
+    });
   }
 
   @override
