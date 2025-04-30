@@ -25,7 +25,6 @@ class SignInRepositoryImpl implements AuthenticationRepository {
     required String idToken,
     required String uid,
   }) {
-    // TODO: implement checkAdmin
     throw UnimplementedError();
   }
 }
