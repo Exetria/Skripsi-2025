@@ -5,7 +5,7 @@ import 'package:windows_app/customer_module/domain/entities/customer_domain.dart
 import 'package:windows_app/customer_module/domain/entities/customer_request_domain.dart';
 import 'package:windows_app/customer_module/domain/repository/customer_repository.dart';
 
-class CustomerListRepositoryImpl implements CustomerRepository {
+class CustomerRequestListRepositoryImpl implements CustomerRepository {
   final remoteDataSource = CustomerRequestListRemoteDatasourceImpl();
 
   @override

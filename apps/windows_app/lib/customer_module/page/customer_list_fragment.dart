@@ -1,3 +1,4 @@
+import 'package:common_components/utils/api_exception.dart';
 import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -88,13 +89,16 @@ class _CustomerListFragmentState extends ConsumerState<CustomerListFragment> {
                 );
               },
 
-              error:
-                  (error, _) => Center(
-                    child: Text(
-                      'Error Loading Customer List: $error',
-                      style: errorStyle,
-                    ),
+              error: (error, _) {
+                final apiexe = error as ApiException;
+
+                return Center(
+                  child: Text(
+                    'Error Loading Customer List: ${apiexe.responseBody}',
+                    style: errorStyle,
                   ),
+                );
+              },
             ),
           ),
         ],
