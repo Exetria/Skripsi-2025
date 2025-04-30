@@ -1,29 +1,29 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'sales_controller.dart';
+part of 'user_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$salesControllerHash() => r'5d1b43f7c708af66748e9083f6f143496aafcd61';
+String _$userControllerHash() => r'5ebc10d578da703329ca9103e778639bb5e8b618';
 
-/// See also [SalesController].
-@ProviderFor(SalesController)
-final salesControllerProvider = AutoDisposeAsyncNotifierProvider<
-  SalesController,
-  List<SalesDomain>?
+/// See also [UserController].
+@ProviderFor(UserController)
+final userControllerProvider = AutoDisposeAsyncNotifierProvider<
+  UserController,
+  List<UserDomain>?
 >.internal(
-  SalesController.new,
-  name: r'salesControllerProvider',
+  UserController.new,
+  name: r'userControllerProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$salesControllerHash,
+          : _$userControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$SalesController = AutoDisposeAsyncNotifier<List<SalesDomain>?>;
+typedef _$UserController = AutoDisposeAsyncNotifier<List<UserDomain>?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

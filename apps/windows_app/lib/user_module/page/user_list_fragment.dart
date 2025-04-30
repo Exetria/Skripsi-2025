@@ -1,8 +1,9 @@
+import 'package:common_components/utils/formatter_functions.dart';
 import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:windows_app/sales_module/page/controller/sales_controller.dart';
+import 'package:windows_app/user_module/page/controller/user_controller.dart';
 import 'package:windows_app/utils/functions.dart';
 
 class SalesListFragment extends StatefulHookConsumerWidget {
@@ -15,7 +16,7 @@ class SalesListFragment extends StatefulHookConsumerWidget {
 class _SalesListFragmentState extends ConsumerState<SalesListFragment> {
   @override
   Widget build(BuildContext context) {
-    final salesListState = ref.watch(salesControllerProvider);
+    final salesListState = ref.watch(userControllerProvider);
 
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -70,7 +71,7 @@ class _SalesListFragmentState extends ConsumerState<SalesListFragment> {
                           'Last Login: Apr ${index + 1}, 2025',
                         ), // Replace with actual login date
                         trailing: Text(
-                          'This Month: ${rupiahFormatter.format((index * 10000) + 100000)}', // Replace with real amount
+                          'This Month: ${rupiahFormat((index * 10000) + 100000)}', // Replace with real amount
                           style: const TextStyle(fontSize: 13),
                         ),
                         onTap: () {

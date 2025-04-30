@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'sales_domain.dart';
+part of 'user_domain.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,12 +15,12 @@ final _privateConstructorUsedError = UnsupportedError(
   'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
 );
 
-SalesDomain _$SalesDomainFromJson(Map<String, dynamic> json) {
-  return _SalesDomain.fromJson(json);
+UserDomain _$UserDomainFromJson(Map<String, dynamic> json) {
+  return _UserDomain.fromJson(json);
 }
 
 /// @nodoc
-mixin _$SalesDomain {
+mixin _$UserDomain {
   @JsonKey(name: 'name')
   String? get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'fields')
@@ -30,22 +30,22 @@ mixin _$SalesDomain {
   @JsonKey(name: 'updateTime')
   String? get updateTime => throw _privateConstructorUsedError;
 
-  /// Serializes this SalesDomain to a JSON map.
+  /// Serializes this UserDomain to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of SalesDomain
+  /// Create a copy of UserDomain
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $SalesDomainCopyWith<SalesDomain> get copyWith =>
+  $UserDomainCopyWith<UserDomain> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SalesDomainCopyWith<$Res> {
-  factory $SalesDomainCopyWith(
-    SalesDomain value,
-    $Res Function(SalesDomain) then,
-  ) = _$SalesDomainCopyWithImpl<$Res, SalesDomain>;
+abstract class $UserDomainCopyWith<$Res> {
+  factory $UserDomainCopyWith(
+    UserDomain value,
+    $Res Function(UserDomain) then,
+  ) = _$UserDomainCopyWithImpl<$Res, UserDomain>;
   @useResult
   $Res call({
     @JsonKey(name: 'name') String? name,
@@ -58,16 +58,16 @@ abstract class $SalesDomainCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SalesDomainCopyWithImpl<$Res, $Val extends SalesDomain>
-    implements $SalesDomainCopyWith<$Res> {
-  _$SalesDomainCopyWithImpl(this._value, this._then);
+class _$UserDomainCopyWithImpl<$Res, $Val extends UserDomain>
+    implements $UserDomainCopyWith<$Res> {
+  _$UserDomainCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of SalesDomain
+  /// Create a copy of UserDomain
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -104,7 +104,7 @@ class _$SalesDomainCopyWithImpl<$Res, $Val extends SalesDomain>
     );
   }
 
-  /// Create a copy of SalesDomain
+  /// Create a copy of UserDomain
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -120,12 +120,12 @@ class _$SalesDomainCopyWithImpl<$Res, $Val extends SalesDomain>
 }
 
 /// @nodoc
-abstract class _$$SalesDomainImplCopyWith<$Res>
-    implements $SalesDomainCopyWith<$Res> {
-  factory _$$SalesDomainImplCopyWith(
-    _$SalesDomainImpl value,
-    $Res Function(_$SalesDomainImpl) then,
-  ) = __$$SalesDomainImplCopyWithImpl<$Res>;
+abstract class _$$UserDomainImplCopyWith<$Res>
+    implements $UserDomainCopyWith<$Res> {
+  factory _$$UserDomainImplCopyWith(
+    _$UserDomainImpl value,
+    $Res Function(_$UserDomainImpl) then,
+  ) = __$$UserDomainImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({
@@ -140,15 +140,15 @@ abstract class _$$SalesDomainImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$SalesDomainImplCopyWithImpl<$Res>
-    extends _$SalesDomainCopyWithImpl<$Res, _$SalesDomainImpl>
-    implements _$$SalesDomainImplCopyWith<$Res> {
-  __$$SalesDomainImplCopyWithImpl(
-    _$SalesDomainImpl _value,
-    $Res Function(_$SalesDomainImpl) _then,
+class __$$UserDomainImplCopyWithImpl<$Res>
+    extends _$UserDomainCopyWithImpl<$Res, _$UserDomainImpl>
+    implements _$$UserDomainImplCopyWith<$Res> {
+  __$$UserDomainImplCopyWithImpl(
+    _$UserDomainImpl _value,
+    $Res Function(_$UserDomainImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of SalesDomain
+  /// Create a copy of UserDomain
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -159,7 +159,7 @@ class __$$SalesDomainImplCopyWithImpl<$Res>
     Object? updateTime = freezed,
   }) {
     return _then(
-      _$SalesDomainImpl(
+      _$UserDomainImpl(
         name:
             freezed == name
                 ? _value.name
@@ -187,16 +187,16 @@ class __$$SalesDomainImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$SalesDomainImpl implements _SalesDomain {
-  const _$SalesDomainImpl({
+class _$UserDomainImpl implements _UserDomain {
+  const _$UserDomainImpl({
     @JsonKey(name: 'name') this.name,
     @JsonKey(name: 'fields') this.fields,
     @JsonKey(name: 'createTime') this.createTime,
     @JsonKey(name: 'updateTime') this.updateTime,
   });
 
-  factory _$SalesDomainImpl.fromJson(Map<String, dynamic> json) =>
-      _$$SalesDomainImplFromJson(json);
+  factory _$UserDomainImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserDomainImplFromJson(json);
 
   @override
   @JsonKey(name: 'name')
@@ -213,14 +213,14 @@ class _$SalesDomainImpl implements _SalesDomain {
 
   @override
   String toString() {
-    return 'SalesDomain(name: $name, fields: $fields, createTime: $createTime, updateTime: $updateTime)';
+    return 'UserDomain(name: $name, fields: $fields, createTime: $createTime, updateTime: $updateTime)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SalesDomainImpl &&
+            other is _$UserDomainImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.fields, fields) || other.fields == fields) &&
             (identical(other.createTime, createTime) ||
@@ -234,30 +234,30 @@ class _$SalesDomainImpl implements _SalesDomain {
   int get hashCode =>
       Object.hash(runtimeType, name, fields, createTime, updateTime);
 
-  /// Create a copy of SalesDomain
+  /// Create a copy of UserDomain
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$SalesDomainImplCopyWith<_$SalesDomainImpl> get copyWith =>
-      __$$SalesDomainImplCopyWithImpl<_$SalesDomainImpl>(this, _$identity);
+  _$$UserDomainImplCopyWith<_$UserDomainImpl> get copyWith =>
+      __$$UserDomainImplCopyWithImpl<_$UserDomainImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$SalesDomainImplToJson(this);
+    return _$$UserDomainImplToJson(this);
   }
 }
 
-abstract class _SalesDomain implements SalesDomain {
-  const factory _SalesDomain({
+abstract class _UserDomain implements UserDomain {
+  const factory _UserDomain({
     @JsonKey(name: 'name') final String? name,
     @JsonKey(name: 'fields') final Fields? fields,
     @JsonKey(name: 'createTime') final String? createTime,
     @JsonKey(name: 'updateTime') final String? updateTime,
-  }) = _$SalesDomainImpl;
+  }) = _$UserDomainImpl;
 
-  factory _SalesDomain.fromJson(Map<String, dynamic> json) =
-      _$SalesDomainImpl.fromJson;
+  factory _UserDomain.fromJson(Map<String, dynamic> json) =
+      _$UserDomainImpl.fromJson;
 
   @override
   @JsonKey(name: 'name')
@@ -272,11 +272,11 @@ abstract class _SalesDomain implements SalesDomain {
   @JsonKey(name: 'updateTime')
   String? get updateTime;
 
-  /// Create a copy of SalesDomain
+  /// Create a copy of UserDomain
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SalesDomainImplCopyWith<_$SalesDomainImpl> get copyWith =>
+  _$$UserDomainImplCopyWith<_$UserDomainImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'sales_domain.dart';
+part of 'user_domain.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$SalesDomainImpl _$$SalesDomainImplFromJson(Map<String, dynamic> json) =>
-    _$SalesDomainImpl(
+_$UserDomainImpl _$$UserDomainImplFromJson(Map<String, dynamic> json) =>
+    _$UserDomainImpl(
       name: json['name'] as String?,
       fields:
           json['fields'] == null
@@ -17,7 +17,7 @@ _$SalesDomainImpl _$$SalesDomainImplFromJson(Map<String, dynamic> json) =>
       updateTime: json['updateTime'] as String?,
     );
 
-Map<String, dynamic> _$$SalesDomainImplToJson(_$SalesDomainImpl instance) =>
+Map<String, dynamic> _$$UserDomainImplToJson(_$UserDomainImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
       'fields': instance.fields,

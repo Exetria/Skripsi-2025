@@ -1,19 +1,19 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'sales_domain.freezed.dart';
-part 'sales_domain.g.dart';
+part 'user_domain.freezed.dart';
+part 'user_domain.g.dart';
 
 @freezed
-class SalesDomain with _$SalesDomain {
-  const factory SalesDomain({
+class UserDomain with _$UserDomain {
+  const factory UserDomain({
     @JsonKey(name: 'name') String? name,
     @JsonKey(name: 'fields') Fields? fields,
     @JsonKey(name: 'createTime') String? createTime,
     @JsonKey(name: 'updateTime') String? updateTime,
-  }) = _SalesDomain;
+  }) = _UserDomain;
 
-  factory SalesDomain.fromJson(Map<String, dynamic> json) =>
-      _$SalesDomainFromJson(json);
+  factory UserDomain.fromJson(Map<String, dynamic> json) =>
+      _$UserDomainFromJson(json);
 }
 
 @freezed
