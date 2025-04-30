@@ -16,8 +16,9 @@ class SignInRemoteDatasourceImpl implements SignInRemoteDatasource {
     required String password,
   }) async {
     Map<String, dynamic> result = await apiCallPost(
-      useHeader: false,
-      'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${dotenv.env['API_KEY']}',
+      url:
+          'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${dotenv.env['API_KEY']}',
+      headers: {},
       body: {'email': email, 'password': password, 'returnSecureToken': true},
     );
 

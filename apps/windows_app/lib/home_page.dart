@@ -1,12 +1,13 @@
-import 'package:common_components/variables.dart';
+import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:windows_app/customer_module/page/customer_list_fragment.dart';
 import 'package:windows_app/order_module/page/order_list_fragment.dart';
 import 'package:windows_app/product_module/page/product_list_fragment.dart';
 import 'package:windows_app/report_module/page/main_report_fragment.dart';
-import 'package:windows_app/sales_module/page/sales_list_fragment.dart';
+import 'package:windows_app/user_management_module/page/login_page.dart';
 import 'package:windows_app/user_management_module/page/profile_fragment.dart';
+import 'package:windows_app/user_module/page/user_list_fragment.dart';
 
 final selectedIndexProvider = StateProvider<int>((ref) => 0);
 
@@ -26,6 +27,21 @@ class _HomePage extends ConsumerState<HomePage> {
     const OrderListFragment(),
     const ProfileFragment(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Check if the user's logged in
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (userDataHelper == null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => LoginPage(kicked: true)),
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
