@@ -16,15 +16,14 @@ void showFeedbackDialog({
     builder: (context) {
       // Start a delayed pop when the dialog builds
       Future.delayed(duration, () {
-        SchedulerBinding.instance.addPostFrameCallback((_) {
-          if (Navigator.of(context).canPop()) {
-            Navigator.of(context).pop();
+        SchedulerBinding.instance.addPostFrameCallback((_) {});
+        if (Navigator.of(context).canPop()) {
+          Navigator.of(context).pop();
 
-            if (onClose != null) {
-              onClose();
-            }
+          if (onClose != null) {
+            onClose();
           }
-        });
+        }
       });
 
       return Dialog(
