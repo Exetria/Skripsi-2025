@@ -1,6 +1,5 @@
 import 'package:android_app/user_management_module/page/login_page.dart';
-import 'package:android_app/utils/functions.dart';
-import 'package:common_components/variables.dart';
+import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -114,13 +113,19 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                 width: 150.w,
                 child: ElevatedButton.icon(
                   onPressed: () {
-                    // TODO: Confirm Sign Out
-                    // signOut(ref);
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginPage(),
-                      ),
+                    // TODO: Implement sign-out confirmation before navigating
+                    clearUserDataInSp();
+
+                    showFeedbackDialog(
+                      context: context,
+                      type: 2,
+                      message: 'Log Out Success',
+                      onClose: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginPage()),
+                        );
+                      },
                     );
                   },
                   style: ElevatedButton.styleFrom(

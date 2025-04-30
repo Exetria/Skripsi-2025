@@ -1,25 +1,51 @@
 import 'package:android_app/home_page.dart';
+import 'package:android_app/user_management_module/domain/entities/sign_in_domain.dart';
+import 'package:android_app/user_management_module/page/controller/check_user_data_controller.dart';
 import 'package:android_app/user_management_module/page/controller/sign_in_controller.dart';
-import 'package:android_app/utils/functions.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+// ignore: must_be_immutable
 class LoginPage extends StatefulHookConsumerWidget {
-  const LoginPage({super.key});
+  bool kicked;
+  LoginPage({super.key, this.kicked = false});
 
   @override
   ConsumerState<LoginPage> createState() => _LoginPage();
 }
 
 class _LoginPage extends ConsumerState<LoginPage> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
   bool obscurePassword = true;
   bool buttonEnabled = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Handle kicked user from HomePage
+    if (widget.kicked) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        showFeedbackDialog(
+          context: context,
+          type: 2,
+          message: 'User Not Signed In',
+        );
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final emailController = useTextEditingController();
+    final passwordController = useTextEditingController();
+    autoFillCredentials(
+      emailController: emailController,
+      passwordController: passwordController,
+    );
+
     return Scaffold(
       backgroundColor: backgroundColor,
       body: Center(
@@ -30,17 +56,13 @@ class _LoginPage extends ConsumerState<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // App Logo
-              Image.asset(
-                'assets/logo.png',
-                width: 100.w,
-                height: 100.h,
-                // fit: BoxFit.contain,
-              ),
+              Image.asset('assets/logo.png', width: 100.w, height: 100.h),
               SizedBox(height: 32.h),
 
               // Email Field
               TextField(
                 controller: emailController,
+                style: bodyStyle,
                 decoration: InputDecoration(
                   labelText: 'Email',
                   labelStyle: bodyStyle,
@@ -51,6 +73,8 @@ class _LoginPage extends ConsumerState<LoginPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.r),
                   ),
+                  filled: true,
+                  fillColor: fillColor,
                 ),
               ),
               SizedBox(height: 16.h),
@@ -59,13 +83,11 @@ class _LoginPage extends ConsumerState<LoginPage> {
               TextField(
                 controller: passwordController,
                 obscureText: obscurePassword,
+                style: bodyStyle,
                 decoration: InputDecoration(
                   labelText: 'Password',
                   labelStyle: bodyStyle,
                   prefixIcon: Icon(Icons.lock, color: textColor.withAlpha(178)),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.r),
-                  ),
                   suffixIcon: IconButton(
                     onPressed: () {
                       setState(() {
@@ -77,6 +99,11 @@ class _LoginPage extends ConsumerState<LoginPage> {
                       color: textColor.withAlpha(178),
                     ),
                   ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
+                  filled: true,
+                  fillColor: fillColor,
                 ),
               ),
               SizedBox(height: 8.h),
@@ -94,35 +121,36 @@ class _LoginPage extends ConsumerState<LoginPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 24.h),
+              SizedBox(height: 8.h),
 
-              // Login Button
-              SizedBox(
-                width: double.infinity,
-                height: 48.h,
-                child: ElevatedButton(
-                  onPressed: () {
-                    doSignIn(
-                      email: emailController.text,
-                      password: passwordController.text,
-                    );
-                  },
-
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryColor,
-                    foregroundColor: backgroundColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
-                  ),
-                  child:
-                      buttonEnabled
-                          ? Text(
-                            'Login',
-                            style: buttonStyle.copyWith(fontSize: 18.sp),
-                          )
-                          : const CircularProgressIndicator(),
-                ),
+              // Login Button or Loader
+              Center(
+                child:
+                    buttonEnabled
+                        ? ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              buttonEnabled = false;
+                            });
+                            doSignIn(
+                              email: emailController.text,
+                              password: passwordController.text,
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: primaryColor,
+                            foregroundColor: invertedTextColor,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 80.w,
+                              vertical: 10.h,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                            ),
+                          ),
+                          child: Text('Login', style: buttonStyle),
+                        )
+                        : const CircularProgressIndicator(strokeWidth: 4),
               ),
             ],
           ),
@@ -140,39 +168,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
       // If success
       if (state is AsyncData) {
         final result = state.value;
-
-        // TODO: Fetch user role from firestore
-
-        saveUserDataToSp(
-          localId: result?.localId ?? '',
-          email: result?.email ?? '',
-          password: password,
-          displayName: result?.displayName ?? '',
-          role: 'admin',
-          idToken: result?.idToken ?? '',
-          refreshToken: result?.refreshToken ?? '',
-        );
-
-        userDataHelper = UserDataHelper(
-          id: result?.localId ?? '',
-          name: result?.displayName ?? '',
-          email: result?.email ?? '',
-          role: 'admin',
-          idToken: result?.idToken ?? '',
-          refreshToken: result?.refreshToken ?? '',
-        );
-
-        showFeedbackDialog(
-          context: context,
-          type: 1,
-          message: 'Login Successful',
-          onClose: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const HomePage()),
-            );
-          },
-        );
+        checkUserData(result: result, password: password);
       }
       // If fail (wrong email/password)
       else if (state is AsyncError) {
@@ -189,19 +185,38 @@ class _LoginPage extends ConsumerState<LoginPage> {
                         'INVALID_EMAIL'
                     ? 'Invalid Email'
                     : 'Unknown Error',
+            onClose: () {
+              setState(() {
+                buttonEnabled = true;
+              });
+            },
           );
         } else {
           showFeedbackDialog(
             context: context,
             type: 3,
             message: apiException.message,
+            onClose: () {
+              setState(() {
+                buttonEnabled = true;
+              });
+            },
           );
         }
       }
     }
     // If email is empty
     else if (email == '') {
-      showFeedbackDialog(context: context, type: 2, message: 'Email is Empty');
+      showFeedbackDialog(
+        context: context,
+        type: 2,
+        message: 'Email is Empty',
+        onClose: () {
+          setState(() {
+            buttonEnabled = true;
+          });
+        },
+      );
     }
     // If password is empty
     else if (password == '') {
@@ -209,6 +224,11 @@ class _LoginPage extends ConsumerState<LoginPage> {
         context: context,
         type: 2,
         message: 'Password is Empty',
+        onClose: () {
+          setState(() {
+            buttonEnabled = true;
+          });
+        },
       );
     }
     // Other error
@@ -217,31 +237,84 @@ class _LoginPage extends ConsumerState<LoginPage> {
         context: context,
         type: 2,
         message: 'An Unknown Error Occured',
+        onClose: () {
+          setState(() {
+            buttonEnabled = true;
+          });
+        },
       );
     }
   }
-  // buttonEnabled
-  //     ? () async {
-  //       setState(() {
-  //         buttonEnabled = false;
-  //       });
-  //       setState(() {
-  //         buttonEnabled = true;
-  //       });
 
-  //       // showCustomDialog(
-  //       //   context,
-  //       //   'Login Success',
-  //       //   duration: const Duration(seconds: 1),
-  //       //   onClosed: () {
-  //       //     Navigator.pushReplacement(
-  //       //       context,
-  //       //       MaterialPageRoute(
-  //       //         builder: (context) => const HomePage(),
-  //       //       ),
-  //       //     );
-  //       //   },
-  //       // );
-  //     }
-  //     : null;
+  void checkUserData({
+    required SignInDomain? result,
+    required String password,
+  }) async {
+    final userValue = await ref
+        .watch(checkUserDataControllerProvider.notifier)
+        .checkUserData(
+          idToken: result?.idToken ?? '',
+          uid: result?.localId ?? '',
+        );
+
+    if (userValue?.fields?.role?.stringValue == 'sales') {
+      saveUserDataToSp(
+        localId: result?.localId ?? '',
+        displayName: result?.displayName ?? '',
+        email: result?.email ?? '',
+        password: password,
+        phoneNumber: userValue?.fields?.phoneNumber?.stringValue ?? '',
+        role: userValue?.fields?.role?.stringValue ?? '',
+        idToken: result?.idToken ?? '',
+        refreshToken: result?.refreshToken ?? '',
+      );
+
+      userDataHelper = UserDataHelper(
+        uid: result?.localId ?? '',
+        name: result?.displayName ?? '',
+        email: result?.email ?? '',
+        phone: userValue?.fields?.phoneNumber?.stringValue ?? '',
+        role: userValue?.fields?.role?.stringValue ?? '',
+        idToken: result?.idToken ?? '',
+        refreshToken: result?.refreshToken ?? '',
+      );
+
+      showFeedbackDialog(
+        context: context,
+        type: 1,
+        message: 'Login Successful',
+        onClose: () {
+          setState(() {
+            buttonEnabled = true;
+          });
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+          );
+        },
+      );
+    } else {
+      showFeedbackDialog(
+        context: context,
+        type: 3,
+        message: 'Sorry, You\'re Not a Sales',
+        onClose: () {
+          setState(() {
+            buttonEnabled = true;
+          });
+        },
+      );
+    }
+  }
+
+  void autoFillCredentials({
+    required TextEditingController emailController,
+    required TextEditingController passwordController,
+  }) async {
+    String email = await getDataFromSp(key: 'email') ?? '';
+    String password = await getDataFromSp(key: 'password') ?? '';
+
+    if (emailController.text == '') emailController.text = email;
+    if (passwordController.text == '') passwordController.text = password;
+  }
 }

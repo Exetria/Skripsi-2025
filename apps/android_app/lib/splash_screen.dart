@@ -40,7 +40,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
           navigated = true;
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const LoginPage()),
+            MaterialPageRoute(builder: (context) => LoginPage()),
             // MaterialPageRoute(builder: (context) => const HomePage()),
           );
         }
