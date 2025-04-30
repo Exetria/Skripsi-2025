@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 
 // LIGHT MODE COLORS
 final Color primaryColor = const Color.fromRGBO(0, 128, 128, 1);
@@ -100,11 +99,4 @@ final TextStyle errorStyle = TextStyle(
   fontSize: Platform.isWindows ? 16 : 16.sp,
   fontWeight: FontWeight.w500,
   color: errorColor,
-);
-
-// CURRENCY FORMATTER
-final rupiahFormatter = NumberFormat.currency(
-  locale: 'id_ID',
-  symbol: 'Rp. ',
-  decimalDigits: 2,
 );
