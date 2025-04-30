@@ -4,8 +4,8 @@ class UserDataHelper {
   final String email;
   final String phone;
   final String role;
-  final String idToken;
-  final String refreshToken;
+  String idToken;
+  String refreshToken;
   final List<String> assignedProducts;
   final List<String> assignedCustomers;
 
