@@ -5,17 +5,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 // Save User Data to SP
 void saveUserDataToSp({
   required String localId,
+  required String displayName,
   required String email,
   required String password,
-  required String displayName,
+  required String phoneNumber,
   required String role,
   required String idToken,
   required String refreshToken,
 }) {
   saveDataToSp(key: 'localId', data: localId);
+  saveDataToSp(key: 'displayName', data: displayName);
   saveDataToSp(key: 'email', data: email);
   saveDataToSp(key: 'password', data: password);
-  saveDataToSp(key: 'displayName', data: displayName);
+  saveDataToSp(key: 'phoneNumber', data: phoneNumber);
   saveDataToSp(key: 'role', data: role);
   saveDataToSp(key: 'idToken', data: idToken);
   saveDataToSp(key: 'refreshToken', data: refreshToken);
@@ -55,14 +57,14 @@ Future<String?> getDataFromSp({
 String _encryptData({required String data}) {
   if (data == '') return '';
 
-  final encrypter = encrypt.Encrypter(encrypt.AES(encryptionHelper.key));
-  final encrypted = encrypter.encrypt(data, iv: encryptionHelper.iv);
+  final encrypter = encrypt.Encrypter(encrypt.AES(EncryptionHelper.key));
+  final encrypted = encrypter.encrypt(data, iv: EncryptionHelper.iv);
   return encrypted.base64;
 }
 
 // Decrypt data
 String _decryptData({required String encryptedData}) {
-  final encrypter = encrypt.Encrypter(encrypt.AES(encryptionHelper.key));
-  final decrypted = encrypter.decrypt64(encryptedData, iv: encryptionHelper.iv);
+  final encrypter = encrypt.Encrypter(encrypt.AES(EncryptionHelper.key));
+  final decrypted = encrypter.decrypt64(encryptedData, iv: EncryptionHelper.iv);
   return decrypted;
 }
