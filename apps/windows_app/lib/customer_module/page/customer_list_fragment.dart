@@ -2,6 +2,7 @@ import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:windows_app/customer_module/page/controller/customer_list_controller.dart';
 import 'package:windows_app/utils/functions.dart';
 
 class CustomerListFragment extends StatefulHookConsumerWidget {
@@ -15,7 +16,7 @@ class CustomerListFragment extends StatefulHookConsumerWidget {
 class _CustomerListFragmentState extends ConsumerState<CustomerListFragment> {
   @override
   Widget build(BuildContext context) {
-    // final customerListState = ref.watch(customerControllerProvider);
+    final customerListState = ref.watch(customerListControllerProvider);
 
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -45,32 +46,55 @@ class _CustomerListFragmentState extends ConsumerState<CustomerListFragment> {
           ),
           const SizedBox(height: 8),
           Expanded(
-            child: ListView.builder(
-              itemCount: 30, // replace with actual customer count
-              itemBuilder: (context, index) {
-                return Card(
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  child: ListTile(
-                    leading: const Icon(Icons.business_sharp),
-                    title: Text(
-                      'Customer ${index + 1}',
-                      style: const TextStyle(fontSize: 14),
-                    ),
-                    subtitle: Text('Jalan Ahmad Yani No. ${index + 1}'),
-                    onTap: () {
-                      // TODO: sales on tap function
-                      showCustomerDetailDialog(
-                        context: context,
-                        name: 'customer 1',
-                        email: 'email',
-                        phone: 'phone',
-                        address: 'address',
-                        onEditPressed: () {},
-                      );
-                    },
-                  ),
+            child: customerListState.when(
+              loading: () => const Center(child: CircularProgressIndicator()),
+
+              data: (customerList) {
+                if (customerList == null || customerList.isEmpty) {
+                  return const Center(child: Text('No sales data found.'));
+                }
+
+                return ListView.builder(
+                  itemCount: customerList.length,
+                  itemBuilder: (context, index) {
+                    final data = customerList[index]; // Skip null entries
+
+                    return Card(
+                      margin: const EdgeInsets.symmetric(vertical: 8),
+                      child: ListTile(
+                        leading: const Icon(Icons.business_sharp),
+                        title: Text(
+                          data.fields?.companyName?.stringValue ?? '-',
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                        subtitle: Text(
+                          data.fields?.storeAddress?.stringValue ?? '-',
+                        ),
+                        onTap: () {
+                          // TODO: customer on tap function
+                          showCustomerDetailDialog(
+                            context: context,
+                            name: data.fields?.companyName?.stringValue ?? '-',
+                            email: data.fields?.email?.stringValue ?? '-',
+                            phone: data.fields?.phoneNumber?.stringValue ?? '-',
+                            address:
+                                data.fields?.storeAddress?.stringValue ?? '-',
+                            onEditPressed: () {},
+                          );
+                        },
+                      ),
+                    );
+                  },
                 );
               },
+
+              error:
+                  (error, _) => Center(
+                    child: Text(
+                      'Error Loading Customer List: $error',
+                      style: errorStyle,
+                    ),
+                  ),
             ),
           ),
         ],
