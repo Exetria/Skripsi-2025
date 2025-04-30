@@ -1,5 +1,5 @@
 import 'package:android_app/utils/functions.dart';
-import 'package:common_components/variables.dart';
+import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -18,7 +18,7 @@ class _ProductDetailPage extends ConsumerState<ProductDetailPage> {
       'https://petapixel.com/assets/uploads/2017/03/product1.jpeg'; // <-- required
   final bool isAvailable = true;
   final String unit = 'pair';
-  final String price = rupiahFormatter.format(1000000);
+  final String price = rupiahFormat(1000000);
   final String description =
       'This is a placeholder description of the product.'; // <-- required
 

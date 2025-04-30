@@ -1,6 +1,6 @@
 import 'package:android_app/product_module/page/product_detail_page.dart';
 import 'package:android_app/utils/functions.dart';
-import 'package:common_components/variables.dart';
+import 'package:common_components/utils/formatter_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -38,7 +38,7 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                 },
                 leadIcon: Icons.person,
                 title: 'Product ${index + 1}',
-                subtitle: rupiahFormatter.format((index + 1) * 100000),
+                subtitle: rupiahFormat((index + 1) * 100000),
                 trailIcon: Icons.arrow_forward_ios,
               );
             },

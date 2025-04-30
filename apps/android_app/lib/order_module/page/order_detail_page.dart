@@ -1,5 +1,5 @@
 import 'package:android_app/utils/functions.dart';
-import 'package:common_components/variables.dart';
+import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -69,7 +69,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
 
                     // Item total price
                     Text(
-                      rupiahFormatter.format(itemTotal),
+                      rupiahFormat(itemTotal),
                       style: bodyStyle.copyWith(color: successColor),
                     ),
                   ],
@@ -99,7 +99,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
             children: [
               const Spacer(),
               Text(
-                'Total: ${rupiahFormatter.format(totalPrice)}',
+                'Total: ${rupiahFormat(totalPrice)}',
                 style: bodyStyle.copyWith(fontWeight: FontWeight.bold),
               ),
             ],
