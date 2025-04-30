@@ -15,6 +15,8 @@ class CustomerListFragment extends StatefulHookConsumerWidget {
 class _CustomerListFragmentState extends ConsumerState<CustomerListFragment> {
   @override
   Widget build(BuildContext context) {
+    // final customerListState = ref.watch(customerControllerProvider);
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(

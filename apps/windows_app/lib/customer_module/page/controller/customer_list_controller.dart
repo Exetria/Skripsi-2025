@@ -1,6 +1,6 @@
 // import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-// part 'module_name_controller.g.dart';
+// part 'customer_controller.g.dart';
 
 // @riverpod
 // class ModuleNameController extends _$ModuleNameController {

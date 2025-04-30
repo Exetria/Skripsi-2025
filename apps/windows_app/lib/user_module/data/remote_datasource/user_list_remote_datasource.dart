@@ -1,11 +1,11 @@
 import 'package:common_components/common_components.dart';
 import 'package:windows_app/user_module/domain/entities/user_domain.dart';
 
-abstract class UserRemoteDatasource {
+abstract class UserListRemoteDatasource {
   Future<List<UserDomain>> getUserList();
 }
 
-class UserRemoteDatasourceImpl implements UserRemoteDatasource {
+class UserListRemoteDatasourceImpl implements UserListRemoteDatasource {
   @override
   Future<List<UserDomain>> getUserList() async {
     Map<String, dynamic> result = await apiCallGet(
