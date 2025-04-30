@@ -61,11 +61,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: '.env');
 
-  // Initialize Encryption Helper
-  encryptionHelper = EncryptionHelper();
-
-  // TODO: Check user data in SP
-
   runApp(const ProviderScope(child: Main()));
 }
 

@@ -54,9 +54,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: '.env');
 
-  // Initialize Encryption Helper
-  encryptionHelper = EncryptionHelper();
-
   // TODO: Check user data in SP
 
   runApp(const ProviderScope(child: Main()));
@@ -82,7 +79,7 @@ class _MainApp extends ConsumerState<Main> {
           home: child,
         );
       },
-      child: const SafeArea(child: LoginPage()),
+      child: SafeArea(child: LoginPage()),
     );
   }
 }
