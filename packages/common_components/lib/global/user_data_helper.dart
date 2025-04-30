@@ -6,6 +6,8 @@ class UserDataHelper {
   final String role;
   final String idToken;
   final String refreshToken;
+  final List<String> assignedProducts;
+  final List<String> assignedCustomers;
 
   UserDataHelper({
     required this.uid,
@@ -15,6 +17,8 @@ class UserDataHelper {
     required this.role,
     required this.idToken,
     required this.refreshToken,
+    required this.assignedProducts,
+    required this.assignedCustomers,
   });
 }
 
