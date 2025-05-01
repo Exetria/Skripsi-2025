@@ -24,7 +24,7 @@ mixin _$CustomerDomain {
   @JsonKey(name: 'name')
   String? get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'fields')
-  Fields? get fields => throw _privateConstructorUsedError;
+  CustomerDomainFields? get fields => throw _privateConstructorUsedError;
   @JsonKey(name: 'createTime')
   String? get createTime => throw _privateConstructorUsedError;
   @JsonKey(name: 'updateTime')
@@ -49,12 +49,12 @@ abstract class $CustomerDomainCopyWith<$Res> {
   @useResult
   $Res call({
     @JsonKey(name: 'name') String? name,
-    @JsonKey(name: 'fields') Fields? fields,
+    @JsonKey(name: 'fields') CustomerDomainFields? fields,
     @JsonKey(name: 'createTime') String? createTime,
     @JsonKey(name: 'updateTime') String? updateTime,
   });
 
-  $FieldsCopyWith<$Res>? get fields;
+  $CustomerDomainFieldsCopyWith<$Res>? get fields;
 }
 
 /// @nodoc
@@ -88,7 +88,7 @@ class _$CustomerDomainCopyWithImpl<$Res, $Val extends CustomerDomain>
                 freezed == fields
                     ? _value.fields
                     : fields // ignore: cast_nullable_to_non_nullable
-                        as Fields?,
+                        as CustomerDomainFields?,
             createTime:
                 freezed == createTime
                     ? _value.createTime
@@ -108,12 +108,12 @@ class _$CustomerDomainCopyWithImpl<$Res, $Val extends CustomerDomain>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $FieldsCopyWith<$Res>? get fields {
+  $CustomerDomainFieldsCopyWith<$Res>? get fields {
     if (_value.fields == null) {
       return null;
     }
 
-    return $FieldsCopyWith<$Res>(_value.fields!, (value) {
+    return $CustomerDomainFieldsCopyWith<$Res>(_value.fields!, (value) {
       return _then(_value.copyWith(fields: value) as $Val);
     });
   }
@@ -130,13 +130,13 @@ abstract class _$$CustomerDomainImplCopyWith<$Res>
   @useResult
   $Res call({
     @JsonKey(name: 'name') String? name,
-    @JsonKey(name: 'fields') Fields? fields,
+    @JsonKey(name: 'fields') CustomerDomainFields? fields,
     @JsonKey(name: 'createTime') String? createTime,
     @JsonKey(name: 'updateTime') String? updateTime,
   });
 
   @override
-  $FieldsCopyWith<$Res>? get fields;
+  $CustomerDomainFieldsCopyWith<$Res>? get fields;
 }
 
 /// @nodoc
@@ -169,7 +169,7 @@ class __$$CustomerDomainImplCopyWithImpl<$Res>
             freezed == fields
                 ? _value.fields
                 : fields // ignore: cast_nullable_to_non_nullable
-                    as Fields?,
+                    as CustomerDomainFields?,
         createTime:
             freezed == createTime
                 ? _value.createTime
@@ -203,7 +203,7 @@ class _$CustomerDomainImpl implements _CustomerDomain {
   final String? name;
   @override
   @JsonKey(name: 'fields')
-  final Fields? fields;
+  final CustomerDomainFields? fields;
   @override
   @JsonKey(name: 'createTime')
   final String? createTime;
@@ -254,7 +254,7 @@ class _$CustomerDomainImpl implements _CustomerDomain {
 abstract class _CustomerDomain implements CustomerDomain {
   const factory _CustomerDomain({
     @JsonKey(name: 'name') final String? name,
-    @JsonKey(name: 'fields') final Fields? fields,
+    @JsonKey(name: 'fields') final CustomerDomainFields? fields,
     @JsonKey(name: 'createTime') final String? createTime,
     @JsonKey(name: 'updateTime') final String? updateTime,
   }) = _$CustomerDomainImpl;
@@ -267,7 +267,7 @@ abstract class _CustomerDomain implements CustomerDomain {
   String? get name;
   @override
   @JsonKey(name: 'fields')
-  Fields? get fields;
+  CustomerDomainFields? get fields;
   @override
   @JsonKey(name: 'createTime')
   String? get createTime;
@@ -283,1086 +283,687 @@ abstract class _CustomerDomain implements CustomerDomain {
       throw _privateConstructorUsedError;
 }
 
-Fields _$FieldsFromJson(Map<String, dynamic> json) {
-  return _Fields.fromJson(json);
+CustomerDomainFields _$CustomerDomainFieldsFromJson(Map<String, dynamic> json) {
+  return _CustomerDomainFields.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Fields {
-  @JsonKey(name: 'purchase_history')
-  PurchaseHistory? get purchaseHistory => throw _privateConstructorUsedError;
-  @JsonKey(name: 'phone_number')
-  BusinessType? get phoneNumber => throw _privateConstructorUsedError;
-  @JsonKey(name: 'latitude')
-  Itude? get latitude => throw _privateConstructorUsedError;
-  @JsonKey(name: 'owner_address')
-  BusinessType? get ownerAddress => throw _privateConstructorUsedError;
-  @JsonKey(name: 'subscription_type')
-  BusinessType? get subscriptionType => throw _privateConstructorUsedError;
-  @JsonKey(name: 'id_number')
-  BusinessType? get idNumber => throw _privateConstructorUsedError;
-  @JsonKey(name: 'preferred_payment_method')
-  BusinessType? get preferredPaymentMethod =>
-      throw _privateConstructorUsedError;
-  @JsonKey(name: 'email')
-  BusinessType? get email => throw _privateConstructorUsedError;
-  @JsonKey(name: 'longitude')
-  Itude? get longitude => throw _privateConstructorUsedError;
-  @JsonKey(name: 'delivery_zone')
-  BusinessType? get deliveryZone => throw _privateConstructorUsedError;
-  @JsonKey(name: 'preferred_delivery_time')
-  BusinessType? get preferredDeliveryTime => throw _privateConstructorUsedError;
-  @JsonKey(name: 'tax_id')
-  BusinessType? get taxId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'store_photo')
-  Photo? get storePhoto => throw _privateConstructorUsedError;
-  @JsonKey(name: 'business_type')
-  BusinessType? get businessType => throw _privateConstructorUsedError;
+mixin _$CustomerDomainFields {
+  @JsonKey(name: 'owner_phone_number')
+  ApprovedBy? get ownerPhoneNumber => throw _privateConstructorUsedError;
   @JsonKey(name: 'customer_code')
-  BusinessType? get customerCode => throw _privateConstructorUsedError;
-  @JsonKey(name: 'ownership')
-  BusinessType? get ownership => throw _privateConstructorUsedError;
-  @JsonKey(name: 'credit_limit')
-  CreditLimit? get creditLimit => throw _privateConstructorUsedError;
+  ApprovedBy? get customerCode => throw _privateConstructorUsedError;
+  @JsonKey(name: 'company_store_condition')
+  ApprovedBy? get companyStoreCondition => throw _privateConstructorUsedError;
+  @JsonKey(name: 'company_phone_number')
+  ApprovedBy? get companyPhoneNumber => throw _privateConstructorUsedError;
+  @JsonKey(name: 'owner_tax_id')
+  ApprovedBy? get ownerTaxId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'approved_by')
+  ApprovedBy? get approvedBy => throw _privateConstructorUsedError;
+  @JsonKey(name: 'subscription_type')
+  ApprovedBy? get subscriptionType => throw _privateConstructorUsedError;
+  @JsonKey(name: 'owner_address')
+  ApprovedBy? get ownerAddress => throw _privateConstructorUsedError;
+  @JsonKey(name: 'ownership_status')
+  ApprovedBy? get ownershipStatus => throw _privateConstructorUsedError;
+  @JsonKey(name: 'company_email')
+  ApprovedBy? get companyEmail => throw _privateConstructorUsedError;
+  @JsonKey(name: 'company_location')
+  CompanyLocation? get companyLocation => throw _privateConstructorUsedError;
+  @JsonKey(name: 'requested_by')
+  ApprovedBy? get requestedBy => throw _privateConstructorUsedError;
+  @JsonKey(name: 'owner_national_id')
+  ApprovedBy? get ownerNationalId => throw _privateConstructorUsedError;
   @JsonKey(name: 'owner_name')
-  BusinessType? get ownerName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'outstanding_balance')
-  CreditLimit? get outstandingBalance => throw _privateConstructorUsedError;
-  @JsonKey(name: 'blacklisted')
-  Blacklisted? get blacklisted => throw _privateConstructorUsedError;
-  @JsonKey(name: 'discount_eligibility')
-  Blacklisted? get discountEligibility => throw _privateConstructorUsedError;
-  @JsonKey(name: 'visit_frequency')
-  BusinessType? get visitFrequency => throw _privateConstructorUsedError;
+  ApprovedBy? get ownerName => throw _privateConstructorUsedError;
   @JsonKey(name: 'company_name')
-  BusinessType? get companyName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'store_address')
-  BusinessType? get storeAddress => throw _privateConstructorUsedError;
-  @JsonKey(name: 'id_photo')
-  Photo? get idPhoto => throw _privateConstructorUsedError;
-  @JsonKey(name: 'status')
-  BusinessType? get status => throw _privateConstructorUsedError;
-  @JsonKey(name: 'sales_rep_id')
-  BusinessType? get salesRepId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'customer_notes')
-  BusinessType? get customerNotes => throw _privateConstructorUsedError;
-  @JsonKey(name: 'store_name')
-  BusinessType? get storeName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'last_transaction_date')
-  LastTransactionDate? get lastTransactionDate =>
-      throw _privateConstructorUsedError;
+  ApprovedBy? get companyName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'owner_national_id_photo')
+  ApprovedBy? get ownerNationalIdPhoto => throw _privateConstructorUsedError;
+  @JsonKey(name: 'company_address')
+  ApprovedBy? get companyAddress => throw _privateConstructorUsedError;
+  @JsonKey(name: 'company_store_photo')
+  ApprovedBy? get companyStorePhoto => throw _privateConstructorUsedError;
 
-  /// Serializes this Fields to a JSON map.
+  /// Serializes this CustomerDomainFields to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of Fields
+  /// Create a copy of CustomerDomainFields
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $FieldsCopyWith<Fields> get copyWith => throw _privateConstructorUsedError;
+  $CustomerDomainFieldsCopyWith<CustomerDomainFields> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $FieldsCopyWith<$Res> {
-  factory $FieldsCopyWith(Fields value, $Res Function(Fields) then) =
-      _$FieldsCopyWithImpl<$Res, Fields>;
+abstract class $CustomerDomainFieldsCopyWith<$Res> {
+  factory $CustomerDomainFieldsCopyWith(
+    CustomerDomainFields value,
+    $Res Function(CustomerDomainFields) then,
+  ) = _$CustomerDomainFieldsCopyWithImpl<$Res, CustomerDomainFields>;
   @useResult
   $Res call({
-    @JsonKey(name: 'purchase_history') PurchaseHistory? purchaseHistory,
-    @JsonKey(name: 'phone_number') BusinessType? phoneNumber,
-    @JsonKey(name: 'latitude') Itude? latitude,
-    @JsonKey(name: 'owner_address') BusinessType? ownerAddress,
-    @JsonKey(name: 'subscription_type') BusinessType? subscriptionType,
-    @JsonKey(name: 'id_number') BusinessType? idNumber,
-    @JsonKey(name: 'preferred_payment_method')
-    BusinessType? preferredPaymentMethod,
-    @JsonKey(name: 'email') BusinessType? email,
-    @JsonKey(name: 'longitude') Itude? longitude,
-    @JsonKey(name: 'delivery_zone') BusinessType? deliveryZone,
-    @JsonKey(name: 'preferred_delivery_time')
-    BusinessType? preferredDeliveryTime,
-    @JsonKey(name: 'tax_id') BusinessType? taxId,
-    @JsonKey(name: 'store_photo') Photo? storePhoto,
-    @JsonKey(name: 'business_type') BusinessType? businessType,
-    @JsonKey(name: 'customer_code') BusinessType? customerCode,
-    @JsonKey(name: 'ownership') BusinessType? ownership,
-    @JsonKey(name: 'credit_limit') CreditLimit? creditLimit,
-    @JsonKey(name: 'owner_name') BusinessType? ownerName,
-    @JsonKey(name: 'outstanding_balance') CreditLimit? outstandingBalance,
-    @JsonKey(name: 'blacklisted') Blacklisted? blacklisted,
-    @JsonKey(name: 'discount_eligibility') Blacklisted? discountEligibility,
-    @JsonKey(name: 'visit_frequency') BusinessType? visitFrequency,
-    @JsonKey(name: 'company_name') BusinessType? companyName,
-    @JsonKey(name: 'store_address') BusinessType? storeAddress,
-    @JsonKey(name: 'id_photo') Photo? idPhoto,
-    @JsonKey(name: 'status') BusinessType? status,
-    @JsonKey(name: 'sales_rep_id') BusinessType? salesRepId,
-    @JsonKey(name: 'customer_notes') BusinessType? customerNotes,
-    @JsonKey(name: 'store_name') BusinessType? storeName,
-    @JsonKey(name: 'last_transaction_date')
-    LastTransactionDate? lastTransactionDate,
+    @JsonKey(name: 'owner_phone_number') ApprovedBy? ownerPhoneNumber,
+    @JsonKey(name: 'customer_code') ApprovedBy? customerCode,
+    @JsonKey(name: 'company_store_condition') ApprovedBy? companyStoreCondition,
+    @JsonKey(name: 'company_phone_number') ApprovedBy? companyPhoneNumber,
+    @JsonKey(name: 'owner_tax_id') ApprovedBy? ownerTaxId,
+    @JsonKey(name: 'approved_by') ApprovedBy? approvedBy,
+    @JsonKey(name: 'subscription_type') ApprovedBy? subscriptionType,
+    @JsonKey(name: 'owner_address') ApprovedBy? ownerAddress,
+    @JsonKey(name: 'ownership_status') ApprovedBy? ownershipStatus,
+    @JsonKey(name: 'company_email') ApprovedBy? companyEmail,
+    @JsonKey(name: 'company_location') CompanyLocation? companyLocation,
+    @JsonKey(name: 'requested_by') ApprovedBy? requestedBy,
+    @JsonKey(name: 'owner_national_id') ApprovedBy? ownerNationalId,
+    @JsonKey(name: 'owner_name') ApprovedBy? ownerName,
+    @JsonKey(name: 'company_name') ApprovedBy? companyName,
+    @JsonKey(name: 'owner_national_id_photo') ApprovedBy? ownerNationalIdPhoto,
+    @JsonKey(name: 'company_address') ApprovedBy? companyAddress,
+    @JsonKey(name: 'company_store_photo') ApprovedBy? companyStorePhoto,
   });
 
-  $PurchaseHistoryCopyWith<$Res>? get purchaseHistory;
-  $BusinessTypeCopyWith<$Res>? get phoneNumber;
-  $ItudeCopyWith<$Res>? get latitude;
-  $BusinessTypeCopyWith<$Res>? get ownerAddress;
-  $BusinessTypeCopyWith<$Res>? get subscriptionType;
-  $BusinessTypeCopyWith<$Res>? get idNumber;
-  $BusinessTypeCopyWith<$Res>? get preferredPaymentMethod;
-  $BusinessTypeCopyWith<$Res>? get email;
-  $ItudeCopyWith<$Res>? get longitude;
-  $BusinessTypeCopyWith<$Res>? get deliveryZone;
-  $BusinessTypeCopyWith<$Res>? get preferredDeliveryTime;
-  $BusinessTypeCopyWith<$Res>? get taxId;
-  $PhotoCopyWith<$Res>? get storePhoto;
-  $BusinessTypeCopyWith<$Res>? get businessType;
-  $BusinessTypeCopyWith<$Res>? get customerCode;
-  $BusinessTypeCopyWith<$Res>? get ownership;
-  $CreditLimitCopyWith<$Res>? get creditLimit;
-  $BusinessTypeCopyWith<$Res>? get ownerName;
-  $CreditLimitCopyWith<$Res>? get outstandingBalance;
-  $BlacklistedCopyWith<$Res>? get blacklisted;
-  $BlacklistedCopyWith<$Res>? get discountEligibility;
-  $BusinessTypeCopyWith<$Res>? get visitFrequency;
-  $BusinessTypeCopyWith<$Res>? get companyName;
-  $BusinessTypeCopyWith<$Res>? get storeAddress;
-  $PhotoCopyWith<$Res>? get idPhoto;
-  $BusinessTypeCopyWith<$Res>? get status;
-  $BusinessTypeCopyWith<$Res>? get salesRepId;
-  $BusinessTypeCopyWith<$Res>? get customerNotes;
-  $BusinessTypeCopyWith<$Res>? get storeName;
-  $LastTransactionDateCopyWith<$Res>? get lastTransactionDate;
+  $ApprovedByCopyWith<$Res>? get ownerPhoneNumber;
+  $ApprovedByCopyWith<$Res>? get customerCode;
+  $ApprovedByCopyWith<$Res>? get companyStoreCondition;
+  $ApprovedByCopyWith<$Res>? get companyPhoneNumber;
+  $ApprovedByCopyWith<$Res>? get ownerTaxId;
+  $ApprovedByCopyWith<$Res>? get approvedBy;
+  $ApprovedByCopyWith<$Res>? get subscriptionType;
+  $ApprovedByCopyWith<$Res>? get ownerAddress;
+  $ApprovedByCopyWith<$Res>? get ownershipStatus;
+  $ApprovedByCopyWith<$Res>? get companyEmail;
+  $CompanyLocationCopyWith<$Res>? get companyLocation;
+  $ApprovedByCopyWith<$Res>? get requestedBy;
+  $ApprovedByCopyWith<$Res>? get ownerNationalId;
+  $ApprovedByCopyWith<$Res>? get ownerName;
+  $ApprovedByCopyWith<$Res>? get companyName;
+  $ApprovedByCopyWith<$Res>? get ownerNationalIdPhoto;
+  $ApprovedByCopyWith<$Res>? get companyAddress;
+  $ApprovedByCopyWith<$Res>? get companyStorePhoto;
 }
 
 /// @nodoc
-class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
-    implements $FieldsCopyWith<$Res> {
-  _$FieldsCopyWithImpl(this._value, this._then);
+class _$CustomerDomainFieldsCopyWithImpl<
+  $Res,
+  $Val extends CustomerDomainFields
+>
+    implements $CustomerDomainFieldsCopyWith<$Res> {
+  _$CustomerDomainFieldsCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Fields
+  /// Create a copy of CustomerDomainFields
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? purchaseHistory = freezed,
-    Object? phoneNumber = freezed,
-    Object? latitude = freezed,
-    Object? ownerAddress = freezed,
-    Object? subscriptionType = freezed,
-    Object? idNumber = freezed,
-    Object? preferredPaymentMethod = freezed,
-    Object? email = freezed,
-    Object? longitude = freezed,
-    Object? deliveryZone = freezed,
-    Object? preferredDeliveryTime = freezed,
-    Object? taxId = freezed,
-    Object? storePhoto = freezed,
-    Object? businessType = freezed,
+    Object? ownerPhoneNumber = freezed,
     Object? customerCode = freezed,
-    Object? ownership = freezed,
-    Object? creditLimit = freezed,
+    Object? companyStoreCondition = freezed,
+    Object? companyPhoneNumber = freezed,
+    Object? ownerTaxId = freezed,
+    Object? approvedBy = freezed,
+    Object? subscriptionType = freezed,
+    Object? ownerAddress = freezed,
+    Object? ownershipStatus = freezed,
+    Object? companyEmail = freezed,
+    Object? companyLocation = freezed,
+    Object? requestedBy = freezed,
+    Object? ownerNationalId = freezed,
     Object? ownerName = freezed,
-    Object? outstandingBalance = freezed,
-    Object? blacklisted = freezed,
-    Object? discountEligibility = freezed,
-    Object? visitFrequency = freezed,
     Object? companyName = freezed,
-    Object? storeAddress = freezed,
-    Object? idPhoto = freezed,
-    Object? status = freezed,
-    Object? salesRepId = freezed,
-    Object? customerNotes = freezed,
-    Object? storeName = freezed,
-    Object? lastTransactionDate = freezed,
+    Object? ownerNationalIdPhoto = freezed,
+    Object? companyAddress = freezed,
+    Object? companyStorePhoto = freezed,
   }) {
     return _then(
       _value.copyWith(
-            purchaseHistory:
-                freezed == purchaseHistory
-                    ? _value.purchaseHistory
-                    : purchaseHistory // ignore: cast_nullable_to_non_nullable
-                        as PurchaseHistory?,
-            phoneNumber:
-                freezed == phoneNumber
-                    ? _value.phoneNumber
-                    : phoneNumber // ignore: cast_nullable_to_non_nullable
-                        as BusinessType?,
-            latitude:
-                freezed == latitude
-                    ? _value.latitude
-                    : latitude // ignore: cast_nullable_to_non_nullable
-                        as Itude?,
-            ownerAddress:
-                freezed == ownerAddress
-                    ? _value.ownerAddress
-                    : ownerAddress // ignore: cast_nullable_to_non_nullable
-                        as BusinessType?,
-            subscriptionType:
-                freezed == subscriptionType
-                    ? _value.subscriptionType
-                    : subscriptionType // ignore: cast_nullable_to_non_nullable
-                        as BusinessType?,
-            idNumber:
-                freezed == idNumber
-                    ? _value.idNumber
-                    : idNumber // ignore: cast_nullable_to_non_nullable
-                        as BusinessType?,
-            preferredPaymentMethod:
-                freezed == preferredPaymentMethod
-                    ? _value.preferredPaymentMethod
-                    : preferredPaymentMethod // ignore: cast_nullable_to_non_nullable
-                        as BusinessType?,
-            email:
-                freezed == email
-                    ? _value.email
-                    : email // ignore: cast_nullable_to_non_nullable
-                        as BusinessType?,
-            longitude:
-                freezed == longitude
-                    ? _value.longitude
-                    : longitude // ignore: cast_nullable_to_non_nullable
-                        as Itude?,
-            deliveryZone:
-                freezed == deliveryZone
-                    ? _value.deliveryZone
-                    : deliveryZone // ignore: cast_nullable_to_non_nullable
-                        as BusinessType?,
-            preferredDeliveryTime:
-                freezed == preferredDeliveryTime
-                    ? _value.preferredDeliveryTime
-                    : preferredDeliveryTime // ignore: cast_nullable_to_non_nullable
-                        as BusinessType?,
-            taxId:
-                freezed == taxId
-                    ? _value.taxId
-                    : taxId // ignore: cast_nullable_to_non_nullable
-                        as BusinessType?,
-            storePhoto:
-                freezed == storePhoto
-                    ? _value.storePhoto
-                    : storePhoto // ignore: cast_nullable_to_non_nullable
-                        as Photo?,
-            businessType:
-                freezed == businessType
-                    ? _value.businessType
-                    : businessType // ignore: cast_nullable_to_non_nullable
-                        as BusinessType?,
+            ownerPhoneNumber:
+                freezed == ownerPhoneNumber
+                    ? _value.ownerPhoneNumber
+                    : ownerPhoneNumber // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
             customerCode:
                 freezed == customerCode
                     ? _value.customerCode
                     : customerCode // ignore: cast_nullable_to_non_nullable
-                        as BusinessType?,
-            ownership:
-                freezed == ownership
-                    ? _value.ownership
-                    : ownership // ignore: cast_nullable_to_non_nullable
-                        as BusinessType?,
-            creditLimit:
-                freezed == creditLimit
-                    ? _value.creditLimit
-                    : creditLimit // ignore: cast_nullable_to_non_nullable
-                        as CreditLimit?,
+                        as ApprovedBy?,
+            companyStoreCondition:
+                freezed == companyStoreCondition
+                    ? _value.companyStoreCondition
+                    : companyStoreCondition // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            companyPhoneNumber:
+                freezed == companyPhoneNumber
+                    ? _value.companyPhoneNumber
+                    : companyPhoneNumber // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            ownerTaxId:
+                freezed == ownerTaxId
+                    ? _value.ownerTaxId
+                    : ownerTaxId // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            approvedBy:
+                freezed == approvedBy
+                    ? _value.approvedBy
+                    : approvedBy // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            subscriptionType:
+                freezed == subscriptionType
+                    ? _value.subscriptionType
+                    : subscriptionType // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            ownerAddress:
+                freezed == ownerAddress
+                    ? _value.ownerAddress
+                    : ownerAddress // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            ownershipStatus:
+                freezed == ownershipStatus
+                    ? _value.ownershipStatus
+                    : ownershipStatus // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            companyEmail:
+                freezed == companyEmail
+                    ? _value.companyEmail
+                    : companyEmail // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            companyLocation:
+                freezed == companyLocation
+                    ? _value.companyLocation
+                    : companyLocation // ignore: cast_nullable_to_non_nullable
+                        as CompanyLocation?,
+            requestedBy:
+                freezed == requestedBy
+                    ? _value.requestedBy
+                    : requestedBy // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            ownerNationalId:
+                freezed == ownerNationalId
+                    ? _value.ownerNationalId
+                    : ownerNationalId // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
             ownerName:
                 freezed == ownerName
                     ? _value.ownerName
                     : ownerName // ignore: cast_nullable_to_non_nullable
-                        as BusinessType?,
-            outstandingBalance:
-                freezed == outstandingBalance
-                    ? _value.outstandingBalance
-                    : outstandingBalance // ignore: cast_nullable_to_non_nullable
-                        as CreditLimit?,
-            blacklisted:
-                freezed == blacklisted
-                    ? _value.blacklisted
-                    : blacklisted // ignore: cast_nullable_to_non_nullable
-                        as Blacklisted?,
-            discountEligibility:
-                freezed == discountEligibility
-                    ? _value.discountEligibility
-                    : discountEligibility // ignore: cast_nullable_to_non_nullable
-                        as Blacklisted?,
-            visitFrequency:
-                freezed == visitFrequency
-                    ? _value.visitFrequency
-                    : visitFrequency // ignore: cast_nullable_to_non_nullable
-                        as BusinessType?,
+                        as ApprovedBy?,
             companyName:
                 freezed == companyName
                     ? _value.companyName
                     : companyName // ignore: cast_nullable_to_non_nullable
-                        as BusinessType?,
-            storeAddress:
-                freezed == storeAddress
-                    ? _value.storeAddress
-                    : storeAddress // ignore: cast_nullable_to_non_nullable
-                        as BusinessType?,
-            idPhoto:
-                freezed == idPhoto
-                    ? _value.idPhoto
-                    : idPhoto // ignore: cast_nullable_to_non_nullable
-                        as Photo?,
-            status:
-                freezed == status
-                    ? _value.status
-                    : status // ignore: cast_nullable_to_non_nullable
-                        as BusinessType?,
-            salesRepId:
-                freezed == salesRepId
-                    ? _value.salesRepId
-                    : salesRepId // ignore: cast_nullable_to_non_nullable
-                        as BusinessType?,
-            customerNotes:
-                freezed == customerNotes
-                    ? _value.customerNotes
-                    : customerNotes // ignore: cast_nullable_to_non_nullable
-                        as BusinessType?,
-            storeName:
-                freezed == storeName
-                    ? _value.storeName
-                    : storeName // ignore: cast_nullable_to_non_nullable
-                        as BusinessType?,
-            lastTransactionDate:
-                freezed == lastTransactionDate
-                    ? _value.lastTransactionDate
-                    : lastTransactionDate // ignore: cast_nullable_to_non_nullable
-                        as LastTransactionDate?,
+                        as ApprovedBy?,
+            ownerNationalIdPhoto:
+                freezed == ownerNationalIdPhoto
+                    ? _value.ownerNationalIdPhoto
+                    : ownerNationalIdPhoto // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            companyAddress:
+                freezed == companyAddress
+                    ? _value.companyAddress
+                    : companyAddress // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            companyStorePhoto:
+                freezed == companyStorePhoto
+                    ? _value.companyStorePhoto
+                    : companyStorePhoto // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
           )
           as $Val,
     );
   }
 
-  /// Create a copy of Fields
+  /// Create a copy of CustomerDomainFields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $PurchaseHistoryCopyWith<$Res>? get purchaseHistory {
-    if (_value.purchaseHistory == null) {
+  $ApprovedByCopyWith<$Res>? get ownerPhoneNumber {
+    if (_value.ownerPhoneNumber == null) {
       return null;
     }
 
-    return $PurchaseHistoryCopyWith<$Res>(_value.purchaseHistory!, (value) {
-      return _then(_value.copyWith(purchaseHistory: value) as $Val);
+    return $ApprovedByCopyWith<$Res>(_value.ownerPhoneNumber!, (value) {
+      return _then(_value.copyWith(ownerPhoneNumber: value) as $Val);
     });
   }
 
-  /// Create a copy of Fields
+  /// Create a copy of CustomerDomainFields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $BusinessTypeCopyWith<$Res>? get phoneNumber {
-    if (_value.phoneNumber == null) {
-      return null;
-    }
-
-    return $BusinessTypeCopyWith<$Res>(_value.phoneNumber!, (value) {
-      return _then(_value.copyWith(phoneNumber: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ItudeCopyWith<$Res>? get latitude {
-    if (_value.latitude == null) {
-      return null;
-    }
-
-    return $ItudeCopyWith<$Res>(_value.latitude!, (value) {
-      return _then(_value.copyWith(latitude: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $BusinessTypeCopyWith<$Res>? get ownerAddress {
-    if (_value.ownerAddress == null) {
-      return null;
-    }
-
-    return $BusinessTypeCopyWith<$Res>(_value.ownerAddress!, (value) {
-      return _then(_value.copyWith(ownerAddress: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $BusinessTypeCopyWith<$Res>? get subscriptionType {
-    if (_value.subscriptionType == null) {
-      return null;
-    }
-
-    return $BusinessTypeCopyWith<$Res>(_value.subscriptionType!, (value) {
-      return _then(_value.copyWith(subscriptionType: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $BusinessTypeCopyWith<$Res>? get idNumber {
-    if (_value.idNumber == null) {
-      return null;
-    }
-
-    return $BusinessTypeCopyWith<$Res>(_value.idNumber!, (value) {
-      return _then(_value.copyWith(idNumber: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $BusinessTypeCopyWith<$Res>? get preferredPaymentMethod {
-    if (_value.preferredPaymentMethod == null) {
-      return null;
-    }
-
-    return $BusinessTypeCopyWith<$Res>(_value.preferredPaymentMethod!, (value) {
-      return _then(_value.copyWith(preferredPaymentMethod: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $BusinessTypeCopyWith<$Res>? get email {
-    if (_value.email == null) {
-      return null;
-    }
-
-    return $BusinessTypeCopyWith<$Res>(_value.email!, (value) {
-      return _then(_value.copyWith(email: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ItudeCopyWith<$Res>? get longitude {
-    if (_value.longitude == null) {
-      return null;
-    }
-
-    return $ItudeCopyWith<$Res>(_value.longitude!, (value) {
-      return _then(_value.copyWith(longitude: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $BusinessTypeCopyWith<$Res>? get deliveryZone {
-    if (_value.deliveryZone == null) {
-      return null;
-    }
-
-    return $BusinessTypeCopyWith<$Res>(_value.deliveryZone!, (value) {
-      return _then(_value.copyWith(deliveryZone: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $BusinessTypeCopyWith<$Res>? get preferredDeliveryTime {
-    if (_value.preferredDeliveryTime == null) {
-      return null;
-    }
-
-    return $BusinessTypeCopyWith<$Res>(_value.preferredDeliveryTime!, (value) {
-      return _then(_value.copyWith(preferredDeliveryTime: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $BusinessTypeCopyWith<$Res>? get taxId {
-    if (_value.taxId == null) {
-      return null;
-    }
-
-    return $BusinessTypeCopyWith<$Res>(_value.taxId!, (value) {
-      return _then(_value.copyWith(taxId: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $PhotoCopyWith<$Res>? get storePhoto {
-    if (_value.storePhoto == null) {
-      return null;
-    }
-
-    return $PhotoCopyWith<$Res>(_value.storePhoto!, (value) {
-      return _then(_value.copyWith(storePhoto: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $BusinessTypeCopyWith<$Res>? get businessType {
-    if (_value.businessType == null) {
-      return null;
-    }
-
-    return $BusinessTypeCopyWith<$Res>(_value.businessType!, (value) {
-      return _then(_value.copyWith(businessType: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $BusinessTypeCopyWith<$Res>? get customerCode {
+  $ApprovedByCopyWith<$Res>? get customerCode {
     if (_value.customerCode == null) {
       return null;
     }
 
-    return $BusinessTypeCopyWith<$Res>(_value.customerCode!, (value) {
+    return $ApprovedByCopyWith<$Res>(_value.customerCode!, (value) {
       return _then(_value.copyWith(customerCode: value) as $Val);
     });
   }
 
-  /// Create a copy of Fields
+  /// Create a copy of CustomerDomainFields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $BusinessTypeCopyWith<$Res>? get ownership {
-    if (_value.ownership == null) {
+  $ApprovedByCopyWith<$Res>? get companyStoreCondition {
+    if (_value.companyStoreCondition == null) {
       return null;
     }
 
-    return $BusinessTypeCopyWith<$Res>(_value.ownership!, (value) {
-      return _then(_value.copyWith(ownership: value) as $Val);
+    return $ApprovedByCopyWith<$Res>(_value.companyStoreCondition!, (value) {
+      return _then(_value.copyWith(companyStoreCondition: value) as $Val);
     });
   }
 
-  /// Create a copy of Fields
+  /// Create a copy of CustomerDomainFields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CreditLimitCopyWith<$Res>? get creditLimit {
-    if (_value.creditLimit == null) {
+  $ApprovedByCopyWith<$Res>? get companyPhoneNumber {
+    if (_value.companyPhoneNumber == null) {
       return null;
     }
 
-    return $CreditLimitCopyWith<$Res>(_value.creditLimit!, (value) {
-      return _then(_value.copyWith(creditLimit: value) as $Val);
+    return $ApprovedByCopyWith<$Res>(_value.companyPhoneNumber!, (value) {
+      return _then(_value.copyWith(companyPhoneNumber: value) as $Val);
     });
   }
 
-  /// Create a copy of Fields
+  /// Create a copy of CustomerDomainFields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $BusinessTypeCopyWith<$Res>? get ownerName {
+  $ApprovedByCopyWith<$Res>? get ownerTaxId {
+    if (_value.ownerTaxId == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.ownerTaxId!, (value) {
+      return _then(_value.copyWith(ownerTaxId: value) as $Val);
+    });
+  }
+
+  /// Create a copy of CustomerDomainFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get approvedBy {
+    if (_value.approvedBy == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.approvedBy!, (value) {
+      return _then(_value.copyWith(approvedBy: value) as $Val);
+    });
+  }
+
+  /// Create a copy of CustomerDomainFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get subscriptionType {
+    if (_value.subscriptionType == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.subscriptionType!, (value) {
+      return _then(_value.copyWith(subscriptionType: value) as $Val);
+    });
+  }
+
+  /// Create a copy of CustomerDomainFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get ownerAddress {
+    if (_value.ownerAddress == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.ownerAddress!, (value) {
+      return _then(_value.copyWith(ownerAddress: value) as $Val);
+    });
+  }
+
+  /// Create a copy of CustomerDomainFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get ownershipStatus {
+    if (_value.ownershipStatus == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.ownershipStatus!, (value) {
+      return _then(_value.copyWith(ownershipStatus: value) as $Val);
+    });
+  }
+
+  /// Create a copy of CustomerDomainFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get companyEmail {
+    if (_value.companyEmail == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.companyEmail!, (value) {
+      return _then(_value.copyWith(companyEmail: value) as $Val);
+    });
+  }
+
+  /// Create a copy of CustomerDomainFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CompanyLocationCopyWith<$Res>? get companyLocation {
+    if (_value.companyLocation == null) {
+      return null;
+    }
+
+    return $CompanyLocationCopyWith<$Res>(_value.companyLocation!, (value) {
+      return _then(_value.copyWith(companyLocation: value) as $Val);
+    });
+  }
+
+  /// Create a copy of CustomerDomainFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get requestedBy {
+    if (_value.requestedBy == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.requestedBy!, (value) {
+      return _then(_value.copyWith(requestedBy: value) as $Val);
+    });
+  }
+
+  /// Create a copy of CustomerDomainFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get ownerNationalId {
+    if (_value.ownerNationalId == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.ownerNationalId!, (value) {
+      return _then(_value.copyWith(ownerNationalId: value) as $Val);
+    });
+  }
+
+  /// Create a copy of CustomerDomainFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get ownerName {
     if (_value.ownerName == null) {
       return null;
     }
 
-    return $BusinessTypeCopyWith<$Res>(_value.ownerName!, (value) {
+    return $ApprovedByCopyWith<$Res>(_value.ownerName!, (value) {
       return _then(_value.copyWith(ownerName: value) as $Val);
     });
   }
 
-  /// Create a copy of Fields
+  /// Create a copy of CustomerDomainFields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CreditLimitCopyWith<$Res>? get outstandingBalance {
-    if (_value.outstandingBalance == null) {
-      return null;
-    }
-
-    return $CreditLimitCopyWith<$Res>(_value.outstandingBalance!, (value) {
-      return _then(_value.copyWith(outstandingBalance: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $BlacklistedCopyWith<$Res>? get blacklisted {
-    if (_value.blacklisted == null) {
-      return null;
-    }
-
-    return $BlacklistedCopyWith<$Res>(_value.blacklisted!, (value) {
-      return _then(_value.copyWith(blacklisted: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $BlacklistedCopyWith<$Res>? get discountEligibility {
-    if (_value.discountEligibility == null) {
-      return null;
-    }
-
-    return $BlacklistedCopyWith<$Res>(_value.discountEligibility!, (value) {
-      return _then(_value.copyWith(discountEligibility: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $BusinessTypeCopyWith<$Res>? get visitFrequency {
-    if (_value.visitFrequency == null) {
-      return null;
-    }
-
-    return $BusinessTypeCopyWith<$Res>(_value.visitFrequency!, (value) {
-      return _then(_value.copyWith(visitFrequency: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $BusinessTypeCopyWith<$Res>? get companyName {
+  $ApprovedByCopyWith<$Res>? get companyName {
     if (_value.companyName == null) {
       return null;
     }
 
-    return $BusinessTypeCopyWith<$Res>(_value.companyName!, (value) {
+    return $ApprovedByCopyWith<$Res>(_value.companyName!, (value) {
       return _then(_value.copyWith(companyName: value) as $Val);
     });
   }
 
-  /// Create a copy of Fields
+  /// Create a copy of CustomerDomainFields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $BusinessTypeCopyWith<$Res>? get storeAddress {
-    if (_value.storeAddress == null) {
+  $ApprovedByCopyWith<$Res>? get ownerNationalIdPhoto {
+    if (_value.ownerNationalIdPhoto == null) {
       return null;
     }
 
-    return $BusinessTypeCopyWith<$Res>(_value.storeAddress!, (value) {
-      return _then(_value.copyWith(storeAddress: value) as $Val);
+    return $ApprovedByCopyWith<$Res>(_value.ownerNationalIdPhoto!, (value) {
+      return _then(_value.copyWith(ownerNationalIdPhoto: value) as $Val);
     });
   }
 
-  /// Create a copy of Fields
+  /// Create a copy of CustomerDomainFields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $PhotoCopyWith<$Res>? get idPhoto {
-    if (_value.idPhoto == null) {
+  $ApprovedByCopyWith<$Res>? get companyAddress {
+    if (_value.companyAddress == null) {
       return null;
     }
 
-    return $PhotoCopyWith<$Res>(_value.idPhoto!, (value) {
-      return _then(_value.copyWith(idPhoto: value) as $Val);
+    return $ApprovedByCopyWith<$Res>(_value.companyAddress!, (value) {
+      return _then(_value.copyWith(companyAddress: value) as $Val);
     });
   }
 
-  /// Create a copy of Fields
+  /// Create a copy of CustomerDomainFields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $BusinessTypeCopyWith<$Res>? get status {
-    if (_value.status == null) {
+  $ApprovedByCopyWith<$Res>? get companyStorePhoto {
+    if (_value.companyStorePhoto == null) {
       return null;
     }
 
-    return $BusinessTypeCopyWith<$Res>(_value.status!, (value) {
-      return _then(_value.copyWith(status: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $BusinessTypeCopyWith<$Res>? get salesRepId {
-    if (_value.salesRepId == null) {
-      return null;
-    }
-
-    return $BusinessTypeCopyWith<$Res>(_value.salesRepId!, (value) {
-      return _then(_value.copyWith(salesRepId: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $BusinessTypeCopyWith<$Res>? get customerNotes {
-    if (_value.customerNotes == null) {
-      return null;
-    }
-
-    return $BusinessTypeCopyWith<$Res>(_value.customerNotes!, (value) {
-      return _then(_value.copyWith(customerNotes: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $BusinessTypeCopyWith<$Res>? get storeName {
-    if (_value.storeName == null) {
-      return null;
-    }
-
-    return $BusinessTypeCopyWith<$Res>(_value.storeName!, (value) {
-      return _then(_value.copyWith(storeName: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $LastTransactionDateCopyWith<$Res>? get lastTransactionDate {
-    if (_value.lastTransactionDate == null) {
-      return null;
-    }
-
-    return $LastTransactionDateCopyWith<$Res>(_value.lastTransactionDate!, (
-      value,
-    ) {
-      return _then(_value.copyWith(lastTransactionDate: value) as $Val);
+    return $ApprovedByCopyWith<$Res>(_value.companyStorePhoto!, (value) {
+      return _then(_value.copyWith(companyStorePhoto: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$$FieldsImplCopyWith<$Res> implements $FieldsCopyWith<$Res> {
-  factory _$$FieldsImplCopyWith(
-    _$FieldsImpl value,
-    $Res Function(_$FieldsImpl) then,
-  ) = __$$FieldsImplCopyWithImpl<$Res>;
+abstract class _$$CustomerDomainFieldsImplCopyWith<$Res>
+    implements $CustomerDomainFieldsCopyWith<$Res> {
+  factory _$$CustomerDomainFieldsImplCopyWith(
+    _$CustomerDomainFieldsImpl value,
+    $Res Function(_$CustomerDomainFieldsImpl) then,
+  ) = __$$CustomerDomainFieldsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({
-    @JsonKey(name: 'purchase_history') PurchaseHistory? purchaseHistory,
-    @JsonKey(name: 'phone_number') BusinessType? phoneNumber,
-    @JsonKey(name: 'latitude') Itude? latitude,
-    @JsonKey(name: 'owner_address') BusinessType? ownerAddress,
-    @JsonKey(name: 'subscription_type') BusinessType? subscriptionType,
-    @JsonKey(name: 'id_number') BusinessType? idNumber,
-    @JsonKey(name: 'preferred_payment_method')
-    BusinessType? preferredPaymentMethod,
-    @JsonKey(name: 'email') BusinessType? email,
-    @JsonKey(name: 'longitude') Itude? longitude,
-    @JsonKey(name: 'delivery_zone') BusinessType? deliveryZone,
-    @JsonKey(name: 'preferred_delivery_time')
-    BusinessType? preferredDeliveryTime,
-    @JsonKey(name: 'tax_id') BusinessType? taxId,
-    @JsonKey(name: 'store_photo') Photo? storePhoto,
-    @JsonKey(name: 'business_type') BusinessType? businessType,
-    @JsonKey(name: 'customer_code') BusinessType? customerCode,
-    @JsonKey(name: 'ownership') BusinessType? ownership,
-    @JsonKey(name: 'credit_limit') CreditLimit? creditLimit,
-    @JsonKey(name: 'owner_name') BusinessType? ownerName,
-    @JsonKey(name: 'outstanding_balance') CreditLimit? outstandingBalance,
-    @JsonKey(name: 'blacklisted') Blacklisted? blacklisted,
-    @JsonKey(name: 'discount_eligibility') Blacklisted? discountEligibility,
-    @JsonKey(name: 'visit_frequency') BusinessType? visitFrequency,
-    @JsonKey(name: 'company_name') BusinessType? companyName,
-    @JsonKey(name: 'store_address') BusinessType? storeAddress,
-    @JsonKey(name: 'id_photo') Photo? idPhoto,
-    @JsonKey(name: 'status') BusinessType? status,
-    @JsonKey(name: 'sales_rep_id') BusinessType? salesRepId,
-    @JsonKey(name: 'customer_notes') BusinessType? customerNotes,
-    @JsonKey(name: 'store_name') BusinessType? storeName,
-    @JsonKey(name: 'last_transaction_date')
-    LastTransactionDate? lastTransactionDate,
+    @JsonKey(name: 'owner_phone_number') ApprovedBy? ownerPhoneNumber,
+    @JsonKey(name: 'customer_code') ApprovedBy? customerCode,
+    @JsonKey(name: 'company_store_condition') ApprovedBy? companyStoreCondition,
+    @JsonKey(name: 'company_phone_number') ApprovedBy? companyPhoneNumber,
+    @JsonKey(name: 'owner_tax_id') ApprovedBy? ownerTaxId,
+    @JsonKey(name: 'approved_by') ApprovedBy? approvedBy,
+    @JsonKey(name: 'subscription_type') ApprovedBy? subscriptionType,
+    @JsonKey(name: 'owner_address') ApprovedBy? ownerAddress,
+    @JsonKey(name: 'ownership_status') ApprovedBy? ownershipStatus,
+    @JsonKey(name: 'company_email') ApprovedBy? companyEmail,
+    @JsonKey(name: 'company_location') CompanyLocation? companyLocation,
+    @JsonKey(name: 'requested_by') ApprovedBy? requestedBy,
+    @JsonKey(name: 'owner_national_id') ApprovedBy? ownerNationalId,
+    @JsonKey(name: 'owner_name') ApprovedBy? ownerName,
+    @JsonKey(name: 'company_name') ApprovedBy? companyName,
+    @JsonKey(name: 'owner_national_id_photo') ApprovedBy? ownerNationalIdPhoto,
+    @JsonKey(name: 'company_address') ApprovedBy? companyAddress,
+    @JsonKey(name: 'company_store_photo') ApprovedBy? companyStorePhoto,
   });
 
   @override
-  $PurchaseHistoryCopyWith<$Res>? get purchaseHistory;
+  $ApprovedByCopyWith<$Res>? get ownerPhoneNumber;
   @override
-  $BusinessTypeCopyWith<$Res>? get phoneNumber;
+  $ApprovedByCopyWith<$Res>? get customerCode;
   @override
-  $ItudeCopyWith<$Res>? get latitude;
+  $ApprovedByCopyWith<$Res>? get companyStoreCondition;
   @override
-  $BusinessTypeCopyWith<$Res>? get ownerAddress;
+  $ApprovedByCopyWith<$Res>? get companyPhoneNumber;
   @override
-  $BusinessTypeCopyWith<$Res>? get subscriptionType;
+  $ApprovedByCopyWith<$Res>? get ownerTaxId;
   @override
-  $BusinessTypeCopyWith<$Res>? get idNumber;
+  $ApprovedByCopyWith<$Res>? get approvedBy;
   @override
-  $BusinessTypeCopyWith<$Res>? get preferredPaymentMethod;
+  $ApprovedByCopyWith<$Res>? get subscriptionType;
   @override
-  $BusinessTypeCopyWith<$Res>? get email;
+  $ApprovedByCopyWith<$Res>? get ownerAddress;
   @override
-  $ItudeCopyWith<$Res>? get longitude;
+  $ApprovedByCopyWith<$Res>? get ownershipStatus;
   @override
-  $BusinessTypeCopyWith<$Res>? get deliveryZone;
+  $ApprovedByCopyWith<$Res>? get companyEmail;
   @override
-  $BusinessTypeCopyWith<$Res>? get preferredDeliveryTime;
+  $CompanyLocationCopyWith<$Res>? get companyLocation;
   @override
-  $BusinessTypeCopyWith<$Res>? get taxId;
+  $ApprovedByCopyWith<$Res>? get requestedBy;
   @override
-  $PhotoCopyWith<$Res>? get storePhoto;
+  $ApprovedByCopyWith<$Res>? get ownerNationalId;
   @override
-  $BusinessTypeCopyWith<$Res>? get businessType;
+  $ApprovedByCopyWith<$Res>? get ownerName;
   @override
-  $BusinessTypeCopyWith<$Res>? get customerCode;
+  $ApprovedByCopyWith<$Res>? get companyName;
   @override
-  $BusinessTypeCopyWith<$Res>? get ownership;
+  $ApprovedByCopyWith<$Res>? get ownerNationalIdPhoto;
   @override
-  $CreditLimitCopyWith<$Res>? get creditLimit;
+  $ApprovedByCopyWith<$Res>? get companyAddress;
   @override
-  $BusinessTypeCopyWith<$Res>? get ownerName;
-  @override
-  $CreditLimitCopyWith<$Res>? get outstandingBalance;
-  @override
-  $BlacklistedCopyWith<$Res>? get blacklisted;
-  @override
-  $BlacklistedCopyWith<$Res>? get discountEligibility;
-  @override
-  $BusinessTypeCopyWith<$Res>? get visitFrequency;
-  @override
-  $BusinessTypeCopyWith<$Res>? get companyName;
-  @override
-  $BusinessTypeCopyWith<$Res>? get storeAddress;
-  @override
-  $PhotoCopyWith<$Res>? get idPhoto;
-  @override
-  $BusinessTypeCopyWith<$Res>? get status;
-  @override
-  $BusinessTypeCopyWith<$Res>? get salesRepId;
-  @override
-  $BusinessTypeCopyWith<$Res>? get customerNotes;
-  @override
-  $BusinessTypeCopyWith<$Res>? get storeName;
-  @override
-  $LastTransactionDateCopyWith<$Res>? get lastTransactionDate;
+  $ApprovedByCopyWith<$Res>? get companyStorePhoto;
 }
 
 /// @nodoc
-class __$$FieldsImplCopyWithImpl<$Res>
-    extends _$FieldsCopyWithImpl<$Res, _$FieldsImpl>
-    implements _$$FieldsImplCopyWith<$Res> {
-  __$$FieldsImplCopyWithImpl(
-    _$FieldsImpl _value,
-    $Res Function(_$FieldsImpl) _then,
+class __$$CustomerDomainFieldsImplCopyWithImpl<$Res>
+    extends _$CustomerDomainFieldsCopyWithImpl<$Res, _$CustomerDomainFieldsImpl>
+    implements _$$CustomerDomainFieldsImplCopyWith<$Res> {
+  __$$CustomerDomainFieldsImplCopyWithImpl(
+    _$CustomerDomainFieldsImpl _value,
+    $Res Function(_$CustomerDomainFieldsImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of Fields
+  /// Create a copy of CustomerDomainFields
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? purchaseHistory = freezed,
-    Object? phoneNumber = freezed,
-    Object? latitude = freezed,
-    Object? ownerAddress = freezed,
-    Object? subscriptionType = freezed,
-    Object? idNumber = freezed,
-    Object? preferredPaymentMethod = freezed,
-    Object? email = freezed,
-    Object? longitude = freezed,
-    Object? deliveryZone = freezed,
-    Object? preferredDeliveryTime = freezed,
-    Object? taxId = freezed,
-    Object? storePhoto = freezed,
-    Object? businessType = freezed,
+    Object? ownerPhoneNumber = freezed,
     Object? customerCode = freezed,
-    Object? ownership = freezed,
-    Object? creditLimit = freezed,
+    Object? companyStoreCondition = freezed,
+    Object? companyPhoneNumber = freezed,
+    Object? ownerTaxId = freezed,
+    Object? approvedBy = freezed,
+    Object? subscriptionType = freezed,
+    Object? ownerAddress = freezed,
+    Object? ownershipStatus = freezed,
+    Object? companyEmail = freezed,
+    Object? companyLocation = freezed,
+    Object? requestedBy = freezed,
+    Object? ownerNationalId = freezed,
     Object? ownerName = freezed,
-    Object? outstandingBalance = freezed,
-    Object? blacklisted = freezed,
-    Object? discountEligibility = freezed,
-    Object? visitFrequency = freezed,
     Object? companyName = freezed,
-    Object? storeAddress = freezed,
-    Object? idPhoto = freezed,
-    Object? status = freezed,
-    Object? salesRepId = freezed,
-    Object? customerNotes = freezed,
-    Object? storeName = freezed,
-    Object? lastTransactionDate = freezed,
+    Object? ownerNationalIdPhoto = freezed,
+    Object? companyAddress = freezed,
+    Object? companyStorePhoto = freezed,
   }) {
     return _then(
-      _$FieldsImpl(
-        purchaseHistory:
-            freezed == purchaseHistory
-                ? _value.purchaseHistory
-                : purchaseHistory // ignore: cast_nullable_to_non_nullable
-                    as PurchaseHistory?,
-        phoneNumber:
-            freezed == phoneNumber
-                ? _value.phoneNumber
-                : phoneNumber // ignore: cast_nullable_to_non_nullable
-                    as BusinessType?,
-        latitude:
-            freezed == latitude
-                ? _value.latitude
-                : latitude // ignore: cast_nullable_to_non_nullable
-                    as Itude?,
-        ownerAddress:
-            freezed == ownerAddress
-                ? _value.ownerAddress
-                : ownerAddress // ignore: cast_nullable_to_non_nullable
-                    as BusinessType?,
-        subscriptionType:
-            freezed == subscriptionType
-                ? _value.subscriptionType
-                : subscriptionType // ignore: cast_nullable_to_non_nullable
-                    as BusinessType?,
-        idNumber:
-            freezed == idNumber
-                ? _value.idNumber
-                : idNumber // ignore: cast_nullable_to_non_nullable
-                    as BusinessType?,
-        preferredPaymentMethod:
-            freezed == preferredPaymentMethod
-                ? _value.preferredPaymentMethod
-                : preferredPaymentMethod // ignore: cast_nullable_to_non_nullable
-                    as BusinessType?,
-        email:
-            freezed == email
-                ? _value.email
-                : email // ignore: cast_nullable_to_non_nullable
-                    as BusinessType?,
-        longitude:
-            freezed == longitude
-                ? _value.longitude
-                : longitude // ignore: cast_nullable_to_non_nullable
-                    as Itude?,
-        deliveryZone:
-            freezed == deliveryZone
-                ? _value.deliveryZone
-                : deliveryZone // ignore: cast_nullable_to_non_nullable
-                    as BusinessType?,
-        preferredDeliveryTime:
-            freezed == preferredDeliveryTime
-                ? _value.preferredDeliveryTime
-                : preferredDeliveryTime // ignore: cast_nullable_to_non_nullable
-                    as BusinessType?,
-        taxId:
-            freezed == taxId
-                ? _value.taxId
-                : taxId // ignore: cast_nullable_to_non_nullable
-                    as BusinessType?,
-        storePhoto:
-            freezed == storePhoto
-                ? _value.storePhoto
-                : storePhoto // ignore: cast_nullable_to_non_nullable
-                    as Photo?,
-        businessType:
-            freezed == businessType
-                ? _value.businessType
-                : businessType // ignore: cast_nullable_to_non_nullable
-                    as BusinessType?,
+      _$CustomerDomainFieldsImpl(
+        ownerPhoneNumber:
+            freezed == ownerPhoneNumber
+                ? _value.ownerPhoneNumber
+                : ownerPhoneNumber // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
         customerCode:
             freezed == customerCode
                 ? _value.customerCode
                 : customerCode // ignore: cast_nullable_to_non_nullable
-                    as BusinessType?,
-        ownership:
-            freezed == ownership
-                ? _value.ownership
-                : ownership // ignore: cast_nullable_to_non_nullable
-                    as BusinessType?,
-        creditLimit:
-            freezed == creditLimit
-                ? _value.creditLimit
-                : creditLimit // ignore: cast_nullable_to_non_nullable
-                    as CreditLimit?,
+                    as ApprovedBy?,
+        companyStoreCondition:
+            freezed == companyStoreCondition
+                ? _value.companyStoreCondition
+                : companyStoreCondition // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        companyPhoneNumber:
+            freezed == companyPhoneNumber
+                ? _value.companyPhoneNumber
+                : companyPhoneNumber // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        ownerTaxId:
+            freezed == ownerTaxId
+                ? _value.ownerTaxId
+                : ownerTaxId // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        approvedBy:
+            freezed == approvedBy
+                ? _value.approvedBy
+                : approvedBy // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        subscriptionType:
+            freezed == subscriptionType
+                ? _value.subscriptionType
+                : subscriptionType // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        ownerAddress:
+            freezed == ownerAddress
+                ? _value.ownerAddress
+                : ownerAddress // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        ownershipStatus:
+            freezed == ownershipStatus
+                ? _value.ownershipStatus
+                : ownershipStatus // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        companyEmail:
+            freezed == companyEmail
+                ? _value.companyEmail
+                : companyEmail // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        companyLocation:
+            freezed == companyLocation
+                ? _value.companyLocation
+                : companyLocation // ignore: cast_nullable_to_non_nullable
+                    as CompanyLocation?,
+        requestedBy:
+            freezed == requestedBy
+                ? _value.requestedBy
+                : requestedBy // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        ownerNationalId:
+            freezed == ownerNationalId
+                ? _value.ownerNationalId
+                : ownerNationalId // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
         ownerName:
             freezed == ownerName
                 ? _value.ownerName
                 : ownerName // ignore: cast_nullable_to_non_nullable
-                    as BusinessType?,
-        outstandingBalance:
-            freezed == outstandingBalance
-                ? _value.outstandingBalance
-                : outstandingBalance // ignore: cast_nullable_to_non_nullable
-                    as CreditLimit?,
-        blacklisted:
-            freezed == blacklisted
-                ? _value.blacklisted
-                : blacklisted // ignore: cast_nullable_to_non_nullable
-                    as Blacklisted?,
-        discountEligibility:
-            freezed == discountEligibility
-                ? _value.discountEligibility
-                : discountEligibility // ignore: cast_nullable_to_non_nullable
-                    as Blacklisted?,
-        visitFrequency:
-            freezed == visitFrequency
-                ? _value.visitFrequency
-                : visitFrequency // ignore: cast_nullable_to_non_nullable
-                    as BusinessType?,
+                    as ApprovedBy?,
         companyName:
             freezed == companyName
                 ? _value.companyName
                 : companyName // ignore: cast_nullable_to_non_nullable
-                    as BusinessType?,
-        storeAddress:
-            freezed == storeAddress
-                ? _value.storeAddress
-                : storeAddress // ignore: cast_nullable_to_non_nullable
-                    as BusinessType?,
-        idPhoto:
-            freezed == idPhoto
-                ? _value.idPhoto
-                : idPhoto // ignore: cast_nullable_to_non_nullable
-                    as Photo?,
-        status:
-            freezed == status
-                ? _value.status
-                : status // ignore: cast_nullable_to_non_nullable
-                    as BusinessType?,
-        salesRepId:
-            freezed == salesRepId
-                ? _value.salesRepId
-                : salesRepId // ignore: cast_nullable_to_non_nullable
-                    as BusinessType?,
-        customerNotes:
-            freezed == customerNotes
-                ? _value.customerNotes
-                : customerNotes // ignore: cast_nullable_to_non_nullable
-                    as BusinessType?,
-        storeName:
-            freezed == storeName
-                ? _value.storeName
-                : storeName // ignore: cast_nullable_to_non_nullable
-                    as BusinessType?,
-        lastTransactionDate:
-            freezed == lastTransactionDate
-                ? _value.lastTransactionDate
-                : lastTransactionDate // ignore: cast_nullable_to_non_nullable
-                    as LastTransactionDate?,
+                    as ApprovedBy?,
+        ownerNationalIdPhoto:
+            freezed == ownerNationalIdPhoto
+                ? _value.ownerNationalIdPhoto
+                : ownerNationalIdPhoto // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        companyAddress:
+            freezed == companyAddress
+                ? _value.companyAddress
+                : companyAddress // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        companyStorePhoto:
+            freezed == companyStorePhoto
+                ? _value.companyStorePhoto
+                : companyStorePhoto // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
       ),
     );
   }
@@ -1370,1223 +971,1096 @@ class __$$FieldsImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$FieldsImpl implements _Fields {
-  const _$FieldsImpl({
-    @JsonKey(name: 'purchase_history') this.purchaseHistory,
-    @JsonKey(name: 'phone_number') this.phoneNumber,
-    @JsonKey(name: 'latitude') this.latitude,
-    @JsonKey(name: 'owner_address') this.ownerAddress,
-    @JsonKey(name: 'subscription_type') this.subscriptionType,
-    @JsonKey(name: 'id_number') this.idNumber,
-    @JsonKey(name: 'preferred_payment_method') this.preferredPaymentMethod,
-    @JsonKey(name: 'email') this.email,
-    @JsonKey(name: 'longitude') this.longitude,
-    @JsonKey(name: 'delivery_zone') this.deliveryZone,
-    @JsonKey(name: 'preferred_delivery_time') this.preferredDeliveryTime,
-    @JsonKey(name: 'tax_id') this.taxId,
-    @JsonKey(name: 'store_photo') this.storePhoto,
-    @JsonKey(name: 'business_type') this.businessType,
+class _$CustomerDomainFieldsImpl implements _CustomerDomainFields {
+  const _$CustomerDomainFieldsImpl({
+    @JsonKey(name: 'owner_phone_number') this.ownerPhoneNumber,
     @JsonKey(name: 'customer_code') this.customerCode,
-    @JsonKey(name: 'ownership') this.ownership,
-    @JsonKey(name: 'credit_limit') this.creditLimit,
+    @JsonKey(name: 'company_store_condition') this.companyStoreCondition,
+    @JsonKey(name: 'company_phone_number') this.companyPhoneNumber,
+    @JsonKey(name: 'owner_tax_id') this.ownerTaxId,
+    @JsonKey(name: 'approved_by') this.approvedBy,
+    @JsonKey(name: 'subscription_type') this.subscriptionType,
+    @JsonKey(name: 'owner_address') this.ownerAddress,
+    @JsonKey(name: 'ownership_status') this.ownershipStatus,
+    @JsonKey(name: 'company_email') this.companyEmail,
+    @JsonKey(name: 'company_location') this.companyLocation,
+    @JsonKey(name: 'requested_by') this.requestedBy,
+    @JsonKey(name: 'owner_national_id') this.ownerNationalId,
     @JsonKey(name: 'owner_name') this.ownerName,
-    @JsonKey(name: 'outstanding_balance') this.outstandingBalance,
-    @JsonKey(name: 'blacklisted') this.blacklisted,
-    @JsonKey(name: 'discount_eligibility') this.discountEligibility,
-    @JsonKey(name: 'visit_frequency') this.visitFrequency,
     @JsonKey(name: 'company_name') this.companyName,
-    @JsonKey(name: 'store_address') this.storeAddress,
-    @JsonKey(name: 'id_photo') this.idPhoto,
-    @JsonKey(name: 'status') this.status,
-    @JsonKey(name: 'sales_rep_id') this.salesRepId,
-    @JsonKey(name: 'customer_notes') this.customerNotes,
-    @JsonKey(name: 'store_name') this.storeName,
-    @JsonKey(name: 'last_transaction_date') this.lastTransactionDate,
+    @JsonKey(name: 'owner_national_id_photo') this.ownerNationalIdPhoto,
+    @JsonKey(name: 'company_address') this.companyAddress,
+    @JsonKey(name: 'company_store_photo') this.companyStorePhoto,
   });
 
-  factory _$FieldsImpl.fromJson(Map<String, dynamic> json) =>
-      _$$FieldsImplFromJson(json);
+  factory _$CustomerDomainFieldsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CustomerDomainFieldsImplFromJson(json);
 
   @override
-  @JsonKey(name: 'purchase_history')
-  final PurchaseHistory? purchaseHistory;
-  @override
-  @JsonKey(name: 'phone_number')
-  final BusinessType? phoneNumber;
-  @override
-  @JsonKey(name: 'latitude')
-  final Itude? latitude;
-  @override
-  @JsonKey(name: 'owner_address')
-  final BusinessType? ownerAddress;
-  @override
-  @JsonKey(name: 'subscription_type')
-  final BusinessType? subscriptionType;
-  @override
-  @JsonKey(name: 'id_number')
-  final BusinessType? idNumber;
-  @override
-  @JsonKey(name: 'preferred_payment_method')
-  final BusinessType? preferredPaymentMethod;
-  @override
-  @JsonKey(name: 'email')
-  final BusinessType? email;
-  @override
-  @JsonKey(name: 'longitude')
-  final Itude? longitude;
-  @override
-  @JsonKey(name: 'delivery_zone')
-  final BusinessType? deliveryZone;
-  @override
-  @JsonKey(name: 'preferred_delivery_time')
-  final BusinessType? preferredDeliveryTime;
-  @override
-  @JsonKey(name: 'tax_id')
-  final BusinessType? taxId;
-  @override
-  @JsonKey(name: 'store_photo')
-  final Photo? storePhoto;
-  @override
-  @JsonKey(name: 'business_type')
-  final BusinessType? businessType;
+  @JsonKey(name: 'owner_phone_number')
+  final ApprovedBy? ownerPhoneNumber;
   @override
   @JsonKey(name: 'customer_code')
-  final BusinessType? customerCode;
+  final ApprovedBy? customerCode;
   @override
-  @JsonKey(name: 'ownership')
-  final BusinessType? ownership;
+  @JsonKey(name: 'company_store_condition')
+  final ApprovedBy? companyStoreCondition;
   @override
-  @JsonKey(name: 'credit_limit')
-  final CreditLimit? creditLimit;
+  @JsonKey(name: 'company_phone_number')
+  final ApprovedBy? companyPhoneNumber;
+  @override
+  @JsonKey(name: 'owner_tax_id')
+  final ApprovedBy? ownerTaxId;
+  @override
+  @JsonKey(name: 'approved_by')
+  final ApprovedBy? approvedBy;
+  @override
+  @JsonKey(name: 'subscription_type')
+  final ApprovedBy? subscriptionType;
+  @override
+  @JsonKey(name: 'owner_address')
+  final ApprovedBy? ownerAddress;
+  @override
+  @JsonKey(name: 'ownership_status')
+  final ApprovedBy? ownershipStatus;
+  @override
+  @JsonKey(name: 'company_email')
+  final ApprovedBy? companyEmail;
+  @override
+  @JsonKey(name: 'company_location')
+  final CompanyLocation? companyLocation;
+  @override
+  @JsonKey(name: 'requested_by')
+  final ApprovedBy? requestedBy;
+  @override
+  @JsonKey(name: 'owner_national_id')
+  final ApprovedBy? ownerNationalId;
   @override
   @JsonKey(name: 'owner_name')
-  final BusinessType? ownerName;
-  @override
-  @JsonKey(name: 'outstanding_balance')
-  final CreditLimit? outstandingBalance;
-  @override
-  @JsonKey(name: 'blacklisted')
-  final Blacklisted? blacklisted;
-  @override
-  @JsonKey(name: 'discount_eligibility')
-  final Blacklisted? discountEligibility;
-  @override
-  @JsonKey(name: 'visit_frequency')
-  final BusinessType? visitFrequency;
+  final ApprovedBy? ownerName;
   @override
   @JsonKey(name: 'company_name')
-  final BusinessType? companyName;
+  final ApprovedBy? companyName;
   @override
-  @JsonKey(name: 'store_address')
-  final BusinessType? storeAddress;
+  @JsonKey(name: 'owner_national_id_photo')
+  final ApprovedBy? ownerNationalIdPhoto;
   @override
-  @JsonKey(name: 'id_photo')
-  final Photo? idPhoto;
+  @JsonKey(name: 'company_address')
+  final ApprovedBy? companyAddress;
   @override
-  @JsonKey(name: 'status')
-  final BusinessType? status;
-  @override
-  @JsonKey(name: 'sales_rep_id')
-  final BusinessType? salesRepId;
-  @override
-  @JsonKey(name: 'customer_notes')
-  final BusinessType? customerNotes;
-  @override
-  @JsonKey(name: 'store_name')
-  final BusinessType? storeName;
-  @override
-  @JsonKey(name: 'last_transaction_date')
-  final LastTransactionDate? lastTransactionDate;
+  @JsonKey(name: 'company_store_photo')
+  final ApprovedBy? companyStorePhoto;
 
   @override
   String toString() {
-    return 'Fields(purchaseHistory: $purchaseHistory, phoneNumber: $phoneNumber, latitude: $latitude, ownerAddress: $ownerAddress, subscriptionType: $subscriptionType, idNumber: $idNumber, preferredPaymentMethod: $preferredPaymentMethod, email: $email, longitude: $longitude, deliveryZone: $deliveryZone, preferredDeliveryTime: $preferredDeliveryTime, taxId: $taxId, storePhoto: $storePhoto, businessType: $businessType, customerCode: $customerCode, ownership: $ownership, creditLimit: $creditLimit, ownerName: $ownerName, outstandingBalance: $outstandingBalance, blacklisted: $blacklisted, discountEligibility: $discountEligibility, visitFrequency: $visitFrequency, companyName: $companyName, storeAddress: $storeAddress, idPhoto: $idPhoto, status: $status, salesRepId: $salesRepId, customerNotes: $customerNotes, storeName: $storeName, lastTransactionDate: $lastTransactionDate)';
+    return 'CustomerDomainFields(ownerPhoneNumber: $ownerPhoneNumber, customerCode: $customerCode, companyStoreCondition: $companyStoreCondition, companyPhoneNumber: $companyPhoneNumber, ownerTaxId: $ownerTaxId, approvedBy: $approvedBy, subscriptionType: $subscriptionType, ownerAddress: $ownerAddress, ownershipStatus: $ownershipStatus, companyEmail: $companyEmail, companyLocation: $companyLocation, requestedBy: $requestedBy, ownerNationalId: $ownerNationalId, ownerName: $ownerName, companyName: $companyName, ownerNationalIdPhoto: $ownerNationalIdPhoto, companyAddress: $companyAddress, companyStorePhoto: $companyStorePhoto)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$FieldsImpl &&
-            (identical(other.purchaseHistory, purchaseHistory) ||
-                other.purchaseHistory == purchaseHistory) &&
-            (identical(other.phoneNumber, phoneNumber) ||
-                other.phoneNumber == phoneNumber) &&
-            (identical(other.latitude, latitude) ||
-                other.latitude == latitude) &&
-            (identical(other.ownerAddress, ownerAddress) ||
-                other.ownerAddress == ownerAddress) &&
-            (identical(other.subscriptionType, subscriptionType) ||
-                other.subscriptionType == subscriptionType) &&
-            (identical(other.idNumber, idNumber) ||
-                other.idNumber == idNumber) &&
-            (identical(other.preferredPaymentMethod, preferredPaymentMethod) ||
-                other.preferredPaymentMethod == preferredPaymentMethod) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.longitude, longitude) ||
-                other.longitude == longitude) &&
-            (identical(other.deliveryZone, deliveryZone) ||
-                other.deliveryZone == deliveryZone) &&
-            (identical(other.preferredDeliveryTime, preferredDeliveryTime) ||
-                other.preferredDeliveryTime == preferredDeliveryTime) &&
-            (identical(other.taxId, taxId) || other.taxId == taxId) &&
-            (identical(other.storePhoto, storePhoto) ||
-                other.storePhoto == storePhoto) &&
-            (identical(other.businessType, businessType) ||
-                other.businessType == businessType) &&
+            other is _$CustomerDomainFieldsImpl &&
+            (identical(other.ownerPhoneNumber, ownerPhoneNumber) ||
+                other.ownerPhoneNumber == ownerPhoneNumber) &&
             (identical(other.customerCode, customerCode) ||
                 other.customerCode == customerCode) &&
-            (identical(other.ownership, ownership) ||
-                other.ownership == ownership) &&
-            (identical(other.creditLimit, creditLimit) ||
-                other.creditLimit == creditLimit) &&
+            (identical(other.companyStoreCondition, companyStoreCondition) ||
+                other.companyStoreCondition == companyStoreCondition) &&
+            (identical(other.companyPhoneNumber, companyPhoneNumber) ||
+                other.companyPhoneNumber == companyPhoneNumber) &&
+            (identical(other.ownerTaxId, ownerTaxId) ||
+                other.ownerTaxId == ownerTaxId) &&
+            (identical(other.approvedBy, approvedBy) ||
+                other.approvedBy == approvedBy) &&
+            (identical(other.subscriptionType, subscriptionType) ||
+                other.subscriptionType == subscriptionType) &&
+            (identical(other.ownerAddress, ownerAddress) ||
+                other.ownerAddress == ownerAddress) &&
+            (identical(other.ownershipStatus, ownershipStatus) ||
+                other.ownershipStatus == ownershipStatus) &&
+            (identical(other.companyEmail, companyEmail) ||
+                other.companyEmail == companyEmail) &&
+            (identical(other.companyLocation, companyLocation) ||
+                other.companyLocation == companyLocation) &&
+            (identical(other.requestedBy, requestedBy) ||
+                other.requestedBy == requestedBy) &&
+            (identical(other.ownerNationalId, ownerNationalId) ||
+                other.ownerNationalId == ownerNationalId) &&
             (identical(other.ownerName, ownerName) ||
                 other.ownerName == ownerName) &&
-            (identical(other.outstandingBalance, outstandingBalance) ||
-                other.outstandingBalance == outstandingBalance) &&
-            (identical(other.blacklisted, blacklisted) ||
-                other.blacklisted == blacklisted) &&
-            (identical(other.discountEligibility, discountEligibility) ||
-                other.discountEligibility == discountEligibility) &&
-            (identical(other.visitFrequency, visitFrequency) ||
-                other.visitFrequency == visitFrequency) &&
             (identical(other.companyName, companyName) ||
                 other.companyName == companyName) &&
-            (identical(other.storeAddress, storeAddress) ||
-                other.storeAddress == storeAddress) &&
-            (identical(other.idPhoto, idPhoto) || other.idPhoto == idPhoto) &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.salesRepId, salesRepId) ||
-                other.salesRepId == salesRepId) &&
-            (identical(other.customerNotes, customerNotes) ||
-                other.customerNotes == customerNotes) &&
-            (identical(other.storeName, storeName) ||
-                other.storeName == storeName) &&
-            (identical(other.lastTransactionDate, lastTransactionDate) ||
-                other.lastTransactionDate == lastTransactionDate));
+            (identical(other.ownerNationalIdPhoto, ownerNationalIdPhoto) ||
+                other.ownerNationalIdPhoto == ownerNationalIdPhoto) &&
+            (identical(other.companyAddress, companyAddress) ||
+                other.companyAddress == companyAddress) &&
+            (identical(other.companyStorePhoto, companyStorePhoto) ||
+                other.companyStorePhoto == companyStorePhoto));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hashAll([
+  int get hashCode => Object.hash(
     runtimeType,
-    purchaseHistory,
-    phoneNumber,
-    latitude,
-    ownerAddress,
-    subscriptionType,
-    idNumber,
-    preferredPaymentMethod,
-    email,
-    longitude,
-    deliveryZone,
-    preferredDeliveryTime,
-    taxId,
-    storePhoto,
-    businessType,
+    ownerPhoneNumber,
     customerCode,
-    ownership,
-    creditLimit,
+    companyStoreCondition,
+    companyPhoneNumber,
+    ownerTaxId,
+    approvedBy,
+    subscriptionType,
+    ownerAddress,
+    ownershipStatus,
+    companyEmail,
+    companyLocation,
+    requestedBy,
+    ownerNationalId,
     ownerName,
-    outstandingBalance,
-    blacklisted,
-    discountEligibility,
-    visitFrequency,
     companyName,
-    storeAddress,
-    idPhoto,
-    status,
-    salesRepId,
-    customerNotes,
-    storeName,
-    lastTransactionDate,
-  ]);
+    ownerNationalIdPhoto,
+    companyAddress,
+    companyStorePhoto,
+  );
 
-  /// Create a copy of Fields
+  /// Create a copy of CustomerDomainFields
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$FieldsImplCopyWith<_$FieldsImpl> get copyWith =>
-      __$$FieldsImplCopyWithImpl<_$FieldsImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$FieldsImplToJson(this);
-  }
-}
-
-abstract class _Fields implements Fields {
-  const factory _Fields({
-    @JsonKey(name: 'purchase_history') final PurchaseHistory? purchaseHistory,
-    @JsonKey(name: 'phone_number') final BusinessType? phoneNumber,
-    @JsonKey(name: 'latitude') final Itude? latitude,
-    @JsonKey(name: 'owner_address') final BusinessType? ownerAddress,
-    @JsonKey(name: 'subscription_type') final BusinessType? subscriptionType,
-    @JsonKey(name: 'id_number') final BusinessType? idNumber,
-    @JsonKey(name: 'preferred_payment_method')
-    final BusinessType? preferredPaymentMethod,
-    @JsonKey(name: 'email') final BusinessType? email,
-    @JsonKey(name: 'longitude') final Itude? longitude,
-    @JsonKey(name: 'delivery_zone') final BusinessType? deliveryZone,
-    @JsonKey(name: 'preferred_delivery_time')
-    final BusinessType? preferredDeliveryTime,
-    @JsonKey(name: 'tax_id') final BusinessType? taxId,
-    @JsonKey(name: 'store_photo') final Photo? storePhoto,
-    @JsonKey(name: 'business_type') final BusinessType? businessType,
-    @JsonKey(name: 'customer_code') final BusinessType? customerCode,
-    @JsonKey(name: 'ownership') final BusinessType? ownership,
-    @JsonKey(name: 'credit_limit') final CreditLimit? creditLimit,
-    @JsonKey(name: 'owner_name') final BusinessType? ownerName,
-    @JsonKey(name: 'outstanding_balance') final CreditLimit? outstandingBalance,
-    @JsonKey(name: 'blacklisted') final Blacklisted? blacklisted,
-    @JsonKey(name: 'discount_eligibility')
-    final Blacklisted? discountEligibility,
-    @JsonKey(name: 'visit_frequency') final BusinessType? visitFrequency,
-    @JsonKey(name: 'company_name') final BusinessType? companyName,
-    @JsonKey(name: 'store_address') final BusinessType? storeAddress,
-    @JsonKey(name: 'id_photo') final Photo? idPhoto,
-    @JsonKey(name: 'status') final BusinessType? status,
-    @JsonKey(name: 'sales_rep_id') final BusinessType? salesRepId,
-    @JsonKey(name: 'customer_notes') final BusinessType? customerNotes,
-    @JsonKey(name: 'store_name') final BusinessType? storeName,
-    @JsonKey(name: 'last_transaction_date')
-    final LastTransactionDate? lastTransactionDate,
-  }) = _$FieldsImpl;
-
-  factory _Fields.fromJson(Map<String, dynamic> json) = _$FieldsImpl.fromJson;
-
-  @override
-  @JsonKey(name: 'purchase_history')
-  PurchaseHistory? get purchaseHistory;
-  @override
-  @JsonKey(name: 'phone_number')
-  BusinessType? get phoneNumber;
-  @override
-  @JsonKey(name: 'latitude')
-  Itude? get latitude;
-  @override
-  @JsonKey(name: 'owner_address')
-  BusinessType? get ownerAddress;
-  @override
-  @JsonKey(name: 'subscription_type')
-  BusinessType? get subscriptionType;
-  @override
-  @JsonKey(name: 'id_number')
-  BusinessType? get idNumber;
-  @override
-  @JsonKey(name: 'preferred_payment_method')
-  BusinessType? get preferredPaymentMethod;
-  @override
-  @JsonKey(name: 'email')
-  BusinessType? get email;
-  @override
-  @JsonKey(name: 'longitude')
-  Itude? get longitude;
-  @override
-  @JsonKey(name: 'delivery_zone')
-  BusinessType? get deliveryZone;
-  @override
-  @JsonKey(name: 'preferred_delivery_time')
-  BusinessType? get preferredDeliveryTime;
-  @override
-  @JsonKey(name: 'tax_id')
-  BusinessType? get taxId;
-  @override
-  @JsonKey(name: 'store_photo')
-  Photo? get storePhoto;
-  @override
-  @JsonKey(name: 'business_type')
-  BusinessType? get businessType;
-  @override
-  @JsonKey(name: 'customer_code')
-  BusinessType? get customerCode;
-  @override
-  @JsonKey(name: 'ownership')
-  BusinessType? get ownership;
-  @override
-  @JsonKey(name: 'credit_limit')
-  CreditLimit? get creditLimit;
-  @override
-  @JsonKey(name: 'owner_name')
-  BusinessType? get ownerName;
-  @override
-  @JsonKey(name: 'outstanding_balance')
-  CreditLimit? get outstandingBalance;
-  @override
-  @JsonKey(name: 'blacklisted')
-  Blacklisted? get blacklisted;
-  @override
-  @JsonKey(name: 'discount_eligibility')
-  Blacklisted? get discountEligibility;
-  @override
-  @JsonKey(name: 'visit_frequency')
-  BusinessType? get visitFrequency;
-  @override
-  @JsonKey(name: 'company_name')
-  BusinessType? get companyName;
-  @override
-  @JsonKey(name: 'store_address')
-  BusinessType? get storeAddress;
-  @override
-  @JsonKey(name: 'id_photo')
-  Photo? get idPhoto;
-  @override
-  @JsonKey(name: 'status')
-  BusinessType? get status;
-  @override
-  @JsonKey(name: 'sales_rep_id')
-  BusinessType? get salesRepId;
-  @override
-  @JsonKey(name: 'customer_notes')
-  BusinessType? get customerNotes;
-  @override
-  @JsonKey(name: 'store_name')
-  BusinessType? get storeName;
-  @override
-  @JsonKey(name: 'last_transaction_date')
-  LastTransactionDate? get lastTransactionDate;
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$FieldsImplCopyWith<_$FieldsImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-Blacklisted _$BlacklistedFromJson(Map<String, dynamic> json) {
-  return _Blacklisted.fromJson(json);
-}
-
-/// @nodoc
-mixin _$Blacklisted {
-  @JsonKey(name: 'booleanValue')
-  bool? get booleanValue => throw _privateConstructorUsedError;
-
-  /// Serializes this Blacklisted to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of Blacklisted
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $BlacklistedCopyWith<Blacklisted> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $BlacklistedCopyWith<$Res> {
-  factory $BlacklistedCopyWith(
-    Blacklisted value,
-    $Res Function(Blacklisted) then,
-  ) = _$BlacklistedCopyWithImpl<$Res, Blacklisted>;
-  @useResult
-  $Res call({@JsonKey(name: 'booleanValue') bool? booleanValue});
-}
-
-/// @nodoc
-class _$BlacklistedCopyWithImpl<$Res, $Val extends Blacklisted>
-    implements $BlacklistedCopyWith<$Res> {
-  _$BlacklistedCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Blacklisted
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? booleanValue = freezed}) {
-    return _then(
-      _value.copyWith(
-            booleanValue:
-                freezed == booleanValue
-                    ? _value.booleanValue
-                    : booleanValue // ignore: cast_nullable_to_non_nullable
-                        as bool?,
-          )
-          as $Val,
-    );
-  }
-}
-
-/// @nodoc
-abstract class _$$BlacklistedImplCopyWith<$Res>
-    implements $BlacklistedCopyWith<$Res> {
-  factory _$$BlacklistedImplCopyWith(
-    _$BlacklistedImpl value,
-    $Res Function(_$BlacklistedImpl) then,
-  ) = __$$BlacklistedImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({@JsonKey(name: 'booleanValue') bool? booleanValue});
-}
-
-/// @nodoc
-class __$$BlacklistedImplCopyWithImpl<$Res>
-    extends _$BlacklistedCopyWithImpl<$Res, _$BlacklistedImpl>
-    implements _$$BlacklistedImplCopyWith<$Res> {
-  __$$BlacklistedImplCopyWithImpl(
-    _$BlacklistedImpl _value,
-    $Res Function(_$BlacklistedImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of Blacklisted
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? booleanValue = freezed}) {
-    return _then(
-      _$BlacklistedImpl(
-        booleanValue:
-            freezed == booleanValue
-                ? _value.booleanValue
-                : booleanValue // ignore: cast_nullable_to_non_nullable
-                    as bool?,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$BlacklistedImpl implements _Blacklisted {
-  const _$BlacklistedImpl({@JsonKey(name: 'booleanValue') this.booleanValue});
-
-  factory _$BlacklistedImpl.fromJson(Map<String, dynamic> json) =>
-      _$$BlacklistedImplFromJson(json);
-
-  @override
-  @JsonKey(name: 'booleanValue')
-  final bool? booleanValue;
-
-  @override
-  String toString() {
-    return 'Blacklisted(booleanValue: $booleanValue)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$BlacklistedImpl &&
-            (identical(other.booleanValue, booleanValue) ||
-                other.booleanValue == booleanValue));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, booleanValue);
-
-  /// Create a copy of Blacklisted
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$BlacklistedImplCopyWith<_$BlacklistedImpl> get copyWith =>
-      __$$BlacklistedImplCopyWithImpl<_$BlacklistedImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$BlacklistedImplToJson(this);
-  }
-}
-
-abstract class _Blacklisted implements Blacklisted {
-  const factory _Blacklisted({
-    @JsonKey(name: 'booleanValue') final bool? booleanValue,
-  }) = _$BlacklistedImpl;
-
-  factory _Blacklisted.fromJson(Map<String, dynamic> json) =
-      _$BlacklistedImpl.fromJson;
-
-  @override
-  @JsonKey(name: 'booleanValue')
-  bool? get booleanValue;
-
-  /// Create a copy of Blacklisted
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$BlacklistedImplCopyWith<_$BlacklistedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-BusinessType _$BusinessTypeFromJson(Map<String, dynamic> json) {
-  return _BusinessType.fromJson(json);
-}
-
-/// @nodoc
-mixin _$BusinessType {
-  @JsonKey(name: 'stringValue')
-  String? get stringValue => throw _privateConstructorUsedError;
-
-  /// Serializes this BusinessType to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of BusinessType
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $BusinessTypeCopyWith<BusinessType> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $BusinessTypeCopyWith<$Res> {
-  factory $BusinessTypeCopyWith(
-    BusinessType value,
-    $Res Function(BusinessType) then,
-  ) = _$BusinessTypeCopyWithImpl<$Res, BusinessType>;
-  @useResult
-  $Res call({@JsonKey(name: 'stringValue') String? stringValue});
-}
-
-/// @nodoc
-class _$BusinessTypeCopyWithImpl<$Res, $Val extends BusinessType>
-    implements $BusinessTypeCopyWith<$Res> {
-  _$BusinessTypeCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of BusinessType
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? stringValue = freezed}) {
-    return _then(
-      _value.copyWith(
-            stringValue:
-                freezed == stringValue
-                    ? _value.stringValue
-                    : stringValue // ignore: cast_nullable_to_non_nullable
-                        as String?,
-          )
-          as $Val,
-    );
-  }
-}
-
-/// @nodoc
-abstract class _$$BusinessTypeImplCopyWith<$Res>
-    implements $BusinessTypeCopyWith<$Res> {
-  factory _$$BusinessTypeImplCopyWith(
-    _$BusinessTypeImpl value,
-    $Res Function(_$BusinessTypeImpl) then,
-  ) = __$$BusinessTypeImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({@JsonKey(name: 'stringValue') String? stringValue});
-}
-
-/// @nodoc
-class __$$BusinessTypeImplCopyWithImpl<$Res>
-    extends _$BusinessTypeCopyWithImpl<$Res, _$BusinessTypeImpl>
-    implements _$$BusinessTypeImplCopyWith<$Res> {
-  __$$BusinessTypeImplCopyWithImpl(
-    _$BusinessTypeImpl _value,
-    $Res Function(_$BusinessTypeImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of BusinessType
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? stringValue = freezed}) {
-    return _then(
-      _$BusinessTypeImpl(
-        stringValue:
-            freezed == stringValue
-                ? _value.stringValue
-                : stringValue // ignore: cast_nullable_to_non_nullable
-                    as String?,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$BusinessTypeImpl implements _BusinessType {
-  const _$BusinessTypeImpl({@JsonKey(name: 'stringValue') this.stringValue});
-
-  factory _$BusinessTypeImpl.fromJson(Map<String, dynamic> json) =>
-      _$$BusinessTypeImplFromJson(json);
-
-  @override
-  @JsonKey(name: 'stringValue')
-  final String? stringValue;
-
-  @override
-  String toString() {
-    return 'BusinessType(stringValue: $stringValue)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$BusinessTypeImpl &&
-            (identical(other.stringValue, stringValue) ||
-                other.stringValue == stringValue));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, stringValue);
-
-  /// Create a copy of BusinessType
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$BusinessTypeImplCopyWith<_$BusinessTypeImpl> get copyWith =>
-      __$$BusinessTypeImplCopyWithImpl<_$BusinessTypeImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$BusinessTypeImplToJson(this);
-  }
-}
-
-abstract class _BusinessType implements BusinessType {
-  const factory _BusinessType({
-    @JsonKey(name: 'stringValue') final String? stringValue,
-  }) = _$BusinessTypeImpl;
-
-  factory _BusinessType.fromJson(Map<String, dynamic> json) =
-      _$BusinessTypeImpl.fromJson;
-
-  @override
-  @JsonKey(name: 'stringValue')
-  String? get stringValue;
-
-  /// Create a copy of BusinessType
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$BusinessTypeImplCopyWith<_$BusinessTypeImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-CreditLimit _$CreditLimitFromJson(Map<String, dynamic> json) {
-  return _CreditLimit.fromJson(json);
-}
-
-/// @nodoc
-mixin _$CreditLimit {
-  @JsonKey(name: 'doubleValue')
-  int? get doubleValue => throw _privateConstructorUsedError;
-
-  /// Serializes this CreditLimit to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of CreditLimit
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $CreditLimitCopyWith<CreditLimit> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $CreditLimitCopyWith<$Res> {
-  factory $CreditLimitCopyWith(
-    CreditLimit value,
-    $Res Function(CreditLimit) then,
-  ) = _$CreditLimitCopyWithImpl<$Res, CreditLimit>;
-  @useResult
-  $Res call({@JsonKey(name: 'doubleValue') int? doubleValue});
-}
-
-/// @nodoc
-class _$CreditLimitCopyWithImpl<$Res, $Val extends CreditLimit>
-    implements $CreditLimitCopyWith<$Res> {
-  _$CreditLimitCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of CreditLimit
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? doubleValue = freezed}) {
-    return _then(
-      _value.copyWith(
-            doubleValue:
-                freezed == doubleValue
-                    ? _value.doubleValue
-                    : doubleValue // ignore: cast_nullable_to_non_nullable
-                        as int?,
-          )
-          as $Val,
-    );
-  }
-}
-
-/// @nodoc
-abstract class _$$CreditLimitImplCopyWith<$Res>
-    implements $CreditLimitCopyWith<$Res> {
-  factory _$$CreditLimitImplCopyWith(
-    _$CreditLimitImpl value,
-    $Res Function(_$CreditLimitImpl) then,
-  ) = __$$CreditLimitImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({@JsonKey(name: 'doubleValue') int? doubleValue});
-}
-
-/// @nodoc
-class __$$CreditLimitImplCopyWithImpl<$Res>
-    extends _$CreditLimitCopyWithImpl<$Res, _$CreditLimitImpl>
-    implements _$$CreditLimitImplCopyWith<$Res> {
-  __$$CreditLimitImplCopyWithImpl(
-    _$CreditLimitImpl _value,
-    $Res Function(_$CreditLimitImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of CreditLimit
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? doubleValue = freezed}) {
-    return _then(
-      _$CreditLimitImpl(
-        doubleValue:
-            freezed == doubleValue
-                ? _value.doubleValue
-                : doubleValue // ignore: cast_nullable_to_non_nullable
-                    as int?,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$CreditLimitImpl implements _CreditLimit {
-  const _$CreditLimitImpl({@JsonKey(name: 'doubleValue') this.doubleValue});
-
-  factory _$CreditLimitImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CreditLimitImplFromJson(json);
-
-  @override
-  @JsonKey(name: 'doubleValue')
-  final int? doubleValue;
-
-  @override
-  String toString() {
-    return 'CreditLimit(doubleValue: $doubleValue)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$CreditLimitImpl &&
-            (identical(other.doubleValue, doubleValue) ||
-                other.doubleValue == doubleValue));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, doubleValue);
-
-  /// Create a copy of CreditLimit
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$CreditLimitImplCopyWith<_$CreditLimitImpl> get copyWith =>
-      __$$CreditLimitImplCopyWithImpl<_$CreditLimitImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$CreditLimitImplToJson(this);
-  }
-}
-
-abstract class _CreditLimit implements CreditLimit {
-  const factory _CreditLimit({
-    @JsonKey(name: 'doubleValue') final int? doubleValue,
-  }) = _$CreditLimitImpl;
-
-  factory _CreditLimit.fromJson(Map<String, dynamic> json) =
-      _$CreditLimitImpl.fromJson;
-
-  @override
-  @JsonKey(name: 'doubleValue')
-  int? get doubleValue;
-
-  /// Create a copy of CreditLimit
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CreditLimitImplCopyWith<_$CreditLimitImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-Photo _$PhotoFromJson(Map<String, dynamic> json) {
-  return _Photo.fromJson(json);
-}
-
-/// @nodoc
-mixin _$Photo {
-  @JsonKey(name: 'stringValue')
-  String? get stringValue => throw _privateConstructorUsedError;
-
-  /// Serializes this Photo to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of Photo
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $PhotoCopyWith<Photo> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $PhotoCopyWith<$Res> {
-  factory $PhotoCopyWith(Photo value, $Res Function(Photo) then) =
-      _$PhotoCopyWithImpl<$Res, Photo>;
-  @useResult
-  $Res call({@JsonKey(name: 'stringValue') String? stringValue});
-}
-
-/// @nodoc
-class _$PhotoCopyWithImpl<$Res, $Val extends Photo>
-    implements $PhotoCopyWith<$Res> {
-  _$PhotoCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Photo
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? stringValue = freezed}) {
-    return _then(
-      _value.copyWith(
-            stringValue:
-                freezed == stringValue
-                    ? _value.stringValue
-                    : stringValue // ignore: cast_nullable_to_non_nullable
-                        as String?,
-          )
-          as $Val,
-    );
-  }
-}
-
-/// @nodoc
-abstract class _$$PhotoImplCopyWith<$Res> implements $PhotoCopyWith<$Res> {
-  factory _$$PhotoImplCopyWith(
-    _$PhotoImpl value,
-    $Res Function(_$PhotoImpl) then,
-  ) = __$$PhotoImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({@JsonKey(name: 'stringValue') String? stringValue});
-}
-
-/// @nodoc
-class __$$PhotoImplCopyWithImpl<$Res>
-    extends _$PhotoCopyWithImpl<$Res, _$PhotoImpl>
-    implements _$$PhotoImplCopyWith<$Res> {
-  __$$PhotoImplCopyWithImpl(
-    _$PhotoImpl _value,
-    $Res Function(_$PhotoImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of Photo
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? stringValue = freezed}) {
-    return _then(
-      _$PhotoImpl(
-        stringValue:
-            freezed == stringValue
-                ? _value.stringValue
-                : stringValue // ignore: cast_nullable_to_non_nullable
-                    as String?,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$PhotoImpl implements _Photo {
-  const _$PhotoImpl({@JsonKey(name: 'stringValue') this.stringValue});
-
-  factory _$PhotoImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PhotoImplFromJson(json);
-
-  @override
-  @JsonKey(name: 'stringValue')
-  final String? stringValue;
-
-  @override
-  String toString() {
-    return 'Photo(stringValue: $stringValue)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$PhotoImpl &&
-            (identical(other.stringValue, stringValue) ||
-                other.stringValue == stringValue));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, stringValue);
-
-  /// Create a copy of Photo
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$PhotoImplCopyWith<_$PhotoImpl> get copyWith =>
-      __$$PhotoImplCopyWithImpl<_$PhotoImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$PhotoImplToJson(this);
-  }
-}
-
-abstract class _Photo implements Photo {
-  const factory _Photo({
-    @JsonKey(name: 'stringValue') final String? stringValue,
-  }) = _$PhotoImpl;
-
-  factory _Photo.fromJson(Map<String, dynamic> json) = _$PhotoImpl.fromJson;
-
-  @override
-  @JsonKey(name: 'stringValue')
-  String? get stringValue;
-
-  /// Create a copy of Photo
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PhotoImplCopyWith<_$PhotoImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-LastTransactionDate _$LastTransactionDateFromJson(Map<String, dynamic> json) {
-  return _LastTransactionDate.fromJson(json);
-}
-
-/// @nodoc
-mixin _$LastTransactionDate {
-  @JsonKey(name: 'stringValue')
-  DateTime? get stringValue => throw _privateConstructorUsedError;
-
-  /// Serializes this LastTransactionDate to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of LastTransactionDate
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $LastTransactionDateCopyWith<LastTransactionDate> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $LastTransactionDateCopyWith<$Res> {
-  factory $LastTransactionDateCopyWith(
-    LastTransactionDate value,
-    $Res Function(LastTransactionDate) then,
-  ) = _$LastTransactionDateCopyWithImpl<$Res, LastTransactionDate>;
-  @useResult
-  $Res call({@JsonKey(name: 'stringValue') DateTime? stringValue});
-}
-
-/// @nodoc
-class _$LastTransactionDateCopyWithImpl<$Res, $Val extends LastTransactionDate>
-    implements $LastTransactionDateCopyWith<$Res> {
-  _$LastTransactionDateCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of LastTransactionDate
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? stringValue = freezed}) {
-    return _then(
-      _value.copyWith(
-            stringValue:
-                freezed == stringValue
-                    ? _value.stringValue
-                    : stringValue // ignore: cast_nullable_to_non_nullable
-                        as DateTime?,
-          )
-          as $Val,
-    );
-  }
-}
-
-/// @nodoc
-abstract class _$$LastTransactionDateImplCopyWith<$Res>
-    implements $LastTransactionDateCopyWith<$Res> {
-  factory _$$LastTransactionDateImplCopyWith(
-    _$LastTransactionDateImpl value,
-    $Res Function(_$LastTransactionDateImpl) then,
-  ) = __$$LastTransactionDateImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({@JsonKey(name: 'stringValue') DateTime? stringValue});
-}
-
-/// @nodoc
-class __$$LastTransactionDateImplCopyWithImpl<$Res>
-    extends _$LastTransactionDateCopyWithImpl<$Res, _$LastTransactionDateImpl>
-    implements _$$LastTransactionDateImplCopyWith<$Res> {
-  __$$LastTransactionDateImplCopyWithImpl(
-    _$LastTransactionDateImpl _value,
-    $Res Function(_$LastTransactionDateImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of LastTransactionDate
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? stringValue = freezed}) {
-    return _then(
-      _$LastTransactionDateImpl(
-        stringValue:
-            freezed == stringValue
-                ? _value.stringValue
-                : stringValue // ignore: cast_nullable_to_non_nullable
-                    as DateTime?,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$LastTransactionDateImpl implements _LastTransactionDate {
-  const _$LastTransactionDateImpl({
-    @JsonKey(name: 'stringValue') this.stringValue,
-  });
-
-  factory _$LastTransactionDateImpl.fromJson(Map<String, dynamic> json) =>
-      _$$LastTransactionDateImplFromJson(json);
-
-  @override
-  @JsonKey(name: 'stringValue')
-  final DateTime? stringValue;
-
-  @override
-  String toString() {
-    return 'LastTransactionDate(stringValue: $stringValue)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$LastTransactionDateImpl &&
-            (identical(other.stringValue, stringValue) ||
-                other.stringValue == stringValue));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, stringValue);
-
-  /// Create a copy of LastTransactionDate
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$LastTransactionDateImplCopyWith<_$LastTransactionDateImpl> get copyWith =>
-      __$$LastTransactionDateImplCopyWithImpl<_$LastTransactionDateImpl>(
+  _$$CustomerDomainFieldsImplCopyWith<_$CustomerDomainFieldsImpl>
+  get copyWith =>
+      __$$CustomerDomainFieldsImplCopyWithImpl<_$CustomerDomainFieldsImpl>(
         this,
         _$identity,
       );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$LastTransactionDateImplToJson(this);
+    return _$$CustomerDomainFieldsImplToJson(this);
   }
 }
 
-abstract class _LastTransactionDate implements LastTransactionDate {
-  const factory _LastTransactionDate({
-    @JsonKey(name: 'stringValue') final DateTime? stringValue,
-  }) = _$LastTransactionDateImpl;
+abstract class _CustomerDomainFields implements CustomerDomainFields {
+  const factory _CustomerDomainFields({
+    @JsonKey(name: 'owner_phone_number') final ApprovedBy? ownerPhoneNumber,
+    @JsonKey(name: 'customer_code') final ApprovedBy? customerCode,
+    @JsonKey(name: 'company_store_condition')
+    final ApprovedBy? companyStoreCondition,
+    @JsonKey(name: 'company_phone_number') final ApprovedBy? companyPhoneNumber,
+    @JsonKey(name: 'owner_tax_id') final ApprovedBy? ownerTaxId,
+    @JsonKey(name: 'approved_by') final ApprovedBy? approvedBy,
+    @JsonKey(name: 'subscription_type') final ApprovedBy? subscriptionType,
+    @JsonKey(name: 'owner_address') final ApprovedBy? ownerAddress,
+    @JsonKey(name: 'ownership_status') final ApprovedBy? ownershipStatus,
+    @JsonKey(name: 'company_email') final ApprovedBy? companyEmail,
+    @JsonKey(name: 'company_location') final CompanyLocation? companyLocation,
+    @JsonKey(name: 'requested_by') final ApprovedBy? requestedBy,
+    @JsonKey(name: 'owner_national_id') final ApprovedBy? ownerNationalId,
+    @JsonKey(name: 'owner_name') final ApprovedBy? ownerName,
+    @JsonKey(name: 'company_name') final ApprovedBy? companyName,
+    @JsonKey(name: 'owner_national_id_photo')
+    final ApprovedBy? ownerNationalIdPhoto,
+    @JsonKey(name: 'company_address') final ApprovedBy? companyAddress,
+    @JsonKey(name: 'company_store_photo') final ApprovedBy? companyStorePhoto,
+  }) = _$CustomerDomainFieldsImpl;
 
-  factory _LastTransactionDate.fromJson(Map<String, dynamic> json) =
-      _$LastTransactionDateImpl.fromJson;
+  factory _CustomerDomainFields.fromJson(Map<String, dynamic> json) =
+      _$CustomerDomainFieldsImpl.fromJson;
 
   @override
-  @JsonKey(name: 'stringValue')
-  DateTime? get stringValue;
+  @JsonKey(name: 'owner_phone_number')
+  ApprovedBy? get ownerPhoneNumber;
+  @override
+  @JsonKey(name: 'customer_code')
+  ApprovedBy? get customerCode;
+  @override
+  @JsonKey(name: 'company_store_condition')
+  ApprovedBy? get companyStoreCondition;
+  @override
+  @JsonKey(name: 'company_phone_number')
+  ApprovedBy? get companyPhoneNumber;
+  @override
+  @JsonKey(name: 'owner_tax_id')
+  ApprovedBy? get ownerTaxId;
+  @override
+  @JsonKey(name: 'approved_by')
+  ApprovedBy? get approvedBy;
+  @override
+  @JsonKey(name: 'subscription_type')
+  ApprovedBy? get subscriptionType;
+  @override
+  @JsonKey(name: 'owner_address')
+  ApprovedBy? get ownerAddress;
+  @override
+  @JsonKey(name: 'ownership_status')
+  ApprovedBy? get ownershipStatus;
+  @override
+  @JsonKey(name: 'company_email')
+  ApprovedBy? get companyEmail;
+  @override
+  @JsonKey(name: 'company_location')
+  CompanyLocation? get companyLocation;
+  @override
+  @JsonKey(name: 'requested_by')
+  ApprovedBy? get requestedBy;
+  @override
+  @JsonKey(name: 'owner_national_id')
+  ApprovedBy? get ownerNationalId;
+  @override
+  @JsonKey(name: 'owner_name')
+  ApprovedBy? get ownerName;
+  @override
+  @JsonKey(name: 'company_name')
+  ApprovedBy? get companyName;
+  @override
+  @JsonKey(name: 'owner_national_id_photo')
+  ApprovedBy? get ownerNationalIdPhoto;
+  @override
+  @JsonKey(name: 'company_address')
+  ApprovedBy? get companyAddress;
+  @override
+  @JsonKey(name: 'company_store_photo')
+  ApprovedBy? get companyStorePhoto;
 
-  /// Create a copy of LastTransactionDate
+  /// Create a copy of CustomerDomainFields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LastTransactionDateImplCopyWith<_$LastTransactionDateImpl> get copyWith =>
+  _$$CustomerDomainFieldsImplCopyWith<_$CustomerDomainFieldsImpl>
+  get copyWith => throw _privateConstructorUsedError;
+}
+
+ApprovedBy _$ApprovedByFromJson(Map<String, dynamic> json) {
+  return _ApprovedBy.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ApprovedBy {
+  @JsonKey(name: 'stringValue')
+  String? get stringValue => throw _privateConstructorUsedError;
+
+  /// Serializes this ApprovedBy to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of ApprovedBy
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $ApprovedByCopyWith<ApprovedBy> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-Itude _$ItudeFromJson(Map<String, dynamic> json) {
-  return _Itude.fromJson(json);
-}
-
 /// @nodoc
-mixin _$Itude {
-  @JsonKey(name: 'doubleValue')
-  double? get doubleValue => throw _privateConstructorUsedError;
-
-  /// Serializes this Itude to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of Itude
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ItudeCopyWith<Itude> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ItudeCopyWith<$Res> {
-  factory $ItudeCopyWith(Itude value, $Res Function(Itude) then) =
-      _$ItudeCopyWithImpl<$Res, Itude>;
+abstract class $ApprovedByCopyWith<$Res> {
+  factory $ApprovedByCopyWith(
+    ApprovedBy value,
+    $Res Function(ApprovedBy) then,
+  ) = _$ApprovedByCopyWithImpl<$Res, ApprovedBy>;
   @useResult
-  $Res call({@JsonKey(name: 'doubleValue') double? doubleValue});
+  $Res call({@JsonKey(name: 'stringValue') String? stringValue});
 }
 
 /// @nodoc
-class _$ItudeCopyWithImpl<$Res, $Val extends Itude>
-    implements $ItudeCopyWith<$Res> {
-  _$ItudeCopyWithImpl(this._value, this._then);
+class _$ApprovedByCopyWithImpl<$Res, $Val extends ApprovedBy>
+    implements $ApprovedByCopyWith<$Res> {
+  _$ApprovedByCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Itude
+  /// Create a copy of ApprovedBy
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? stringValue = freezed}) {
+    return _then(
+      _value.copyWith(
+            stringValue:
+                freezed == stringValue
+                    ? _value.stringValue
+                    : stringValue // ignore: cast_nullable_to_non_nullable
+                        as String?,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$ApprovedByImplCopyWith<$Res>
+    implements $ApprovedByCopyWith<$Res> {
+  factory _$$ApprovedByImplCopyWith(
+    _$ApprovedByImpl value,
+    $Res Function(_$ApprovedByImpl) then,
+  ) = __$$ApprovedByImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: 'stringValue') String? stringValue});
+}
+
+/// @nodoc
+class __$$ApprovedByImplCopyWithImpl<$Res>
+    extends _$ApprovedByCopyWithImpl<$Res, _$ApprovedByImpl>
+    implements _$$ApprovedByImplCopyWith<$Res> {
+  __$$ApprovedByImplCopyWithImpl(
+    _$ApprovedByImpl _value,
+    $Res Function(_$ApprovedByImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of ApprovedBy
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? stringValue = freezed}) {
+    return _then(
+      _$ApprovedByImpl(
+        stringValue:
+            freezed == stringValue
+                ? _value.stringValue
+                : stringValue // ignore: cast_nullable_to_non_nullable
+                    as String?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ApprovedByImpl implements _ApprovedBy {
+  const _$ApprovedByImpl({@JsonKey(name: 'stringValue') this.stringValue});
+
+  factory _$ApprovedByImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ApprovedByImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'stringValue')
+  final String? stringValue;
+
+  @override
+  String toString() {
+    return 'ApprovedBy(stringValue: $stringValue)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ApprovedByImpl &&
+            (identical(other.stringValue, stringValue) ||
+                other.stringValue == stringValue));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, stringValue);
+
+  /// Create a copy of ApprovedBy
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ApprovedByImplCopyWith<_$ApprovedByImpl> get copyWith =>
+      __$$ApprovedByImplCopyWithImpl<_$ApprovedByImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ApprovedByImplToJson(this);
+  }
+}
+
+abstract class _ApprovedBy implements ApprovedBy {
+  const factory _ApprovedBy({
+    @JsonKey(name: 'stringValue') final String? stringValue,
+  }) = _$ApprovedByImpl;
+
+  factory _ApprovedBy.fromJson(Map<String, dynamic> json) =
+      _$ApprovedByImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'stringValue')
+  String? get stringValue;
+
+  /// Create a copy of ApprovedBy
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ApprovedByImplCopyWith<_$ApprovedByImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+CompanyLocation _$CompanyLocationFromJson(Map<String, dynamic> json) {
+  return _CompanyLocation.fromJson(json);
+}
+
+/// @nodoc
+mixin _$CompanyLocation {
+  @JsonKey(name: 'mapValue')
+  MapValue? get mapValue => throw _privateConstructorUsedError;
+
+  /// Serializes this CompanyLocation to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of CompanyLocation
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $CompanyLocationCopyWith<CompanyLocation> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CompanyLocationCopyWith<$Res> {
+  factory $CompanyLocationCopyWith(
+    CompanyLocation value,
+    $Res Function(CompanyLocation) then,
+  ) = _$CompanyLocationCopyWithImpl<$Res, CompanyLocation>;
+  @useResult
+  $Res call({@JsonKey(name: 'mapValue') MapValue? mapValue});
+
+  $MapValueCopyWith<$Res>? get mapValue;
+}
+
+/// @nodoc
+class _$CompanyLocationCopyWithImpl<$Res, $Val extends CompanyLocation>
+    implements $CompanyLocationCopyWith<$Res> {
+  _$CompanyLocationCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of CompanyLocation
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? mapValue = freezed}) {
+    return _then(
+      _value.copyWith(
+            mapValue:
+                freezed == mapValue
+                    ? _value.mapValue
+                    : mapValue // ignore: cast_nullable_to_non_nullable
+                        as MapValue?,
+          )
+          as $Val,
+    );
+  }
+
+  /// Create a copy of CompanyLocation
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $MapValueCopyWith<$Res>? get mapValue {
+    if (_value.mapValue == null) {
+      return null;
+    }
+
+    return $MapValueCopyWith<$Res>(_value.mapValue!, (value) {
+      return _then(_value.copyWith(mapValue: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$CompanyLocationImplCopyWith<$Res>
+    implements $CompanyLocationCopyWith<$Res> {
+  factory _$$CompanyLocationImplCopyWith(
+    _$CompanyLocationImpl value,
+    $Res Function(_$CompanyLocationImpl) then,
+  ) = __$$CompanyLocationImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: 'mapValue') MapValue? mapValue});
+
+  @override
+  $MapValueCopyWith<$Res>? get mapValue;
+}
+
+/// @nodoc
+class __$$CompanyLocationImplCopyWithImpl<$Res>
+    extends _$CompanyLocationCopyWithImpl<$Res, _$CompanyLocationImpl>
+    implements _$$CompanyLocationImplCopyWith<$Res> {
+  __$$CompanyLocationImplCopyWithImpl(
+    _$CompanyLocationImpl _value,
+    $Res Function(_$CompanyLocationImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of CompanyLocation
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? mapValue = freezed}) {
+    return _then(
+      _$CompanyLocationImpl(
+        mapValue:
+            freezed == mapValue
+                ? _value.mapValue
+                : mapValue // ignore: cast_nullable_to_non_nullable
+                    as MapValue?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$CompanyLocationImpl implements _CompanyLocation {
+  const _$CompanyLocationImpl({@JsonKey(name: 'mapValue') this.mapValue});
+
+  factory _$CompanyLocationImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CompanyLocationImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'mapValue')
+  final MapValue? mapValue;
+
+  @override
+  String toString() {
+    return 'CompanyLocation(mapValue: $mapValue)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CompanyLocationImpl &&
+            (identical(other.mapValue, mapValue) ||
+                other.mapValue == mapValue));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, mapValue);
+
+  /// Create a copy of CompanyLocation
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CompanyLocationImplCopyWith<_$CompanyLocationImpl> get copyWith =>
+      __$$CompanyLocationImplCopyWithImpl<_$CompanyLocationImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CompanyLocationImplToJson(this);
+  }
+}
+
+abstract class _CompanyLocation implements CompanyLocation {
+  const factory _CompanyLocation({
+    @JsonKey(name: 'mapValue') final MapValue? mapValue,
+  }) = _$CompanyLocationImpl;
+
+  factory _CompanyLocation.fromJson(Map<String, dynamic> json) =
+      _$CompanyLocationImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'mapValue')
+  MapValue? get mapValue;
+
+  /// Create a copy of CompanyLocation
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$CompanyLocationImplCopyWith<_$CompanyLocationImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+MapValue _$MapValueFromJson(Map<String, dynamic> json) {
+  return _MapValue.fromJson(json);
+}
+
+/// @nodoc
+mixin _$MapValue {
+  @JsonKey(name: 'fields')
+  MapValueFields? get fields => throw _privateConstructorUsedError;
+
+  /// Serializes this MapValue to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of MapValue
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $MapValueCopyWith<MapValue> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $MapValueCopyWith<$Res> {
+  factory $MapValueCopyWith(MapValue value, $Res Function(MapValue) then) =
+      _$MapValueCopyWithImpl<$Res, MapValue>;
+  @useResult
+  $Res call({@JsonKey(name: 'fields') MapValueFields? fields});
+
+  $MapValueFieldsCopyWith<$Res>? get fields;
+}
+
+/// @nodoc
+class _$MapValueCopyWithImpl<$Res, $Val extends MapValue>
+    implements $MapValueCopyWith<$Res> {
+  _$MapValueCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of MapValue
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? fields = freezed}) {
+    return _then(
+      _value.copyWith(
+            fields:
+                freezed == fields
+                    ? _value.fields
+                    : fields // ignore: cast_nullable_to_non_nullable
+                        as MapValueFields?,
+          )
+          as $Val,
+    );
+  }
+
+  /// Create a copy of MapValue
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $MapValueFieldsCopyWith<$Res>? get fields {
+    if (_value.fields == null) {
+      return null;
+    }
+
+    return $MapValueFieldsCopyWith<$Res>(_value.fields!, (value) {
+      return _then(_value.copyWith(fields: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$MapValueImplCopyWith<$Res>
+    implements $MapValueCopyWith<$Res> {
+  factory _$$MapValueImplCopyWith(
+    _$MapValueImpl value,
+    $Res Function(_$MapValueImpl) then,
+  ) = __$$MapValueImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: 'fields') MapValueFields? fields});
+
+  @override
+  $MapValueFieldsCopyWith<$Res>? get fields;
+}
+
+/// @nodoc
+class __$$MapValueImplCopyWithImpl<$Res>
+    extends _$MapValueCopyWithImpl<$Res, _$MapValueImpl>
+    implements _$$MapValueImplCopyWith<$Res> {
+  __$$MapValueImplCopyWithImpl(
+    _$MapValueImpl _value,
+    $Res Function(_$MapValueImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of MapValue
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? fields = freezed}) {
+    return _then(
+      _$MapValueImpl(
+        fields:
+            freezed == fields
+                ? _value.fields
+                : fields // ignore: cast_nullable_to_non_nullable
+                    as MapValueFields?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$MapValueImpl implements _MapValue {
+  const _$MapValueImpl({@JsonKey(name: 'fields') this.fields});
+
+  factory _$MapValueImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MapValueImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'fields')
+  final MapValueFields? fields;
+
+  @override
+  String toString() {
+    return 'MapValue(fields: $fields)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$MapValueImpl &&
+            (identical(other.fields, fields) || other.fields == fields));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, fields);
+
+  /// Create a copy of MapValue
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$MapValueImplCopyWith<_$MapValueImpl> get copyWith =>
+      __$$MapValueImplCopyWithImpl<_$MapValueImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$MapValueImplToJson(this);
+  }
+}
+
+abstract class _MapValue implements MapValue {
+  const factory _MapValue({
+    @JsonKey(name: 'fields') final MapValueFields? fields,
+  }) = _$MapValueImpl;
+
+  factory _MapValue.fromJson(Map<String, dynamic> json) =
+      _$MapValueImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'fields')
+  MapValueFields? get fields;
+
+  /// Create a copy of MapValue
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$MapValueImplCopyWith<_$MapValueImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+MapValueFields _$MapValueFieldsFromJson(Map<String, dynamic> json) {
+  return _MapValueFields.fromJson(json);
+}
+
+/// @nodoc
+mixin _$MapValueFields {
+  @JsonKey(name: 'accuracy')
+  Accuracy? get accuracy => throw _privateConstructorUsedError;
+  @JsonKey(name: 'latitude')
+  Accuracy? get latitude => throw _privateConstructorUsedError;
+  @JsonKey(name: 'longitude')
+  Accuracy? get longitude => throw _privateConstructorUsedError;
+
+  /// Serializes this MapValueFields to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of MapValueFields
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $MapValueFieldsCopyWith<MapValueFields> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $MapValueFieldsCopyWith<$Res> {
+  factory $MapValueFieldsCopyWith(
+    MapValueFields value,
+    $Res Function(MapValueFields) then,
+  ) = _$MapValueFieldsCopyWithImpl<$Res, MapValueFields>;
+  @useResult
+  $Res call({
+    @JsonKey(name: 'accuracy') Accuracy? accuracy,
+    @JsonKey(name: 'latitude') Accuracy? latitude,
+    @JsonKey(name: 'longitude') Accuracy? longitude,
+  });
+
+  $AccuracyCopyWith<$Res>? get accuracy;
+  $AccuracyCopyWith<$Res>? get latitude;
+  $AccuracyCopyWith<$Res>? get longitude;
+}
+
+/// @nodoc
+class _$MapValueFieldsCopyWithImpl<$Res, $Val extends MapValueFields>
+    implements $MapValueFieldsCopyWith<$Res> {
+  _$MapValueFieldsCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of MapValueFields
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? accuracy = freezed,
+    Object? latitude = freezed,
+    Object? longitude = freezed,
+  }) {
+    return _then(
+      _value.copyWith(
+            accuracy:
+                freezed == accuracy
+                    ? _value.accuracy
+                    : accuracy // ignore: cast_nullable_to_non_nullable
+                        as Accuracy?,
+            latitude:
+                freezed == latitude
+                    ? _value.latitude
+                    : latitude // ignore: cast_nullable_to_non_nullable
+                        as Accuracy?,
+            longitude:
+                freezed == longitude
+                    ? _value.longitude
+                    : longitude // ignore: cast_nullable_to_non_nullable
+                        as Accuracy?,
+          )
+          as $Val,
+    );
+  }
+
+  /// Create a copy of MapValueFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AccuracyCopyWith<$Res>? get accuracy {
+    if (_value.accuracy == null) {
+      return null;
+    }
+
+    return $AccuracyCopyWith<$Res>(_value.accuracy!, (value) {
+      return _then(_value.copyWith(accuracy: value) as $Val);
+    });
+  }
+
+  /// Create a copy of MapValueFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AccuracyCopyWith<$Res>? get latitude {
+    if (_value.latitude == null) {
+      return null;
+    }
+
+    return $AccuracyCopyWith<$Res>(_value.latitude!, (value) {
+      return _then(_value.copyWith(latitude: value) as $Val);
+    });
+  }
+
+  /// Create a copy of MapValueFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AccuracyCopyWith<$Res>? get longitude {
+    if (_value.longitude == null) {
+      return null;
+    }
+
+    return $AccuracyCopyWith<$Res>(_value.longitude!, (value) {
+      return _then(_value.copyWith(longitude: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$MapValueFieldsImplCopyWith<$Res>
+    implements $MapValueFieldsCopyWith<$Res> {
+  factory _$$MapValueFieldsImplCopyWith(
+    _$MapValueFieldsImpl value,
+    $Res Function(_$MapValueFieldsImpl) then,
+  ) = __$$MapValueFieldsImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({
+    @JsonKey(name: 'accuracy') Accuracy? accuracy,
+    @JsonKey(name: 'latitude') Accuracy? latitude,
+    @JsonKey(name: 'longitude') Accuracy? longitude,
+  });
+
+  @override
+  $AccuracyCopyWith<$Res>? get accuracy;
+  @override
+  $AccuracyCopyWith<$Res>? get latitude;
+  @override
+  $AccuracyCopyWith<$Res>? get longitude;
+}
+
+/// @nodoc
+class __$$MapValueFieldsImplCopyWithImpl<$Res>
+    extends _$MapValueFieldsCopyWithImpl<$Res, _$MapValueFieldsImpl>
+    implements _$$MapValueFieldsImplCopyWith<$Res> {
+  __$$MapValueFieldsImplCopyWithImpl(
+    _$MapValueFieldsImpl _value,
+    $Res Function(_$MapValueFieldsImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of MapValueFields
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? accuracy = freezed,
+    Object? latitude = freezed,
+    Object? longitude = freezed,
+  }) {
+    return _then(
+      _$MapValueFieldsImpl(
+        accuracy:
+            freezed == accuracy
+                ? _value.accuracy
+                : accuracy // ignore: cast_nullable_to_non_nullable
+                    as Accuracy?,
+        latitude:
+            freezed == latitude
+                ? _value.latitude
+                : latitude // ignore: cast_nullable_to_non_nullable
+                    as Accuracy?,
+        longitude:
+            freezed == longitude
+                ? _value.longitude
+                : longitude // ignore: cast_nullable_to_non_nullable
+                    as Accuracy?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$MapValueFieldsImpl implements _MapValueFields {
+  const _$MapValueFieldsImpl({
+    @JsonKey(name: 'accuracy') this.accuracy,
+    @JsonKey(name: 'latitude') this.latitude,
+    @JsonKey(name: 'longitude') this.longitude,
+  });
+
+  factory _$MapValueFieldsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MapValueFieldsImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'accuracy')
+  final Accuracy? accuracy;
+  @override
+  @JsonKey(name: 'latitude')
+  final Accuracy? latitude;
+  @override
+  @JsonKey(name: 'longitude')
+  final Accuracy? longitude;
+
+  @override
+  String toString() {
+    return 'MapValueFields(accuracy: $accuracy, latitude: $latitude, longitude: $longitude)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$MapValueFieldsImpl &&
+            (identical(other.accuracy, accuracy) ||
+                other.accuracy == accuracy) &&
+            (identical(other.latitude, latitude) ||
+                other.latitude == latitude) &&
+            (identical(other.longitude, longitude) ||
+                other.longitude == longitude));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, accuracy, latitude, longitude);
+
+  /// Create a copy of MapValueFields
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$MapValueFieldsImplCopyWith<_$MapValueFieldsImpl> get copyWith =>
+      __$$MapValueFieldsImplCopyWithImpl<_$MapValueFieldsImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$MapValueFieldsImplToJson(this);
+  }
+}
+
+abstract class _MapValueFields implements MapValueFields {
+  const factory _MapValueFields({
+    @JsonKey(name: 'accuracy') final Accuracy? accuracy,
+    @JsonKey(name: 'latitude') final Accuracy? latitude,
+    @JsonKey(name: 'longitude') final Accuracy? longitude,
+  }) = _$MapValueFieldsImpl;
+
+  factory _MapValueFields.fromJson(Map<String, dynamic> json) =
+      _$MapValueFieldsImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'accuracy')
+  Accuracy? get accuracy;
+  @override
+  @JsonKey(name: 'latitude')
+  Accuracy? get latitude;
+  @override
+  @JsonKey(name: 'longitude')
+  Accuracy? get longitude;
+
+  /// Create a copy of MapValueFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$MapValueFieldsImplCopyWith<_$MapValueFieldsImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Accuracy _$AccuracyFromJson(Map<String, dynamic> json) {
+  return _Accuracy.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Accuracy {
+  @JsonKey(name: 'doubleValue')
+  double? get doubleValue => throw _privateConstructorUsedError;
+
+  /// Serializes this Accuracy to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of Accuracy
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $AccuracyCopyWith<Accuracy> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AccuracyCopyWith<$Res> {
+  factory $AccuracyCopyWith(Accuracy value, $Res Function(Accuracy) then) =
+      _$AccuracyCopyWithImpl<$Res, Accuracy>;
+  @useResult
+  $Res call({@JsonKey(name: 'doubleValue') double? doubleValue});
+}
+
+/// @nodoc
+class _$AccuracyCopyWithImpl<$Res, $Val extends Accuracy>
+    implements $AccuracyCopyWith<$Res> {
+  _$AccuracyCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of Accuracy
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -2605,32 +2079,33 @@ class _$ItudeCopyWithImpl<$Res, $Val extends Itude>
 }
 
 /// @nodoc
-abstract class _$$ItudeImplCopyWith<$Res> implements $ItudeCopyWith<$Res> {
-  factory _$$ItudeImplCopyWith(
-    _$ItudeImpl value,
-    $Res Function(_$ItudeImpl) then,
-  ) = __$$ItudeImplCopyWithImpl<$Res>;
+abstract class _$$AccuracyImplCopyWith<$Res>
+    implements $AccuracyCopyWith<$Res> {
+  factory _$$AccuracyImplCopyWith(
+    _$AccuracyImpl value,
+    $Res Function(_$AccuracyImpl) then,
+  ) = __$$AccuracyImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({@JsonKey(name: 'doubleValue') double? doubleValue});
 }
 
 /// @nodoc
-class __$$ItudeImplCopyWithImpl<$Res>
-    extends _$ItudeCopyWithImpl<$Res, _$ItudeImpl>
-    implements _$$ItudeImplCopyWith<$Res> {
-  __$$ItudeImplCopyWithImpl(
-    _$ItudeImpl _value,
-    $Res Function(_$ItudeImpl) _then,
+class __$$AccuracyImplCopyWithImpl<$Res>
+    extends _$AccuracyCopyWithImpl<$Res, _$AccuracyImpl>
+    implements _$$AccuracyImplCopyWith<$Res> {
+  __$$AccuracyImplCopyWithImpl(
+    _$AccuracyImpl _value,
+    $Res Function(_$AccuracyImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of Itude
+  /// Create a copy of Accuracy
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({Object? doubleValue = freezed}) {
     return _then(
-      _$ItudeImpl(
+      _$AccuracyImpl(
         doubleValue:
             freezed == doubleValue
                 ? _value.doubleValue
@@ -2643,11 +2118,11 @@ class __$$ItudeImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ItudeImpl implements _Itude {
-  const _$ItudeImpl({@JsonKey(name: 'doubleValue') this.doubleValue});
+class _$AccuracyImpl implements _Accuracy {
+  const _$AccuracyImpl({@JsonKey(name: 'doubleValue') this.doubleValue});
 
-  factory _$ItudeImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ItudeImplFromJson(json);
+  factory _$AccuracyImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AccuracyImplFromJson(json);
 
   @override
   @JsonKey(name: 'doubleValue')
@@ -2655,14 +2130,14 @@ class _$ItudeImpl implements _Itude {
 
   @override
   String toString() {
-    return 'Itude(doubleValue: $doubleValue)';
+    return 'Accuracy(doubleValue: $doubleValue)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ItudeImpl &&
+            other is _$AccuracyImpl &&
             (identical(other.doubleValue, doubleValue) ||
                 other.doubleValue == doubleValue));
   }
@@ -2671,384 +2146,36 @@ class _$ItudeImpl implements _Itude {
   @override
   int get hashCode => Object.hash(runtimeType, doubleValue);
 
-  /// Create a copy of Itude
+  /// Create a copy of Accuracy
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ItudeImplCopyWith<_$ItudeImpl> get copyWith =>
-      __$$ItudeImplCopyWithImpl<_$ItudeImpl>(this, _$identity);
+  _$$AccuracyImplCopyWith<_$AccuracyImpl> get copyWith =>
+      __$$AccuracyImplCopyWithImpl<_$AccuracyImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ItudeImplToJson(this);
+    return _$$AccuracyImplToJson(this);
   }
 }
 
-abstract class _Itude implements Itude {
-  const factory _Itude({
+abstract class _Accuracy implements Accuracy {
+  const factory _Accuracy({
     @JsonKey(name: 'doubleValue') final double? doubleValue,
-  }) = _$ItudeImpl;
+  }) = _$AccuracyImpl;
 
-  factory _Itude.fromJson(Map<String, dynamic> json) = _$ItudeImpl.fromJson;
+  factory _Accuracy.fromJson(Map<String, dynamic> json) =
+      _$AccuracyImpl.fromJson;
 
   @override
   @JsonKey(name: 'doubleValue')
   double? get doubleValue;
 
-  /// Create a copy of Itude
+  /// Create a copy of Accuracy
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ItudeImplCopyWith<_$ItudeImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-PurchaseHistory _$PurchaseHistoryFromJson(Map<String, dynamic> json) {
-  return _PurchaseHistory.fromJson(json);
-}
-
-/// @nodoc
-mixin _$PurchaseHistory {
-  @JsonKey(name: 'arrayValue')
-  ArrayValue? get arrayValue => throw _privateConstructorUsedError;
-
-  /// Serializes this PurchaseHistory to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of PurchaseHistory
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $PurchaseHistoryCopyWith<PurchaseHistory> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $PurchaseHistoryCopyWith<$Res> {
-  factory $PurchaseHistoryCopyWith(
-    PurchaseHistory value,
-    $Res Function(PurchaseHistory) then,
-  ) = _$PurchaseHistoryCopyWithImpl<$Res, PurchaseHistory>;
-  @useResult
-  $Res call({@JsonKey(name: 'arrayValue') ArrayValue? arrayValue});
-
-  $ArrayValueCopyWith<$Res>? get arrayValue;
-}
-
-/// @nodoc
-class _$PurchaseHistoryCopyWithImpl<$Res, $Val extends PurchaseHistory>
-    implements $PurchaseHistoryCopyWith<$Res> {
-  _$PurchaseHistoryCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of PurchaseHistory
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? arrayValue = freezed}) {
-    return _then(
-      _value.copyWith(
-            arrayValue:
-                freezed == arrayValue
-                    ? _value.arrayValue
-                    : arrayValue // ignore: cast_nullable_to_non_nullable
-                        as ArrayValue?,
-          )
-          as $Val,
-    );
-  }
-
-  /// Create a copy of PurchaseHistory
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ArrayValueCopyWith<$Res>? get arrayValue {
-    if (_value.arrayValue == null) {
-      return null;
-    }
-
-    return $ArrayValueCopyWith<$Res>(_value.arrayValue!, (value) {
-      return _then(_value.copyWith(arrayValue: value) as $Val);
-    });
-  }
-}
-
-/// @nodoc
-abstract class _$$PurchaseHistoryImplCopyWith<$Res>
-    implements $PurchaseHistoryCopyWith<$Res> {
-  factory _$$PurchaseHistoryImplCopyWith(
-    _$PurchaseHistoryImpl value,
-    $Res Function(_$PurchaseHistoryImpl) then,
-  ) = __$$PurchaseHistoryImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({@JsonKey(name: 'arrayValue') ArrayValue? arrayValue});
-
-  @override
-  $ArrayValueCopyWith<$Res>? get arrayValue;
-}
-
-/// @nodoc
-class __$$PurchaseHistoryImplCopyWithImpl<$Res>
-    extends _$PurchaseHistoryCopyWithImpl<$Res, _$PurchaseHistoryImpl>
-    implements _$$PurchaseHistoryImplCopyWith<$Res> {
-  __$$PurchaseHistoryImplCopyWithImpl(
-    _$PurchaseHistoryImpl _value,
-    $Res Function(_$PurchaseHistoryImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of PurchaseHistory
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? arrayValue = freezed}) {
-    return _then(
-      _$PurchaseHistoryImpl(
-        arrayValue:
-            freezed == arrayValue
-                ? _value.arrayValue
-                : arrayValue // ignore: cast_nullable_to_non_nullable
-                    as ArrayValue?,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$PurchaseHistoryImpl implements _PurchaseHistory {
-  const _$PurchaseHistoryImpl({@JsonKey(name: 'arrayValue') this.arrayValue});
-
-  factory _$PurchaseHistoryImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PurchaseHistoryImplFromJson(json);
-
-  @override
-  @JsonKey(name: 'arrayValue')
-  final ArrayValue? arrayValue;
-
-  @override
-  String toString() {
-    return 'PurchaseHistory(arrayValue: $arrayValue)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$PurchaseHistoryImpl &&
-            (identical(other.arrayValue, arrayValue) ||
-                other.arrayValue == arrayValue));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, arrayValue);
-
-  /// Create a copy of PurchaseHistory
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$PurchaseHistoryImplCopyWith<_$PurchaseHistoryImpl> get copyWith =>
-      __$$PurchaseHistoryImplCopyWithImpl<_$PurchaseHistoryImpl>(
-        this,
-        _$identity,
-      );
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$PurchaseHistoryImplToJson(this);
-  }
-}
-
-abstract class _PurchaseHistory implements PurchaseHistory {
-  const factory _PurchaseHistory({
-    @JsonKey(name: 'arrayValue') final ArrayValue? arrayValue,
-  }) = _$PurchaseHistoryImpl;
-
-  factory _PurchaseHistory.fromJson(Map<String, dynamic> json) =
-      _$PurchaseHistoryImpl.fromJson;
-
-  @override
-  @JsonKey(name: 'arrayValue')
-  ArrayValue? get arrayValue;
-
-  /// Create a copy of PurchaseHistory
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PurchaseHistoryImplCopyWith<_$PurchaseHistoryImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-ArrayValue _$ArrayValueFromJson(Map<String, dynamic> json) {
-  return _ArrayValue.fromJson(json);
-}
-
-/// @nodoc
-mixin _$ArrayValue {
-  @JsonKey(name: 'values')
-  List<BusinessType>? get values => throw _privateConstructorUsedError;
-
-  /// Serializes this ArrayValue to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of ArrayValue
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ArrayValueCopyWith<ArrayValue> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ArrayValueCopyWith<$Res> {
-  factory $ArrayValueCopyWith(
-    ArrayValue value,
-    $Res Function(ArrayValue) then,
-  ) = _$ArrayValueCopyWithImpl<$Res, ArrayValue>;
-  @useResult
-  $Res call({@JsonKey(name: 'values') List<BusinessType>? values});
-}
-
-/// @nodoc
-class _$ArrayValueCopyWithImpl<$Res, $Val extends ArrayValue>
-    implements $ArrayValueCopyWith<$Res> {
-  _$ArrayValueCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of ArrayValue
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? values = freezed}) {
-    return _then(
-      _value.copyWith(
-            values:
-                freezed == values
-                    ? _value.values
-                    : values // ignore: cast_nullable_to_non_nullable
-                        as List<BusinessType>?,
-          )
-          as $Val,
-    );
-  }
-}
-
-/// @nodoc
-abstract class _$$ArrayValueImplCopyWith<$Res>
-    implements $ArrayValueCopyWith<$Res> {
-  factory _$$ArrayValueImplCopyWith(
-    _$ArrayValueImpl value,
-    $Res Function(_$ArrayValueImpl) then,
-  ) = __$$ArrayValueImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({@JsonKey(name: 'values') List<BusinessType>? values});
-}
-
-/// @nodoc
-class __$$ArrayValueImplCopyWithImpl<$Res>
-    extends _$ArrayValueCopyWithImpl<$Res, _$ArrayValueImpl>
-    implements _$$ArrayValueImplCopyWith<$Res> {
-  __$$ArrayValueImplCopyWithImpl(
-    _$ArrayValueImpl _value,
-    $Res Function(_$ArrayValueImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of ArrayValue
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? values = freezed}) {
-    return _then(
-      _$ArrayValueImpl(
-        values:
-            freezed == values
-                ? _value._values
-                : values // ignore: cast_nullable_to_non_nullable
-                    as List<BusinessType>?,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$ArrayValueImpl implements _ArrayValue {
-  const _$ArrayValueImpl({
-    @JsonKey(name: 'values') final List<BusinessType>? values,
-  }) : _values = values;
-
-  factory _$ArrayValueImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ArrayValueImplFromJson(json);
-
-  final List<BusinessType>? _values;
-  @override
-  @JsonKey(name: 'values')
-  List<BusinessType>? get values {
-    final value = _values;
-    if (value == null) return null;
-    if (_values is EqualUnmodifiableListView) return _values;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  @override
-  String toString() {
-    return 'ArrayValue(values: $values)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ArrayValueImpl &&
-            const DeepCollectionEquality().equals(other._values, _values));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_values));
-
-  /// Create a copy of ArrayValue
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ArrayValueImplCopyWith<_$ArrayValueImpl> get copyWith =>
-      __$$ArrayValueImplCopyWithImpl<_$ArrayValueImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ArrayValueImplToJson(this);
-  }
-}
-
-abstract class _ArrayValue implements ArrayValue {
-  const factory _ArrayValue({
-    @JsonKey(name: 'values') final List<BusinessType>? values,
-  }) = _$ArrayValueImpl;
-
-  factory _ArrayValue.fromJson(Map<String, dynamic> json) =
-      _$ArrayValueImpl.fromJson;
-
-  @override
-  @JsonKey(name: 'values')
-  List<BusinessType>? get values;
-
-  /// Create a copy of ArrayValue
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ArrayValueImplCopyWith<_$ArrayValueImpl> get copyWith =>
+  _$$AccuracyImplCopyWith<_$AccuracyImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

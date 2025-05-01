@@ -13,7 +13,9 @@ _$CustomerRequestDomainImpl _$$CustomerRequestDomainImplFromJson(
   fields:
       json['fields'] == null
           ? null
-          : Fields.fromJson(json['fields'] as Map<String, dynamic>),
+          : CustomerRequestDomainFields.fromJson(
+            json['fields'] as Map<String, dynamic>,
+          ),
   createTime: json['createTime'] as String?,
   updateTime: json['updateTime'] as String?,
 );
@@ -27,187 +29,205 @@ Map<String, dynamic> _$$CustomerRequestDomainImplToJson(
   'updateTime': instance.updateTime,
 };
 
-_$FieldsImpl _$$FieldsImplFromJson(Map<String, dynamic> json) => _$FieldsImpl(
-  companyName:
-      json['company_name'] == null
+_$CustomerRequestDomainFieldsImpl _$$CustomerRequestDomainFieldsImplFromJson(
+  Map<String, dynamic> json,
+) => _$CustomerRequestDomainFieldsImpl(
+  ownerNationalIdPhoto:
+      json['owner_national_id_photo'] == null
           ? null
-          : ApprovalStatus.fromJson(
-            json['company_name'] as Map<String, dynamic>,
+          : ApprovalReason.fromJson(
+            json['owner_national_id_photo'] as Map<String, dynamic>,
           ),
-  nationalIdPhoto:
-      json['national_id_photo'] == null
+  companyStoreCondition:
+      json['company_store_condition'] == null
           ? null
-          : Photo.fromJson(json['national_id_photo'] as Map<String, dynamic>),
-  approvalStatus:
-      json['approval_status'] == null
-          ? null
-          : ApprovalStatus.fromJson(
-            json['approval_status'] as Map<String, dynamic>,
+          : ApprovalReason.fromJson(
+            json['company_store_condition'] as Map<String, dynamic>,
           ),
   requestedBy:
       json['requested_by'] == null
           ? null
-          : ApprovalStatus.fromJson(
+          : ApprovalReason.fromJson(
             json['requested_by'] as Map<String, dynamic>,
           ),
-  storePhoto:
-      json['store_photo'] == null
+  companyEmail:
+      json['company_email'] == null
           ? null
-          : Photo.fromJson(json['store_photo'] as Map<String, dynamic>),
-  companyAddress:
-      json['company_address'] == null
-          ? null
-          : ApprovalStatus.fromJson(
-            json['company_address'] as Map<String, dynamic>,
-          ),
-  customerRequestId:
-      json['customer_request_id'] == null
-          ? null
-          : ApprovalStatus.fromJson(
-            json['customer_request_id'] as Map<String, dynamic>,
-          ),
-  location:
-      json['location'] == null
-          ? null
-          : Location.fromJson(json['location'] as Map<String, dynamic>),
-  nationalId:
-      json['national_id'] == null
-          ? null
-          : ApprovalStatus.fromJson(
-            json['national_id'] as Map<String, dynamic>,
-          ),
-  subscriptionType:
-      json['subscription_type'] == null
-          ? null
-          : ApprovalStatus.fromJson(
-            json['subscription_type'] as Map<String, dynamic>,
-          ),
-  storeCondition:
-      json['store_condition'] == null
-          ? null
-          : ApprovalStatus.fromJson(
-            json['store_condition'] as Map<String, dynamic>,
-          ),
-  ownerName:
-      json['owner_name'] == null
-          ? null
-          : ApprovalStatus.fromJson(json['owner_name'] as Map<String, dynamic>),
-  destinationCompany:
-      json['destination_company'] == null
-          ? null
-          : ApprovalStatus.fromJson(
-            json['destination_company'] as Map<String, dynamic>,
-          ),
-  approvalDate:
-      json['approval_date'] == null
-          ? null
-          : Date.fromJson(json['approval_date'] as Map<String, dynamic>),
-  phoneNumber:
-      json['phone_number'] == null
-          ? null
-          : ApprovalStatus.fromJson(
-            json['phone_number'] as Map<String, dynamic>,
-          ),
-  customerCode:
-      json['customer_code'] == null
-          ? null
-          : CustomerCode.fromJson(
-            json['customer_code'] as Map<String, dynamic>,
-          ),
-  carbonCopy:
-      json['carbon_copy'] == null
-          ? null
-          : ApprovalStatus.fromJson(
-            json['carbon_copy'] as Map<String, dynamic>,
+          : ApprovalReason.fromJson(
+            json['company_email'] as Map<String, dynamic>,
           ),
   approvedBy:
       json['approved_by'] == null
           ? null
-          : ApprovalStatus.fromJson(
+          : ApprovalReason.fromJson(
             json['approved_by'] as Map<String, dynamic>,
           ),
-  date:
-      json['date'] == null
-          ? null
-          : Date.fromJson(json['date'] as Map<String, dynamic>),
   ownershipStatus:
       json['ownership_status'] == null
           ? null
-          : ApprovalStatus.fromJson(
+          : ApprovalReason.fromJson(
             json['ownership_status'] as Map<String, dynamic>,
           ),
-  taxId:
-      json['tax_id'] == null
+  companyStorePhoto:
+      json['company_store_photo'] == null
           ? null
-          : ApprovalStatus.fromJson(json['tax_id'] as Map<String, dynamic>),
+          : ApprovalReason.fromJson(
+            json['company_store_photo'] as Map<String, dynamic>,
+          ),
+  companyAddress:
+      json['company_address'] == null
+          ? null
+          : ApprovalReason.fromJson(
+            json['company_address'] as Map<String, dynamic>,
+          ),
+  companyName:
+      json['company_name'] == null
+          ? null
+          : ApprovalReason.fromJson(
+            json['company_name'] as Map<String, dynamic>,
+          ),
+  ownerPhoneNumber:
+      json['owner_phone_number'] == null
+          ? null
+          : ApprovalReason.fromJson(
+            json['owner_phone_number'] as Map<String, dynamic>,
+          ),
+  requestDestination:
+      json['request_destination'] == null
+          ? null
+          : ApprovalReason.fromJson(
+            json['request_destination'] as Map<String, dynamic>,
+          ),
+  approvalStatus:
+      json['approval_status'] == null
+          ? null
+          : ApprovalReason.fromJson(
+            json['approval_status'] as Map<String, dynamic>,
+          ),
   ownerAddress:
       json['owner_address'] == null
           ? null
-          : ApprovalStatus.fromJson(
+          : ApprovalReason.fromJson(
             json['owner_address'] as Map<String, dynamic>,
+          ),
+  ownerTaxId:
+      json['owner_tax_id'] == null
+          ? null
+          : ApprovalReason.fromJson(
+            json['owner_tax_id'] as Map<String, dynamic>,
+          ),
+  carbonCopy:
+      json['carbon_copy'] == null
+          ? null
+          : ApprovalReason.fromJson(
+            json['carbon_copy'] as Map<String, dynamic>,
+          ),
+  companyPhoneNumber:
+      json['company_phone_number'] == null
+          ? null
+          : ApprovalReason.fromJson(
+            json['company_phone_number'] as Map<String, dynamic>,
+          ),
+  approvalDate:
+      json['approval_date'] == null
+          ? null
+          : ApprovalDate.fromJson(
+            json['approval_date'] as Map<String, dynamic>,
           ),
   note:
       json['note'] == null
           ? null
-          : ApprovalStatus.fromJson(json['note'] as Map<String, dynamic>),
+          : ApprovalReason.fromJson(json['note'] as Map<String, dynamic>),
+  ownerName:
+      json['owner_name'] == null
+          ? null
+          : ApprovalReason.fromJson(json['owner_name'] as Map<String, dynamic>),
+  ownerNationalId:
+      json['owner_national_id'] == null
+          ? null
+          : ApprovalReason.fromJson(
+            json['owner_national_id'] as Map<String, dynamic>,
+          ),
+  approvalReason:
+      json['approval_reason'] == null
+          ? null
+          : ApprovalReason.fromJson(
+            json['approval_reason'] as Map<String, dynamic>,
+          ),
+  subscriptionType:
+      json['subscription_type'] == null
+          ? null
+          : ApprovalReason.fromJson(
+            json['subscription_type'] as Map<String, dynamic>,
+          ),
+  companyLocation:
+      json['company_location'] == null
+          ? null
+          : CompanyLocation.fromJson(
+            json['company_location'] as Map<String, dynamic>,
+          ),
+  customerType:
+      json['customer_type'] == null
+          ? null
+          : ApprovalReason.fromJson(
+            json['customer_type'] as Map<String, dynamic>,
+          ),
 );
 
-Map<String, dynamic> _$$FieldsImplToJson(_$FieldsImpl instance) =>
-    <String, dynamic>{
-      'company_name': instance.companyName,
-      'national_id_photo': instance.nationalIdPhoto,
-      'approval_status': instance.approvalStatus,
-      'requested_by': instance.requestedBy,
-      'store_photo': instance.storePhoto,
-      'company_address': instance.companyAddress,
-      'customer_request_id': instance.customerRequestId,
-      'location': instance.location,
-      'national_id': instance.nationalId,
-      'subscription_type': instance.subscriptionType,
-      'store_condition': instance.storeCondition,
-      'owner_name': instance.ownerName,
-      'destination_company': instance.destinationCompany,
-      'approval_date': instance.approvalDate,
-      'phone_number': instance.phoneNumber,
-      'customer_code': instance.customerCode,
-      'carbon_copy': instance.carbonCopy,
-      'approved_by': instance.approvedBy,
-      'date': instance.date,
-      'ownership_status': instance.ownershipStatus,
-      'tax_id': instance.taxId,
-      'owner_address': instance.ownerAddress,
-      'note': instance.note,
-    };
+Map<String, dynamic> _$$CustomerRequestDomainFieldsImplToJson(
+  _$CustomerRequestDomainFieldsImpl instance,
+) => <String, dynamic>{
+  'owner_national_id_photo': instance.ownerNationalIdPhoto,
+  'company_store_condition': instance.companyStoreCondition,
+  'requested_by': instance.requestedBy,
+  'company_email': instance.companyEmail,
+  'approved_by': instance.approvedBy,
+  'ownership_status': instance.ownershipStatus,
+  'company_store_photo': instance.companyStorePhoto,
+  'company_address': instance.companyAddress,
+  'company_name': instance.companyName,
+  'owner_phone_number': instance.ownerPhoneNumber,
+  'request_destination': instance.requestDestination,
+  'approval_status': instance.approvalStatus,
+  'owner_address': instance.ownerAddress,
+  'owner_tax_id': instance.ownerTaxId,
+  'carbon_copy': instance.carbonCopy,
+  'company_phone_number': instance.companyPhoneNumber,
+  'approval_date': instance.approvalDate,
+  'note': instance.note,
+  'owner_name': instance.ownerName,
+  'owner_national_id': instance.ownerNationalId,
+  'approval_reason': instance.approvalReason,
+  'subscription_type': instance.subscriptionType,
+  'company_location': instance.companyLocation,
+  'customer_type': instance.customerType,
+};
 
-_$DateImpl _$$DateImplFromJson(Map<String, dynamic> json) =>
-    _$DateImpl(timestampValue: json['timestampValue'] as String?);
+_$ApprovalDateImpl _$$ApprovalDateImplFromJson(Map<String, dynamic> json) =>
+    _$ApprovalDateImpl(timestampValue: json['timestampValue'] as String?);
 
-Map<String, dynamic> _$$DateImplToJson(_$DateImpl instance) =>
+Map<String, dynamic> _$$ApprovalDateImplToJson(_$ApprovalDateImpl instance) =>
     <String, dynamic>{'timestampValue': instance.timestampValue};
 
-_$ApprovalStatusImpl _$$ApprovalStatusImplFromJson(Map<String, dynamic> json) =>
-    _$ApprovalStatusImpl(stringValue: json['stringValue'] as String?);
+_$ApprovalReasonImpl _$$ApprovalReasonImplFromJson(Map<String, dynamic> json) =>
+    _$ApprovalReasonImpl(stringValue: json['stringValue'] as String?);
 
-Map<String, dynamic> _$$ApprovalStatusImplToJson(
-  _$ApprovalStatusImpl instance,
+Map<String, dynamic> _$$ApprovalReasonImplToJson(
+  _$ApprovalReasonImpl instance,
 ) => <String, dynamic>{'stringValue': instance.stringValue};
 
-_$CustomerCodeImpl _$$CustomerCodeImplFromJson(Map<String, dynamic> json) =>
-    _$CustomerCodeImpl(integerValue: json['integerValue'] as String?);
+_$CompanyLocationImpl _$$CompanyLocationImplFromJson(
+  Map<String, dynamic> json,
+) => _$CompanyLocationImpl(
+  mapValue:
+      json['mapValue'] == null
+          ? null
+          : MapValue.fromJson(json['mapValue'] as Map<String, dynamic>),
+);
 
-Map<String, dynamic> _$$CustomerCodeImplToJson(_$CustomerCodeImpl instance) =>
-    <String, dynamic>{'integerValue': instance.integerValue};
-
-_$LocationImpl _$$LocationImplFromJson(Map<String, dynamic> json) =>
-    _$LocationImpl(
-      mapValue:
-          json['mapValue'] == null
-              ? null
-              : MapValue.fromJson(json['mapValue'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$$LocationImplToJson(_$LocationImpl instance) =>
-    <String, dynamic>{'mapValue': instance.mapValue};
+Map<String, dynamic> _$$CompanyLocationImplToJson(
+  _$CompanyLocationImpl instance,
+) => <String, dynamic>{'mapValue': instance.mapValue};
 
 _$MapValueImpl _$$MapValueImplFromJson(Map<String, dynamic> json) =>
     _$MapValueImpl(
@@ -222,10 +242,6 @@ Map<String, dynamic> _$$MapValueImplToJson(_$MapValueImpl instance) =>
 
 _$MapValueFieldsImpl _$$MapValueFieldsImplFromJson(Map<String, dynamic> json) =>
     _$MapValueFieldsImpl(
-      accuracy:
-          json['accuracy'] == null
-              ? null
-              : Accuracy.fromJson(json['accuracy'] as Map<String, dynamic>),
       latitude:
           json['latitude'] == null
               ? null
@@ -234,14 +250,18 @@ _$MapValueFieldsImpl _$$MapValueFieldsImplFromJson(Map<String, dynamic> json) =>
           json['longitude'] == null
               ? null
               : Itude.fromJson(json['longitude'] as Map<String, dynamic>),
+      accuracy:
+          json['accuracy'] == null
+              ? null
+              : Accuracy.fromJson(json['accuracy'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$MapValueFieldsImplToJson(
   _$MapValueFieldsImpl instance,
 ) => <String, dynamic>{
-  'accuracy': instance.accuracy,
   'latitude': instance.latitude,
   'longitude': instance.longitude,
+  'accuracy': instance.accuracy,
 };
 
 _$AccuracyImpl _$$AccuracyImplFromJson(Map<String, dynamic> json) =>
@@ -255,9 +275,3 @@ _$ItudeImpl _$$ItudeImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$ItudeImplToJson(_$ItudeImpl instance) =>
     <String, dynamic>{'doubleValue': instance.doubleValue};
-
-_$PhotoImpl _$$PhotoImplFromJson(Map<String, dynamic> json) =>
-    _$PhotoImpl(stringValue: json['stringValue'] as String?);
-
-Map<String, dynamic> _$$PhotoImplToJson(_$PhotoImpl instance) =>
-    <String, dynamic>{'stringValue': instance.stringValue};

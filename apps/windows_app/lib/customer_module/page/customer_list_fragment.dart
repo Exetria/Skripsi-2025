@@ -69,17 +69,20 @@ class _CustomerListFragmentState extends ConsumerState<CustomerListFragment> {
                           style: const TextStyle(fontSize: 14),
                         ),
                         subtitle: Text(
-                          data.fields?.storeAddress?.stringValue ?? '-',
+                          data.fields?.companyAddress?.stringValue ?? '-',
                         ),
                         onTap: () {
                           // TODO: customer on tap function
                           showCustomerDetailDialog(
                             context: context,
                             name: data.fields?.companyName?.stringValue ?? '-',
-                            email: data.fields?.email?.stringValue ?? '-',
-                            phone: data.fields?.phoneNumber?.stringValue ?? '-',
+                            email:
+                                data.fields?.companyEmail?.stringValue ?? '-',
+                            phone:
+                                data.fields?.companyPhoneNumber?.stringValue ??
+                                '-',
                             address:
-                                data.fields?.storeAddress?.stringValue ?? '-',
+                                data.fields?.companyAddress?.stringValue ?? '-',
                             onEditPressed: () {},
                           );
                         },

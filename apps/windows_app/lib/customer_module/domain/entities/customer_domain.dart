@@ -7,7 +7,7 @@ part 'customer_domain.g.dart';
 class CustomerDomain with _$CustomerDomain {
   const factory CustomerDomain({
     @JsonKey(name: 'name') String? name,
-    @JsonKey(name: 'fields') Fields? fields,
+    @JsonKey(name: 'fields') CustomerDomainFields? fields,
     @JsonKey(name: 'createTime') String? createTime,
     @JsonKey(name: 'updateTime') String? updateTime,
   }) = _CustomerDomain;
@@ -17,109 +17,78 @@ class CustomerDomain with _$CustomerDomain {
 }
 
 @freezed
-class Fields with _$Fields {
-  const factory Fields({
-    @JsonKey(name: 'purchase_history') PurchaseHistory? purchaseHistory,
-    @JsonKey(name: 'phone_number') BusinessType? phoneNumber,
-    @JsonKey(name: 'latitude') Itude? latitude,
-    @JsonKey(name: 'owner_address') BusinessType? ownerAddress,
-    @JsonKey(name: 'subscription_type') BusinessType? subscriptionType,
-    @JsonKey(name: 'id_number') BusinessType? idNumber,
-    @JsonKey(name: 'preferred_payment_method')
-    BusinessType? preferredPaymentMethod,
-    @JsonKey(name: 'email') BusinessType? email,
-    @JsonKey(name: 'longitude') Itude? longitude,
-    @JsonKey(name: 'delivery_zone') BusinessType? deliveryZone,
-    @JsonKey(name: 'preferred_delivery_time')
-    BusinessType? preferredDeliveryTime,
-    @JsonKey(name: 'tax_id') BusinessType? taxId,
-    @JsonKey(name: 'store_photo') Photo? storePhoto,
-    @JsonKey(name: 'business_type') BusinessType? businessType,
-    @JsonKey(name: 'customer_code') BusinessType? customerCode,
-    @JsonKey(name: 'ownership') BusinessType? ownership,
-    @JsonKey(name: 'credit_limit') CreditLimit? creditLimit,
-    @JsonKey(name: 'owner_name') BusinessType? ownerName,
-    @JsonKey(name: 'outstanding_balance') CreditLimit? outstandingBalance,
-    @JsonKey(name: 'blacklisted') Blacklisted? blacklisted,
-    @JsonKey(name: 'discount_eligibility') Blacklisted? discountEligibility,
-    @JsonKey(name: 'visit_frequency') BusinessType? visitFrequency,
-    @JsonKey(name: 'company_name') BusinessType? companyName,
-    @JsonKey(name: 'store_address') BusinessType? storeAddress,
-    @JsonKey(name: 'id_photo') Photo? idPhoto,
-    @JsonKey(name: 'status') BusinessType? status,
-    @JsonKey(name: 'sales_rep_id') BusinessType? salesRepId,
-    @JsonKey(name: 'customer_notes') BusinessType? customerNotes,
-    @JsonKey(name: 'store_name') BusinessType? storeName,
-    @JsonKey(name: 'last_transaction_date')
-    LastTransactionDate? lastTransactionDate,
-  }) = _Fields;
+class CustomerDomainFields with _$CustomerDomainFields {
+  const factory CustomerDomainFields({
+    @JsonKey(name: 'owner_phone_number') ApprovedBy? ownerPhoneNumber,
+    @JsonKey(name: 'customer_code') ApprovedBy? customerCode,
+    @JsonKey(name: 'company_store_condition') ApprovedBy? companyStoreCondition,
+    @JsonKey(name: 'company_phone_number') ApprovedBy? companyPhoneNumber,
+    @JsonKey(name: 'owner_tax_id') ApprovedBy? ownerTaxId,
+    @JsonKey(name: 'approved_by') ApprovedBy? approvedBy,
+    @JsonKey(name: 'subscription_type') ApprovedBy? subscriptionType,
+    @JsonKey(name: 'owner_address') ApprovedBy? ownerAddress,
+    @JsonKey(name: 'ownership_status') ApprovedBy? ownershipStatus,
+    @JsonKey(name: 'company_email') ApprovedBy? companyEmail,
+    @JsonKey(name: 'company_location') CompanyLocation? companyLocation,
+    @JsonKey(name: 'requested_by') ApprovedBy? requestedBy,
+    @JsonKey(name: 'owner_national_id') ApprovedBy? ownerNationalId,
+    @JsonKey(name: 'owner_name') ApprovedBy? ownerName,
+    @JsonKey(name: 'company_name') ApprovedBy? companyName,
+    @JsonKey(name: 'owner_national_id_photo') ApprovedBy? ownerNationalIdPhoto,
+    @JsonKey(name: 'company_address') ApprovedBy? companyAddress,
+    @JsonKey(name: 'company_store_photo') ApprovedBy? companyStorePhoto,
+  }) = _CustomerDomainFields;
 
-  factory Fields.fromJson(Map<String, dynamic> json) => _$FieldsFromJson(json);
+  factory CustomerDomainFields.fromJson(Map<String, dynamic> json) =>
+      _$CustomerDomainFieldsFromJson(json);
 }
 
 @freezed
-class Blacklisted with _$Blacklisted {
-  const factory Blacklisted({
-    @JsonKey(name: 'booleanValue') bool? booleanValue,
-  }) = _Blacklisted;
-  factory Blacklisted.fromJson(Map<String, dynamic> json) =>
-      _$BlacklistedFromJson(json);
-}
-
-@freezed
-class BusinessType with _$BusinessType {
-  const factory BusinessType({
+class ApprovedBy with _$ApprovedBy {
+  const factory ApprovedBy({
     @JsonKey(name: 'stringValue') String? stringValue,
-  }) = _BusinessType;
-  factory BusinessType.fromJson(Map<String, dynamic> json) =>
-      _$BusinessTypeFromJson(json);
+  }) = _ApprovedBy;
+
+  factory ApprovedBy.fromJson(Map<String, dynamic> json) =>
+      _$ApprovedByFromJson(json);
 }
 
 @freezed
-class CreditLimit with _$CreditLimit {
-  const factory CreditLimit({@JsonKey(name: 'doubleValue') int? doubleValue}) =
-      _CreditLimit;
-  factory CreditLimit.fromJson(Map<String, dynamic> json) =>
-      _$CreditLimitFromJson(json);
+class CompanyLocation with _$CompanyLocation {
+  const factory CompanyLocation({
+    @JsonKey(name: 'mapValue') MapValue? mapValue,
+  }) = _CompanyLocation;
+
+  factory CompanyLocation.fromJson(Map<String, dynamic> json) =>
+      _$CompanyLocationFromJson(json);
 }
 
 @freezed
-class Photo with _$Photo {
-  const factory Photo({@JsonKey(name: 'stringValue') String? stringValue}) =
-      _Photo;
-  factory Photo.fromJson(Map<String, dynamic> json) => _$PhotoFromJson(json);
+class MapValue with _$MapValue {
+  const factory MapValue({@JsonKey(name: 'fields') MapValueFields? fields}) =
+      _MapValue;
+
+  factory MapValue.fromJson(Map<String, dynamic> json) =>
+      _$MapValueFromJson(json);
 }
 
 @freezed
-class LastTransactionDate with _$LastTransactionDate {
-  const factory LastTransactionDate({
-    @JsonKey(name: 'stringValue') DateTime? stringValue,
-  }) = _LastTransactionDate;
-  factory LastTransactionDate.fromJson(Map<String, dynamic> json) =>
-      _$LastTransactionDateFromJson(json);
+class MapValueFields with _$MapValueFields {
+  const factory MapValueFields({
+    @JsonKey(name: 'accuracy') Accuracy? accuracy,
+    @JsonKey(name: 'latitude') Accuracy? latitude,
+    @JsonKey(name: 'longitude') Accuracy? longitude,
+  }) = _MapValueFields;
+
+  factory MapValueFields.fromJson(Map<String, dynamic> json) =>
+      _$MapValueFieldsFromJson(json);
 }
 
 @freezed
-class Itude with _$Itude {
-  const factory Itude({@JsonKey(name: 'doubleValue') double? doubleValue}) =
-      _Itude;
-  factory Itude.fromJson(Map<String, dynamic> json) => _$ItudeFromJson(json);
-}
+class Accuracy with _$Accuracy {
+  const factory Accuracy({@JsonKey(name: 'doubleValue') double? doubleValue}) =
+      _Accuracy;
 
-@freezed
-class PurchaseHistory with _$PurchaseHistory {
-  const factory PurchaseHistory({
-    @JsonKey(name: 'arrayValue') ArrayValue? arrayValue,
-  }) = _PurchaseHistory;
-  factory PurchaseHistory.fromJson(Map<String, dynamic> json) =>
-      _$PurchaseHistoryFromJson(json);
-}
-
-@freezed
-class ArrayValue with _$ArrayValue {
-  const factory ArrayValue({
-    @JsonKey(name: 'values') List<BusinessType>? values,
-  }) = _ArrayValue;
-  factory ArrayValue.fromJson(Map<String, dynamic> json) =>
-      _$ArrayValueFromJson(json);
+  factory Accuracy.fromJson(Map<String, dynamic> json) =>
+      _$AccuracyFromJson(json);
 }
