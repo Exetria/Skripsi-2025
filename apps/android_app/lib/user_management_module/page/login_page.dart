@@ -257,7 +257,6 @@ class _LoginPage extends ConsumerState<LoginPage> {
         );
 
     if (userValue?.fields?.role?.stringValue == 'sales') {
-      print('asds $userValue');
       userDataHelper = UserDataHelper(
         uid: result?.localId ?? '',
         name: result?.displayName ?? '',
