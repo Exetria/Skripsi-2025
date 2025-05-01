@@ -1,11 +1,20 @@
-// import 'package:common_components/common_components.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:fpdart/fpdart.dart';
+import 'package:android_app/customer_module/data/repository_impl/customer_list_repository_impl.dart';
+import 'package:android_app/customer_module/data/repository_impl/customer_request_list_repository_impl.dart';
+import 'package:android_app/customer_module/domain/entities/customer_domain.dart';
+import 'package:android_app/customer_module/domain/entities/customer_request_domain.dart';
+import 'package:common_components/common_components.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart';
 
-// abstract class ModuleNameRepository {
-//   Future<Either<ApiException, List<ModuleNameDomain>?>> fx();
-// }
+abstract class CustomerRepository {
+  Future<Either<ApiException, List<CustomerDomain>?>> getCustomerList();
+  Future<Either<ApiException, List<CustomerRequestDomain>?>>
+  getCustomerRequestList();
+}
 
-// final ModuleNameRepositoryProvider = Provider<ModuleNameRepository>(
-//   (ref) => ModuleNameRepositoryImpl(),
-// );
+final CustomerListRepositoryProvider = Provider<CustomerRepository>(
+  (ref) => CustomerListRepositoryImpl(),
+);
+final CustomerRequestListRepositoryProvider = Provider<CustomerRepository>(
+  (ref) => CustomerRequestListRepositoryImpl(),
+);
