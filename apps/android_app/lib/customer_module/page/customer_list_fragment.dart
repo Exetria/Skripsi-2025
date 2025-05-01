@@ -30,7 +30,7 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
 
             data: (customerList) {
               if (customerList == null || customerList.isEmpty) {
-                return const Center(child: Text('No sales data found.'));
+                return const Center(child: Text('No order data found.'));
               }
 
               return ListView.separated(
@@ -60,6 +60,7 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
 
             error: (error, _) {
               final exception = error as ApiException;
+              print('asds $exception');
 
               return Center(
                 child: Text(
