@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'customer_domain.freezed.dart';
@@ -20,23 +22,24 @@ class CustomerDomain with _$CustomerDomain {
 class CustomerDomainFields with _$CustomerDomainFields {
   const factory CustomerDomainFields({
     @JsonKey(name: 'owner_phone_number') ApprovedBy? ownerPhoneNumber,
-    @JsonKey(name: 'customer_code') ApprovedBy? customerCode,
-    @JsonKey(name: 'company_store_condition') ApprovedBy? companyStoreCondition,
-    @JsonKey(name: 'company_phone_number') ApprovedBy? companyPhoneNumber,
-    @JsonKey(name: 'owner_tax_id') ApprovedBy? ownerTaxId,
-    @JsonKey(name: 'approved_by') ApprovedBy? approvedBy,
     @JsonKey(name: 'subscription_type') ApprovedBy? subscriptionType,
-    @JsonKey(name: 'owner_address') ApprovedBy? ownerAddress,
-    @JsonKey(name: 'ownership_status') ApprovedBy? ownershipStatus,
     @JsonKey(name: 'company_email') ApprovedBy? companyEmail,
-    @JsonKey(name: 'company_location') CompanyLocation? companyLocation,
-    @JsonKey(name: 'requested_by') ApprovedBy? requestedBy,
     @JsonKey(name: 'owner_national_id') ApprovedBy? ownerNationalId,
-    @JsonKey(name: 'owner_name') ApprovedBy? ownerName,
-    @JsonKey(name: 'company_name') ApprovedBy? companyName,
-    @JsonKey(name: 'owner_national_id_photo') ApprovedBy? ownerNationalIdPhoto,
-    @JsonKey(name: 'company_address') ApprovedBy? companyAddress,
+    @JsonKey(name: 'approved_by') ApprovedBy? approvedBy,
+    @JsonKey(name: 'blacklisted') Blacklisted? blacklisted,
+    @JsonKey(name: 'company_location') CompanyLocation? companyLocation,
+    @JsonKey(name: 'company_store_condition') ApprovedBy? companyStoreCondition,
     @JsonKey(name: 'company_store_photo') ApprovedBy? companyStorePhoto,
+    @JsonKey(name: 'company_address') ApprovedBy? companyAddress,
+    @JsonKey(name: 'requested_by') ApprovedBy? requestedBy,
+    @JsonKey(name: 'customer_code') ApprovedBy? customerCode,
+    @JsonKey(name: 'owner_tax_id') ApprovedBy? ownerTaxId,
+    @JsonKey(name: 'company_name') ApprovedBy? companyName,
+    @JsonKey(name: 'owner_address') ApprovedBy? ownerAddress,
+    @JsonKey(name: 'owner_national_id_photo') ApprovedBy? ownerNationalIdPhoto,
+    @JsonKey(name: 'owner_name') ApprovedBy? ownerName,
+    @JsonKey(name: 'company_phone_number') ApprovedBy? companyPhoneNumber,
+    @JsonKey(name: 'ownership_status') ApprovedBy? ownershipStatus,
   }) = _CustomerDomainFields;
 
   factory CustomerDomainFields.fromJson(Map<String, dynamic> json) =>
@@ -51,6 +54,16 @@ class ApprovedBy with _$ApprovedBy {
 
   factory ApprovedBy.fromJson(Map<String, dynamic> json) =>
       _$ApprovedByFromJson(json);
+}
+
+@freezed
+class Blacklisted with _$Blacklisted {
+  const factory Blacklisted({
+    @JsonKey(name: 'booleanValue') bool? booleanValue,
+  }) = _Blacklisted;
+
+  factory Blacklisted.fromJson(Map<String, dynamic> json) =>
+      _$BlacklistedFromJson(json);
 }
 
 @freezed
@@ -75,8 +88,8 @@ class MapValue with _$MapValue {
 @freezed
 class MapValueFields with _$MapValueFields {
   const factory MapValueFields({
-    @JsonKey(name: 'accuracy') Accuracy? accuracy,
     @JsonKey(name: 'latitude') Accuracy? latitude,
+    @JsonKey(name: 'accuracy') Accuracy? accuracy,
     @JsonKey(name: 'longitude') Accuracy? longitude,
   }) = _MapValueFields;
 

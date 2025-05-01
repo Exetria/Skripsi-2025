@@ -291,40 +291,42 @@ CustomerDomainFields _$CustomerDomainFieldsFromJson(Map<String, dynamic> json) {
 mixin _$CustomerDomainFields {
   @JsonKey(name: 'owner_phone_number')
   ApprovedBy? get ownerPhoneNumber => throw _privateConstructorUsedError;
-  @JsonKey(name: 'customer_code')
-  ApprovedBy? get customerCode => throw _privateConstructorUsedError;
-  @JsonKey(name: 'company_store_condition')
-  ApprovedBy? get companyStoreCondition => throw _privateConstructorUsedError;
-  @JsonKey(name: 'company_phone_number')
-  ApprovedBy? get companyPhoneNumber => throw _privateConstructorUsedError;
-  @JsonKey(name: 'owner_tax_id')
-  ApprovedBy? get ownerTaxId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'approved_by')
-  ApprovedBy? get approvedBy => throw _privateConstructorUsedError;
   @JsonKey(name: 'subscription_type')
   ApprovedBy? get subscriptionType => throw _privateConstructorUsedError;
-  @JsonKey(name: 'owner_address')
-  ApprovedBy? get ownerAddress => throw _privateConstructorUsedError;
-  @JsonKey(name: 'ownership_status')
-  ApprovedBy? get ownershipStatus => throw _privateConstructorUsedError;
   @JsonKey(name: 'company_email')
   ApprovedBy? get companyEmail => throw _privateConstructorUsedError;
-  @JsonKey(name: 'company_location')
-  CompanyLocation? get companyLocation => throw _privateConstructorUsedError;
-  @JsonKey(name: 'requested_by')
-  ApprovedBy? get requestedBy => throw _privateConstructorUsedError;
   @JsonKey(name: 'owner_national_id')
   ApprovedBy? get ownerNationalId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'owner_name')
-  ApprovedBy? get ownerName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'company_name')
-  ApprovedBy? get companyName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'owner_national_id_photo')
-  ApprovedBy? get ownerNationalIdPhoto => throw _privateConstructorUsedError;
-  @JsonKey(name: 'company_address')
-  ApprovedBy? get companyAddress => throw _privateConstructorUsedError;
+  @JsonKey(name: 'approved_by')
+  ApprovedBy? get approvedBy => throw _privateConstructorUsedError;
+  @JsonKey(name: 'blacklisted')
+  Blacklisted? get blacklisted => throw _privateConstructorUsedError;
+  @JsonKey(name: 'company_location')
+  CompanyLocation? get companyLocation => throw _privateConstructorUsedError;
+  @JsonKey(name: 'company_store_condition')
+  ApprovedBy? get companyStoreCondition => throw _privateConstructorUsedError;
   @JsonKey(name: 'company_store_photo')
   ApprovedBy? get companyStorePhoto => throw _privateConstructorUsedError;
+  @JsonKey(name: 'company_address')
+  ApprovedBy? get companyAddress => throw _privateConstructorUsedError;
+  @JsonKey(name: 'requested_by')
+  ApprovedBy? get requestedBy => throw _privateConstructorUsedError;
+  @JsonKey(name: 'customer_code')
+  ApprovedBy? get customerCode => throw _privateConstructorUsedError;
+  @JsonKey(name: 'owner_tax_id')
+  ApprovedBy? get ownerTaxId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'company_name')
+  ApprovedBy? get companyName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'owner_address')
+  ApprovedBy? get ownerAddress => throw _privateConstructorUsedError;
+  @JsonKey(name: 'owner_national_id_photo')
+  ApprovedBy? get ownerNationalIdPhoto => throw _privateConstructorUsedError;
+  @JsonKey(name: 'owner_name')
+  ApprovedBy? get ownerName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'company_phone_number')
+  ApprovedBy? get companyPhoneNumber => throw _privateConstructorUsedError;
+  @JsonKey(name: 'ownership_status')
+  ApprovedBy? get ownershipStatus => throw _privateConstructorUsedError;
 
   /// Serializes this CustomerDomainFields to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -345,43 +347,45 @@ abstract class $CustomerDomainFieldsCopyWith<$Res> {
   @useResult
   $Res call({
     @JsonKey(name: 'owner_phone_number') ApprovedBy? ownerPhoneNumber,
-    @JsonKey(name: 'customer_code') ApprovedBy? customerCode,
-    @JsonKey(name: 'company_store_condition') ApprovedBy? companyStoreCondition,
-    @JsonKey(name: 'company_phone_number') ApprovedBy? companyPhoneNumber,
-    @JsonKey(name: 'owner_tax_id') ApprovedBy? ownerTaxId,
-    @JsonKey(name: 'approved_by') ApprovedBy? approvedBy,
     @JsonKey(name: 'subscription_type') ApprovedBy? subscriptionType,
-    @JsonKey(name: 'owner_address') ApprovedBy? ownerAddress,
-    @JsonKey(name: 'ownership_status') ApprovedBy? ownershipStatus,
     @JsonKey(name: 'company_email') ApprovedBy? companyEmail,
-    @JsonKey(name: 'company_location') CompanyLocation? companyLocation,
-    @JsonKey(name: 'requested_by') ApprovedBy? requestedBy,
     @JsonKey(name: 'owner_national_id') ApprovedBy? ownerNationalId,
-    @JsonKey(name: 'owner_name') ApprovedBy? ownerName,
-    @JsonKey(name: 'company_name') ApprovedBy? companyName,
-    @JsonKey(name: 'owner_national_id_photo') ApprovedBy? ownerNationalIdPhoto,
-    @JsonKey(name: 'company_address') ApprovedBy? companyAddress,
+    @JsonKey(name: 'approved_by') ApprovedBy? approvedBy,
+    @JsonKey(name: 'blacklisted') Blacklisted? blacklisted,
+    @JsonKey(name: 'company_location') CompanyLocation? companyLocation,
+    @JsonKey(name: 'company_store_condition') ApprovedBy? companyStoreCondition,
     @JsonKey(name: 'company_store_photo') ApprovedBy? companyStorePhoto,
+    @JsonKey(name: 'company_address') ApprovedBy? companyAddress,
+    @JsonKey(name: 'requested_by') ApprovedBy? requestedBy,
+    @JsonKey(name: 'customer_code') ApprovedBy? customerCode,
+    @JsonKey(name: 'owner_tax_id') ApprovedBy? ownerTaxId,
+    @JsonKey(name: 'company_name') ApprovedBy? companyName,
+    @JsonKey(name: 'owner_address') ApprovedBy? ownerAddress,
+    @JsonKey(name: 'owner_national_id_photo') ApprovedBy? ownerNationalIdPhoto,
+    @JsonKey(name: 'owner_name') ApprovedBy? ownerName,
+    @JsonKey(name: 'company_phone_number') ApprovedBy? companyPhoneNumber,
+    @JsonKey(name: 'ownership_status') ApprovedBy? ownershipStatus,
   });
 
   $ApprovedByCopyWith<$Res>? get ownerPhoneNumber;
-  $ApprovedByCopyWith<$Res>? get customerCode;
-  $ApprovedByCopyWith<$Res>? get companyStoreCondition;
-  $ApprovedByCopyWith<$Res>? get companyPhoneNumber;
-  $ApprovedByCopyWith<$Res>? get ownerTaxId;
-  $ApprovedByCopyWith<$Res>? get approvedBy;
   $ApprovedByCopyWith<$Res>? get subscriptionType;
-  $ApprovedByCopyWith<$Res>? get ownerAddress;
-  $ApprovedByCopyWith<$Res>? get ownershipStatus;
   $ApprovedByCopyWith<$Res>? get companyEmail;
-  $CompanyLocationCopyWith<$Res>? get companyLocation;
-  $ApprovedByCopyWith<$Res>? get requestedBy;
   $ApprovedByCopyWith<$Res>? get ownerNationalId;
-  $ApprovedByCopyWith<$Res>? get ownerName;
-  $ApprovedByCopyWith<$Res>? get companyName;
-  $ApprovedByCopyWith<$Res>? get ownerNationalIdPhoto;
-  $ApprovedByCopyWith<$Res>? get companyAddress;
+  $ApprovedByCopyWith<$Res>? get approvedBy;
+  $BlacklistedCopyWith<$Res>? get blacklisted;
+  $CompanyLocationCopyWith<$Res>? get companyLocation;
+  $ApprovedByCopyWith<$Res>? get companyStoreCondition;
   $ApprovedByCopyWith<$Res>? get companyStorePhoto;
+  $ApprovedByCopyWith<$Res>? get companyAddress;
+  $ApprovedByCopyWith<$Res>? get requestedBy;
+  $ApprovedByCopyWith<$Res>? get customerCode;
+  $ApprovedByCopyWith<$Res>? get ownerTaxId;
+  $ApprovedByCopyWith<$Res>? get companyName;
+  $ApprovedByCopyWith<$Res>? get ownerAddress;
+  $ApprovedByCopyWith<$Res>? get ownerNationalIdPhoto;
+  $ApprovedByCopyWith<$Res>? get ownerName;
+  $ApprovedByCopyWith<$Res>? get companyPhoneNumber;
+  $ApprovedByCopyWith<$Res>? get ownershipStatus;
 }
 
 /// @nodoc
@@ -403,23 +407,24 @@ class _$CustomerDomainFieldsCopyWithImpl<
   @override
   $Res call({
     Object? ownerPhoneNumber = freezed,
-    Object? customerCode = freezed,
-    Object? companyStoreCondition = freezed,
-    Object? companyPhoneNumber = freezed,
-    Object? ownerTaxId = freezed,
-    Object? approvedBy = freezed,
     Object? subscriptionType = freezed,
-    Object? ownerAddress = freezed,
-    Object? ownershipStatus = freezed,
     Object? companyEmail = freezed,
-    Object? companyLocation = freezed,
-    Object? requestedBy = freezed,
     Object? ownerNationalId = freezed,
-    Object? ownerName = freezed,
-    Object? companyName = freezed,
-    Object? ownerNationalIdPhoto = freezed,
-    Object? companyAddress = freezed,
+    Object? approvedBy = freezed,
+    Object? blacklisted = freezed,
+    Object? companyLocation = freezed,
+    Object? companyStoreCondition = freezed,
     Object? companyStorePhoto = freezed,
+    Object? companyAddress = freezed,
+    Object? requestedBy = freezed,
+    Object? customerCode = freezed,
+    Object? ownerTaxId = freezed,
+    Object? companyName = freezed,
+    Object? ownerAddress = freezed,
+    Object? ownerNationalIdPhoto = freezed,
+    Object? ownerName = freezed,
+    Object? companyPhoneNumber = freezed,
+    Object? ownershipStatus = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -428,90 +433,95 @@ class _$CustomerDomainFieldsCopyWithImpl<
                     ? _value.ownerPhoneNumber
                     : ownerPhoneNumber // ignore: cast_nullable_to_non_nullable
                         as ApprovedBy?,
-            customerCode:
-                freezed == customerCode
-                    ? _value.customerCode
-                    : customerCode // ignore: cast_nullable_to_non_nullable
-                        as ApprovedBy?,
-            companyStoreCondition:
-                freezed == companyStoreCondition
-                    ? _value.companyStoreCondition
-                    : companyStoreCondition // ignore: cast_nullable_to_non_nullable
-                        as ApprovedBy?,
-            companyPhoneNumber:
-                freezed == companyPhoneNumber
-                    ? _value.companyPhoneNumber
-                    : companyPhoneNumber // ignore: cast_nullable_to_non_nullable
-                        as ApprovedBy?,
-            ownerTaxId:
-                freezed == ownerTaxId
-                    ? _value.ownerTaxId
-                    : ownerTaxId // ignore: cast_nullable_to_non_nullable
-                        as ApprovedBy?,
-            approvedBy:
-                freezed == approvedBy
-                    ? _value.approvedBy
-                    : approvedBy // ignore: cast_nullable_to_non_nullable
-                        as ApprovedBy?,
             subscriptionType:
                 freezed == subscriptionType
                     ? _value.subscriptionType
                     : subscriptionType // ignore: cast_nullable_to_non_nullable
-                        as ApprovedBy?,
-            ownerAddress:
-                freezed == ownerAddress
-                    ? _value.ownerAddress
-                    : ownerAddress // ignore: cast_nullable_to_non_nullable
-                        as ApprovedBy?,
-            ownershipStatus:
-                freezed == ownershipStatus
-                    ? _value.ownershipStatus
-                    : ownershipStatus // ignore: cast_nullable_to_non_nullable
                         as ApprovedBy?,
             companyEmail:
                 freezed == companyEmail
                     ? _value.companyEmail
                     : companyEmail // ignore: cast_nullable_to_non_nullable
                         as ApprovedBy?,
-            companyLocation:
-                freezed == companyLocation
-                    ? _value.companyLocation
-                    : companyLocation // ignore: cast_nullable_to_non_nullable
-                        as CompanyLocation?,
-            requestedBy:
-                freezed == requestedBy
-                    ? _value.requestedBy
-                    : requestedBy // ignore: cast_nullable_to_non_nullable
-                        as ApprovedBy?,
             ownerNationalId:
                 freezed == ownerNationalId
                     ? _value.ownerNationalId
                     : ownerNationalId // ignore: cast_nullable_to_non_nullable
                         as ApprovedBy?,
-            ownerName:
-                freezed == ownerName
-                    ? _value.ownerName
-                    : ownerName // ignore: cast_nullable_to_non_nullable
+            approvedBy:
+                freezed == approvedBy
+                    ? _value.approvedBy
+                    : approvedBy // ignore: cast_nullable_to_non_nullable
                         as ApprovedBy?,
-            companyName:
-                freezed == companyName
-                    ? _value.companyName
-                    : companyName // ignore: cast_nullable_to_non_nullable
+            blacklisted:
+                freezed == blacklisted
+                    ? _value.blacklisted
+                    : blacklisted // ignore: cast_nullable_to_non_nullable
+                        as Blacklisted?,
+            companyLocation:
+                freezed == companyLocation
+                    ? _value.companyLocation
+                    : companyLocation // ignore: cast_nullable_to_non_nullable
+                        as CompanyLocation?,
+            companyStoreCondition:
+                freezed == companyStoreCondition
+                    ? _value.companyStoreCondition
+                    : companyStoreCondition // ignore: cast_nullable_to_non_nullable
                         as ApprovedBy?,
-            ownerNationalIdPhoto:
-                freezed == ownerNationalIdPhoto
-                    ? _value.ownerNationalIdPhoto
-                    : ownerNationalIdPhoto // ignore: cast_nullable_to_non_nullable
+            companyStorePhoto:
+                freezed == companyStorePhoto
+                    ? _value.companyStorePhoto
+                    : companyStorePhoto // ignore: cast_nullable_to_non_nullable
                         as ApprovedBy?,
             companyAddress:
                 freezed == companyAddress
                     ? _value.companyAddress
                     : companyAddress // ignore: cast_nullable_to_non_nullable
                         as ApprovedBy?,
-            companyStorePhoto:
-                freezed == companyStorePhoto
-                    ? _value.companyStorePhoto
-                    : companyStorePhoto // ignore: cast_nullable_to_non_nullable
+            requestedBy:
+                freezed == requestedBy
+                    ? _value.requestedBy
+                    : requestedBy // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            customerCode:
+                freezed == customerCode
+                    ? _value.customerCode
+                    : customerCode // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            ownerTaxId:
+                freezed == ownerTaxId
+                    ? _value.ownerTaxId
+                    : ownerTaxId // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            companyName:
+                freezed == companyName
+                    ? _value.companyName
+                    : companyName // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            ownerAddress:
+                freezed == ownerAddress
+                    ? _value.ownerAddress
+                    : ownerAddress // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            ownerNationalIdPhoto:
+                freezed == ownerNationalIdPhoto
+                    ? _value.ownerNationalIdPhoto
+                    : ownerNationalIdPhoto // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            ownerName:
+                freezed == ownerName
+                    ? _value.ownerName
+                    : ownerName // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            companyPhoneNumber:
+                freezed == companyPhoneNumber
+                    ? _value.companyPhoneNumber
+                    : companyPhoneNumber // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            ownershipStatus:
+                freezed == ownershipStatus
+                    ? _value.ownershipStatus
+                    : ownershipStatus // ignore: cast_nullable_to_non_nullable
                         as ApprovedBy?,
           )
           as $Val,
@@ -536,76 +546,6 @@ class _$CustomerDomainFieldsCopyWithImpl<
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get customerCode {
-    if (_value.customerCode == null) {
-      return null;
-    }
-
-    return $ApprovedByCopyWith<$Res>(_value.customerCode!, (value) {
-      return _then(_value.copyWith(customerCode: value) as $Val);
-    });
-  }
-
-  /// Create a copy of CustomerDomainFields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get companyStoreCondition {
-    if (_value.companyStoreCondition == null) {
-      return null;
-    }
-
-    return $ApprovedByCopyWith<$Res>(_value.companyStoreCondition!, (value) {
-      return _then(_value.copyWith(companyStoreCondition: value) as $Val);
-    });
-  }
-
-  /// Create a copy of CustomerDomainFields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get companyPhoneNumber {
-    if (_value.companyPhoneNumber == null) {
-      return null;
-    }
-
-    return $ApprovedByCopyWith<$Res>(_value.companyPhoneNumber!, (value) {
-      return _then(_value.copyWith(companyPhoneNumber: value) as $Val);
-    });
-  }
-
-  /// Create a copy of CustomerDomainFields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get ownerTaxId {
-    if (_value.ownerTaxId == null) {
-      return null;
-    }
-
-    return $ApprovedByCopyWith<$Res>(_value.ownerTaxId!, (value) {
-      return _then(_value.copyWith(ownerTaxId: value) as $Val);
-    });
-  }
-
-  /// Create a copy of CustomerDomainFields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get approvedBy {
-    if (_value.approvedBy == null) {
-      return null;
-    }
-
-    return $ApprovedByCopyWith<$Res>(_value.approvedBy!, (value) {
-      return _then(_value.copyWith(approvedBy: value) as $Val);
-    });
-  }
-
-  /// Create a copy of CustomerDomainFields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
   $ApprovedByCopyWith<$Res>? get subscriptionType {
     if (_value.subscriptionType == null) {
       return null;
@@ -613,34 +553,6 @@ class _$CustomerDomainFieldsCopyWithImpl<
 
     return $ApprovedByCopyWith<$Res>(_value.subscriptionType!, (value) {
       return _then(_value.copyWith(subscriptionType: value) as $Val);
-    });
-  }
-
-  /// Create a copy of CustomerDomainFields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get ownerAddress {
-    if (_value.ownerAddress == null) {
-      return null;
-    }
-
-    return $ApprovedByCopyWith<$Res>(_value.ownerAddress!, (value) {
-      return _then(_value.copyWith(ownerAddress: value) as $Val);
-    });
-  }
-
-  /// Create a copy of CustomerDomainFields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get ownershipStatus {
-    if (_value.ownershipStatus == null) {
-      return null;
-    }
-
-    return $ApprovedByCopyWith<$Res>(_value.ownershipStatus!, (value) {
-      return _then(_value.copyWith(ownershipStatus: value) as $Val);
     });
   }
 
@@ -662,34 +574,6 @@ class _$CustomerDomainFieldsCopyWithImpl<
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CompanyLocationCopyWith<$Res>? get companyLocation {
-    if (_value.companyLocation == null) {
-      return null;
-    }
-
-    return $CompanyLocationCopyWith<$Res>(_value.companyLocation!, (value) {
-      return _then(_value.copyWith(companyLocation: value) as $Val);
-    });
-  }
-
-  /// Create a copy of CustomerDomainFields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get requestedBy {
-    if (_value.requestedBy == null) {
-      return null;
-    }
-
-    return $ApprovedByCopyWith<$Res>(_value.requestedBy!, (value) {
-      return _then(_value.copyWith(requestedBy: value) as $Val);
-    });
-  }
-
-  /// Create a copy of CustomerDomainFields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
   $ApprovedByCopyWith<$Res>? get ownerNationalId {
     if (_value.ownerNationalId == null) {
       return null;
@@ -704,13 +588,13 @@ class _$CustomerDomainFieldsCopyWithImpl<
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get ownerName {
-    if (_value.ownerName == null) {
+  $ApprovedByCopyWith<$Res>? get approvedBy {
+    if (_value.approvedBy == null) {
       return null;
     }
 
-    return $ApprovedByCopyWith<$Res>(_value.ownerName!, (value) {
-      return _then(_value.copyWith(ownerName: value) as $Val);
+    return $ApprovedByCopyWith<$Res>(_value.approvedBy!, (value) {
+      return _then(_value.copyWith(approvedBy: value) as $Val);
     });
   }
 
@@ -718,13 +602,13 @@ class _$CustomerDomainFieldsCopyWithImpl<
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get companyName {
-    if (_value.companyName == null) {
+  $BlacklistedCopyWith<$Res>? get blacklisted {
+    if (_value.blacklisted == null) {
       return null;
     }
 
-    return $ApprovedByCopyWith<$Res>(_value.companyName!, (value) {
-      return _then(_value.copyWith(companyName: value) as $Val);
+    return $BlacklistedCopyWith<$Res>(_value.blacklisted!, (value) {
+      return _then(_value.copyWith(blacklisted: value) as $Val);
     });
   }
 
@@ -732,13 +616,41 @@ class _$CustomerDomainFieldsCopyWithImpl<
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get ownerNationalIdPhoto {
-    if (_value.ownerNationalIdPhoto == null) {
+  $CompanyLocationCopyWith<$Res>? get companyLocation {
+    if (_value.companyLocation == null) {
       return null;
     }
 
-    return $ApprovedByCopyWith<$Res>(_value.ownerNationalIdPhoto!, (value) {
-      return _then(_value.copyWith(ownerNationalIdPhoto: value) as $Val);
+    return $CompanyLocationCopyWith<$Res>(_value.companyLocation!, (value) {
+      return _then(_value.copyWith(companyLocation: value) as $Val);
+    });
+  }
+
+  /// Create a copy of CustomerDomainFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get companyStoreCondition {
+    if (_value.companyStoreCondition == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.companyStoreCondition!, (value) {
+      return _then(_value.copyWith(companyStoreCondition: value) as $Val);
+    });
+  }
+
+  /// Create a copy of CustomerDomainFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get companyStorePhoto {
+    if (_value.companyStorePhoto == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.companyStorePhoto!, (value) {
+      return _then(_value.copyWith(companyStorePhoto: value) as $Val);
     });
   }
 
@@ -760,13 +672,125 @@ class _$CustomerDomainFieldsCopyWithImpl<
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get companyStorePhoto {
-    if (_value.companyStorePhoto == null) {
+  $ApprovedByCopyWith<$Res>? get requestedBy {
+    if (_value.requestedBy == null) {
       return null;
     }
 
-    return $ApprovedByCopyWith<$Res>(_value.companyStorePhoto!, (value) {
-      return _then(_value.copyWith(companyStorePhoto: value) as $Val);
+    return $ApprovedByCopyWith<$Res>(_value.requestedBy!, (value) {
+      return _then(_value.copyWith(requestedBy: value) as $Val);
+    });
+  }
+
+  /// Create a copy of CustomerDomainFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get customerCode {
+    if (_value.customerCode == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.customerCode!, (value) {
+      return _then(_value.copyWith(customerCode: value) as $Val);
+    });
+  }
+
+  /// Create a copy of CustomerDomainFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get ownerTaxId {
+    if (_value.ownerTaxId == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.ownerTaxId!, (value) {
+      return _then(_value.copyWith(ownerTaxId: value) as $Val);
+    });
+  }
+
+  /// Create a copy of CustomerDomainFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get companyName {
+    if (_value.companyName == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.companyName!, (value) {
+      return _then(_value.copyWith(companyName: value) as $Val);
+    });
+  }
+
+  /// Create a copy of CustomerDomainFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get ownerAddress {
+    if (_value.ownerAddress == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.ownerAddress!, (value) {
+      return _then(_value.copyWith(ownerAddress: value) as $Val);
+    });
+  }
+
+  /// Create a copy of CustomerDomainFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get ownerNationalIdPhoto {
+    if (_value.ownerNationalIdPhoto == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.ownerNationalIdPhoto!, (value) {
+      return _then(_value.copyWith(ownerNationalIdPhoto: value) as $Val);
+    });
+  }
+
+  /// Create a copy of CustomerDomainFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get ownerName {
+    if (_value.ownerName == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.ownerName!, (value) {
+      return _then(_value.copyWith(ownerName: value) as $Val);
+    });
+  }
+
+  /// Create a copy of CustomerDomainFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get companyPhoneNumber {
+    if (_value.companyPhoneNumber == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.companyPhoneNumber!, (value) {
+      return _then(_value.copyWith(companyPhoneNumber: value) as $Val);
+    });
+  }
+
+  /// Create a copy of CustomerDomainFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get ownershipStatus {
+    if (_value.ownershipStatus == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.ownershipStatus!, (value) {
+      return _then(_value.copyWith(ownershipStatus: value) as $Val);
     });
   }
 }
@@ -782,61 +806,64 @@ abstract class _$$CustomerDomainFieldsImplCopyWith<$Res>
   @useResult
   $Res call({
     @JsonKey(name: 'owner_phone_number') ApprovedBy? ownerPhoneNumber,
-    @JsonKey(name: 'customer_code') ApprovedBy? customerCode,
-    @JsonKey(name: 'company_store_condition') ApprovedBy? companyStoreCondition,
-    @JsonKey(name: 'company_phone_number') ApprovedBy? companyPhoneNumber,
-    @JsonKey(name: 'owner_tax_id') ApprovedBy? ownerTaxId,
-    @JsonKey(name: 'approved_by') ApprovedBy? approvedBy,
     @JsonKey(name: 'subscription_type') ApprovedBy? subscriptionType,
-    @JsonKey(name: 'owner_address') ApprovedBy? ownerAddress,
-    @JsonKey(name: 'ownership_status') ApprovedBy? ownershipStatus,
     @JsonKey(name: 'company_email') ApprovedBy? companyEmail,
-    @JsonKey(name: 'company_location') CompanyLocation? companyLocation,
-    @JsonKey(name: 'requested_by') ApprovedBy? requestedBy,
     @JsonKey(name: 'owner_national_id') ApprovedBy? ownerNationalId,
-    @JsonKey(name: 'owner_name') ApprovedBy? ownerName,
-    @JsonKey(name: 'company_name') ApprovedBy? companyName,
-    @JsonKey(name: 'owner_national_id_photo') ApprovedBy? ownerNationalIdPhoto,
-    @JsonKey(name: 'company_address') ApprovedBy? companyAddress,
+    @JsonKey(name: 'approved_by') ApprovedBy? approvedBy,
+    @JsonKey(name: 'blacklisted') Blacklisted? blacklisted,
+    @JsonKey(name: 'company_location') CompanyLocation? companyLocation,
+    @JsonKey(name: 'company_store_condition') ApprovedBy? companyStoreCondition,
     @JsonKey(name: 'company_store_photo') ApprovedBy? companyStorePhoto,
+    @JsonKey(name: 'company_address') ApprovedBy? companyAddress,
+    @JsonKey(name: 'requested_by') ApprovedBy? requestedBy,
+    @JsonKey(name: 'customer_code') ApprovedBy? customerCode,
+    @JsonKey(name: 'owner_tax_id') ApprovedBy? ownerTaxId,
+    @JsonKey(name: 'company_name') ApprovedBy? companyName,
+    @JsonKey(name: 'owner_address') ApprovedBy? ownerAddress,
+    @JsonKey(name: 'owner_national_id_photo') ApprovedBy? ownerNationalIdPhoto,
+    @JsonKey(name: 'owner_name') ApprovedBy? ownerName,
+    @JsonKey(name: 'company_phone_number') ApprovedBy? companyPhoneNumber,
+    @JsonKey(name: 'ownership_status') ApprovedBy? ownershipStatus,
   });
 
   @override
   $ApprovedByCopyWith<$Res>? get ownerPhoneNumber;
   @override
-  $ApprovedByCopyWith<$Res>? get customerCode;
-  @override
-  $ApprovedByCopyWith<$Res>? get companyStoreCondition;
-  @override
-  $ApprovedByCopyWith<$Res>? get companyPhoneNumber;
-  @override
-  $ApprovedByCopyWith<$Res>? get ownerTaxId;
-  @override
-  $ApprovedByCopyWith<$Res>? get approvedBy;
-  @override
   $ApprovedByCopyWith<$Res>? get subscriptionType;
-  @override
-  $ApprovedByCopyWith<$Res>? get ownerAddress;
-  @override
-  $ApprovedByCopyWith<$Res>? get ownershipStatus;
   @override
   $ApprovedByCopyWith<$Res>? get companyEmail;
   @override
-  $CompanyLocationCopyWith<$Res>? get companyLocation;
-  @override
-  $ApprovedByCopyWith<$Res>? get requestedBy;
-  @override
   $ApprovedByCopyWith<$Res>? get ownerNationalId;
   @override
-  $ApprovedByCopyWith<$Res>? get ownerName;
+  $ApprovedByCopyWith<$Res>? get approvedBy;
   @override
-  $ApprovedByCopyWith<$Res>? get companyName;
+  $BlacklistedCopyWith<$Res>? get blacklisted;
   @override
-  $ApprovedByCopyWith<$Res>? get ownerNationalIdPhoto;
+  $CompanyLocationCopyWith<$Res>? get companyLocation;
+  @override
+  $ApprovedByCopyWith<$Res>? get companyStoreCondition;
+  @override
+  $ApprovedByCopyWith<$Res>? get companyStorePhoto;
   @override
   $ApprovedByCopyWith<$Res>? get companyAddress;
   @override
-  $ApprovedByCopyWith<$Res>? get companyStorePhoto;
+  $ApprovedByCopyWith<$Res>? get requestedBy;
+  @override
+  $ApprovedByCopyWith<$Res>? get customerCode;
+  @override
+  $ApprovedByCopyWith<$Res>? get ownerTaxId;
+  @override
+  $ApprovedByCopyWith<$Res>? get companyName;
+  @override
+  $ApprovedByCopyWith<$Res>? get ownerAddress;
+  @override
+  $ApprovedByCopyWith<$Res>? get ownerNationalIdPhoto;
+  @override
+  $ApprovedByCopyWith<$Res>? get ownerName;
+  @override
+  $ApprovedByCopyWith<$Res>? get companyPhoneNumber;
+  @override
+  $ApprovedByCopyWith<$Res>? get ownershipStatus;
 }
 
 /// @nodoc
@@ -854,23 +881,24 @@ class __$$CustomerDomainFieldsImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? ownerPhoneNumber = freezed,
-    Object? customerCode = freezed,
-    Object? companyStoreCondition = freezed,
-    Object? companyPhoneNumber = freezed,
-    Object? ownerTaxId = freezed,
-    Object? approvedBy = freezed,
     Object? subscriptionType = freezed,
-    Object? ownerAddress = freezed,
-    Object? ownershipStatus = freezed,
     Object? companyEmail = freezed,
-    Object? companyLocation = freezed,
-    Object? requestedBy = freezed,
     Object? ownerNationalId = freezed,
-    Object? ownerName = freezed,
-    Object? companyName = freezed,
-    Object? ownerNationalIdPhoto = freezed,
-    Object? companyAddress = freezed,
+    Object? approvedBy = freezed,
+    Object? blacklisted = freezed,
+    Object? companyLocation = freezed,
+    Object? companyStoreCondition = freezed,
     Object? companyStorePhoto = freezed,
+    Object? companyAddress = freezed,
+    Object? requestedBy = freezed,
+    Object? customerCode = freezed,
+    Object? ownerTaxId = freezed,
+    Object? companyName = freezed,
+    Object? ownerAddress = freezed,
+    Object? ownerNationalIdPhoto = freezed,
+    Object? ownerName = freezed,
+    Object? companyPhoneNumber = freezed,
+    Object? ownershipStatus = freezed,
   }) {
     return _then(
       _$CustomerDomainFieldsImpl(
@@ -879,90 +907,95 @@ class __$$CustomerDomainFieldsImplCopyWithImpl<$Res>
                 ? _value.ownerPhoneNumber
                 : ownerPhoneNumber // ignore: cast_nullable_to_non_nullable
                     as ApprovedBy?,
-        customerCode:
-            freezed == customerCode
-                ? _value.customerCode
-                : customerCode // ignore: cast_nullable_to_non_nullable
-                    as ApprovedBy?,
-        companyStoreCondition:
-            freezed == companyStoreCondition
-                ? _value.companyStoreCondition
-                : companyStoreCondition // ignore: cast_nullable_to_non_nullable
-                    as ApprovedBy?,
-        companyPhoneNumber:
-            freezed == companyPhoneNumber
-                ? _value.companyPhoneNumber
-                : companyPhoneNumber // ignore: cast_nullable_to_non_nullable
-                    as ApprovedBy?,
-        ownerTaxId:
-            freezed == ownerTaxId
-                ? _value.ownerTaxId
-                : ownerTaxId // ignore: cast_nullable_to_non_nullable
-                    as ApprovedBy?,
-        approvedBy:
-            freezed == approvedBy
-                ? _value.approvedBy
-                : approvedBy // ignore: cast_nullable_to_non_nullable
-                    as ApprovedBy?,
         subscriptionType:
             freezed == subscriptionType
                 ? _value.subscriptionType
                 : subscriptionType // ignore: cast_nullable_to_non_nullable
-                    as ApprovedBy?,
-        ownerAddress:
-            freezed == ownerAddress
-                ? _value.ownerAddress
-                : ownerAddress // ignore: cast_nullable_to_non_nullable
-                    as ApprovedBy?,
-        ownershipStatus:
-            freezed == ownershipStatus
-                ? _value.ownershipStatus
-                : ownershipStatus // ignore: cast_nullable_to_non_nullable
                     as ApprovedBy?,
         companyEmail:
             freezed == companyEmail
                 ? _value.companyEmail
                 : companyEmail // ignore: cast_nullable_to_non_nullable
                     as ApprovedBy?,
-        companyLocation:
-            freezed == companyLocation
-                ? _value.companyLocation
-                : companyLocation // ignore: cast_nullable_to_non_nullable
-                    as CompanyLocation?,
-        requestedBy:
-            freezed == requestedBy
-                ? _value.requestedBy
-                : requestedBy // ignore: cast_nullable_to_non_nullable
-                    as ApprovedBy?,
         ownerNationalId:
             freezed == ownerNationalId
                 ? _value.ownerNationalId
                 : ownerNationalId // ignore: cast_nullable_to_non_nullable
                     as ApprovedBy?,
-        ownerName:
-            freezed == ownerName
-                ? _value.ownerName
-                : ownerName // ignore: cast_nullable_to_non_nullable
+        approvedBy:
+            freezed == approvedBy
+                ? _value.approvedBy
+                : approvedBy // ignore: cast_nullable_to_non_nullable
                     as ApprovedBy?,
-        companyName:
-            freezed == companyName
-                ? _value.companyName
-                : companyName // ignore: cast_nullable_to_non_nullable
+        blacklisted:
+            freezed == blacklisted
+                ? _value.blacklisted
+                : blacklisted // ignore: cast_nullable_to_non_nullable
+                    as Blacklisted?,
+        companyLocation:
+            freezed == companyLocation
+                ? _value.companyLocation
+                : companyLocation // ignore: cast_nullable_to_non_nullable
+                    as CompanyLocation?,
+        companyStoreCondition:
+            freezed == companyStoreCondition
+                ? _value.companyStoreCondition
+                : companyStoreCondition // ignore: cast_nullable_to_non_nullable
                     as ApprovedBy?,
-        ownerNationalIdPhoto:
-            freezed == ownerNationalIdPhoto
-                ? _value.ownerNationalIdPhoto
-                : ownerNationalIdPhoto // ignore: cast_nullable_to_non_nullable
+        companyStorePhoto:
+            freezed == companyStorePhoto
+                ? _value.companyStorePhoto
+                : companyStorePhoto // ignore: cast_nullable_to_non_nullable
                     as ApprovedBy?,
         companyAddress:
             freezed == companyAddress
                 ? _value.companyAddress
                 : companyAddress // ignore: cast_nullable_to_non_nullable
                     as ApprovedBy?,
-        companyStorePhoto:
-            freezed == companyStorePhoto
-                ? _value.companyStorePhoto
-                : companyStorePhoto // ignore: cast_nullable_to_non_nullable
+        requestedBy:
+            freezed == requestedBy
+                ? _value.requestedBy
+                : requestedBy // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        customerCode:
+            freezed == customerCode
+                ? _value.customerCode
+                : customerCode // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        ownerTaxId:
+            freezed == ownerTaxId
+                ? _value.ownerTaxId
+                : ownerTaxId // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        companyName:
+            freezed == companyName
+                ? _value.companyName
+                : companyName // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        ownerAddress:
+            freezed == ownerAddress
+                ? _value.ownerAddress
+                : ownerAddress // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        ownerNationalIdPhoto:
+            freezed == ownerNationalIdPhoto
+                ? _value.ownerNationalIdPhoto
+                : ownerNationalIdPhoto // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        ownerName:
+            freezed == ownerName
+                ? _value.ownerName
+                : ownerName // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        companyPhoneNumber:
+            freezed == companyPhoneNumber
+                ? _value.companyPhoneNumber
+                : companyPhoneNumber // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        ownershipStatus:
+            freezed == ownershipStatus
+                ? _value.ownershipStatus
+                : ownershipStatus // ignore: cast_nullable_to_non_nullable
                     as ApprovedBy?,
       ),
     );
@@ -974,23 +1007,24 @@ class __$$CustomerDomainFieldsImplCopyWithImpl<$Res>
 class _$CustomerDomainFieldsImpl implements _CustomerDomainFields {
   const _$CustomerDomainFieldsImpl({
     @JsonKey(name: 'owner_phone_number') this.ownerPhoneNumber,
-    @JsonKey(name: 'customer_code') this.customerCode,
-    @JsonKey(name: 'company_store_condition') this.companyStoreCondition,
-    @JsonKey(name: 'company_phone_number') this.companyPhoneNumber,
-    @JsonKey(name: 'owner_tax_id') this.ownerTaxId,
-    @JsonKey(name: 'approved_by') this.approvedBy,
     @JsonKey(name: 'subscription_type') this.subscriptionType,
-    @JsonKey(name: 'owner_address') this.ownerAddress,
-    @JsonKey(name: 'ownership_status') this.ownershipStatus,
     @JsonKey(name: 'company_email') this.companyEmail,
-    @JsonKey(name: 'company_location') this.companyLocation,
-    @JsonKey(name: 'requested_by') this.requestedBy,
     @JsonKey(name: 'owner_national_id') this.ownerNationalId,
-    @JsonKey(name: 'owner_name') this.ownerName,
-    @JsonKey(name: 'company_name') this.companyName,
-    @JsonKey(name: 'owner_national_id_photo') this.ownerNationalIdPhoto,
-    @JsonKey(name: 'company_address') this.companyAddress,
+    @JsonKey(name: 'approved_by') this.approvedBy,
+    @JsonKey(name: 'blacklisted') this.blacklisted,
+    @JsonKey(name: 'company_location') this.companyLocation,
+    @JsonKey(name: 'company_store_condition') this.companyStoreCondition,
     @JsonKey(name: 'company_store_photo') this.companyStorePhoto,
+    @JsonKey(name: 'company_address') this.companyAddress,
+    @JsonKey(name: 'requested_by') this.requestedBy,
+    @JsonKey(name: 'customer_code') this.customerCode,
+    @JsonKey(name: 'owner_tax_id') this.ownerTaxId,
+    @JsonKey(name: 'company_name') this.companyName,
+    @JsonKey(name: 'owner_address') this.ownerAddress,
+    @JsonKey(name: 'owner_national_id_photo') this.ownerNationalIdPhoto,
+    @JsonKey(name: 'owner_name') this.ownerName,
+    @JsonKey(name: 'company_phone_number') this.companyPhoneNumber,
+    @JsonKey(name: 'ownership_status') this.ownershipStatus,
   });
 
   factory _$CustomerDomainFieldsImpl.fromJson(Map<String, dynamic> json) =>
@@ -1000,60 +1034,63 @@ class _$CustomerDomainFieldsImpl implements _CustomerDomainFields {
   @JsonKey(name: 'owner_phone_number')
   final ApprovedBy? ownerPhoneNumber;
   @override
-  @JsonKey(name: 'customer_code')
-  final ApprovedBy? customerCode;
-  @override
-  @JsonKey(name: 'company_store_condition')
-  final ApprovedBy? companyStoreCondition;
-  @override
-  @JsonKey(name: 'company_phone_number')
-  final ApprovedBy? companyPhoneNumber;
-  @override
-  @JsonKey(name: 'owner_tax_id')
-  final ApprovedBy? ownerTaxId;
-  @override
-  @JsonKey(name: 'approved_by')
-  final ApprovedBy? approvedBy;
-  @override
   @JsonKey(name: 'subscription_type')
   final ApprovedBy? subscriptionType;
-  @override
-  @JsonKey(name: 'owner_address')
-  final ApprovedBy? ownerAddress;
-  @override
-  @JsonKey(name: 'ownership_status')
-  final ApprovedBy? ownershipStatus;
   @override
   @JsonKey(name: 'company_email')
   final ApprovedBy? companyEmail;
   @override
-  @JsonKey(name: 'company_location')
-  final CompanyLocation? companyLocation;
-  @override
-  @JsonKey(name: 'requested_by')
-  final ApprovedBy? requestedBy;
-  @override
   @JsonKey(name: 'owner_national_id')
   final ApprovedBy? ownerNationalId;
   @override
-  @JsonKey(name: 'owner_name')
-  final ApprovedBy? ownerName;
+  @JsonKey(name: 'approved_by')
+  final ApprovedBy? approvedBy;
   @override
-  @JsonKey(name: 'company_name')
-  final ApprovedBy? companyName;
+  @JsonKey(name: 'blacklisted')
+  final Blacklisted? blacklisted;
   @override
-  @JsonKey(name: 'owner_national_id_photo')
-  final ApprovedBy? ownerNationalIdPhoto;
+  @JsonKey(name: 'company_location')
+  final CompanyLocation? companyLocation;
+  @override
+  @JsonKey(name: 'company_store_condition')
+  final ApprovedBy? companyStoreCondition;
+  @override
+  @JsonKey(name: 'company_store_photo')
+  final ApprovedBy? companyStorePhoto;
   @override
   @JsonKey(name: 'company_address')
   final ApprovedBy? companyAddress;
   @override
-  @JsonKey(name: 'company_store_photo')
-  final ApprovedBy? companyStorePhoto;
+  @JsonKey(name: 'requested_by')
+  final ApprovedBy? requestedBy;
+  @override
+  @JsonKey(name: 'customer_code')
+  final ApprovedBy? customerCode;
+  @override
+  @JsonKey(name: 'owner_tax_id')
+  final ApprovedBy? ownerTaxId;
+  @override
+  @JsonKey(name: 'company_name')
+  final ApprovedBy? companyName;
+  @override
+  @JsonKey(name: 'owner_address')
+  final ApprovedBy? ownerAddress;
+  @override
+  @JsonKey(name: 'owner_national_id_photo')
+  final ApprovedBy? ownerNationalIdPhoto;
+  @override
+  @JsonKey(name: 'owner_name')
+  final ApprovedBy? ownerName;
+  @override
+  @JsonKey(name: 'company_phone_number')
+  final ApprovedBy? companyPhoneNumber;
+  @override
+  @JsonKey(name: 'ownership_status')
+  final ApprovedBy? ownershipStatus;
 
   @override
   String toString() {
-    return 'CustomerDomainFields(ownerPhoneNumber: $ownerPhoneNumber, customerCode: $customerCode, companyStoreCondition: $companyStoreCondition, companyPhoneNumber: $companyPhoneNumber, ownerTaxId: $ownerTaxId, approvedBy: $approvedBy, subscriptionType: $subscriptionType, ownerAddress: $ownerAddress, ownershipStatus: $ownershipStatus, companyEmail: $companyEmail, companyLocation: $companyLocation, requestedBy: $requestedBy, ownerNationalId: $ownerNationalId, ownerName: $ownerName, companyName: $companyName, ownerNationalIdPhoto: $ownerNationalIdPhoto, companyAddress: $companyAddress, companyStorePhoto: $companyStorePhoto)';
+    return 'CustomerDomainFields(ownerPhoneNumber: $ownerPhoneNumber, subscriptionType: $subscriptionType, companyEmail: $companyEmail, ownerNationalId: $ownerNationalId, approvedBy: $approvedBy, blacklisted: $blacklisted, companyLocation: $companyLocation, companyStoreCondition: $companyStoreCondition, companyStorePhoto: $companyStorePhoto, companyAddress: $companyAddress, requestedBy: $requestedBy, customerCode: $customerCode, ownerTaxId: $ownerTaxId, companyName: $companyName, ownerAddress: $ownerAddress, ownerNationalIdPhoto: $ownerNationalIdPhoto, ownerName: $ownerName, companyPhoneNumber: $companyPhoneNumber, ownershipStatus: $ownershipStatus)';
   }
 
   @override
@@ -1063,65 +1100,68 @@ class _$CustomerDomainFieldsImpl implements _CustomerDomainFields {
             other is _$CustomerDomainFieldsImpl &&
             (identical(other.ownerPhoneNumber, ownerPhoneNumber) ||
                 other.ownerPhoneNumber == ownerPhoneNumber) &&
-            (identical(other.customerCode, customerCode) ||
-                other.customerCode == customerCode) &&
-            (identical(other.companyStoreCondition, companyStoreCondition) ||
-                other.companyStoreCondition == companyStoreCondition) &&
-            (identical(other.companyPhoneNumber, companyPhoneNumber) ||
-                other.companyPhoneNumber == companyPhoneNumber) &&
-            (identical(other.ownerTaxId, ownerTaxId) ||
-                other.ownerTaxId == ownerTaxId) &&
-            (identical(other.approvedBy, approvedBy) ||
-                other.approvedBy == approvedBy) &&
             (identical(other.subscriptionType, subscriptionType) ||
                 other.subscriptionType == subscriptionType) &&
-            (identical(other.ownerAddress, ownerAddress) ||
-                other.ownerAddress == ownerAddress) &&
-            (identical(other.ownershipStatus, ownershipStatus) ||
-                other.ownershipStatus == ownershipStatus) &&
             (identical(other.companyEmail, companyEmail) ||
                 other.companyEmail == companyEmail) &&
-            (identical(other.companyLocation, companyLocation) ||
-                other.companyLocation == companyLocation) &&
-            (identical(other.requestedBy, requestedBy) ||
-                other.requestedBy == requestedBy) &&
             (identical(other.ownerNationalId, ownerNationalId) ||
                 other.ownerNationalId == ownerNationalId) &&
-            (identical(other.ownerName, ownerName) ||
-                other.ownerName == ownerName) &&
-            (identical(other.companyName, companyName) ||
-                other.companyName == companyName) &&
-            (identical(other.ownerNationalIdPhoto, ownerNationalIdPhoto) ||
-                other.ownerNationalIdPhoto == ownerNationalIdPhoto) &&
+            (identical(other.approvedBy, approvedBy) ||
+                other.approvedBy == approvedBy) &&
+            (identical(other.blacklisted, blacklisted) ||
+                other.blacklisted == blacklisted) &&
+            (identical(other.companyLocation, companyLocation) ||
+                other.companyLocation == companyLocation) &&
+            (identical(other.companyStoreCondition, companyStoreCondition) ||
+                other.companyStoreCondition == companyStoreCondition) &&
+            (identical(other.companyStorePhoto, companyStorePhoto) ||
+                other.companyStorePhoto == companyStorePhoto) &&
             (identical(other.companyAddress, companyAddress) ||
                 other.companyAddress == companyAddress) &&
-            (identical(other.companyStorePhoto, companyStorePhoto) ||
-                other.companyStorePhoto == companyStorePhoto));
+            (identical(other.requestedBy, requestedBy) ||
+                other.requestedBy == requestedBy) &&
+            (identical(other.customerCode, customerCode) ||
+                other.customerCode == customerCode) &&
+            (identical(other.ownerTaxId, ownerTaxId) ||
+                other.ownerTaxId == ownerTaxId) &&
+            (identical(other.companyName, companyName) ||
+                other.companyName == companyName) &&
+            (identical(other.ownerAddress, ownerAddress) ||
+                other.ownerAddress == ownerAddress) &&
+            (identical(other.ownerNationalIdPhoto, ownerNationalIdPhoto) ||
+                other.ownerNationalIdPhoto == ownerNationalIdPhoto) &&
+            (identical(other.ownerName, ownerName) ||
+                other.ownerName == ownerName) &&
+            (identical(other.companyPhoneNumber, companyPhoneNumber) ||
+                other.companyPhoneNumber == companyPhoneNumber) &&
+            (identical(other.ownershipStatus, ownershipStatus) ||
+                other.ownershipStatus == ownershipStatus));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
+  int get hashCode => Object.hashAll([
     runtimeType,
     ownerPhoneNumber,
-    customerCode,
-    companyStoreCondition,
-    companyPhoneNumber,
-    ownerTaxId,
-    approvedBy,
     subscriptionType,
-    ownerAddress,
-    ownershipStatus,
     companyEmail,
-    companyLocation,
-    requestedBy,
     ownerNationalId,
-    ownerName,
-    companyName,
-    ownerNationalIdPhoto,
-    companyAddress,
+    approvedBy,
+    blacklisted,
+    companyLocation,
+    companyStoreCondition,
     companyStorePhoto,
-  );
+    companyAddress,
+    requestedBy,
+    customerCode,
+    ownerTaxId,
+    companyName,
+    ownerAddress,
+    ownerNationalIdPhoto,
+    ownerName,
+    companyPhoneNumber,
+    ownershipStatus,
+  ]);
 
   /// Create a copy of CustomerDomainFields
   /// with the given fields replaced by the non-null parameter values.
@@ -1144,25 +1184,26 @@ class _$CustomerDomainFieldsImpl implements _CustomerDomainFields {
 abstract class _CustomerDomainFields implements CustomerDomainFields {
   const factory _CustomerDomainFields({
     @JsonKey(name: 'owner_phone_number') final ApprovedBy? ownerPhoneNumber,
-    @JsonKey(name: 'customer_code') final ApprovedBy? customerCode,
+    @JsonKey(name: 'subscription_type') final ApprovedBy? subscriptionType,
+    @JsonKey(name: 'company_email') final ApprovedBy? companyEmail,
+    @JsonKey(name: 'owner_national_id') final ApprovedBy? ownerNationalId,
+    @JsonKey(name: 'approved_by') final ApprovedBy? approvedBy,
+    @JsonKey(name: 'blacklisted') final Blacklisted? blacklisted,
+    @JsonKey(name: 'company_location') final CompanyLocation? companyLocation,
     @JsonKey(name: 'company_store_condition')
     final ApprovedBy? companyStoreCondition,
-    @JsonKey(name: 'company_phone_number') final ApprovedBy? companyPhoneNumber,
-    @JsonKey(name: 'owner_tax_id') final ApprovedBy? ownerTaxId,
-    @JsonKey(name: 'approved_by') final ApprovedBy? approvedBy,
-    @JsonKey(name: 'subscription_type') final ApprovedBy? subscriptionType,
-    @JsonKey(name: 'owner_address') final ApprovedBy? ownerAddress,
-    @JsonKey(name: 'ownership_status') final ApprovedBy? ownershipStatus,
-    @JsonKey(name: 'company_email') final ApprovedBy? companyEmail,
-    @JsonKey(name: 'company_location') final CompanyLocation? companyLocation,
+    @JsonKey(name: 'company_store_photo') final ApprovedBy? companyStorePhoto,
+    @JsonKey(name: 'company_address') final ApprovedBy? companyAddress,
     @JsonKey(name: 'requested_by') final ApprovedBy? requestedBy,
-    @JsonKey(name: 'owner_national_id') final ApprovedBy? ownerNationalId,
-    @JsonKey(name: 'owner_name') final ApprovedBy? ownerName,
+    @JsonKey(name: 'customer_code') final ApprovedBy? customerCode,
+    @JsonKey(name: 'owner_tax_id') final ApprovedBy? ownerTaxId,
     @JsonKey(name: 'company_name') final ApprovedBy? companyName,
+    @JsonKey(name: 'owner_address') final ApprovedBy? ownerAddress,
     @JsonKey(name: 'owner_national_id_photo')
     final ApprovedBy? ownerNationalIdPhoto,
-    @JsonKey(name: 'company_address') final ApprovedBy? companyAddress,
-    @JsonKey(name: 'company_store_photo') final ApprovedBy? companyStorePhoto,
+    @JsonKey(name: 'owner_name') final ApprovedBy? ownerName,
+    @JsonKey(name: 'company_phone_number') final ApprovedBy? companyPhoneNumber,
+    @JsonKey(name: 'ownership_status') final ApprovedBy? ownershipStatus,
   }) = _$CustomerDomainFieldsImpl;
 
   factory _CustomerDomainFields.fromJson(Map<String, dynamic> json) =
@@ -1172,56 +1213,59 @@ abstract class _CustomerDomainFields implements CustomerDomainFields {
   @JsonKey(name: 'owner_phone_number')
   ApprovedBy? get ownerPhoneNumber;
   @override
-  @JsonKey(name: 'customer_code')
-  ApprovedBy? get customerCode;
-  @override
-  @JsonKey(name: 'company_store_condition')
-  ApprovedBy? get companyStoreCondition;
-  @override
-  @JsonKey(name: 'company_phone_number')
-  ApprovedBy? get companyPhoneNumber;
-  @override
-  @JsonKey(name: 'owner_tax_id')
-  ApprovedBy? get ownerTaxId;
-  @override
-  @JsonKey(name: 'approved_by')
-  ApprovedBy? get approvedBy;
-  @override
   @JsonKey(name: 'subscription_type')
   ApprovedBy? get subscriptionType;
-  @override
-  @JsonKey(name: 'owner_address')
-  ApprovedBy? get ownerAddress;
-  @override
-  @JsonKey(name: 'ownership_status')
-  ApprovedBy? get ownershipStatus;
   @override
   @JsonKey(name: 'company_email')
   ApprovedBy? get companyEmail;
   @override
-  @JsonKey(name: 'company_location')
-  CompanyLocation? get companyLocation;
-  @override
-  @JsonKey(name: 'requested_by')
-  ApprovedBy? get requestedBy;
-  @override
   @JsonKey(name: 'owner_national_id')
   ApprovedBy? get ownerNationalId;
   @override
-  @JsonKey(name: 'owner_name')
-  ApprovedBy? get ownerName;
+  @JsonKey(name: 'approved_by')
+  ApprovedBy? get approvedBy;
   @override
-  @JsonKey(name: 'company_name')
-  ApprovedBy? get companyName;
+  @JsonKey(name: 'blacklisted')
+  Blacklisted? get blacklisted;
   @override
-  @JsonKey(name: 'owner_national_id_photo')
-  ApprovedBy? get ownerNationalIdPhoto;
+  @JsonKey(name: 'company_location')
+  CompanyLocation? get companyLocation;
+  @override
+  @JsonKey(name: 'company_store_condition')
+  ApprovedBy? get companyStoreCondition;
+  @override
+  @JsonKey(name: 'company_store_photo')
+  ApprovedBy? get companyStorePhoto;
   @override
   @JsonKey(name: 'company_address')
   ApprovedBy? get companyAddress;
   @override
-  @JsonKey(name: 'company_store_photo')
-  ApprovedBy? get companyStorePhoto;
+  @JsonKey(name: 'requested_by')
+  ApprovedBy? get requestedBy;
+  @override
+  @JsonKey(name: 'customer_code')
+  ApprovedBy? get customerCode;
+  @override
+  @JsonKey(name: 'owner_tax_id')
+  ApprovedBy? get ownerTaxId;
+  @override
+  @JsonKey(name: 'company_name')
+  ApprovedBy? get companyName;
+  @override
+  @JsonKey(name: 'owner_address')
+  ApprovedBy? get ownerAddress;
+  @override
+  @JsonKey(name: 'owner_national_id_photo')
+  ApprovedBy? get ownerNationalIdPhoto;
+  @override
+  @JsonKey(name: 'owner_name')
+  ApprovedBy? get ownerName;
+  @override
+  @JsonKey(name: 'company_phone_number')
+  ApprovedBy? get companyPhoneNumber;
+  @override
+  @JsonKey(name: 'ownership_status')
+  ApprovedBy? get ownershipStatus;
 
   /// Create a copy of CustomerDomainFields
   /// with the given fields replaced by the non-null parameter values.
@@ -1387,6 +1431,165 @@ abstract class _ApprovedBy implements ApprovedBy {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ApprovedByImplCopyWith<_$ApprovedByImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Blacklisted _$BlacklistedFromJson(Map<String, dynamic> json) {
+  return _Blacklisted.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Blacklisted {
+  @JsonKey(name: 'booleanValue')
+  bool? get booleanValue => throw _privateConstructorUsedError;
+
+  /// Serializes this Blacklisted to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of Blacklisted
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $BlacklistedCopyWith<Blacklisted> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $BlacklistedCopyWith<$Res> {
+  factory $BlacklistedCopyWith(
+    Blacklisted value,
+    $Res Function(Blacklisted) then,
+  ) = _$BlacklistedCopyWithImpl<$Res, Blacklisted>;
+  @useResult
+  $Res call({@JsonKey(name: 'booleanValue') bool? booleanValue});
+}
+
+/// @nodoc
+class _$BlacklistedCopyWithImpl<$Res, $Val extends Blacklisted>
+    implements $BlacklistedCopyWith<$Res> {
+  _$BlacklistedCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of Blacklisted
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? booleanValue = freezed}) {
+    return _then(
+      _value.copyWith(
+            booleanValue:
+                freezed == booleanValue
+                    ? _value.booleanValue
+                    : booleanValue // ignore: cast_nullable_to_non_nullable
+                        as bool?,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$BlacklistedImplCopyWith<$Res>
+    implements $BlacklistedCopyWith<$Res> {
+  factory _$$BlacklistedImplCopyWith(
+    _$BlacklistedImpl value,
+    $Res Function(_$BlacklistedImpl) then,
+  ) = __$$BlacklistedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: 'booleanValue') bool? booleanValue});
+}
+
+/// @nodoc
+class __$$BlacklistedImplCopyWithImpl<$Res>
+    extends _$BlacklistedCopyWithImpl<$Res, _$BlacklistedImpl>
+    implements _$$BlacklistedImplCopyWith<$Res> {
+  __$$BlacklistedImplCopyWithImpl(
+    _$BlacklistedImpl _value,
+    $Res Function(_$BlacklistedImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of Blacklisted
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? booleanValue = freezed}) {
+    return _then(
+      _$BlacklistedImpl(
+        booleanValue:
+            freezed == booleanValue
+                ? _value.booleanValue
+                : booleanValue // ignore: cast_nullable_to_non_nullable
+                    as bool?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$BlacklistedImpl implements _Blacklisted {
+  const _$BlacklistedImpl({@JsonKey(name: 'booleanValue') this.booleanValue});
+
+  factory _$BlacklistedImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BlacklistedImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'booleanValue')
+  final bool? booleanValue;
+
+  @override
+  String toString() {
+    return 'Blacklisted(booleanValue: $booleanValue)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$BlacklistedImpl &&
+            (identical(other.booleanValue, booleanValue) ||
+                other.booleanValue == booleanValue));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, booleanValue);
+
+  /// Create a copy of Blacklisted
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BlacklistedImplCopyWith<_$BlacklistedImpl> get copyWith =>
+      __$$BlacklistedImplCopyWithImpl<_$BlacklistedImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$BlacklistedImplToJson(this);
+  }
+}
+
+abstract class _Blacklisted implements Blacklisted {
+  const factory _Blacklisted({
+    @JsonKey(name: 'booleanValue') final bool? booleanValue,
+  }) = _$BlacklistedImpl;
+
+  factory _Blacklisted.fromJson(Map<String, dynamic> json) =
+      _$BlacklistedImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'booleanValue')
+  bool? get booleanValue;
+
+  /// Create a copy of Blacklisted
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$BlacklistedImplCopyWith<_$BlacklistedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1752,10 +1955,10 @@ MapValueFields _$MapValueFieldsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$MapValueFields {
-  @JsonKey(name: 'accuracy')
-  Accuracy? get accuracy => throw _privateConstructorUsedError;
   @JsonKey(name: 'latitude')
   Accuracy? get latitude => throw _privateConstructorUsedError;
+  @JsonKey(name: 'accuracy')
+  Accuracy? get accuracy => throw _privateConstructorUsedError;
   @JsonKey(name: 'longitude')
   Accuracy? get longitude => throw _privateConstructorUsedError;
 
@@ -1777,13 +1980,13 @@ abstract class $MapValueFieldsCopyWith<$Res> {
   ) = _$MapValueFieldsCopyWithImpl<$Res, MapValueFields>;
   @useResult
   $Res call({
-    @JsonKey(name: 'accuracy') Accuracy? accuracy,
     @JsonKey(name: 'latitude') Accuracy? latitude,
+    @JsonKey(name: 'accuracy') Accuracy? accuracy,
     @JsonKey(name: 'longitude') Accuracy? longitude,
   });
 
-  $AccuracyCopyWith<$Res>? get accuracy;
   $AccuracyCopyWith<$Res>? get latitude;
+  $AccuracyCopyWith<$Res>? get accuracy;
   $AccuracyCopyWith<$Res>? get longitude;
 }
 
@@ -1802,21 +2005,21 @@ class _$MapValueFieldsCopyWithImpl<$Res, $Val extends MapValueFields>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? accuracy = freezed,
     Object? latitude = freezed,
+    Object? accuracy = freezed,
     Object? longitude = freezed,
   }) {
     return _then(
       _value.copyWith(
-            accuracy:
-                freezed == accuracy
-                    ? _value.accuracy
-                    : accuracy // ignore: cast_nullable_to_non_nullable
-                        as Accuracy?,
             latitude:
                 freezed == latitude
                     ? _value.latitude
                     : latitude // ignore: cast_nullable_to_non_nullable
+                        as Accuracy?,
+            accuracy:
+                freezed == accuracy
+                    ? _value.accuracy
+                    : accuracy // ignore: cast_nullable_to_non_nullable
                         as Accuracy?,
             longitude:
                 freezed == longitude
@@ -1832,20 +2035,6 @@ class _$MapValueFieldsCopyWithImpl<$Res, $Val extends MapValueFields>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $AccuracyCopyWith<$Res>? get accuracy {
-    if (_value.accuracy == null) {
-      return null;
-    }
-
-    return $AccuracyCopyWith<$Res>(_value.accuracy!, (value) {
-      return _then(_value.copyWith(accuracy: value) as $Val);
-    });
-  }
-
-  /// Create a copy of MapValueFields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
   $AccuracyCopyWith<$Res>? get latitude {
     if (_value.latitude == null) {
       return null;
@@ -1853,6 +2042,20 @@ class _$MapValueFieldsCopyWithImpl<$Res, $Val extends MapValueFields>
 
     return $AccuracyCopyWith<$Res>(_value.latitude!, (value) {
       return _then(_value.copyWith(latitude: value) as $Val);
+    });
+  }
+
+  /// Create a copy of MapValueFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AccuracyCopyWith<$Res>? get accuracy {
+    if (_value.accuracy == null) {
+      return null;
+    }
+
+    return $AccuracyCopyWith<$Res>(_value.accuracy!, (value) {
+      return _then(_value.copyWith(accuracy: value) as $Val);
     });
   }
 
@@ -1881,15 +2084,15 @@ abstract class _$$MapValueFieldsImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    @JsonKey(name: 'accuracy') Accuracy? accuracy,
     @JsonKey(name: 'latitude') Accuracy? latitude,
+    @JsonKey(name: 'accuracy') Accuracy? accuracy,
     @JsonKey(name: 'longitude') Accuracy? longitude,
   });
 
   @override
-  $AccuracyCopyWith<$Res>? get accuracy;
-  @override
   $AccuracyCopyWith<$Res>? get latitude;
+  @override
+  $AccuracyCopyWith<$Res>? get accuracy;
   @override
   $AccuracyCopyWith<$Res>? get longitude;
 }
@@ -1908,21 +2111,21 @@ class __$$MapValueFieldsImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? accuracy = freezed,
     Object? latitude = freezed,
+    Object? accuracy = freezed,
     Object? longitude = freezed,
   }) {
     return _then(
       _$MapValueFieldsImpl(
-        accuracy:
-            freezed == accuracy
-                ? _value.accuracy
-                : accuracy // ignore: cast_nullable_to_non_nullable
-                    as Accuracy?,
         latitude:
             freezed == latitude
                 ? _value.latitude
                 : latitude // ignore: cast_nullable_to_non_nullable
+                    as Accuracy?,
+        accuracy:
+            freezed == accuracy
+                ? _value.accuracy
+                : accuracy // ignore: cast_nullable_to_non_nullable
                     as Accuracy?,
         longitude:
             freezed == longitude
@@ -1938,8 +2141,8 @@ class __$$MapValueFieldsImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$MapValueFieldsImpl implements _MapValueFields {
   const _$MapValueFieldsImpl({
-    @JsonKey(name: 'accuracy') this.accuracy,
     @JsonKey(name: 'latitude') this.latitude,
+    @JsonKey(name: 'accuracy') this.accuracy,
     @JsonKey(name: 'longitude') this.longitude,
   });
 
@@ -1947,18 +2150,18 @@ class _$MapValueFieldsImpl implements _MapValueFields {
       _$$MapValueFieldsImplFromJson(json);
 
   @override
-  @JsonKey(name: 'accuracy')
-  final Accuracy? accuracy;
-  @override
   @JsonKey(name: 'latitude')
   final Accuracy? latitude;
+  @override
+  @JsonKey(name: 'accuracy')
+  final Accuracy? accuracy;
   @override
   @JsonKey(name: 'longitude')
   final Accuracy? longitude;
 
   @override
   String toString() {
-    return 'MapValueFields(accuracy: $accuracy, latitude: $latitude, longitude: $longitude)';
+    return 'MapValueFields(latitude: $latitude, accuracy: $accuracy, longitude: $longitude)';
   }
 
   @override
@@ -1966,17 +2169,17 @@ class _$MapValueFieldsImpl implements _MapValueFields {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MapValueFieldsImpl &&
-            (identical(other.accuracy, accuracy) ||
-                other.accuracy == accuracy) &&
             (identical(other.latitude, latitude) ||
                 other.latitude == latitude) &&
+            (identical(other.accuracy, accuracy) ||
+                other.accuracy == accuracy) &&
             (identical(other.longitude, longitude) ||
                 other.longitude == longitude));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, accuracy, latitude, longitude);
+  int get hashCode => Object.hash(runtimeType, latitude, accuracy, longitude);
 
   /// Create a copy of MapValueFields
   /// with the given fields replaced by the non-null parameter values.
@@ -1997,8 +2200,8 @@ class _$MapValueFieldsImpl implements _MapValueFields {
 
 abstract class _MapValueFields implements MapValueFields {
   const factory _MapValueFields({
-    @JsonKey(name: 'accuracy') final Accuracy? accuracy,
     @JsonKey(name: 'latitude') final Accuracy? latitude,
+    @JsonKey(name: 'accuracy') final Accuracy? accuracy,
     @JsonKey(name: 'longitude') final Accuracy? longitude,
   }) = _$MapValueFieldsImpl;
 
@@ -2006,11 +2209,11 @@ abstract class _MapValueFields implements MapValueFields {
       _$MapValueFieldsImpl.fromJson;
 
   @override
-  @JsonKey(name: 'accuracy')
-  Accuracy? get accuracy;
-  @override
   @JsonKey(name: 'latitude')
   Accuracy? get latitude;
+  @override
+  @JsonKey(name: 'accuracy')
+  Accuracy? get accuracy;
   @override
   @JsonKey(name: 'longitude')
   Accuracy? get longitude;
