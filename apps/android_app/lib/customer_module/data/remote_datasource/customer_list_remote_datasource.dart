@@ -8,8 +8,6 @@ abstract class CustomerListRemoteDatasource {
 class CustomerListRemoteDatasourceImpl implements CustomerListRemoteDatasource {
   @override
   Future<List<CustomerDomain>> getCustomerList() async {
-    print('asds list of cust ${userDataHelper?.assignedCustomers}');
-
     List<CustomerDomain> customerList = [];
 
     for (String documentId in userDataHelper?.assignedCustomers ?? []) {
@@ -24,7 +22,13 @@ class CustomerListRemoteDatasourceImpl implements CustomerListRemoteDatasource {
       );
 
       // Add CustomerDomain to result
-      customerList.add(CustomerDomain.fromJson(result));
+      CustomerDomain instance = CustomerDomain.fromJson(result);
+
+      // Filter if customer is blacklisted
+      bool blacklisted = instance.fields?.blacklisted?.booleanValue ?? false;
+      if (!(blacklisted)) {
+        customerList.add(instance);
+      }
     }
 
     return customerList;

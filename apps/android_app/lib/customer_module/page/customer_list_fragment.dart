@@ -34,14 +34,16 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
               }
 
               return ListView.separated(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
                 itemCount: customerList.length,
                 separatorBuilder: (context, index) => SizedBox(height: 12.h),
                 itemBuilder: (context, index) {
                   final data = customerList[index];
+
                   return customListItem(
                     leadIcon: Icons.person,
-                    title: data.fields?.companyName?.stringValue ?? '',
-                    subtitle: data.fields?.companyEmail?.stringValue ?? '',
+                    title: data.fields?.companyName?.stringValue ?? '-',
+                    subtitle: data.fields?.companyEmail?.stringValue ?? '-',
                     trailIcon: Icons.arrow_forward_ios,
                     onTap: () {
                       Navigator.push(
@@ -61,7 +63,7 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
 
               return Center(
                 child: Text(
-                  'Error Loading Customer List: ${exception.responseBody}',
+                  'Error Loading Customer List: ${exception.message}',
                   style: errorStyle,
                 ),
               );
