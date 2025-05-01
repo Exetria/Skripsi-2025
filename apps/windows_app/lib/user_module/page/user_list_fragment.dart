@@ -1,3 +1,4 @@
+import 'package:common_components/utils/api_exception.dart';
 import 'package:common_components/utils/formatter_functions.dart';
 import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
@@ -91,13 +92,16 @@ class _SalesListFragmentState extends ConsumerState<SalesListFragment> {
                 );
               },
 
-              error:
-                  (error, _) => Center(
-                    child: Text(
-                      'Error Loading Sales List: $error',
-                      style: errorStyle,
-                    ),
+              error: (error, _) {
+                final exception = error as ApiException;
+
+                return Center(
+                  child: Text(
+                    'Error Loading Customer List: ${exception.message}',
+                    style: errorStyle,
                   ),
+                );
+              },
             ),
           ),
         ],

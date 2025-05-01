@@ -97,7 +97,7 @@ class _CustomerListFragmentState extends ConsumerState<CustomerListFragment> {
 
                 return Center(
                   child: Text(
-                    'Error Loading Customer List: ${exception.responseBody}',
+                    'Error Loading Customer List: ${exception.message}',
                     style: errorStyle,
                   ),
                 );
