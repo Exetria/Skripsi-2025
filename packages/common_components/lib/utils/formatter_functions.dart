@@ -11,6 +11,14 @@ String rupiahFormat(num value) {
   return _rupiahFormatter.format(value);
 }
 
+num? stringToNum(String value) {
+  try {
+    return num.parse(value);
+  } catch (_) {
+    return null;
+  }
+}
+
 String phoneNumberFormat(String value) {
   final digitsOnly = value.replaceAll(RegExp(r'\D'), '');
   final buffer = StringBuffer();
