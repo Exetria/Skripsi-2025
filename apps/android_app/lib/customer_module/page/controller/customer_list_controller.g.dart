@@ -1,31 +1,31 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'refresh_token_controller.dart';
+part of 'customer_list_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$refreshTokenControllerHash() =>
-    r'd5103d8eb83dba0461fb54d13216e942a76ffcbf';
+String _$customerListControllerHash() =>
+    r'0537811fe388ee186818658440eb2d3cddde922f';
 
-/// See also [RefreshTokenController].
-@ProviderFor(RefreshTokenController)
-final refreshTokenControllerProvider = AutoDisposeNotifierProvider<
-  RefreshTokenController,
-  AsyncValue<RefreshTokenDomain?>
+/// See also [CustomerListController].
+@ProviderFor(CustomerListController)
+final customerListControllerProvider = AutoDisposeAsyncNotifierProvider<
+  CustomerListController,
+  List<CustomerDomain>?
 >.internal(
-  RefreshTokenController.new,
-  name: r'refreshTokenControllerProvider',
+  CustomerListController.new,
+  name: r'customerListControllerProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$refreshTokenControllerHash,
+          : _$customerListControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$RefreshTokenController =
-    AutoDisposeNotifier<AsyncValue<RefreshTokenDomain?>>;
+typedef _$CustomerListController =
+    AutoDisposeAsyncNotifier<List<CustomerDomain>?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

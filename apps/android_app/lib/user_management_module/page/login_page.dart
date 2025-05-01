@@ -1,6 +1,7 @@
 import 'package:android_app/home_page.dart';
 import 'package:android_app/user_management_module/domain/entities/sign_in_domain.dart';
 import 'package:android_app/user_management_module/page/controller/check_user_data_controller.dart';
+import 'package:android_app/user_management_module/page/controller/refresh_token_controller.dart';
 import 'package:android_app/user_management_module/page/controller/sign_in_controller.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
@@ -278,8 +279,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
         refreshToken: result?.refreshToken ?? '',
       );
 
-      // TODO: Implement auto refresh
-      // ref.read(refreshTokenControllerProvider.notifier).startAutoRefreshToken();
+      ref.read(refreshTokenControllerProvider.notifier).startAutoRefreshToken();
 
       showFeedbackDialog(
         context: context,

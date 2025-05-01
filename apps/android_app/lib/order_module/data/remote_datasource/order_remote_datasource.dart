@@ -1,6 +1,6 @@
 // import 'package:common_components/common_components.dart';
 
-// abstract class ModuleNameRemoteDatasource {
+// abstract class OrderListRemoteDatasource {
 //   Future<List<DomainName>> fx();
 // }
 
