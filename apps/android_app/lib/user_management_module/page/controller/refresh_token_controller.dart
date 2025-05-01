@@ -25,7 +25,6 @@ class RefreshTokenController extends _$RefreshTokenController {
   }
 
   Future<void> startAutoRefreshToken() async {
-    await Future.delayed(const Duration(seconds: 10));
     _refreshTimer = Timer.periodic(_checkInterval, (_) {
       final timeElapsed = Duration(
         milliseconds: DateTime.now().millisecondsSinceEpoch - _lastRefresh,
@@ -60,7 +59,7 @@ class RefreshTokenController extends _$RefreshTokenController {
         (r) => AsyncData(r),
       );
 
-      if (state.value is AsyncData) {
+      if (state is AsyncData) {
         _lastRefresh = DateTime.now().microsecondsSinceEpoch;
 
         // Save new token to user data
