@@ -93,11 +93,11 @@ class _CustomerListFragmentState extends ConsumerState<CustomerListFragment> {
               },
 
               error: (error, _) {
-                final apiexe = error as ApiException;
+                final exception = error as ApiException;
 
                 return Center(
                   child: Text(
-                    'Error Loading Customer List: ${apiexe.responseBody}',
+                    'Error Loading Customer List: ${exception.responseBody}',
                     style: errorStyle,
                   ),
                 );

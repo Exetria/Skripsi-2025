@@ -10,6 +10,7 @@ class CustomerListRepositoryImpl implements CustomerRepository {
 
   @override
   Future<Either<ApiException, List<CustomerDomain>?>> getCustomerList() async {
+    print('asds impl1');
     final resp = await remoteProcess(remoteDataSource.getCustomerList());
 
     return resp.fold((l) => Left(l), (r) => Right(r));

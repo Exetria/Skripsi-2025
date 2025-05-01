@@ -8,13 +8,16 @@ part 'customer_list_controller.g.dart';
 class CustomerListController extends _$CustomerListController {
   @override
   FutureOr<List<CustomerDomain>?> build() async {
+    print('asds controler built');
     final repository = ref.watch(CustomerListRepositoryProvider);
     state = const AsyncLoading();
+    print('asds controler built2');
     final result = await repository.getCustomerList();
     state = await result.fold(
       (l) => AsyncError(l, StackTrace.empty),
       (r) => AsyncData(r),
     );
+    print('asds controler built3: ${state.value}');
     return state.value;
   }
 }

@@ -8,6 +8,8 @@ abstract class CustomerListRemoteDatasource {
 class CustomerListRemoteDatasourceImpl implements CustomerListRemoteDatasource {
   @override
   Future<List<CustomerDomain>> getCustomerList() async {
+    print('asds list of cust ${userDataHelper?.assignedCustomers}');
+
     List<CustomerDomain> customerList = [];
 
     for (String documentId in userDataHelper?.assignedCustomers ?? []) {

@@ -1,4 +1,5 @@
 import 'package:android_app/home_page.dart';
+import 'package:android_app/user_management_module/domain/entities/check_user_data_domain.dart';
 import 'package:android_app/user_management_module/domain/entities/sign_in_domain.dart';
 import 'package:android_app/user_management_module/page/controller/check_user_data_controller.dart';
 import 'package:android_app/user_management_module/page/controller/refresh_token_controller.dart';
@@ -256,6 +257,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
         );
 
     if (userValue?.fields?.role?.stringValue == 'sales') {
+      print('asds $userValue');
       userDataHelper = UserDataHelper(
         uid: result?.localId ?? '',
         name: result?.displayName ?? '',
@@ -264,8 +266,12 @@ class _LoginPage extends ConsumerState<LoginPage> {
         role: userValue?.fields?.role?.stringValue ?? '',
         idToken: result?.idToken ?? '',
         refreshToken: result?.refreshToken ?? '',
-        assignedProducts: [],
-        assignedCustomers: [],
+        assignedProducts: convertAssignedItemsToArray(
+          userValue?.fields?.assignedProducts?.arrayValue?.values ?? [],
+        ),
+        assignedCustomers: convertAssignedItemsToArray(
+          userValue?.fields?.assignedCustomers?.arrayValue?.values ?? [],
+        ),
       );
 
       saveUserDataToSp(
@@ -307,6 +313,21 @@ class _LoginPage extends ConsumerState<LoginPage> {
         },
       );
     }
+  }
+
+  List<String> convertAssignedItemsToArray(List<Email> emailList) {
+    if (emailList.isEmpty) {
+      return [];
+    }
+
+    List<String> result = [];
+
+    for (Email value in emailList) {
+      String content = value.stringValue ?? '';
+      if (content != '') result.add(content);
+    }
+
+    return result;
   }
 
   void autoFillCredentials({
