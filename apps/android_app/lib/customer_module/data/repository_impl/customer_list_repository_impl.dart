@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:android_app/customer_module/data/remote_datasource/customer_list_remote_datasource.dart';
 import 'package:android_app/customer_module/domain/entities/customer_domain.dart';
 import 'package:android_app/customer_module/domain/entities/customer_request_domain.dart';
@@ -18,6 +20,31 @@ class CustomerListRepositoryImpl implements CustomerRepository {
   @override
   Future<Either<ApiException, List<CustomerRequestDomain>?>>
   getCustomerRequestList() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<ApiException, CustomerRequestDomain?>> createCustomerRequest({
+    required File storePhoto,
+    required File ktpPhoto,
+    required String customer_type,
+    required String subscription_type,
+    required String request_destination,
+    required String carbon_copy,
+    required String company_name,
+    required String company_address,
+    required String company_phone_number,
+    required String company_email,
+    required String company_store_condition,
+    required String owner_name,
+    required String owner_address,
+    required String owner_phone_number,
+    required String owner_tax_id,
+    required String owner_national_id,
+    required String ownership_status,
+    required String note,
+  }) {
+    // TODO: implement createCustomerRequest
     throw UnimplementedError();
   }
 }
