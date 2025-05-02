@@ -84,7 +84,7 @@ class _HomePage extends ConsumerState<HomePage> {
           onRightPressed: onRightPressed,
         ),
         body: Padding(
-          padding: EdgeInsets.all(8.sp),
+          padding: EdgeInsets.all(8.r),
           child: pages[selectedIndex],
         ),
         bottomNavigationBar: BottomNavigationBar(

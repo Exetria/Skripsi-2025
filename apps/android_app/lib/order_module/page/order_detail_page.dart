@@ -30,7 +30,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
     return Scaffold(
       appBar: customAppBar(title: 'Order Detail', showLeftButton: true),
       body: Padding(
-        padding: EdgeInsets.all(16.w),
+        padding: EdgeInsets.all(16.r),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -41,7 +41,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
 
               return Container(
                 margin: EdgeInsets.only(bottom: 12.h),
-                padding: EdgeInsets.all(12.w),
+                padding: EdgeInsets.all(12.r),
                 decoration: BoxDecoration(
                   color: backgroundColor,
                   borderRadius: BorderRadius.circular(12.r),

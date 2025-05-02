@@ -25,7 +25,7 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
     return Scaffold(
       appBar: customAppBar(title: 'Customer Detail', showLeftButton: true),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.w),
+        padding: EdgeInsets.all(16.r),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -67,7 +67,7 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
             // Info Card with name inside
             Container(
               width: double.infinity,
-              padding: EdgeInsets.all(16.w),
+              padding: EdgeInsets.all(16.r),
               decoration: BoxDecoration(
                 color: backgroundColor,
                 borderRadius: BorderRadius.circular(12.r),

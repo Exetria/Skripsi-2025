@@ -43,7 +43,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
     return Scaffold(
       appBar: customAppBar(title: 'Add Order', showLeftButton: true),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.w),
+        padding: EdgeInsets.all(16.r),
         child: Form(
           key: _formKey,
           child: Column(

@@ -100,7 +100,7 @@ PreferredSizeWidget customAppBar({
 // SEARCH BAR
 Padding customSearchBar({String? hint}) {
   return Padding(
-    padding: EdgeInsets.all(16.w),
+    padding: EdgeInsets.all(16.r),
     child: TextField(
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
@@ -138,7 +138,7 @@ InkWell customListItem({
     borderRadius: BorderRadius.circular(12.r),
     onTap: onTap,
     child: Container(
-      padding: EdgeInsets.all(12.w),
+      padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(12.r),
@@ -198,7 +198,7 @@ void showFormDialog({
             ),
             backgroundColor: backgroundColor,
             child: Padding(
-              padding: EdgeInsets.all(24.w),
+              padding: EdgeInsets.all(24.r),
               child: Form(
                 key: formKey,
                 child: Column(

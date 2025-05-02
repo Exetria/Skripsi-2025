@@ -29,7 +29,7 @@ class _ProductDetailPage extends ConsumerState<ProductDetailPage> {
     return Scaffold(
       appBar: customAppBar(title: 'Nama Produk', showLeftButton: true),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.w),
+        padding: EdgeInsets.all(16.r),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -100,7 +100,7 @@ class _ProductDetailPage extends ConsumerState<ProductDetailPage> {
             SizedBox(height: 8.h),
             Container(
               width: double.infinity,
-              padding: EdgeInsets.all(12.w),
+              padding: EdgeInsets.all(12.r),
               decoration: BoxDecoration(
                 color: backgroundColor.withAlpha(20),
                 borderRadius: BorderRadius.circular(12.r),

@@ -28,7 +28,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
         showLeftButton: true,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.w),
+        padding: EdgeInsets.all(16.r),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
