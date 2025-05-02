@@ -15,9 +15,11 @@ dependencies:
   fpdart: ^1.1.1
 
   # OTHERS
-  intl: ^0.20.2
   http: ^1.3.0
+  mime: ^2.0.0
+  intl: ^0.20.2
   encrypt: ^5.0.3
+  http_parser: ^4.0.2
   google_fonts: ^6.2.1
   flutter_dotenv: ^5.2.1
   flutter_screenutil: ^5.9.3

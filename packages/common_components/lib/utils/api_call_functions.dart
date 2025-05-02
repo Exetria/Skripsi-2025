@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:common_components/utils/api_exception.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:http/http.dart' as http;
+import 'package:mime/mime.dart';
 
 // safety function for call remote process
 Future<Either<ApiException, T>> remoteProcess<T>(Future<T> process) async {
@@ -34,10 +35,16 @@ Future<Map<String, dynamic>> apiCallGet({
 
   if (response.statusCode == 200) {
     return json.decode(response.body);
+  } else if (response.statusCode == 400 || response.statusCode == 401) {
+    throw ApiException(
+      statusCode: response.statusCode,
+      message: json.decode(response.body)['error']['message'],
+      responseBody: json.decode(response.body),
+    );
   } else {
     throw ApiException(
       statusCode: response.statusCode,
-      message: "success",
+      message: "Unknown Error",
       responseBody: json.decode(response.body),
     );
   }
@@ -59,10 +66,16 @@ Future<Map<String, dynamic>> apiCallPost({
 
   if (response.statusCode == 200) {
     return json.decode(response.body);
+  } else if (response.statusCode == 400 || response.statusCode == 401) {
+    throw ApiException(
+      statusCode: response.statusCode,
+      message: json.decode(response.body)['error']['message'],
+      responseBody: json.decode(response.body),
+    );
   } else {
     throw ApiException(
       statusCode: response.statusCode,
-      message: "success",
+      message: "Unknown Error",
       responseBody: json.decode(response.body),
     );
   }
@@ -84,10 +97,16 @@ Future<Map<String, dynamic>> apiCallPatch({
 
   if (response.statusCode == 200) {
     return json.decode(response.body);
+  } else if (response.statusCode == 400 || response.statusCode == 401) {
+    throw ApiException(
+      statusCode: response.statusCode,
+      message: json.decode(response.body)['error']['message'],
+      responseBody: json.decode(response.body),
+    );
   } else {
     throw ApiException(
       statusCode: response.statusCode,
-      message: "success",
+      message: "Unknown Error",
       responseBody: json.decode(response.body),
     );
   }
@@ -109,10 +128,16 @@ Future<Map<String, dynamic>> apiCallPut({
 
   if (response.statusCode == 200) {
     return json.decode(response.body);
+  } else if (response.statusCode == 400 || response.statusCode == 401) {
+    throw ApiException(
+      statusCode: response.statusCode,
+      message: json.decode(response.body)['error']['message'],
+      responseBody: json.decode(response.body),
+    );
   } else {
     throw ApiException(
       statusCode: response.statusCode,
-      message: "success",
+      message: "Unknown Error",
       responseBody: json.decode(response.body),
     );
   }
@@ -129,10 +154,50 @@ Future<Map<String, dynamic>> apiCallDelete({
 
   if (response.statusCode == 200) {
     return json.decode(response.body);
+  } else if (response.statusCode == 400 || response.statusCode == 401) {
+    throw ApiException(
+      statusCode: response.statusCode,
+      message: json.decode(response.body)['error']['message'],
+      responseBody: json.decode(response.body),
+    );
   } else {
     throw ApiException(
       statusCode: response.statusCode,
-      message: "success",
+      message: "Unknown Error",
+      responseBody: json.decode(response.body),
+    );
+  }
+}
+
+Future<Map<String, dynamic>> uploadFileToStorage({
+  required String url,
+  required Map<String, String> headers,
+  required File file,
+}) async {
+  final uri = Uri.parse(url);
+  final mimeType = lookupMimeType(file.path) ?? 'application/octet-stream';
+  final fileBytes = await file.readAsBytes();
+
+  final updatedHeaders = {...headers, 'Content-Type': mimeType};
+
+  final response = await http.post(
+    uri,
+    headers: updatedHeaders,
+    body: fileBytes,
+  );
+
+  if (response.statusCode == 200) {
+    return json.decode(response.body);
+  } else if (response.statusCode == 400 || response.statusCode == 401) {
+    throw ApiException(
+      statusCode: response.statusCode,
+      message: json.decode(response.body)['error']['message'],
+      responseBody: json.decode(response.body),
+    );
+  } else {
+    throw ApiException(
+      statusCode: response.statusCode,
+      message: "Unknown Error",
       responseBody: json.decode(response.body),
     );
   }
