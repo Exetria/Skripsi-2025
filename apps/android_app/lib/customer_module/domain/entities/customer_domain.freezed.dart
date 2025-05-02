@@ -24,7 +24,7 @@ mixin _$CustomerDomain {
   @JsonKey(name: 'name')
   String? get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'fields')
-  CustomerDomainFields? get fields => throw _privateConstructorUsedError;
+  Fields? get fields => throw _privateConstructorUsedError;
   @JsonKey(name: 'createTime')
   String? get createTime => throw _privateConstructorUsedError;
   @JsonKey(name: 'updateTime')
@@ -49,12 +49,12 @@ abstract class $CustomerDomainCopyWith<$Res> {
   @useResult
   $Res call({
     @JsonKey(name: 'name') String? name,
-    @JsonKey(name: 'fields') CustomerDomainFields? fields,
+    @JsonKey(name: 'fields') Fields? fields,
     @JsonKey(name: 'createTime') String? createTime,
     @JsonKey(name: 'updateTime') String? updateTime,
   });
 
-  $CustomerDomainFieldsCopyWith<$Res>? get fields;
+  $FieldsCopyWith<$Res>? get fields;
 }
 
 /// @nodoc
@@ -88,7 +88,7 @@ class _$CustomerDomainCopyWithImpl<$Res, $Val extends CustomerDomain>
                 freezed == fields
                     ? _value.fields
                     : fields // ignore: cast_nullable_to_non_nullable
-                        as CustomerDomainFields?,
+                        as Fields?,
             createTime:
                 freezed == createTime
                     ? _value.createTime
@@ -108,12 +108,12 @@ class _$CustomerDomainCopyWithImpl<$Res, $Val extends CustomerDomain>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CustomerDomainFieldsCopyWith<$Res>? get fields {
+  $FieldsCopyWith<$Res>? get fields {
     if (_value.fields == null) {
       return null;
     }
 
-    return $CustomerDomainFieldsCopyWith<$Res>(_value.fields!, (value) {
+    return $FieldsCopyWith<$Res>(_value.fields!, (value) {
       return _then(_value.copyWith(fields: value) as $Val);
     });
   }
@@ -130,13 +130,13 @@ abstract class _$$CustomerDomainImplCopyWith<$Res>
   @useResult
   $Res call({
     @JsonKey(name: 'name') String? name,
-    @JsonKey(name: 'fields') CustomerDomainFields? fields,
+    @JsonKey(name: 'fields') Fields? fields,
     @JsonKey(name: 'createTime') String? createTime,
     @JsonKey(name: 'updateTime') String? updateTime,
   });
 
   @override
-  $CustomerDomainFieldsCopyWith<$Res>? get fields;
+  $FieldsCopyWith<$Res>? get fields;
 }
 
 /// @nodoc
@@ -169,7 +169,7 @@ class __$$CustomerDomainImplCopyWithImpl<$Res>
             freezed == fields
                 ? _value.fields
                 : fields // ignore: cast_nullable_to_non_nullable
-                    as CustomerDomainFields?,
+                    as Fields?,
         createTime:
             freezed == createTime
                 ? _value.createTime
@@ -203,7 +203,7 @@ class _$CustomerDomainImpl implements _CustomerDomain {
   final String? name;
   @override
   @JsonKey(name: 'fields')
-  final CustomerDomainFields? fields;
+  final Fields? fields;
   @override
   @JsonKey(name: 'createTime')
   final String? createTime;
@@ -254,7 +254,7 @@ class _$CustomerDomainImpl implements _CustomerDomain {
 abstract class _CustomerDomain implements CustomerDomain {
   const factory _CustomerDomain({
     @JsonKey(name: 'name') final String? name,
-    @JsonKey(name: 'fields') final CustomerDomainFields? fields,
+    @JsonKey(name: 'fields') final Fields? fields,
     @JsonKey(name: 'createTime') final String? createTime,
     @JsonKey(name: 'updateTime') final String? updateTime,
   }) = _$CustomerDomainImpl;
@@ -267,7 +267,7 @@ abstract class _CustomerDomain implements CustomerDomain {
   String? get name;
   @override
   @JsonKey(name: 'fields')
-  CustomerDomainFields? get fields;
+  Fields? get fields;
   @override
   @JsonKey(name: 'createTime')
   String? get createTime;
@@ -283,12 +283,12 @@ abstract class _CustomerDomain implements CustomerDomain {
       throw _privateConstructorUsedError;
 }
 
-CustomerDomainFields _$CustomerDomainFieldsFromJson(Map<String, dynamic> json) {
-  return _CustomerDomainFields.fromJson(json);
+Fields _$FieldsFromJson(Map<String, dynamic> json) {
+  return _Fields.fromJson(json);
 }
 
 /// @nodoc
-mixin _$CustomerDomainFields {
+mixin _$Fields {
   @JsonKey(name: 'owner_phone_number')
   ApprovedBy? get ownerPhoneNumber => throw _privateConstructorUsedError;
   @JsonKey(name: 'subscription_type')
@@ -328,22 +328,19 @@ mixin _$CustomerDomainFields {
   @JsonKey(name: 'ownership_status')
   ApprovedBy? get ownershipStatus => throw _privateConstructorUsedError;
 
-  /// Serializes this CustomerDomainFields to a JSON map.
+  /// Serializes this Fields to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of CustomerDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $CustomerDomainFieldsCopyWith<CustomerDomainFields> get copyWith =>
-      throw _privateConstructorUsedError;
+  $FieldsCopyWith<Fields> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CustomerDomainFieldsCopyWith<$Res> {
-  factory $CustomerDomainFieldsCopyWith(
-    CustomerDomainFields value,
-    $Res Function(CustomerDomainFields) then,
-  ) = _$CustomerDomainFieldsCopyWithImpl<$Res, CustomerDomainFields>;
+abstract class $FieldsCopyWith<$Res> {
+  factory $FieldsCopyWith(Fields value, $Res Function(Fields) then) =
+      _$FieldsCopyWithImpl<$Res, Fields>;
   @useResult
   $Res call({
     @JsonKey(name: 'owner_phone_number') ApprovedBy? ownerPhoneNumber,
@@ -389,19 +386,16 @@ abstract class $CustomerDomainFieldsCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CustomerDomainFieldsCopyWithImpl<
-  $Res,
-  $Val extends CustomerDomainFields
->
-    implements $CustomerDomainFieldsCopyWith<$Res> {
-  _$CustomerDomainFieldsCopyWithImpl(this._value, this._then);
+class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
+    implements $FieldsCopyWith<$Res> {
+  _$FieldsCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of CustomerDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -528,7 +522,7 @@ class _$CustomerDomainFieldsCopyWithImpl<
     );
   }
 
-  /// Create a copy of CustomerDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -542,7 +536,7 @@ class _$CustomerDomainFieldsCopyWithImpl<
     });
   }
 
-  /// Create a copy of CustomerDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -556,7 +550,7 @@ class _$CustomerDomainFieldsCopyWithImpl<
     });
   }
 
-  /// Create a copy of CustomerDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -570,7 +564,7 @@ class _$CustomerDomainFieldsCopyWithImpl<
     });
   }
 
-  /// Create a copy of CustomerDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -584,7 +578,7 @@ class _$CustomerDomainFieldsCopyWithImpl<
     });
   }
 
-  /// Create a copy of CustomerDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -598,7 +592,7 @@ class _$CustomerDomainFieldsCopyWithImpl<
     });
   }
 
-  /// Create a copy of CustomerDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -612,7 +606,7 @@ class _$CustomerDomainFieldsCopyWithImpl<
     });
   }
 
-  /// Create a copy of CustomerDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -626,7 +620,7 @@ class _$CustomerDomainFieldsCopyWithImpl<
     });
   }
 
-  /// Create a copy of CustomerDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -640,7 +634,7 @@ class _$CustomerDomainFieldsCopyWithImpl<
     });
   }
 
-  /// Create a copy of CustomerDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -654,7 +648,7 @@ class _$CustomerDomainFieldsCopyWithImpl<
     });
   }
 
-  /// Create a copy of CustomerDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -668,7 +662,7 @@ class _$CustomerDomainFieldsCopyWithImpl<
     });
   }
 
-  /// Create a copy of CustomerDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -682,7 +676,7 @@ class _$CustomerDomainFieldsCopyWithImpl<
     });
   }
 
-  /// Create a copy of CustomerDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -696,7 +690,7 @@ class _$CustomerDomainFieldsCopyWithImpl<
     });
   }
 
-  /// Create a copy of CustomerDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -710,7 +704,7 @@ class _$CustomerDomainFieldsCopyWithImpl<
     });
   }
 
-  /// Create a copy of CustomerDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -724,7 +718,7 @@ class _$CustomerDomainFieldsCopyWithImpl<
     });
   }
 
-  /// Create a copy of CustomerDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -738,7 +732,7 @@ class _$CustomerDomainFieldsCopyWithImpl<
     });
   }
 
-  /// Create a copy of CustomerDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -752,7 +746,7 @@ class _$CustomerDomainFieldsCopyWithImpl<
     });
   }
 
-  /// Create a copy of CustomerDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -766,7 +760,7 @@ class _$CustomerDomainFieldsCopyWithImpl<
     });
   }
 
-  /// Create a copy of CustomerDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -780,7 +774,7 @@ class _$CustomerDomainFieldsCopyWithImpl<
     });
   }
 
-  /// Create a copy of CustomerDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -796,12 +790,11 @@ class _$CustomerDomainFieldsCopyWithImpl<
 }
 
 /// @nodoc
-abstract class _$$CustomerDomainFieldsImplCopyWith<$Res>
-    implements $CustomerDomainFieldsCopyWith<$Res> {
-  factory _$$CustomerDomainFieldsImplCopyWith(
-    _$CustomerDomainFieldsImpl value,
-    $Res Function(_$CustomerDomainFieldsImpl) then,
-  ) = __$$CustomerDomainFieldsImplCopyWithImpl<$Res>;
+abstract class _$$FieldsImplCopyWith<$Res> implements $FieldsCopyWith<$Res> {
+  factory _$$FieldsImplCopyWith(
+    _$FieldsImpl value,
+    $Res Function(_$FieldsImpl) then,
+  ) = __$$FieldsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({
@@ -867,15 +860,15 @@ abstract class _$$CustomerDomainFieldsImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$CustomerDomainFieldsImplCopyWithImpl<$Res>
-    extends _$CustomerDomainFieldsCopyWithImpl<$Res, _$CustomerDomainFieldsImpl>
-    implements _$$CustomerDomainFieldsImplCopyWith<$Res> {
-  __$$CustomerDomainFieldsImplCopyWithImpl(
-    _$CustomerDomainFieldsImpl _value,
-    $Res Function(_$CustomerDomainFieldsImpl) _then,
+class __$$FieldsImplCopyWithImpl<$Res>
+    extends _$FieldsCopyWithImpl<$Res, _$FieldsImpl>
+    implements _$$FieldsImplCopyWith<$Res> {
+  __$$FieldsImplCopyWithImpl(
+    _$FieldsImpl _value,
+    $Res Function(_$FieldsImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of CustomerDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -901,7 +894,7 @@ class __$$CustomerDomainFieldsImplCopyWithImpl<$Res>
     Object? ownershipStatus = freezed,
   }) {
     return _then(
-      _$CustomerDomainFieldsImpl(
+      _$FieldsImpl(
         ownerPhoneNumber:
             freezed == ownerPhoneNumber
                 ? _value.ownerPhoneNumber
@@ -1004,8 +997,8 @@ class __$$CustomerDomainFieldsImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$CustomerDomainFieldsImpl implements _CustomerDomainFields {
-  const _$CustomerDomainFieldsImpl({
+class _$FieldsImpl implements _Fields {
+  const _$FieldsImpl({
     @JsonKey(name: 'owner_phone_number') this.ownerPhoneNumber,
     @JsonKey(name: 'subscription_type') this.subscriptionType,
     @JsonKey(name: 'company_email') this.companyEmail,
@@ -1027,8 +1020,8 @@ class _$CustomerDomainFieldsImpl implements _CustomerDomainFields {
     @JsonKey(name: 'ownership_status') this.ownershipStatus,
   });
 
-  factory _$CustomerDomainFieldsImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CustomerDomainFieldsImplFromJson(json);
+  factory _$FieldsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$FieldsImplFromJson(json);
 
   @override
   @JsonKey(name: 'owner_phone_number')
@@ -1090,14 +1083,14 @@ class _$CustomerDomainFieldsImpl implements _CustomerDomainFields {
 
   @override
   String toString() {
-    return 'CustomerDomainFields(ownerPhoneNumber: $ownerPhoneNumber, subscriptionType: $subscriptionType, companyEmail: $companyEmail, ownerNationalId: $ownerNationalId, approvedBy: $approvedBy, blacklisted: $blacklisted, companyLocation: $companyLocation, companyStoreCondition: $companyStoreCondition, companyStorePhoto: $companyStorePhoto, companyAddress: $companyAddress, requestedBy: $requestedBy, customerCode: $customerCode, ownerTaxId: $ownerTaxId, companyName: $companyName, ownerAddress: $ownerAddress, ownerNationalIdPhoto: $ownerNationalIdPhoto, ownerName: $ownerName, companyPhoneNumber: $companyPhoneNumber, ownershipStatus: $ownershipStatus)';
+    return 'Fields(ownerPhoneNumber: $ownerPhoneNumber, subscriptionType: $subscriptionType, companyEmail: $companyEmail, ownerNationalId: $ownerNationalId, approvedBy: $approvedBy, blacklisted: $blacklisted, companyLocation: $companyLocation, companyStoreCondition: $companyStoreCondition, companyStorePhoto: $companyStorePhoto, companyAddress: $companyAddress, requestedBy: $requestedBy, customerCode: $customerCode, ownerTaxId: $ownerTaxId, companyName: $companyName, ownerAddress: $ownerAddress, ownerNationalIdPhoto: $ownerNationalIdPhoto, ownerName: $ownerName, companyPhoneNumber: $companyPhoneNumber, ownershipStatus: $ownershipStatus)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CustomerDomainFieldsImpl &&
+            other is _$FieldsImpl &&
             (identical(other.ownerPhoneNumber, ownerPhoneNumber) ||
                 other.ownerPhoneNumber == ownerPhoneNumber) &&
             (identical(other.subscriptionType, subscriptionType) ||
@@ -1163,26 +1156,22 @@ class _$CustomerDomainFieldsImpl implements _CustomerDomainFields {
     ownershipStatus,
   ]);
 
-  /// Create a copy of CustomerDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$CustomerDomainFieldsImplCopyWith<_$CustomerDomainFieldsImpl>
-  get copyWith =>
-      __$$CustomerDomainFieldsImplCopyWithImpl<_$CustomerDomainFieldsImpl>(
-        this,
-        _$identity,
-      );
+  _$$FieldsImplCopyWith<_$FieldsImpl> get copyWith =>
+      __$$FieldsImplCopyWithImpl<_$FieldsImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CustomerDomainFieldsImplToJson(this);
+    return _$$FieldsImplToJson(this);
   }
 }
 
-abstract class _CustomerDomainFields implements CustomerDomainFields {
-  const factory _CustomerDomainFields({
+abstract class _Fields implements Fields {
+  const factory _Fields({
     @JsonKey(name: 'owner_phone_number') final ApprovedBy? ownerPhoneNumber,
     @JsonKey(name: 'subscription_type') final ApprovedBy? subscriptionType,
     @JsonKey(name: 'company_email') final ApprovedBy? companyEmail,
@@ -1204,10 +1193,9 @@ abstract class _CustomerDomainFields implements CustomerDomainFields {
     @JsonKey(name: 'owner_name') final ApprovedBy? ownerName,
     @JsonKey(name: 'company_phone_number') final ApprovedBy? companyPhoneNumber,
     @JsonKey(name: 'ownership_status') final ApprovedBy? ownershipStatus,
-  }) = _$CustomerDomainFieldsImpl;
+  }) = _$FieldsImpl;
 
-  factory _CustomerDomainFields.fromJson(Map<String, dynamic> json) =
-      _$CustomerDomainFieldsImpl.fromJson;
+  factory _Fields.fromJson(Map<String, dynamic> json) = _$FieldsImpl.fromJson;
 
   @override
   @JsonKey(name: 'owner_phone_number')
@@ -1267,12 +1255,12 @@ abstract class _CustomerDomainFields implements CustomerDomainFields {
   @JsonKey(name: 'ownership_status')
   ApprovedBy? get ownershipStatus;
 
-  /// Create a copy of CustomerDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CustomerDomainFieldsImplCopyWith<_$CustomerDomainFieldsImpl>
-  get copyWith => throw _privateConstructorUsedError;
+  _$$FieldsImplCopyWith<_$FieldsImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 ApprovedBy _$ApprovedByFromJson(Map<String, dynamic> json) {

@@ -7,7 +7,7 @@ part 'visit_domain.g.dart';
 class VisitDomain with _$VisitDomain {
   const factory VisitDomain({
     @JsonKey(name: 'name') String? name,
-    @JsonKey(name: 'fields') VisitDomainFields? fields,
+    @JsonKey(name: 'fields') Fields? fields,
     @JsonKey(name: 'createTime') String? createTime,
     @JsonKey(name: 'updateTime') String? updateTime,
   }) = _VisitDomain;
@@ -17,8 +17,8 @@ class VisitDomain with _$VisitDomain {
 }
 
 @freezed
-class VisitDomainFields with _$VisitDomainFields {
-  const factory VisitDomainFields({
+class Fields with _$Fields {
+  const factory Fields({
     @JsonKey(name: 'visit_date') VisitDate? visitDate,
     @JsonKey(name: 'visit_purpose') CustomerId? visitPurpose,
     @JsonKey(name: 'visit_notes') CustomerId? visitNotes,
@@ -26,10 +26,9 @@ class VisitDomainFields with _$VisitDomainFields {
     @JsonKey(name: 'sales_id') CustomerId? salesId,
     @JsonKey(name: 'customer_id') CustomerId? customerId,
     @JsonKey(name: 'location') Location? location,
-  }) = _VisitDomainFields;
+  }) = _Fields;
 
-  factory VisitDomainFields.fromJson(Map<String, dynamic> json) =>
-      _$VisitDomainFieldsFromJson(json);
+  factory Fields.fromJson(Map<String, dynamic> json) => _$FieldsFromJson(json);
 }
 
 @freezed

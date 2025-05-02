@@ -7,7 +7,7 @@ part 'customer_domain.g.dart';
 class CustomerDomain with _$CustomerDomain {
   const factory CustomerDomain({
     @JsonKey(name: 'name') String? name,
-    @JsonKey(name: 'fields') CustomerDomainFields? fields,
+    @JsonKey(name: 'fields') Fields? fields,
     @JsonKey(name: 'createTime') String? createTime,
     @JsonKey(name: 'updateTime') String? updateTime,
   }) = _CustomerDomain;
@@ -17,8 +17,8 @@ class CustomerDomain with _$CustomerDomain {
 }
 
 @freezed
-class CustomerDomainFields with _$CustomerDomainFields {
-  const factory CustomerDomainFields({
+class Fields with _$Fields {
+  const factory Fields({
     @JsonKey(name: 'owner_phone_number') ApprovedBy? ownerPhoneNumber,
     @JsonKey(name: 'subscription_type') ApprovedBy? subscriptionType,
     @JsonKey(name: 'company_email') ApprovedBy? companyEmail,
@@ -38,10 +38,9 @@ class CustomerDomainFields with _$CustomerDomainFields {
     @JsonKey(name: 'owner_name') ApprovedBy? ownerName,
     @JsonKey(name: 'company_phone_number') ApprovedBy? companyPhoneNumber,
     @JsonKey(name: 'ownership_status') ApprovedBy? ownershipStatus,
-  }) = _CustomerDomainFields;
+  }) = _Fields;
 
-  factory CustomerDomainFields.fromJson(Map<String, dynamic> json) =>
-      _$CustomerDomainFieldsFromJson(json);
+  factory Fields.fromJson(Map<String, dynamic> json) => _$FieldsFromJson(json);
 }
 
 @freezed

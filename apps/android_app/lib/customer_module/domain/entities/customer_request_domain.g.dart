@@ -13,9 +13,7 @@ _$CustomerRequestDomainImpl _$$CustomerRequestDomainImplFromJson(
   fields:
       json['fields'] == null
           ? null
-          : CustomerRequestDomainFields.fromJson(
-            json['fields'] as Map<String, dynamic>,
-          ),
+          : Fields.fromJson(json['fields'] as Map<String, dynamic>),
   createTime: json['createTime'] as String?,
   updateTime: json['updateTime'] as String?,
 );
@@ -29,9 +27,7 @@ Map<String, dynamic> _$$CustomerRequestDomainImplToJson(
   'updateTime': instance.updateTime,
 };
 
-_$CustomerRequestDomainFieldsImpl _$$CustomerRequestDomainFieldsImplFromJson(
-  Map<String, dynamic> json,
-) => _$CustomerRequestDomainFieldsImpl(
+_$FieldsImpl _$$FieldsImplFromJson(Map<String, dynamic> json) => _$FieldsImpl(
   ownerNationalIdPhoto:
       json['owner_national_id_photo'] == null
           ? null
@@ -174,34 +170,33 @@ _$CustomerRequestDomainFieldsImpl _$$CustomerRequestDomainFieldsImplFromJson(
           ),
 );
 
-Map<String, dynamic> _$$CustomerRequestDomainFieldsImplToJson(
-  _$CustomerRequestDomainFieldsImpl instance,
-) => <String, dynamic>{
-  'owner_national_id_photo': instance.ownerNationalIdPhoto,
-  'company_store_condition': instance.companyStoreCondition,
-  'requested_by': instance.requestedBy,
-  'company_email': instance.companyEmail,
-  'approved_by': instance.approvedBy,
-  'ownership_status': instance.ownershipStatus,
-  'company_store_photo': instance.companyStorePhoto,
-  'company_address': instance.companyAddress,
-  'company_name': instance.companyName,
-  'owner_phone_number': instance.ownerPhoneNumber,
-  'request_destination': instance.requestDestination,
-  'approval_status': instance.approvalStatus,
-  'owner_address': instance.ownerAddress,
-  'owner_tax_id': instance.ownerTaxId,
-  'carbon_copy': instance.carbonCopy,
-  'company_phone_number': instance.companyPhoneNumber,
-  'approval_date': instance.approvalDate,
-  'note': instance.note,
-  'owner_name': instance.ownerName,
-  'owner_national_id': instance.ownerNationalId,
-  'approval_reason': instance.approvalReason,
-  'subscription_type': instance.subscriptionType,
-  'company_location': instance.companyLocation,
-  'customer_type': instance.customerType,
-};
+Map<String, dynamic> _$$FieldsImplToJson(_$FieldsImpl instance) =>
+    <String, dynamic>{
+      'owner_national_id_photo': instance.ownerNationalIdPhoto,
+      'company_store_condition': instance.companyStoreCondition,
+      'requested_by': instance.requestedBy,
+      'company_email': instance.companyEmail,
+      'approved_by': instance.approvedBy,
+      'ownership_status': instance.ownershipStatus,
+      'company_store_photo': instance.companyStorePhoto,
+      'company_address': instance.companyAddress,
+      'company_name': instance.companyName,
+      'owner_phone_number': instance.ownerPhoneNumber,
+      'request_destination': instance.requestDestination,
+      'approval_status': instance.approvalStatus,
+      'owner_address': instance.ownerAddress,
+      'owner_tax_id': instance.ownerTaxId,
+      'carbon_copy': instance.carbonCopy,
+      'company_phone_number': instance.companyPhoneNumber,
+      'approval_date': instance.approvalDate,
+      'note': instance.note,
+      'owner_name': instance.ownerName,
+      'owner_national_id': instance.ownerNationalId,
+      'approval_reason': instance.approvalReason,
+      'subscription_type': instance.subscriptionType,
+      'company_location': instance.companyLocation,
+      'customer_type': instance.customerType,
+    };
 
 _$ApprovalDateImpl _$$ApprovalDateImplFromJson(Map<String, dynamic> json) =>
     _$ApprovalDateImpl(timestampValue: json['timestampValue'] as String?);

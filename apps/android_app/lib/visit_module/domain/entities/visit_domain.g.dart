@@ -12,9 +12,7 @@ _$VisitDomainImpl _$$VisitDomainImplFromJson(Map<String, dynamic> json) =>
       fields:
           json['fields'] == null
               ? null
-              : VisitDomainFields.fromJson(
-                json['fields'] as Map<String, dynamic>,
-              ),
+              : Fields.fromJson(json['fields'] as Map<String, dynamic>),
       createTime: json['createTime'] as String?,
       updateTime: json['updateTime'] as String?,
     );
@@ -27,9 +25,7 @@ Map<String, dynamic> _$$VisitDomainImplToJson(_$VisitDomainImpl instance) =>
       'updateTime': instance.updateTime,
     };
 
-_$VisitDomainFieldsImpl _$$VisitDomainFieldsImplFromJson(
-  Map<String, dynamic> json,
-) => _$VisitDomainFieldsImpl(
+_$FieldsImpl _$$FieldsImplFromJson(Map<String, dynamic> json) => _$FieldsImpl(
   visitDate:
       json['visit_date'] == null
           ? null
@@ -60,17 +56,16 @@ _$VisitDomainFieldsImpl _$$VisitDomainFieldsImplFromJson(
           : Location.fromJson(json['location'] as Map<String, dynamic>),
 );
 
-Map<String, dynamic> _$$VisitDomainFieldsImplToJson(
-  _$VisitDomainFieldsImpl instance,
-) => <String, dynamic>{
-  'visit_date': instance.visitDate,
-  'visit_purpose': instance.visitPurpose,
-  'visit_notes': instance.visitNotes,
-  'visit_status': instance.visitStatus,
-  'sales_id': instance.salesId,
-  'customer_id': instance.customerId,
-  'location': instance.location,
-};
+Map<String, dynamic> _$$FieldsImplToJson(_$FieldsImpl instance) =>
+    <String, dynamic>{
+      'visit_date': instance.visitDate,
+      'visit_purpose': instance.visitPurpose,
+      'visit_notes': instance.visitNotes,
+      'visit_status': instance.visitStatus,
+      'sales_id': instance.salesId,
+      'customer_id': instance.customerId,
+      'location': instance.location,
+    };
 
 _$CustomerIdImpl _$$CustomerIdImplFromJson(Map<String, dynamic> json) =>
     _$CustomerIdImpl(stringValue: json['stringValue'] as String?);
