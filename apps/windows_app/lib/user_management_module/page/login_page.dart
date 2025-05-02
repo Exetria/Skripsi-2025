@@ -19,8 +19,8 @@ class LoginPage extends StatefulHookConsumerWidget {
 }
 
 class _LoginPageState extends ConsumerState<LoginPage> {
-  bool obscurePassword = true;
-  bool buttonEnabled = true;
+  bool _obscurePassword = true;
+  bool _buttonEnabled = true;
 
   @override
   void initState() {
@@ -94,7 +94,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     // Password TextField
                     TextField(
                       controller: passwordController,
-                      obscureText: obscurePassword,
+                      obscureText: _obscurePassword,
                       decoration: InputDecoration(
                         labelText: 'Password',
                         labelStyle: bodyStyle,
@@ -115,11 +115,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         suffixIcon: IconButton(
                           onPressed: () {
                             setState(() {
-                              obscurePassword = !obscurePassword;
+                              _obscurePassword = !_obscurePassword;
                             });
                           },
                           icon: Icon(
-                            obscurePassword
+                            _obscurePassword
                                 ? Icons.visibility_off
                                 : Icons.visibility,
                             color: textColor.withAlpha(178),
@@ -131,11 +131,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     // Login Button
                     Center(
                       child:
-                          buttonEnabled
+                          _buttonEnabled
                               ? ElevatedButton(
                                 onPressed: () {
                                   setState(() {
-                                    buttonEnabled = false;
+                                    _buttonEnabled = false;
                                   });
                                   doSignIn(
                                     email: emailController.text,
@@ -196,7 +196,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     : 'Unknown Error',
             onClose: () {
               setState(() {
-                buttonEnabled = true;
+                _buttonEnabled = true;
               });
             },
           );
@@ -207,7 +207,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             message: apiException.message,
             onClose: () {
               setState(() {
-                buttonEnabled = true;
+                _buttonEnabled = true;
               });
             },
           );
@@ -222,7 +222,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         message: 'Email is Empty',
         onClose: () {
           setState(() {
-            buttonEnabled = true;
+            _buttonEnabled = true;
           });
         },
       );
@@ -235,7 +235,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         message: 'Password is Empty',
         onClose: () {
           setState(() {
-            buttonEnabled = true;
+            _buttonEnabled = true;
           });
         },
       );
@@ -248,7 +248,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         message: 'An Unknown Error Occured',
         onClose: () {
           setState(() {
-            buttonEnabled = true;
+            _buttonEnabled = true;
           });
         },
       );
@@ -298,7 +298,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         message: 'Login Successful',
         onClose: () {
           setState(() {
-            buttonEnabled = true;
+            _buttonEnabled = true;
           });
           Navigator.pushReplacement(
             context,
@@ -313,7 +313,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         message: 'Sorry, You\'re Not an Admin',
         onClose: () {
           setState(() {
-            buttonEnabled = true;
+            _buttonEnabled = true;
           });
         },
       );

@@ -21,8 +21,8 @@ class LoginPage extends StatefulHookConsumerWidget {
 }
 
 class _LoginPage extends ConsumerState<LoginPage> {
-  bool obscurePassword = true;
-  bool buttonEnabled = true;
+  bool _obscurePassword = true;
+  bool _signInButtonEnabled = true;
 
   @override
   void initState() {
@@ -81,7 +81,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
               // Password Field
               TextField(
                 controller: passwordController,
-                obscureText: obscurePassword,
+                obscureText: _obscurePassword,
                 style: bodyStyle,
                 decoration: InputDecoration(
                   labelText: 'Password',
@@ -90,11 +90,13 @@ class _LoginPage extends ConsumerState<LoginPage> {
                   suffixIcon: IconButton(
                     onPressed: () {
                       setState(() {
-                        obscurePassword = !obscurePassword;
+                        _obscurePassword = !_obscurePassword;
                       });
                     },
                     icon: Icon(
-                      obscurePassword ? Icons.visibility_off : Icons.visibility,
+                      _obscurePassword
+                          ? Icons.visibility_off
+                          : Icons.visibility,
                       color: textColor.withAlpha(178),
                     ),
                   ),
@@ -125,11 +127,11 @@ class _LoginPage extends ConsumerState<LoginPage> {
               // Login Button or Loader
               Center(
                 child:
-                    buttonEnabled
+                    _signInButtonEnabled
                         ? ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              buttonEnabled = false;
+                              _signInButtonEnabled = false;
                             });
                             doSignIn(
                               email: emailController.text,
@@ -186,7 +188,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
                     : 'Unknown Error',
             onClose: () {
               setState(() {
-                buttonEnabled = true;
+                _signInButtonEnabled = true;
               });
             },
           );
@@ -197,7 +199,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
             message: apiException.message,
             onClose: () {
               setState(() {
-                buttonEnabled = true;
+                _signInButtonEnabled = true;
               });
             },
           );
@@ -212,7 +214,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
         message: 'Email is Empty',
         onClose: () {
           setState(() {
-            buttonEnabled = true;
+            _signInButtonEnabled = true;
           });
         },
       );
@@ -225,7 +227,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
         message: 'Password is Empty',
         onClose: () {
           setState(() {
-            buttonEnabled = true;
+            _signInButtonEnabled = true;
           });
         },
       );
@@ -238,7 +240,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
         message: 'An Unknown Error Occured',
         onClose: () {
           setState(() {
-            buttonEnabled = true;
+            _signInButtonEnabled = true;
           });
         },
       );
@@ -292,7 +294,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
         message: 'Login Successful',
         onClose: () {
           setState(() {
-            buttonEnabled = true;
+            _signInButtonEnabled = true;
           });
           Navigator.pushReplacement(
             context,
@@ -307,7 +309,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
         message: 'Sorry, You\'re Not a Sales',
         onClose: () {
           setState(() {
-            buttonEnabled = true;
+            _signInButtonEnabled = true;
           });
         },
       );
