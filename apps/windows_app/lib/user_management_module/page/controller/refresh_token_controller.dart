@@ -12,8 +12,9 @@ part 'refresh_token_controller.g.dart';
 
 @riverpod
 class RefreshTokenController extends _$RefreshTokenController {
-  final Duration _tokenDuration = const Duration(seconds: 3600);
-  final Duration _checkInterval = const Duration(seconds: 120);
+  final Duration _tokenDuration = const Duration(seconds: 30);
+  final Duration _checkInterval = const Duration(seconds: 5);
+  final Duration _checkBuffer = const Duration(seconds: 7);
 
   int _lastRefresh = DateTime.now().millisecondsSinceEpoch;
   Timer? _refreshTimer;
@@ -30,9 +31,10 @@ class RefreshTokenController extends _$RefreshTokenController {
         milliseconds: DateTime.now().millisecondsSinceEpoch - _lastRefresh,
       );
 
+      // time remaining until refresh: ${(_tokenDuration.inMilliseconds - _checkBuffer.inMilliseconds) - timeElapsed.inMilliseconds}
       if (!_refreshing &&
           timeElapsed.inMilliseconds >=
-              (_tokenDuration.inMilliseconds - _checkInterval.inMilliseconds)) {
+              (_tokenDuration.inMilliseconds - _checkBuffer.inMilliseconds)) {
         _refreshToken();
       }
     });
@@ -60,7 +62,7 @@ class RefreshTokenController extends _$RefreshTokenController {
       );
 
       if (state is AsyncData) {
-        _lastRefresh = DateTime.now().microsecondsSinceEpoch;
+        _lastRefresh = DateTime.now().millisecondsSinceEpoch;
 
         // Save new token to user data
         userDataHelper?.idToken = state.value?.idToken ?? '';
