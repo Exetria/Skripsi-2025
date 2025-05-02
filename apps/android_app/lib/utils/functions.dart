@@ -1,6 +1,7 @@
-import 'package:common_components/variables.dart';
+import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geolocator/geolocator.dart';
 
 // APP BAR
 PreferredSizeWidget customAppBar({
@@ -269,5 +270,43 @@ void showFormDialog({
         },
       );
     },
+  );
+}
+
+// GET CURRENT POSITION
+Future<Position> getCurrentPosition() async {
+  bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  if (!serviceEnabled) {
+    throw ApiException(
+      statusCode: -1,
+      message: 'Location services are disabled.',
+    );
+  }
+
+  LocationPermission permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied) {
+      throw ApiException(
+        statusCode: -1,
+        message: 'Location permissions are denied.',
+      );
+    }
+  }
+
+  if (permission == LocationPermission.deniedForever) {
+    throw ApiException(
+      statusCode: -1,
+      message: 'Location permissions are permanently denied.',
+    );
+  }
+
+  return await Geolocator.getCurrentPosition(
+    // High accuracy settings
+    // 10m offset
+    locationSettings: const LocationSettings(
+      accuracy: LocationAccuracy.high,
+      distanceFilter: 10,
+    ),
   );
 }
