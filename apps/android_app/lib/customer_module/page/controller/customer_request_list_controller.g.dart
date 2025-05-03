@@ -7,11 +7,11 @@ part of 'customer_request_list_controller.dart';
 // **************************************************************************
 
 String _$customerRequestListControllerHash() =>
-    r'079ce59bc10ec3efba1c50aaa6c95adab8d9d18c';
+    r'ca73e9358ea512d124039be6cfc6bbd0fa4ef1dd';
 
 /// See also [CustomerRequestListController].
 @ProviderFor(CustomerRequestListController)
-final customerRequestListControllerProvider = AutoDisposeAsyncNotifierProvider<
+final customerRequestListControllerProvider = AsyncNotifierProvider<
   CustomerRequestListController,
   List<CustomerRequestDomain>?
 >.internal(
@@ -26,6 +26,6 @@ final customerRequestListControllerProvider = AutoDisposeAsyncNotifierProvider<
 );
 
 typedef _$CustomerRequestListController =
-    AutoDisposeAsyncNotifier<List<CustomerRequestDomain>?>;
+    AsyncNotifier<List<CustomerRequestDomain>?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'customer_request_list_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class CustomerRequestListController extends _$CustomerRequestListController {
   @override
   FutureOr<List<CustomerRequestDomain>?> build() async {

@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'order_list_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class OrderListController extends _$OrderListController {
   @override
   FutureOr<List<OrderDomain>?> build() async {

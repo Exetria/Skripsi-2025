@@ -7,11 +7,11 @@ part of 'customer_list_controller.dart';
 // **************************************************************************
 
 String _$customerListControllerHash() =>
-    r'0537811fe388ee186818658440eb2d3cddde922f';
+    r'a0aab3376ae202c1a2e25cb1cc137bcb26889960';
 
 /// See also [CustomerListController].
 @ProviderFor(CustomerListController)
-final customerListControllerProvider = AutoDisposeAsyncNotifierProvider<
+final customerListControllerProvider = AsyncNotifierProvider<
   CustomerListController,
   List<CustomerDomain>?
 >.internal(
@@ -25,7 +25,6 @@ final customerListControllerProvider = AutoDisposeAsyncNotifierProvider<
   allTransitiveDependencies: null,
 );
 
-typedef _$CustomerListController =
-    AutoDisposeAsyncNotifier<List<CustomerDomain>?>;
+typedef _$CustomerListController = AsyncNotifier<List<CustomerDomain>?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

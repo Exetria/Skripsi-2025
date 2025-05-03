@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'product_list_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class ProductListController extends _$ProductListController {
   @override
   FutureOr<List<ProductDomain>?> build() async {

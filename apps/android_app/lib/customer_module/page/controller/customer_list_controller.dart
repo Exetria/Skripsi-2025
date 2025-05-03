@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'customer_list_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class CustomerListController extends _$CustomerListController {
   @override
   FutureOr<List<CustomerDomain>?> build() async {

@@ -4,10 +4,11 @@ import 'package:windows_app/user_module/domain/repository/user_repository.dart';
 
 part 'user_list_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class UserListController extends _$UserListController {
   @override
   FutureOr<List<UserDomain>?> build() async {
+    print('asds build');
     final repository = ref.watch(UserListRepositoryProvider);
     state = const AsyncLoading();
     final result = await repository.getUserList();
