@@ -1,4 +1,5 @@
 import 'package:common_components/common_components.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:windows_app/customer_module/domain/entities/customer_request_domain.dart';
 
 abstract class CustomerRequestListRemoteDatasource {
@@ -11,7 +12,7 @@ class CustomerRequestListRemoteDatasourceImpl
   Future<List<CustomerRequestDomain>> getCustomerRequestList() async {
     Map<String, dynamic> result = await apiCallGet(
       url:
-          'https://firestore.googleapis.com/v1/projects/kost-noting/databases/(default)/documents/customerRequests',
+          'https://firestore.googleapis.com/v1/projects/${dotenv.env['PROJECT_ID']}/databases/(default)/documents/customerRequests',
       headers: {
         'Authorization': 'Bearer ${userDataHelper?.idToken ?? ""}',
         'Content-Type': 'application/json',

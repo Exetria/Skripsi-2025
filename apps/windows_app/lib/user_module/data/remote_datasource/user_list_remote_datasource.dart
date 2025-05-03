@@ -1,4 +1,5 @@
 import 'package:common_components/common_components.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:windows_app/user_module/domain/entities/user_domain.dart';
 
 abstract class UserListRemoteDatasource {
@@ -10,7 +11,7 @@ class UserListRemoteDatasourceImpl implements UserListRemoteDatasource {
   Future<List<UserDomain>> getUserList() async {
     Map<String, dynamic> result = await apiCallGet(
       url:
-          'https://firestore.googleapis.com/v1/projects/kost-noting/databases/(default)/documents/users',
+          'https://firestore.googleapis.com/v1/projects/${dotenv.env['PROJECT_ID']}/databases/(default)/documents/users',
       headers: {
         'Authorization': 'Bearer ${userDataHelper?.idToken ?? ""}',
         'Content-Type': 'application/json',

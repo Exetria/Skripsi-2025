@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:android_app/customer_module/domain/entities/customer_request_domain.dart';
 import 'package:android_app/utils/functions.dart';
 import 'package:common_components/common_components.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 abstract class CreateCustomerRequestDatasource {
   Future<CustomerRequestDomain> createCustomerRequest({
@@ -69,7 +70,7 @@ class CreateCustomerRequestDatasourceImpl
     // Upload files
     final storePhotoresponse = await uploadFileToStorage(
       url:
-          'https://firebasestorage.googleapis.com/v0/b/kost-noting.appspot.com/o?uploadType=media&name=store/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg',
+          'https://firebasestorage.googleapis.com/v0/b/${dotenv.env['PROJECT_ID']}.appspot.com/o?uploadType=media&name=store/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg',
       headers: {
         'Authorization': 'Bearer ${userDataHelper?.idToken ?? ""}',
         'Content-Type': 'application/json',
@@ -79,7 +80,7 @@ class CreateCustomerRequestDatasourceImpl
 
     final ktpPhotoresponse = await uploadFileToStorage(
       url:
-          'https://firebasestorage.googleapis.com/v0/b/kost-noting.appspot.com/o?uploadType=media&name=ktp/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg',
+          'https://firebasestorage.googleapis.com/v0/b/${dotenv.env['PROJECT_ID']}.appspot.com/o?uploadType=media&name=ktp/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg',
       headers: {
         'Authorization': 'Bearer ${userDataHelper?.idToken ?? ""}',
         'Content-Type': 'application/json',
@@ -100,7 +101,7 @@ class CreateCustomerRequestDatasourceImpl
 
     Map<String, dynamic> result = await apiCallPost(
       url:
-          'https://firestore.googleapis.com/v1/projects/kost-noting/databases/(default)/documents/customerRequests',
+          'https://firestore.googleapis.com/v1/projects/${dotenv.env['PROJECT_ID']}/databases/(default)/documents/customerRequests',
       headers: {
         'Authorization': 'Bearer ${userDataHelper?.idToken ?? ""}',
         'Content-Type': 'application/json',
