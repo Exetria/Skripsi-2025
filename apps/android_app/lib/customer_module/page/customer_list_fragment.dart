@@ -18,60 +18,63 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
   Widget build(BuildContext context) {
     final customerListState = ref.watch(customerListControllerProvider);
 
-    return Column(
-      children: [
-        // Search Bar
-        customSearchBar(hint: 'Search Customers...'),
+    return Padding(
+      padding: EdgeInsets.all(8.r),
+      child: Column(
+        children: [
+          // Search Bar
+          customSearchBar(hint: 'Search Customers...'),
 
-        // Customer List
-        Expanded(
-          child: customerListState.when(
-            loading: () => const Center(child: CircularProgressIndicator()),
+          SizedBox(height: 12.h),
 
-            data: (customerList) {
-              if (customerList == null || customerList.isEmpty) {
-                return const Center(child: Text('No order data found.'));
-              }
+          // Customer List
+          Expanded(
+            child: customerListState.when(
+              loading: () => const Center(child: CircularProgressIndicator()),
 
-              return ListView.separated(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-                itemCount: customerList.length,
-                separatorBuilder: (context, index) => SizedBox(height: 12.h),
-                itemBuilder: (context, index) {
-                  final data = customerList[index];
+              data: (customerList) {
+                if (customerList == null || customerList.isEmpty) {
+                  return const Center(child: Text('No order data found.'));
+                }
 
-                  return customListItem(
-                    leadIcon: Icons.person,
-                    title: data.fields?.companyName?.stringValue ?? '-',
-                    subtitle: data.fields?.companyEmail?.stringValue ?? '-',
-                    trailIcon: Icons.arrow_forward_ios,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const CustomerDetailPage(),
-                        ),
-                      );
-                    },
-                  );
-                },
-              );
-            },
+                return ListView.separated(
+                  itemCount: customerList.length,
+                  separatorBuilder: (context, index) => SizedBox(height: 12.h),
+                  itemBuilder: (context, index) {
+                    final data = customerList[index];
 
-            error: (error, _) {
-              final exception = error as ApiException;
-              print('asds $exception');
+                    return customListItem(
+                      leadIcon: Icons.person,
+                      title: data.fields?.companyName?.stringValue ?? '-',
+                      subtitle: data.fields?.companyEmail?.stringValue ?? '-',
+                      trailIcon: Icons.arrow_forward_ios,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const CustomerDetailPage(),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                );
+              },
 
-              return Center(
-                child: Text(
-                  'Error Loading Customer List: ${exception.message}',
-                  style: errorStyle,
-                ),
-              );
-            },
+              error: (error, _) {
+                final exception = error as ApiException;
+
+                return Center(
+                  child: Text(
+                    'Error Loading Customer List: ${exception.message}',
+                    style: errorStyle,
+                  ),
+                );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -18,61 +18,65 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
   Widget build(BuildContext context) {
     final orderListState = ref.watch(orderListControllerProvider);
 
-    return Column(
-      children: [
-        // Search Bar
-        customSearchBar(hint: 'Search Orders...'),
+    return Padding(
+      padding: EdgeInsets.all(8.r),
+      child: Column(
+        children: [
+          // Search Bar
+          customSearchBar(hint: 'Search Orders...'),
 
-        // Order List
-        Expanded(
-          child: orderListState.when(
-            loading: () => const Center(child: CircularProgressIndicator()),
+          SizedBox(height: 12.h),
 
-            data: (orderList) {
-              if (orderList == null || orderList.isEmpty) {
-                return const Center(child: Text('No Order Data Found.'));
-              }
+          // Order List
+          Expanded(
+            child: orderListState.when(
+              loading: () => const Center(child: CircularProgressIndicator()),
 
-              return ListView.separated(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-                itemCount: orderList.length,
-                separatorBuilder: (context, index) => SizedBox(height: 12.h),
-                itemBuilder: (context, index) {
-                  final data = orderList[index];
+              data: (orderList) {
+                if (orderList == null || orderList.isEmpty) {
+                  return const Center(child: Text('No Order Data Found.'));
+                }
 
-                  return customListItem(
-                    leadIcon: Icons.receipt_long,
-                    title:
-                        'Order ${(data.name != null) ? data.name?.substring(58) : "-"}',
-                    subtitle:
-                        'Status: ${data.fields?.orderStatus?.stringValue ?? "-"}',
-                    trailIcon: Icons.arrow_forward_ios,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const OrderDetailPage(),
-                        ),
-                      );
-                    },
-                  );
-                },
-              );
-            },
+                return ListView.separated(
+                  itemCount: orderList.length,
+                  separatorBuilder: (context, index) => SizedBox(height: 12.h),
+                  itemBuilder: (context, index) {
+                    final data = orderList[index];
 
-            error: (error, _) {
-              final exception = error as ApiException;
+                    return customListItem(
+                      leadIcon: Icons.receipt_long,
+                      title:
+                          'Order ${(data.name != null) ? data.name?.substring(58) : "-"}',
+                      subtitle:
+                          'Status: ${data.fields?.orderStatus?.stringValue ?? "-"}',
+                      trailIcon: Icons.arrow_forward_ios,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const OrderDetailPage(),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                );
+              },
 
-              return Center(
-                child: Text(
-                  'Error Loading Order List: ${exception.message}',
-                  style: errorStyle,
-                ),
-              );
-            },
+              error: (error, _) {
+                final exception = error as ApiException;
+
+                return Center(
+                  child: Text(
+                    'Error Loading Order List: ${exception.message}',
+                    style: errorStyle,
+                  ),
+                );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

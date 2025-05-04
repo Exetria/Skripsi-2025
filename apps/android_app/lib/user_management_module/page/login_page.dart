@@ -63,17 +63,30 @@ class _LoginPage extends ConsumerState<LoginPage> {
                 controller: emailController,
                 style: bodyStyle,
                 decoration: InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 14.h,
+                    horizontal: 16.w,
+                  ),
                   labelText: 'Email',
                   labelStyle: bodyStyle,
                   prefixIcon: Icon(
                     Icons.email,
                     color: textColor.withAlpha(178),
                   ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.r),
-                  ),
                   filled: true,
                   fillColor: fillColor,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                    borderSide: BorderSide(color: dividerColor),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                    borderSide: BorderSide(color: dividerColor),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                    borderSide: BorderSide(color: primaryColor, width: 2),
+                  ),
                 ),
               ),
               SizedBox(height: 16.h),
@@ -84,6 +97,10 @@ class _LoginPage extends ConsumerState<LoginPage> {
                 obscureText: _obscurePassword,
                 style: bodyStyle,
                 decoration: InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 14.h,
+                    horizontal: 16.w,
+                  ),
                   labelText: 'Password',
                   labelStyle: bodyStyle,
                   prefixIcon: Icon(Icons.lock, color: textColor.withAlpha(178)),
@@ -101,7 +118,16 @@ class _LoginPage extends ConsumerState<LoginPage> {
                     ),
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.r),
+                    borderRadius: BorderRadius.circular(12.r),
+                    borderSide: BorderSide(color: dividerColor),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                    borderSide: BorderSide(color: dividerColor),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                    borderSide: BorderSide(color: primaryColor, width: 2),
                   ),
                   filled: true,
                   fillColor: fillColor,
@@ -140,7 +166,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: primaryColor,
-                            foregroundColor: invertedTextColor,
+                            foregroundColor: backgroundColor,
                             padding: EdgeInsets.symmetric(
                               horizontal: 80.w,
                               vertical: 10.h,
@@ -163,7 +189,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
   void doSignIn({required String email, required String password}) async {
     if (email != '' && password != '') {
       final state = await ref
-          .watch(signInControllerProvider.notifier)
+          .read(signInControllerProvider.notifier)
           .signIn(email: email, password: password);
 
       // If success
@@ -252,7 +278,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
     required String password,
   }) async {
     final userValue = await ref
-        .watch(checkUserDataControllerProvider.notifier)
+        .read(checkUserDataControllerProvider.notifier)
         .checkUserData(
           idToken: result?.idToken ?? '',
           uid: result?.localId ?? '',
@@ -261,9 +287,11 @@ class _LoginPage extends ConsumerState<LoginPage> {
     if (userValue?.fields?.role?.stringValue == 'sales') {
       userDataHelper = UserDataHelper(
         uid: result?.localId ?? '',
-        name: result?.displayName ?? '',
+        userName: userValue?.fields?.userName?.stringValue ?? '',
+        fullName: userValue?.fields?.fullName?.stringValue ?? '',
         email: result?.email ?? '',
         phone: userValue?.fields?.phoneNumber?.stringValue ?? '',
+        photoUrl: userValue?.fields?.photoUrl?.stringValue ?? '',
         role: userValue?.fields?.role?.stringValue ?? '',
         idToken: result?.idToken ?? '',
         refreshToken: result?.refreshToken ?? '',

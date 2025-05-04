@@ -18,64 +18,68 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
   Widget build(BuildContext context) {
     final productListState = ref.watch(productListControllerProvider);
 
-    return Column(
-      children: [
-        // Search Bar
-        customSearchBar(hint: 'Search Products...'),
+    return Padding(
+      padding: EdgeInsets.all(8.r),
+      child: Column(
+        children: [
+          // Search Bar
+          customSearchBar(hint: 'Search Products...'),
 
-        // Product List
-        Expanded(
-          child: productListState.when(
-            loading: () => const Center(child: CircularProgressIndicator()),
-            data: (productList) {
-              if (productList == null || productList.isEmpty) {
-                return const Center(child: Text('No sales data found.'));
-              }
+          SizedBox(height: 12.h),
 
-              return ListView.separated(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-                itemCount: productList.length,
-                separatorBuilder: (context, index) => SizedBox(height: 12.h),
-                itemBuilder: (context, index) {
-                  final data = productList[index];
+          // Product List
+          Expanded(
+            child: productListState.when(
+              loading: () => const Center(child: CircularProgressIndicator()),
+              data: (productList) {
+                if (productList == null || productList.isEmpty) {
+                  return const Center(child: Text('No sales data found.'));
+                }
 
-                  // Format Product Price
-                  final num? priceNumber = stringToNum(
-                    data.fields?.price?.integerValue ?? '',
-                  );
-                  final String priceText =
-                      priceNumber != null ? rupiahFormat(priceNumber) : '-';
+                return ListView.separated(
+                  itemCount: productList.length,
+                  separatorBuilder: (context, index) => SizedBox(height: 12.h),
+                  itemBuilder: (context, index) {
+                    final data = productList[index];
 
-                  return customListItem(
-                    leadIcon: Icons.person,
-                    title: data.fields?.productName?.stringValue ?? '-',
-                    subtitle: priceText,
-                    trailIcon: Icons.arrow_forward_ios,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ProductDetailPage(),
-                        ),
-                      );
-                    },
-                  );
-                },
-              );
-            },
-            error: (error, _) {
-              final exception = error as ApiException;
+                    // Format Product Price
+                    final num? priceNumber = stringToNum(
+                      data.fields?.price?.integerValue ?? '',
+                    );
+                    final String priceText =
+                        priceNumber != null ? rupiahFormat(priceNumber) : '-';
 
-              return Center(
-                child: Text(
-                  'Error Loading Product List: ${exception.message}',
-                  style: errorStyle,
-                ),
-              );
-            },
+                    return customListItem(
+                      leadIcon: Icons.person,
+                      title: data.fields?.productName?.stringValue ?? '-',
+                      subtitle: priceText,
+                      trailIcon: Icons.arrow_forward_ios,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ProductDetailPage(),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                );
+              },
+              error: (error, _) {
+                final exception = error as ApiException;
+
+                return Center(
+                  child: Text(
+                    'Error Loading Product List: ${exception.message}',
+                    style: errorStyle,
+                  ),
+                );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

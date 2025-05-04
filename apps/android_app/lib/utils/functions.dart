@@ -98,29 +98,26 @@ PreferredSizeWidget customAppBar({
 }
 
 // SEARCH BAR
-Padding customSearchBar({String? hint}) {
-  return Padding(
-    padding: EdgeInsets.all(16.r),
-    child: TextField(
-      decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
-        hintText: hint ?? '',
-        hintStyle: hintStyle,
-        prefixIcon: Icon(Icons.search, color: unselectedItemColor),
-        filled: true,
-        fillColor: backgroundColor,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: BorderSide(color: dividerColor),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: BorderSide(color: dividerColor),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: BorderSide(color: primaryColor, width: 2),
-        ),
+TextField customSearchBar({String? hint}) {
+  return TextField(
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
+      hintText: hint ?? '',
+      hintStyle: hintStyle,
+      prefixIcon: Icon(Icons.search, color: unselectedItemColor),
+      filled: true,
+      fillColor: fillColor,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.r),
+        borderSide: BorderSide(color: dividerColor),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.r),
+        borderSide: BorderSide(color: dividerColor),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.r),
+        borderSide: BorderSide(color: primaryColor, width: 2),
       ),
     ),
   );
@@ -140,7 +137,7 @@ InkWell customListItem({
     child: Container(
       padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
-        color: backgroundColor,
+        color: fillColor,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: dividerColor, width: 0.3),
         boxShadow: [
