@@ -12,9 +12,9 @@ part 'refresh_token_controller.g.dart';
 
 @riverpod
 class RefreshTokenController extends _$RefreshTokenController {
-  final Duration _tokenDuration = const Duration(seconds: 30);
-  final Duration _checkInterval = const Duration(seconds: 5);
-  final Duration _checkBuffer = const Duration(seconds: 7);
+  final Duration _tokenDuration = const Duration(seconds: 3600);
+  final Duration _checkInterval = const Duration(seconds: 120);
+  final Duration _checkBuffer = const Duration(seconds: 300);
 
   int _lastRefresh = DateTime.now().millisecondsSinceEpoch;
   Timer? _refreshTimer;
@@ -75,6 +75,7 @@ class RefreshTokenController extends _$RefreshTokenController {
           data: state.value?.refreshToken ?? '',
         );
       } else {
+        stopAutoRefresh();
         navigatorKey.currentState?.pushReplacement(
           MaterialPageRoute(
             builder:
@@ -86,6 +87,7 @@ class RefreshTokenController extends _$RefreshTokenController {
         );
       }
     } catch (e) {
+      stopAutoRefresh();
       navigatorKey.currentState?.pushReplacement(
         MaterialPageRoute(
           builder:
