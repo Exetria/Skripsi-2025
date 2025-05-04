@@ -35,6 +35,12 @@ Future<Map<String, dynamic>> apiCallGet({
 
   if (response.statusCode == 200) {
     return json.decode(response.body);
+  } else if (response.statusCode == 404) {
+    throw ApiException(
+      statusCode: response.statusCode,
+      message: "Not Found",
+      responseBody: json.decode(response.body),
+    );
   } else if (response.statusCode == 400 || response.statusCode == 401) {
     throw ApiException(
       statusCode: response.statusCode,
@@ -66,6 +72,12 @@ Future<Map<String, dynamic>> apiCallPost({
 
   if (response.statusCode == 200) {
     return json.decode(response.body);
+  } else if (response.statusCode == 404) {
+    throw ApiException(
+      statusCode: response.statusCode,
+      message: "Not Found",
+      responseBody: json.decode(response.body),
+    );
   } else if (response.statusCode == 400 || response.statusCode == 401) {
     throw ApiException(
       statusCode: response.statusCode,
@@ -97,6 +109,12 @@ Future<Map<String, dynamic>> apiCallPatch({
 
   if (response.statusCode == 200) {
     return json.decode(response.body);
+  } else if (response.statusCode == 404) {
+    throw ApiException(
+      statusCode: response.statusCode,
+      message: "Not Found",
+      responseBody: json.decode(response.body),
+    );
   } else if (response.statusCode == 400 || response.statusCode == 401) {
     throw ApiException(
       statusCode: response.statusCode,
@@ -128,6 +146,12 @@ Future<Map<String, dynamic>> apiCallPut({
 
   if (response.statusCode == 200) {
     return json.decode(response.body);
+  } else if (response.statusCode == 404) {
+    throw ApiException(
+      statusCode: response.statusCode,
+      message: "Not Found",
+      responseBody: json.decode(response.body),
+    );
   } else if (response.statusCode == 400 || response.statusCode == 401) {
     throw ApiException(
       statusCode: response.statusCode,
@@ -154,6 +178,12 @@ Future<Map<String, dynamic>> apiCallDelete({
 
   if (response.statusCode == 200) {
     return json.decode(response.body);
+  } else if (response.statusCode == 404) {
+    throw ApiException(
+      statusCode: response.statusCode,
+      message: "Not Found",
+      responseBody: json.decode(response.body),
+    );
   } else if (response.statusCode == 400 || response.statusCode == 401) {
     throw ApiException(
       statusCode: response.statusCode,
@@ -188,6 +218,12 @@ Future<Map<String, dynamic>> uploadFileToStorage({
 
   if (response.statusCode == 200) {
     return json.decode(response.body);
+  } else if (response.statusCode == 404) {
+    throw ApiException(
+      statusCode: response.statusCode,
+      message: "Not Found",
+      responseBody: json.decode(response.body),
+    );
   } else if (response.statusCode == 400 || response.statusCode == 401) {
     throw ApiException(
       statusCode: response.statusCode,
