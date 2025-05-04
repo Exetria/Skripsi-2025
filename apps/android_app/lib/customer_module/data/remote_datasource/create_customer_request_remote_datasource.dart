@@ -72,7 +72,7 @@ class CreateCustomerRequestDatasourceImpl
       url:
           'https://firebasestorage.googleapis.com/v0/b/${dotenv.env['PROJECT_ID']}.appspot.com/o?uploadType=media&name=store/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg',
       headers: {
-        'Authorization': 'Bearer ${userDataHelper?.idToken ?? ""}',
+        'Authorization': 'Bearer ${userDataHelper?.idToken}',
         'Content-Type': 'application/json',
       },
       file: storePhoto,
@@ -82,18 +82,20 @@ class CreateCustomerRequestDatasourceImpl
       url:
           'https://firebasestorage.googleapis.com/v0/b/${dotenv.env['PROJECT_ID']}.appspot.com/o?uploadType=media&name=ktp/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg',
       headers: {
-        'Authorization': 'Bearer ${userDataHelper?.idToken ?? ""}',
+        'Authorization': 'Bearer ${userDataHelper?.idToken}',
         'Content-Type': 'application/json',
       },
       file: ktpPhoto,
     );
 
+    // Format file names, replace all '/' with '%2F'
     final String storeFileName = storePhotoresponse['name'].replaceAll(
       '/',
       '%2F',
     );
     final String ktpFileName = ktpPhotoresponse['name'].replaceAll('/', '%2F');
-    // Create download links replaceAll('/', '%2F')
+
+    // Create download links
     storePhotoLink =
         'https://firebasestorage.googleapis.com/v0/b/${storePhotoresponse['bucket']}/o/$storeFileName?alt=media&token=${storePhotoresponse['downloadTokens']}';
     ktpPhotoLink =
@@ -103,7 +105,7 @@ class CreateCustomerRequestDatasourceImpl
       url:
           'https://firestore.googleapis.com/v1/projects/${dotenv.env['PROJECT_ID']}/databases/(default)/documents/customerRequests',
       headers: {
-        'Authorization': 'Bearer ${userDataHelper?.idToken ?? ""}',
+        'Authorization': 'Bearer ${userDataHelper?.idToken}',
         'Content-Type': 'application/json',
       },
       body: {

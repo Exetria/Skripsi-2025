@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:android_app/customer_module/data/remote_datasource/create_customer_request_list_remote_datasource.dart';
+import 'package:android_app/customer_module/data/remote_datasource/create_customer_request_remote_datasource.dart';
 import 'package:android_app/customer_module/domain/entities/customer_domain.dart';
 import 'package:android_app/customer_module/domain/entities/customer_request_domain.dart';
 import 'package:android_app/customer_module/domain/repository/customer_repository.dart';

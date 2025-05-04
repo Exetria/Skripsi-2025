@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:android_app/customer_module/data/repository_impl/create_customer_request_list_repository_impl.dart';
+import 'package:android_app/customer_module/data/repository_impl/create_customer_request_repository_impl.dart';
 import 'package:android_app/customer_module/data/repository_impl/customer_list_repository_impl.dart';
 import 'package:android_app/customer_module/data/repository_impl/customer_request_list_repository_impl.dart';
 import 'package:android_app/customer_module/domain/entities/customer_domain.dart';
