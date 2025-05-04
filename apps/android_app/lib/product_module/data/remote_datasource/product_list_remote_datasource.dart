@@ -17,7 +17,7 @@ class ProductListRemoteDatasourceImpl implements ProductListRemoteDatasource {
         url:
             'https://firestore.googleapis.com/v1/projects/${dotenv.env['PROJECT_ID']}/databases/(default)/documents/products/$documentId',
         headers: {
-          'Authorization': 'Bearer ${userDataHelper?.idToken ?? ""}',
+          'Authorization': 'Bearer ${userDataHelper?.idToken}',
           'Content-Type': 'application/json',
         },
       );

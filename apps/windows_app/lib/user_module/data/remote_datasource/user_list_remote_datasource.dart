@@ -13,7 +13,7 @@ class UserListRemoteDatasourceImpl implements UserListRemoteDatasource {
       url:
           'https://firestore.googleapis.com/v1/projects/${dotenv.env['PROJECT_ID']}/databases/(default)/documents/users',
       headers: {
-        'Authorization': 'Bearer ${userDataHelper?.idToken ?? ""}',
+        'Authorization': 'Bearer ${userDataHelper?.idToken}',
         'Content-Type': 'application/json',
       },
     );
