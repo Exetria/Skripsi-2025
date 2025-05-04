@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 final Color primaryColor = const Color.fromRGBO(0, 128, 128, 1);
 final Color secondaryColor = const Color.fromRGBO(0, 150, 136, 1);
 final Color tertiaryColor = const Color.fromRGBO(178, 223, 219, 1);
-final Color fillColor = const Color.fromRGBO(238, 238, 238, 1);
+final Color fillColor = const Color.fromRGBO(255, 255, 255, 1);
 final Color accentColor = const Color.fromRGBO(0, 105, 92, 1);
 final Color backgroundColor = const Color.fromRGBO(245, 245, 245, 1);
 final Color textColor = const Color.fromRGBO(33, 33, 33, 1);
@@ -83,7 +83,7 @@ final TextStyle hintStyle = TextStyle(
 final TextStyle buttonStyle = TextStyle(
   fontSize: Platform.isWindows ? 16 : 16.sp,
   fontWeight: FontWeight.w600,
-  color: dividerColor,
+  color: invertedTextColor,
 );
 final TextStyle successStyle = TextStyle(
   fontSize: Platform.isWindows ? 16 : 16.sp,
