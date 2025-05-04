@@ -171,7 +171,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   void doSignIn({required String email, required String password}) async {
     if (email != '' && password != '') {
       final state = await ref
-          .watch(signInControllerProvider.notifier)
+          .read(signInControllerProvider.notifier)
           .signIn(email: email, password: password);
 
       // If success
@@ -260,7 +260,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     required String password,
   }) async {
     final userValue = await ref
-        .watch(checkUserDataControllerProvider.notifier)
+        .read(checkUserDataControllerProvider.notifier)
         .checkUserData(
           idToken: result?.idToken ?? '',
           uid: result?.localId ?? '',
@@ -269,9 +269,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     if (userValue?.fields?.role?.stringValue == 'admin') {
       userDataHelper = UserDataHelper(
         uid: result?.localId ?? '',
-        name: result?.displayName ?? '',
+        userName: userValue?.fields?.userName?.stringValue ?? '',
+        fullName: userValue?.fields?.fullName?.stringValue ?? '',
         email: result?.email ?? '',
         phone: userValue?.fields?.phoneNumber?.stringValue ?? '',
+        photoUrl: userValue?.fields?.photoUrl?.stringValue ?? '',
         role: userValue?.fields?.role?.stringValue ?? '',
         idToken: result?.idToken ?? '',
         refreshToken: result?.refreshToken ?? '',
