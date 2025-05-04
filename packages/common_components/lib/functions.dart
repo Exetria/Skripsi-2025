@@ -59,6 +59,10 @@ void showConfirmationDialog({
   required String message,
   String leftButtonText = 'Yes',
   String rightButtonText = 'No',
+  Color? leftButtonBackgroundColor,
+  Color? leftButtonForegroundColor,
+  Color? rightButtonBackgroundColor,
+  Color? rightButtonForegroundColor,
   required VoidCallback onLeftButtonTap,
   required VoidCallback onRightButtonTap,
 }) {
@@ -87,14 +91,16 @@ void showConfirmationDialog({
                     width: 100,
                     child: ElevatedButton(
                       onPressed: () {
-                        onLeftButtonTap();
                         if (Navigator.of(context).canPop()) {
                           Navigator.of(context).pop();
                         }
+                        onLeftButtonTap();
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryColor,
-                        foregroundColor: backgroundColor,
+                        backgroundColor:
+                            leftButtonBackgroundColor ?? successColor,
+                        foregroundColor:
+                            leftButtonForegroundColor ?? backgroundColor,
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -109,14 +115,16 @@ void showConfirmationDialog({
                     width: 100,
                     child: ElevatedButton(
                       onPressed: () {
-                        onRightButtonTap();
                         if (Navigator.of(context).canPop()) {
                           Navigator.of(context).pop();
                         }
+                        onRightButtonTap();
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryColor,
-                        foregroundColor: backgroundColor,
+                        backgroundColor:
+                            rightButtonBackgroundColor ?? errorColor,
+                        foregroundColor:
+                            rightButtonForegroundColor ?? backgroundColor,
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
