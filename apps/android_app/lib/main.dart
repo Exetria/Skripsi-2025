@@ -1,4 +1,5 @@
 import 'package:android_app/splash_screen.dart';
+import 'package:android_app/utils/theme_controller.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -59,6 +60,64 @@ final lightTheme = ThemeData(
   textTheme: GoogleFonts.montserratTextTheme(),
 );
 
+final darkTheme = ThemeData(
+  brightness: Brightness.dark,
+  primaryColor: darkModePrimaryColor,
+  scaffoldBackgroundColor: darkModeBackgroundColor,
+  cardColor: darkModeFillColor,
+  colorScheme: ColorScheme.dark(
+    primary: darkModePrimaryColor,
+    secondary: darkModeAccentColor,
+    surface: darkModeFillColor,
+    onPrimary: Colors.white,
+    onSecondary: Colors.white,
+    onSurface: darkModeTextColor,
+  ),
+  appBarTheme: AppBarTheme(
+    backgroundColor: darkModePrimaryColor,
+    foregroundColor: Colors.white,
+    elevation: 2,
+  ),
+  iconTheme: IconThemeData(color: darkModeTextColor),
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    backgroundColor: darkModePrimaryColor,
+    foregroundColor: Colors.white,
+  ),
+  cardTheme: CardTheme(
+    color: darkModeFillColor,
+    elevation: 4,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+  ),
+  navigationBarTheme: NavigationBarThemeData(
+    backgroundColor: darkModeBackgroundColor,
+    indicatorColor: darkModePrimaryColor.withAlpha(30),
+    labelTextStyle: WidgetStateProperty.all(
+      TextStyle(color: darkModePrimaryColor),
+    ),
+    iconTheme: WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.selected)) {
+        return IconThemeData(color: darkModePrimaryColor);
+      }
+      return IconThemeData(color: darkModeUnselectedItemColor);
+    }),
+  ),
+  inputDecorationTheme: InputDecorationTheme(
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: darkModePrimaryColor),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: darkModeDividerColor),
+    ),
+    border: OutlineInputBorder(
+      borderSide: BorderSide(color: darkModeDividerColor),
+    ),
+  ),
+  textTheme: GoogleFonts.montserratTextTheme().apply(
+    bodyColor: darkModeTextColor,
+    displayColor: darkModeTextColor,
+  ),
+);
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: '.env');
@@ -76,6 +135,8 @@ class Main extends StatefulHookConsumerWidget {
 class _MainApp extends ConsumerState<Main> {
   @override
   Widget build(BuildContext context) {
+    final themeMode = ref.watch(themeModeProvider);
+
     return ScreenUtilInit(
       minTextAdapt: true,
       splitScreenMode: true,
@@ -84,6 +145,8 @@ class _MainApp extends ConsumerState<Main> {
           navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
           theme: lightTheme,
+          darkTheme: darkTheme,
+          themeMode: themeMode,
           home: child,
         );
       },

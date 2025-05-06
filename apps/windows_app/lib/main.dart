@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:windows_app/user_management_module/page/login_page.dart';
+import 'package:windows_app/utils/theme_controller.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -52,11 +53,67 @@ final lightTheme = ThemeData(
   textTheme: GoogleFonts.montserratTextTheme(),
 );
 
+final darkTheme = ThemeData(
+  brightness: Brightness.dark,
+  primaryColor: darkModePrimaryColor,
+  scaffoldBackgroundColor: darkModeBackgroundColor,
+  cardColor: darkModeFillColor,
+  colorScheme: ColorScheme.dark(
+    primary: darkModePrimaryColor,
+    secondary: darkModeAccentColor,
+    surface: darkModeFillColor,
+    onPrimary: Colors.white,
+    onSecondary: Colors.white,
+    onSurface: darkModeTextColor,
+  ),
+  appBarTheme: AppBarTheme(
+    backgroundColor: darkModePrimaryColor,
+    foregroundColor: Colors.white,
+    elevation: 2,
+  ),
+  iconTheme: IconThemeData(color: darkModeTextColor),
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    backgroundColor: darkModePrimaryColor,
+    foregroundColor: Colors.white,
+  ),
+  cardTheme: CardTheme(
+    color: darkModeFillColor,
+    elevation: 4,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+  ),
+  navigationBarTheme: NavigationBarThemeData(
+    backgroundColor: darkModeBackgroundColor,
+    indicatorColor: darkModePrimaryColor.withAlpha(30),
+    labelTextStyle: WidgetStateProperty.all(
+      TextStyle(color: darkModePrimaryColor),
+    ),
+    iconTheme: WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.selected)) {
+        return IconThemeData(color: darkModePrimaryColor);
+      }
+      return IconThemeData(color: darkModeUnselectedItemColor);
+    }),
+  ),
+  inputDecorationTheme: InputDecorationTheme(
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: darkModePrimaryColor),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: darkModeDividerColor),
+    ),
+    border: OutlineInputBorder(
+      borderSide: BorderSide(color: darkModeDividerColor),
+    ),
+  ),
+  textTheme: GoogleFonts.montserratTextTheme().apply(
+    bodyColor: darkModeTextColor,
+    displayColor: darkModeTextColor,
+  ),
+);
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: '.env');
-
-  // TODO: Check user data in SP
 
   runApp(const ProviderScope(child: Main()));
 }
@@ -71,6 +128,8 @@ class Main extends StatefulHookConsumerWidget {
 class _MainApp extends ConsumerState<Main> {
   @override
   Widget build(BuildContext context) {
+    final themeMode = ref.watch(themeModeProvider);
+
     return ScreenUtilInit(
       minTextAdapt: true,
       splitScreenMode: true,
@@ -79,6 +138,8 @@ class _MainApp extends ConsumerState<Main> {
           navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
           theme: lightTheme,
+          darkTheme: darkTheme,
+          themeMode: themeMode,
           home: child,
         );
       },
