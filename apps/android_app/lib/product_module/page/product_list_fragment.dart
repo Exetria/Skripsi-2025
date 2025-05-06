@@ -33,37 +33,37 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
               loading: () => const Center(child: CircularProgressIndicator()),
               data: (productList) {
                 if (productList == null || productList.isEmpty) {
-                  return const Center(child: Text('No sales data found.'));
+                  return const Center(child: Text('No Product Data Found'));
                 }
 
-                return ListView.separated(
-                  itemCount: productList.length,
-                  separatorBuilder: (context, index) => SizedBox(height: 12.h),
-                  itemBuilder: (context, index) {
-                    final data = productList[index];
-
-                    // Format Product Price
-                    final num? priceNumber = stringToNum(
-                      data.fields?.price?.integerValue ?? '',
-                    );
-                    final String priceText =
-                        priceNumber != null ? rupiahFormat(priceNumber) : '-';
-
-                    return customListItem(
-                      leadIcon: Icons.person,
-                      title: data.fields?.productName?.stringValue ?? '-',
-                      subtitle: priceText,
-                      trailIcon: Icons.arrow_forward_ios,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ProductDetailPage(),
-                          ),
-                        );
-                      },
-                    );
+                return RefreshIndicator(
+                  onRefresh: () async {
+                    ref.invalidate(productListControllerProvider);
                   },
+                  child: ListView.separated(
+                    itemCount: productList.length,
+                    separatorBuilder:
+                        (context, index) => SizedBox(height: 12.h),
+                    itemBuilder: (context, index) {
+                      final data = productList[index];
+
+                      return customListItem(
+                        leadIcon: Icons.inventory_2,
+                        title: data.fields?.productName?.stringValue ?? '-',
+                        subtitle: data.fields?.brand?.stringValue ?? '-',
+                        trailIcon: Icons.arrow_forward_ios,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => ProductDetailPage(data: data),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
                 );
               },
               error: (error, _) {

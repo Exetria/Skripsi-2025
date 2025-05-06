@@ -1,3 +1,4 @@
+import 'package:android_app/product_module/domain/entities/product_domain.dart';
 import 'package:android_app/utils/functions.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
@@ -5,111 +6,141 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ProductDetailPage extends StatefulHookConsumerWidget {
-  const ProductDetailPage({super.key});
+  final ProductDomain data;
+
+  const ProductDetailPage({super.key, required this.data});
 
   @override
   ConsumerState<ProductDetailPage> createState() => _ProductDetailPage();
 }
 
 class _ProductDetailPage extends ConsumerState<ProductDetailPage> {
-  // Placeholder data - to be replaced with real data later
-  final String productName = 'Nama Produk'; // <-- required
-  final String imageUrl =
-      'https://petapixel.com/assets/uploads/2017/03/product1.jpeg'; // <-- required
-  final bool isAvailable = true;
-  final String unit = 'pair';
-  final String price = rupiahFormat(1000000);
-  final String description =
-      'This is a placeholder description of the product.'; // <-- required
-
   @override
   Widget build(BuildContext context) {
-    final availabilityText = isAvailable ? 'Available' : 'Not Available';
+    final variants = widget.data.fields?.variants?.arrayValue?.values ?? [];
+    List<Widget> variantCards = createVariantCards(variants);
 
     return Scaffold(
-      appBar: customAppBar(title: 'Nama Produk', showLeftButton: true),
+      appBar: customAppBar(
+        title: widget.data.fields?.productName?.stringValue ?? '-',
+        showLeftButton: true,
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.r),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Product Image
-            SizedBox(
-              height: 140.h,
-              child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(10.r)),
-                child: Image.network(
-                  imageUrl,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                  errorBuilder:
-                      (context, error, stackTrace) => const Icon(Icons.error),
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Center(
-                      child: CircularProgressIndicator(
-                        value:
-                            loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                                : null,
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
-            SizedBox(height: 24.h),
-
-            // Product Name
-            Center(
-              child: Text(
-                productName,
-                style: sectionTitleStyle,
-                textAlign: TextAlign.center,
-              ),
-            ),
+            Text('General Informations', style: sectionTitleStyle),
             SizedBox(height: 12.h),
 
-            // Unit
-            Text('Unit: $unit', style: captionStyle),
-            SizedBox(height: 8.h),
-
-            // Price
-            Text('Price: $price per $unit', style: captionStyle),
-            SizedBox(height: 12.h),
-
-            // Availability
-            Row(
-              children: [
-                Icon(Icons.circle, size: 12.sp, color: successColor),
-                SizedBox(width: 8.w),
-                Text(
-                  availabilityText,
-                  style: captionStyle.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: successColor,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 24.h),
-
-            // Description
-            Text('Description', style: subtitleStyle),
-            SizedBox(height: 8.h),
             Container(
               width: double.infinity,
-              padding: EdgeInsets.all(12.r),
+              padding: EdgeInsets.all(16.r),
               decoration: BoxDecoration(
-                color: backgroundColor.withAlpha(20),
+                color: fillColor,
                 borderRadius: BorderRadius.circular(12.r),
+                border: Border.all(color: dividerColor),
+                boxShadow: [
+                  BoxShadow(
+                    color: dividerColor,
+                    blurRadius: 8,
+                    offset: Offset(0, 6.h),
+                  ),
+                ],
               ),
-              child: Text(description, style: bodyStyle),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Brand Info', style: subtitleStyle),
+                  // Brand
+                  Text(
+                    'Brand : ${widget.data.fields?.brand?.stringValue ?? "-"}',
+                    style: bodyStyle,
+                  ),
+                  SizedBox(height: 8.h),
+
+                  // Company
+                  Text(
+                    'Company : ${widget.data.fields?.companyCode?.stringValue ?? "-"}',
+                    style: bodyStyle,
+                  ),
+                  SizedBox(height: 12.h),
+
+                  // Description
+                  Text('Description', style: subtitleStyle),
+                  Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: backgroundColor.withAlpha(20),
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    child: Text(
+                      widget.data.fields?.description?.stringValue ?? '-',
+                      style: bodyStyle,
+                    ),
+                  ),
+                ],
+              ),
             ),
+            SizedBox(height: 12.h),
+
+            Text('Variants', style: sectionTitleStyle),
+            SizedBox(height: 12.h),
+
+            // Product Variants
+            ...variantCards,
           ],
         ),
       ),
     );
+  }
+
+  List<Widget> createVariantCards(List<Value> variants) {
+    List<Widget> result = [];
+
+    for (final variant in variants) {
+      List<String> cardValues = [];
+      List<IconData> cardIcons = [];
+
+      // Map of attributes
+      Map<String, String> variantAttributes = parseVariantAttributes(
+        variant.mapValue?.fields?.attributes?.mapValue ?? {},
+      );
+
+      // Availability
+      bool available =
+          variant.mapValue?.fields?.available?.booleanValue ?? false;
+      cardValues.add("Status: ${available ? 'Available' : 'Not Available'}");
+      cardIcons.add(Icons.category);
+
+      // Price
+      cardValues.add(
+        "Price: ${variant.mapValue?.fields?.price?.integerValue ?? '-'}",
+      );
+      cardIcons.add(Icons.donut_small);
+
+      // Units per package
+      cardValues.add(
+        "Units per package: ${variant.mapValue?.fields?.unitsPerPackage?.integerValue ?? '-'}",
+      );
+      cardIcons.add(Icons.donut_small);
+
+      variantAttributes.forEach((key, value) {
+        cardValues.add('$key: $value');
+        cardIcons.add(Icons.donut_small);
+      });
+
+      result.add(
+        buildInfoCard(
+          title: variant.mapValue?.fields?.variantName?.stringValue ?? '-',
+          imageurl: variant.mapValue?.fields?.variantImage?.stringValue ?? '',
+          values: cardValues,
+          icons: cardIcons,
+        ),
+      );
+      result.add(SizedBox(height: 8.h));
+    }
+
+    return result;
   }
 }
