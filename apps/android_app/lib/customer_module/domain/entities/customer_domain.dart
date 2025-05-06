@@ -19,25 +19,26 @@ class CustomerDomain with _$CustomerDomain {
 @freezed
 class Fields with _$Fields {
   const factory Fields({
-    @JsonKey(name: 'owner_phone_number') ApprovedBy? ownerPhoneNumber,
-    @JsonKey(name: 'subscription_type') ApprovedBy? subscriptionType,
-    @JsonKey(name: 'company_email') ApprovedBy? companyEmail,
-    @JsonKey(name: 'owner_national_id') ApprovedBy? ownerNationalId,
-    @JsonKey(name: 'approved_by') ApprovedBy? approvedBy,
-    @JsonKey(name: 'blacklisted') Blacklisted? blacklisted,
-    @JsonKey(name: 'company_location') CompanyLocation? companyLocation,
     @JsonKey(name: 'company_store_condition') ApprovedBy? companyStoreCondition,
-    @JsonKey(name: 'company_store_photo') ApprovedBy? companyStorePhoto,
-    @JsonKey(name: 'company_address') ApprovedBy? companyAddress,
-    @JsonKey(name: 'requested_by') ApprovedBy? requestedBy,
-    @JsonKey(name: 'customer_code') ApprovedBy? customerCode,
-    @JsonKey(name: 'owner_tax_id') ApprovedBy? ownerTaxId,
-    @JsonKey(name: 'company_name') ApprovedBy? companyName,
-    @JsonKey(name: 'owner_address') ApprovedBy? ownerAddress,
-    @JsonKey(name: 'owner_national_id_photo') ApprovedBy? ownerNationalIdPhoto,
     @JsonKey(name: 'owner_name') ApprovedBy? ownerName,
-    @JsonKey(name: 'company_phone_number') ApprovedBy? companyPhoneNumber,
+    @JsonKey(name: 'subscription_type') ApprovedBy? subscriptionType,
+    @JsonKey(name: 'customer_type') ApprovedBy? customerType,
+    @JsonKey(name: 'company_location') CompanyLocation? companyLocation,
+    @JsonKey(name: 'owner_address') ApprovedBy? ownerAddress,
+    @JsonKey(name: 'owner_national_id') ApprovedBy? ownerNationalId,
+    @JsonKey(name: 'owner_tax_id') ApprovedBy? ownerTaxId,
+    @JsonKey(name: 'requested_by') ApprovedBy? requestedBy,
+    @JsonKey(name: 'owner_national_id_photo') ApprovedBy? ownerNationalIdPhoto,
+    @JsonKey(name: 'company_address') ApprovedBy? companyAddress,
+    @JsonKey(name: 'note') ApprovedBy? note,
+    @JsonKey(name: 'company_email') ApprovedBy? companyEmail,
+    @JsonKey(name: 'approved_by') ApprovedBy? approvedBy,
     @JsonKey(name: 'ownership_status') ApprovedBy? ownershipStatus,
+    @JsonKey(name: 'company_store_photo') CompanyStorePhoto? companyStorePhoto,
+    @JsonKey(name: 'company_name') ApprovedBy? companyName,
+    @JsonKey(name: 'owner_phone_number') ApprovedBy? ownerPhoneNumber,
+    @JsonKey(name: 'blacklisted') Blacklisted? blacklisted,
+    @JsonKey(name: 'company_phone_number') ApprovedBy? companyPhoneNumber,
   }) = _Fields;
 
   factory Fields.fromJson(Map<String, dynamic> json) => _$FieldsFromJson(json);
@@ -85,9 +86,9 @@ class MapValue with _$MapValue {
 @freezed
 class MapValueFields with _$MapValueFields {
   const factory MapValueFields({
-    @JsonKey(name: 'latitude') Accuracy? latitude,
     @JsonKey(name: 'accuracy') Accuracy? accuracy,
-    @JsonKey(name: 'longitude') Accuracy? longitude,
+    @JsonKey(name: 'latitude') Itude? latitude,
+    @JsonKey(name: 'longitude') Itude? longitude,
   }) = _MapValueFields;
 
   factory MapValueFields.fromJson(Map<String, dynamic> json) =>
@@ -96,9 +97,27 @@ class MapValueFields with _$MapValueFields {
 
 @freezed
 class Accuracy with _$Accuracy {
-  const factory Accuracy({@JsonKey(name: 'doubleValue') double? doubleValue}) =
+  const factory Accuracy({@JsonKey(name: 'doubleValue') int? doubleValue}) =
       _Accuracy;
 
   factory Accuracy.fromJson(Map<String, dynamic> json) =>
       _$AccuracyFromJson(json);
+}
+
+@freezed
+class Itude with _$Itude {
+  const factory Itude({@JsonKey(name: 'doubleValue') double? doubleValue}) =
+      _Itude;
+
+  factory Itude.fromJson(Map<String, dynamic> json) => _$ItudeFromJson(json);
+}
+
+@freezed
+class CompanyStorePhoto with _$CompanyStorePhoto {
+  const factory CompanyStorePhoto({
+    @JsonKey(name: 'stringValue') String? stringValue,
+  }) = _CompanyStorePhoto;
+
+  factory CompanyStorePhoto.fromJson(Map<String, dynamic> json) =>
+      _$CompanyStorePhotoFromJson(json);
 }

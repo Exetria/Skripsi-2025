@@ -37,29 +37,35 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
                   return const Center(child: Text('No Order Data Found.'));
                 }
 
-                return ListView.separated(
-                  itemCount: orderList.length,
-                  separatorBuilder: (context, index) => SizedBox(height: 12.h),
-                  itemBuilder: (context, index) {
-                    final data = orderList[index];
-
-                    return customListItem(
-                      leadIcon: Icons.receipt_long,
-                      title:
-                          'Order ${(data.name != null) ? data.name?.substring(58) : "-"}',
-                      subtitle:
-                          'Status: ${data.fields?.orderStatus?.stringValue ?? "-"}',
-                      trailIcon: Icons.arrow_forward_ios,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const OrderDetailPage(),
-                          ),
-                        );
-                      },
-                    );
+                return RefreshIndicator(
+                  onRefresh: () async {
+                    ref.invalidate(orderListControllerProvider);
                   },
+                  child: ListView.separated(
+                    itemCount: orderList.length,
+                    separatorBuilder:
+                        (context, index) => SizedBox(height: 12.h),
+                    itemBuilder: (context, index) {
+                      final data = orderList[index];
+
+                      return customListItem(
+                        leadIcon: Icons.receipt_long,
+                        title:
+                            'Order ${(data.name != null) ? data.name?.substring(58) : "-"}',
+                        subtitle:
+                            'Status: ${data.fields?.orderStatus?.stringValue ?? "-"}',
+                        trailIcon: Icons.arrow_forward_ios,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const OrderDetailPage(),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
                 );
               },
 
