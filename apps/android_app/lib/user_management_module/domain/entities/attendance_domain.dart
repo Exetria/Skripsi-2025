@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'attendance_domain.freezed.dart';
@@ -9,7 +7,7 @@ part 'attendance_domain.g.dart';
 class AttendanceDomain with _$AttendanceDomain {
   const factory AttendanceDomain({
     @JsonKey(name: 'name') String? name,
-    @JsonKey(name: 'fields') AttendanceDomainFields? fields,
+    @JsonKey(name: 'fields') Fields? fields,
     @JsonKey(name: 'createTime') String? createTime,
     @JsonKey(name: 'updateTime') String? updateTime,
   }) = _AttendanceDomain;
@@ -19,17 +17,16 @@ class AttendanceDomain with _$AttendanceDomain {
 }
 
 @freezed
-class AttendanceDomainFields with _$AttendanceDomainFields {
-  const factory AttendanceDomainFields({
+class Fields with _$Fields {
+  const factory Fields({
     @JsonKey(name: 'checkin_time') CheckTime? checkinTime,
     @JsonKey(name: 'checkin_location') CheckLocation? checkinLocation,
     @JsonKey(name: 'created_by') CreatedBy? createdBy,
     @JsonKey(name: 'checkout_location') CheckLocation? checkoutLocation,
     @JsonKey(name: 'checkout_time') CheckTime? checkoutTime,
-  }) = _AttendanceDomainFields;
+  }) = _Fields;
 
-  factory AttendanceDomainFields.fromJson(Map<String, dynamic> json) =>
-      _$AttendanceDomainFieldsFromJson(json);
+  factory Fields.fromJson(Map<String, dynamic> json) => _$FieldsFromJson(json);
 }
 
 @freezed

@@ -24,7 +24,7 @@ mixin _$AttendanceDomain {
   @JsonKey(name: 'name')
   String? get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'fields')
-  AttendanceDomainFields? get fields => throw _privateConstructorUsedError;
+  Fields? get fields => throw _privateConstructorUsedError;
   @JsonKey(name: 'createTime')
   String? get createTime => throw _privateConstructorUsedError;
   @JsonKey(name: 'updateTime')
@@ -49,12 +49,12 @@ abstract class $AttendanceDomainCopyWith<$Res> {
   @useResult
   $Res call({
     @JsonKey(name: 'name') String? name,
-    @JsonKey(name: 'fields') AttendanceDomainFields? fields,
+    @JsonKey(name: 'fields') Fields? fields,
     @JsonKey(name: 'createTime') String? createTime,
     @JsonKey(name: 'updateTime') String? updateTime,
   });
 
-  $AttendanceDomainFieldsCopyWith<$Res>? get fields;
+  $FieldsCopyWith<$Res>? get fields;
 }
 
 /// @nodoc
@@ -88,7 +88,7 @@ class _$AttendanceDomainCopyWithImpl<$Res, $Val extends AttendanceDomain>
                 freezed == fields
                     ? _value.fields
                     : fields // ignore: cast_nullable_to_non_nullable
-                        as AttendanceDomainFields?,
+                        as Fields?,
             createTime:
                 freezed == createTime
                     ? _value.createTime
@@ -108,12 +108,12 @@ class _$AttendanceDomainCopyWithImpl<$Res, $Val extends AttendanceDomain>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $AttendanceDomainFieldsCopyWith<$Res>? get fields {
+  $FieldsCopyWith<$Res>? get fields {
     if (_value.fields == null) {
       return null;
     }
 
-    return $AttendanceDomainFieldsCopyWith<$Res>(_value.fields!, (value) {
+    return $FieldsCopyWith<$Res>(_value.fields!, (value) {
       return _then(_value.copyWith(fields: value) as $Val);
     });
   }
@@ -130,13 +130,13 @@ abstract class _$$AttendanceDomainImplCopyWith<$Res>
   @useResult
   $Res call({
     @JsonKey(name: 'name') String? name,
-    @JsonKey(name: 'fields') AttendanceDomainFields? fields,
+    @JsonKey(name: 'fields') Fields? fields,
     @JsonKey(name: 'createTime') String? createTime,
     @JsonKey(name: 'updateTime') String? updateTime,
   });
 
   @override
-  $AttendanceDomainFieldsCopyWith<$Res>? get fields;
+  $FieldsCopyWith<$Res>? get fields;
 }
 
 /// @nodoc
@@ -169,7 +169,7 @@ class __$$AttendanceDomainImplCopyWithImpl<$Res>
             freezed == fields
                 ? _value.fields
                 : fields // ignore: cast_nullable_to_non_nullable
-                    as AttendanceDomainFields?,
+                    as Fields?,
         createTime:
             freezed == createTime
                 ? _value.createTime
@@ -203,7 +203,7 @@ class _$AttendanceDomainImpl implements _AttendanceDomain {
   final String? name;
   @override
   @JsonKey(name: 'fields')
-  final AttendanceDomainFields? fields;
+  final Fields? fields;
   @override
   @JsonKey(name: 'createTime')
   final String? createTime;
@@ -254,7 +254,7 @@ class _$AttendanceDomainImpl implements _AttendanceDomain {
 abstract class _AttendanceDomain implements AttendanceDomain {
   const factory _AttendanceDomain({
     @JsonKey(name: 'name') final String? name,
-    @JsonKey(name: 'fields') final AttendanceDomainFields? fields,
+    @JsonKey(name: 'fields') final Fields? fields,
     @JsonKey(name: 'createTime') final String? createTime,
     @JsonKey(name: 'updateTime') final String? updateTime,
   }) = _$AttendanceDomainImpl;
@@ -267,7 +267,7 @@ abstract class _AttendanceDomain implements AttendanceDomain {
   String? get name;
   @override
   @JsonKey(name: 'fields')
-  AttendanceDomainFields? get fields;
+  Fields? get fields;
   @override
   @JsonKey(name: 'createTime')
   String? get createTime;
@@ -283,14 +283,12 @@ abstract class _AttendanceDomain implements AttendanceDomain {
       throw _privateConstructorUsedError;
 }
 
-AttendanceDomainFields _$AttendanceDomainFieldsFromJson(
-  Map<String, dynamic> json,
-) {
-  return _AttendanceDomainFields.fromJson(json);
+Fields _$FieldsFromJson(Map<String, dynamic> json) {
+  return _Fields.fromJson(json);
 }
 
 /// @nodoc
-mixin _$AttendanceDomainFields {
+mixin _$Fields {
   @JsonKey(name: 'checkin_time')
   CheckTime? get checkinTime => throw _privateConstructorUsedError;
   @JsonKey(name: 'checkin_location')
@@ -302,22 +300,19 @@ mixin _$AttendanceDomainFields {
   @JsonKey(name: 'checkout_time')
   CheckTime? get checkoutTime => throw _privateConstructorUsedError;
 
-  /// Serializes this AttendanceDomainFields to a JSON map.
+  /// Serializes this Fields to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of AttendanceDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $AttendanceDomainFieldsCopyWith<AttendanceDomainFields> get copyWith =>
-      throw _privateConstructorUsedError;
+  $FieldsCopyWith<Fields> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AttendanceDomainFieldsCopyWith<$Res> {
-  factory $AttendanceDomainFieldsCopyWith(
-    AttendanceDomainFields value,
-    $Res Function(AttendanceDomainFields) then,
-  ) = _$AttendanceDomainFieldsCopyWithImpl<$Res, AttendanceDomainFields>;
+abstract class $FieldsCopyWith<$Res> {
+  factory $FieldsCopyWith(Fields value, $Res Function(Fields) then) =
+      _$FieldsCopyWithImpl<$Res, Fields>;
   @useResult
   $Res call({
     @JsonKey(name: 'checkin_time') CheckTime? checkinTime,
@@ -335,19 +330,16 @@ abstract class $AttendanceDomainFieldsCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AttendanceDomainFieldsCopyWithImpl<
-  $Res,
-  $Val extends AttendanceDomainFields
->
-    implements $AttendanceDomainFieldsCopyWith<$Res> {
-  _$AttendanceDomainFieldsCopyWithImpl(this._value, this._then);
+class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
+    implements $FieldsCopyWith<$Res> {
+  _$FieldsCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of AttendanceDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -390,7 +382,7 @@ class _$AttendanceDomainFieldsCopyWithImpl<
     );
   }
 
-  /// Create a copy of AttendanceDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -404,7 +396,7 @@ class _$AttendanceDomainFieldsCopyWithImpl<
     });
   }
 
-  /// Create a copy of AttendanceDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -418,7 +410,7 @@ class _$AttendanceDomainFieldsCopyWithImpl<
     });
   }
 
-  /// Create a copy of AttendanceDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -432,7 +424,7 @@ class _$AttendanceDomainFieldsCopyWithImpl<
     });
   }
 
-  /// Create a copy of AttendanceDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -446,7 +438,7 @@ class _$AttendanceDomainFieldsCopyWithImpl<
     });
   }
 
-  /// Create a copy of AttendanceDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -462,12 +454,11 @@ class _$AttendanceDomainFieldsCopyWithImpl<
 }
 
 /// @nodoc
-abstract class _$$AttendanceDomainFieldsImplCopyWith<$Res>
-    implements $AttendanceDomainFieldsCopyWith<$Res> {
-  factory _$$AttendanceDomainFieldsImplCopyWith(
-    _$AttendanceDomainFieldsImpl value,
-    $Res Function(_$AttendanceDomainFieldsImpl) then,
-  ) = __$$AttendanceDomainFieldsImplCopyWithImpl<$Res>;
+abstract class _$$FieldsImplCopyWith<$Res> implements $FieldsCopyWith<$Res> {
+  factory _$$FieldsImplCopyWith(
+    _$FieldsImpl value,
+    $Res Function(_$FieldsImpl) then,
+  ) = __$$FieldsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({
@@ -491,16 +482,15 @@ abstract class _$$AttendanceDomainFieldsImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$AttendanceDomainFieldsImplCopyWithImpl<$Res>
-    extends
-        _$AttendanceDomainFieldsCopyWithImpl<$Res, _$AttendanceDomainFieldsImpl>
-    implements _$$AttendanceDomainFieldsImplCopyWith<$Res> {
-  __$$AttendanceDomainFieldsImplCopyWithImpl(
-    _$AttendanceDomainFieldsImpl _value,
-    $Res Function(_$AttendanceDomainFieldsImpl) _then,
+class __$$FieldsImplCopyWithImpl<$Res>
+    extends _$FieldsCopyWithImpl<$Res, _$FieldsImpl>
+    implements _$$FieldsImplCopyWith<$Res> {
+  __$$FieldsImplCopyWithImpl(
+    _$FieldsImpl _value,
+    $Res Function(_$FieldsImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of AttendanceDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -512,7 +502,7 @@ class __$$AttendanceDomainFieldsImplCopyWithImpl<$Res>
     Object? checkoutTime = freezed,
   }) {
     return _then(
-      _$AttendanceDomainFieldsImpl(
+      _$FieldsImpl(
         checkinTime:
             freezed == checkinTime
                 ? _value.checkinTime
@@ -545,8 +535,8 @@ class __$$AttendanceDomainFieldsImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$AttendanceDomainFieldsImpl implements _AttendanceDomainFields {
-  const _$AttendanceDomainFieldsImpl({
+class _$FieldsImpl implements _Fields {
+  const _$FieldsImpl({
     @JsonKey(name: 'checkin_time') this.checkinTime,
     @JsonKey(name: 'checkin_location') this.checkinLocation,
     @JsonKey(name: 'created_by') this.createdBy,
@@ -554,8 +544,8 @@ class _$AttendanceDomainFieldsImpl implements _AttendanceDomainFields {
     @JsonKey(name: 'checkout_time') this.checkoutTime,
   });
 
-  factory _$AttendanceDomainFieldsImpl.fromJson(Map<String, dynamic> json) =>
-      _$$AttendanceDomainFieldsImplFromJson(json);
+  factory _$FieldsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$FieldsImplFromJson(json);
 
   @override
   @JsonKey(name: 'checkin_time')
@@ -575,14 +565,14 @@ class _$AttendanceDomainFieldsImpl implements _AttendanceDomainFields {
 
   @override
   String toString() {
-    return 'AttendanceDomainFields(checkinTime: $checkinTime, checkinLocation: $checkinLocation, createdBy: $createdBy, checkoutLocation: $checkoutLocation, checkoutTime: $checkoutTime)';
+    return 'Fields(checkinTime: $checkinTime, checkinLocation: $checkinLocation, createdBy: $createdBy, checkoutLocation: $checkoutLocation, checkoutTime: $checkoutTime)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AttendanceDomainFieldsImpl &&
+            other is _$FieldsImpl &&
             (identical(other.checkinTime, checkinTime) ||
                 other.checkinTime == checkinTime) &&
             (identical(other.checkinLocation, checkinLocation) ||
@@ -606,35 +596,30 @@ class _$AttendanceDomainFieldsImpl implements _AttendanceDomainFields {
     checkoutTime,
   );
 
-  /// Create a copy of AttendanceDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$AttendanceDomainFieldsImplCopyWith<_$AttendanceDomainFieldsImpl>
-  get copyWith =>
-      __$$AttendanceDomainFieldsImplCopyWithImpl<_$AttendanceDomainFieldsImpl>(
-        this,
-        _$identity,
-      );
+  _$$FieldsImplCopyWith<_$FieldsImpl> get copyWith =>
+      __$$FieldsImplCopyWithImpl<_$FieldsImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$AttendanceDomainFieldsImplToJson(this);
+    return _$$FieldsImplToJson(this);
   }
 }
 
-abstract class _AttendanceDomainFields implements AttendanceDomainFields {
-  const factory _AttendanceDomainFields({
+abstract class _Fields implements Fields {
+  const factory _Fields({
     @JsonKey(name: 'checkin_time') final CheckTime? checkinTime,
     @JsonKey(name: 'checkin_location') final CheckLocation? checkinLocation,
     @JsonKey(name: 'created_by') final CreatedBy? createdBy,
     @JsonKey(name: 'checkout_location') final CheckLocation? checkoutLocation,
     @JsonKey(name: 'checkout_time') final CheckTime? checkoutTime,
-  }) = _$AttendanceDomainFieldsImpl;
+  }) = _$FieldsImpl;
 
-  factory _AttendanceDomainFields.fromJson(Map<String, dynamic> json) =
-      _$AttendanceDomainFieldsImpl.fromJson;
+  factory _Fields.fromJson(Map<String, dynamic> json) = _$FieldsImpl.fromJson;
 
   @override
   @JsonKey(name: 'checkin_time')
@@ -652,12 +637,12 @@ abstract class _AttendanceDomainFields implements AttendanceDomainFields {
   @JsonKey(name: 'checkout_time')
   CheckTime? get checkoutTime;
 
-  /// Create a copy of AttendanceDomainFields
+  /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$AttendanceDomainFieldsImplCopyWith<_$AttendanceDomainFieldsImpl>
-  get copyWith => throw _privateConstructorUsedError;
+  _$$FieldsImplCopyWith<_$FieldsImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 CheckLocation _$CheckLocationFromJson(Map<String, dynamic> json) {

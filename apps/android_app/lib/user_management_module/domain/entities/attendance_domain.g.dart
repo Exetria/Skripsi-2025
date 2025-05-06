@@ -13,9 +13,7 @@ _$AttendanceDomainImpl _$$AttendanceDomainImplFromJson(
   fields:
       json['fields'] == null
           ? null
-          : AttendanceDomainFields.fromJson(
-            json['fields'] as Map<String, dynamic>,
-          ),
+          : Fields.fromJson(json['fields'] as Map<String, dynamic>),
   createTime: json['createTime'] as String?,
   updateTime: json['updateTime'] as String?,
 );
@@ -29,9 +27,7 @@ Map<String, dynamic> _$$AttendanceDomainImplToJson(
   'updateTime': instance.updateTime,
 };
 
-_$AttendanceDomainFieldsImpl _$$AttendanceDomainFieldsImplFromJson(
-  Map<String, dynamic> json,
-) => _$AttendanceDomainFieldsImpl(
+_$FieldsImpl _$$FieldsImplFromJson(Map<String, dynamic> json) => _$FieldsImpl(
   checkinTime:
       json['checkin_time'] == null
           ? null
@@ -58,15 +54,14 @@ _$AttendanceDomainFieldsImpl _$$AttendanceDomainFieldsImplFromJson(
           : CheckTime.fromJson(json['checkout_time'] as Map<String, dynamic>),
 );
 
-Map<String, dynamic> _$$AttendanceDomainFieldsImplToJson(
-  _$AttendanceDomainFieldsImpl instance,
-) => <String, dynamic>{
-  'checkin_time': instance.checkinTime,
-  'checkin_location': instance.checkinLocation,
-  'created_by': instance.createdBy,
-  'checkout_location': instance.checkoutLocation,
-  'checkout_time': instance.checkoutTime,
-};
+Map<String, dynamic> _$$FieldsImplToJson(_$FieldsImpl instance) =>
+    <String, dynamic>{
+      'checkin_time': instance.checkinTime,
+      'checkin_location': instance.checkinLocation,
+      'created_by': instance.createdBy,
+      'checkout_location': instance.checkoutLocation,
+      'checkout_time': instance.checkoutTime,
+    };
 
 _$CheckLocationImpl _$$CheckLocationImplFromJson(Map<String, dynamic> json) =>
     _$CheckLocationImpl(
