@@ -10,7 +10,7 @@ class GetAttendanceDataRemoteDatasourceImpl
     implements GetAttendanceDataRemoteDatasource {
   @override
   Future<AttendanceDomain> getAttendanceData() async {
-    final documentId = generateDocumentId();
+    final documentId = _generateDocumentId();
 
     Map<String, dynamic> result = await apiCallGet(
       url:
@@ -21,10 +21,12 @@ class GetAttendanceDataRemoteDatasourceImpl
       },
     );
 
+    print('asds result api $result');
+
     return AttendanceDomain.fromJson(result);
   }
 
-  String generateDocumentId() {
+  String _generateDocumentId() {
     final currentTime = DateTime.now();
     final formattedDate =
         '${currentTime.day.toString().padLeft(2, '0')}${currentTime.month.toString().padLeft(2, '0')}${currentTime.year}';

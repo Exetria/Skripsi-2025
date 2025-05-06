@@ -19,7 +19,7 @@ class UpdateAttendanceDataRemoteDatasourceImpl
   @override
   Future<AttendanceDomain> checkIn() async {
     final currentPosition = await getCurrentPosition();
-    final documentId = generateDocumentId();
+    final documentId = _generateDocumentId();
 
     Map<String, dynamic> result = await apiCallPatch(
       url:
@@ -68,7 +68,7 @@ class UpdateAttendanceDataRemoteDatasourceImpl
     required double checkinAccuracy,
   }) async {
     final currentPosition = await getCurrentPosition();
-    final documentId = generateDocumentId();
+    final documentId = _generateDocumentId();
 
     Map<String, dynamic> result = await apiCallPatch(
       url:
@@ -109,7 +109,7 @@ class UpdateAttendanceDataRemoteDatasourceImpl
     return AttendanceDomain.fromJson(result);
   }
 
-  String generateDocumentId() {
+  String _generateDocumentId() {
     final currentTime = DateTime.now();
     final formattedDate =
         '${currentTime.day.toString().padLeft(2, '0')}${currentTime.month.toString().padLeft(2, '0')}${currentTime.year}';
