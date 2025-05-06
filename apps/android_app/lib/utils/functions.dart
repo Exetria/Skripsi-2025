@@ -67,7 +67,7 @@ PreferredSizeWidget customAppBar({
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(title, style: subtitleStyle),
+                Text(title, style: sectionTitleStyle),
                 if (subtitle != null) Text(subtitle, style: captionStyle),
               ],
             ),
@@ -270,6 +270,109 @@ void showFormDialog({
   );
 }
 
+// BUILD INFO CARD
+Widget buildInfoCard({
+  required String title,
+  String? imageurl,
+  required List<String> values,
+  required List<IconData> icons,
+}) {
+  if (values.length != icons.length) {
+    return const Center(child: Text('Uneven List Length'));
+  }
+
+  List<Widget> cardAttribute = [];
+  for (int i = 0; i < values.length; i++) {
+    final val = values[i];
+    final icon = icons[i];
+
+    // Add row
+    cardAttribute.add(
+      Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(icon, size: 20.sp, color: primaryColor),
+          SizedBox(width: 8.w),
+          Expanded(child: Text(val, style: bodyStyle)),
+        ],
+      ),
+    );
+
+    // Don't add spacer if it's the last item
+    if (i != values.length - 1) {
+      cardAttribute.add(SizedBox(height: 8.h));
+    }
+  }
+
+  return Container(
+    width: double.infinity,
+    padding: EdgeInsets.all(16.r),
+    decoration: BoxDecoration(
+      color: fillColor,
+      borderRadius: BorderRadius.circular(12.r),
+      border: Border.all(color: dividerColor),
+      boxShadow: [
+        BoxShadow(color: dividerColor, blurRadius: 8, offset: Offset(0, 6.h)),
+      ],
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Image
+        imageurl != null && imageurl != ''
+            ? Center(
+              child: SizedBox(
+                height: 170.h,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16.r),
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Image.network(
+                      imageurl,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                      errorBuilder:
+                          (_, __, ___) => Container(
+                            color: dividerColor,
+                            child: Icon(
+                              Icons.error,
+                              color: errorColor,
+                              size: 40.sp,
+                            ),
+                          ),
+                      loadingBuilder: (_, child, progress) {
+                        if (progress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value:
+                                progress.expectedTotalBytes != null
+                                    ? progress.cumulativeBytesLoaded /
+                                        progress.expectedTotalBytes!
+                                    : null,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            )
+            : const SizedBox.shrink(),
+        imageurl != null && imageurl != ''
+            ? SizedBox(height: 8.h)
+            : const SizedBox.shrink(),
+
+        // Title
+        Text(title, style: subtitleStyle),
+        SizedBox(height: 8.h),
+
+        ...cardAttribute,
+      ],
+    ),
+  );
+}
+
 // GET CURRENT POSITION
 Future<Position> getCurrentPosition() async {
   bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -299,11 +402,19 @@ Future<Position> getCurrentPosition() async {
   }
 
   return await Geolocator.getCurrentPosition(
-    // High accuracy settings
-    // 10m offset
     locationSettings: const LocationSettings(
-      accuracy: LocationAccuracy.high,
-      distanceFilter: 10,
+      accuracy: LocationAccuracy.bestForNavigation,
+      distanceFilter: 0,
     ),
   );
+}
+
+// PARSE PRODUCT VARIANT ATTRIBUTE
+Map<String, String> parseVariantAttributes(Map<String, dynamic> attributesMap) {
+  final fields = attributesMap['fields'] as Map<String, dynamic>? ?? {};
+  return {
+    for (final entry in fields.entries)
+      if (entry.value['stringValue'] != null)
+        entry.key: entry.value['stringValue'] as String,
+  };
 }
