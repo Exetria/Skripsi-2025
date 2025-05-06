@@ -2,6 +2,7 @@ import 'package:android_app/user_management_module/domain/entities/attendance_do
 import 'package:android_app/user_management_module/page/controller/get_attendance_data_controller.dart';
 import 'package:android_app/user_management_module/page/controller/update_attendance_controller.dart';
 import 'package:android_app/user_management_module/page/login_page.dart';
+import 'package:android_app/utils/theme_controller.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -82,6 +83,16 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
 
           const Spacer(),
 
+          SwitchListTile(
+            title: const Text('Dark Mode'),
+            value: ref.watch(themeModeProvider) == ThemeMode.dark,
+            onChanged: (val) {
+              ref.read(themeModeProvider.notifier).state =
+                  val ? ThemeMode.dark : ThemeMode.light;
+            },
+          ),
+          SizedBox(height: 24.h),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -90,117 +101,19 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                 width: 140.w,
                 child: attendanceDataState.when(
                   loading: () {
-                    print('asds loading');
                     return buildLoadingCheckInOutButton();
                   },
                   data: (data) {
-                    print('asds data');
-
-                    if ((data?.fields?.checkinTime?.timestampValue != null &&
-                            data
-                                    ?.fields
-                                    ?.checkinTime
-                                    ?.timestampValue
-                                    ?.isNotEmpty ==
-                                true &&
-                            data
-                                    ?.fields
-                                    ?.checkinLocation
-                                    ?.mapValue
-                                    ?.fields
-                                    ?.latitude
-                                    ?.doubleValue !=
-                                null &&
-                            data
-                                    ?.fields
-                                    ?.checkinLocation
-                                    ?.mapValue
-                                    ?.fields
-                                    ?.longitude
-                                    ?.doubleValue !=
-                                null &&
-                            data
-                                    ?.fields
-                                    ?.checkinLocation
-                                    ?.mapValue
-                                    ?.fields
-                                    ?.accuracy
-                                    ?.doubleValue !=
-                                null) &&
-                        (data?.fields?.checkoutTime?.timestampValue != null &&
-                            data
-                                    ?.fields
-                                    ?.checkoutTime
-                                    ?.timestampValue
-                                    ?.isNotEmpty ==
-                                true &&
-                            data
-                                    ?.fields
-                                    ?.checkoutLocation
-                                    ?.mapValue
-                                    ?.fields
-                                    ?.latitude
-                                    ?.doubleValue !=
-                                null &&
-                            data
-                                    ?.fields
-                                    ?.checkoutLocation
-                                    ?.mapValue
-                                    ?.fields
-                                    ?.longitude
-                                    ?.doubleValue !=
-                                null &&
-                            data
-                                    ?.fields
-                                    ?.checkoutLocation
-                                    ?.mapValue
-                                    ?.fields
-                                    ?.accuracy
-                                    ?.doubleValue !=
-                                null)) {
-                      print('asds checked in and out');
+                    if (isCheckedIn(data) && isCheckedOut(data)) {
                       return buildCheckedCheckInOutButton();
-                    } else if (data?.fields?.checkinTime?.timestampValue !=
-                            null &&
-                        data?.fields?.checkinTime?.timestampValue?.isNotEmpty ==
-                            true &&
-                        data
-                                ?.fields
-                                ?.checkinLocation
-                                ?.mapValue
-                                ?.fields
-                                ?.latitude
-                                ?.doubleValue !=
-                            null &&
-                        data
-                                ?.fields
-                                ?.checkinLocation
-                                ?.mapValue
-                                ?.fields
-                                ?.longitude
-                                ?.doubleValue !=
-                            null &&
-                        data
-                                ?.fields
-                                ?.checkinLocation
-                                ?.mapValue
-                                ?.fields
-                                ?.accuracy
-                                ?.doubleValue !=
-                            null) {
-                      print('asds checked in');
-
+                    } else if (isCheckedOut(data)) {
                       return buildCheckOutButton(data);
                     } else {
-                      print('asds not checked');
-
                       return buildCheckInButton();
                     }
                   },
                   error: (error, stackTrace) {
-                    print('asds error');
                     final exception = error as ApiException;
-
                     if (exception.statusCode == 404) {
                       return buildCheckInButton();
                     } else {
@@ -454,5 +367,63 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
     setState(() {
       logOutButtonEnable = true;
     });
+  }
+
+  bool isCheckedIn(AttendanceDomain? data) {
+    return (data?.fields?.checkinTime?.timestampValue != null &&
+        data?.fields?.checkinTime?.timestampValue?.isNotEmpty == true &&
+        data
+                ?.fields
+                ?.checkinLocation
+                ?.mapValue
+                ?.fields
+                ?.latitude
+                ?.doubleValue !=
+            null &&
+        data
+                ?.fields
+                ?.checkinLocation
+                ?.mapValue
+                ?.fields
+                ?.longitude
+                ?.doubleValue !=
+            null &&
+        data
+                ?.fields
+                ?.checkinLocation
+                ?.mapValue
+                ?.fields
+                ?.accuracy
+                ?.doubleValue !=
+            null);
+  }
+
+  bool isCheckedOut(AttendanceDomain? data) {
+    return (data?.fields?.checkoutTime?.timestampValue != null &&
+        data?.fields?.checkoutTime?.timestampValue?.isNotEmpty == true &&
+        data
+                ?.fields
+                ?.checkoutLocation
+                ?.mapValue
+                ?.fields
+                ?.latitude
+                ?.doubleValue !=
+            null &&
+        data
+                ?.fields
+                ?.checkoutLocation
+                ?.mapValue
+                ?.fields
+                ?.longitude
+                ?.doubleValue !=
+            null &&
+        data
+                ?.fields
+                ?.checkoutLocation
+                ?.mapValue
+                ?.fields
+                ?.accuracy
+                ?.doubleValue !=
+            null);
   }
 }
