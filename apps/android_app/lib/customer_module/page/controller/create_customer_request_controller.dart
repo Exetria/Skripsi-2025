@@ -26,6 +26,7 @@ class CreateCustomerRequestController
     required String company_name,
     required String company_address,
     required String company_phone_number,
+    required String company_tax_id,
     required String company_email,
     required String company_store_condition,
 
@@ -38,7 +39,6 @@ class CreateCustomerRequestController
 
     required String note,
   }) async {
-    print('asds masuk fx');
     final repository = ref.watch(CreateCustomerRequestRepositoryProvider);
 
     state = const AsyncLoading();
@@ -55,6 +55,7 @@ class CreateCustomerRequestController
       company_name: company_name,
       company_address: company_address,
       company_phone_number: company_phone_number,
+      company_tax_id: company_tax_id,
       company_email: company_email,
       company_store_condition: company_store_condition,
 

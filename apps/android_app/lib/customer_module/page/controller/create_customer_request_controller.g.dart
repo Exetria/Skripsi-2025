@@ -7,7 +7,7 @@ part of 'create_customer_request_controller.dart';
 // **************************************************************************
 
 String _$createCustomerRequestControllerHash() =>
-    r'00f47554074b69efe8a9668893f1f95cf7484a71';
+    r'1faad16ca85e8b3c603fb5a5b038366c74fa0ce2';
 
 /// See also [CreateCustomerRequestController].
 @ProviderFor(CreateCustomerRequestController)

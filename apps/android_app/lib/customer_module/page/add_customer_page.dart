@@ -33,6 +33,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
     final companyName = useTextEditingController();
     final companyAddress = useTextEditingController();
     final companyPhone = useTextEditingController();
+    final companyTaxId = useTextEditingController();
     final companyEmail = useTextEditingController();
     final storeCondition = useTextEditingController();
     final ownerName = useTextEditingController();
@@ -78,6 +79,10 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                             final companyAddressFilled =
                                 companyAddress.text != '';
                             final companyPhoneFilled = companyPhone.text != '';
+                            final companyTaxIdFilled =
+                                _customerType == 'PKP'
+                                    ? true
+                                    : (companyTaxId.text != '');
                             final companyEmailFilled = companyEmail.text != '';
                             final storeConditionFilled =
                                 storeCondition.text != '';
@@ -105,6 +110,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                                 companyNameFilled &&
                                 companyAddressFilled &&
                                 companyPhoneFilled &&
+                                companyTaxIdFilled &&
                                 companyEmailFilled &&
                                 storeConditionFilled &&
                                 ownerNameFilled &&
@@ -132,6 +138,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                                     company_name: companyName.text,
                                     company_address: companyAddress.text,
                                     company_phone_number: companyPhone.text,
+                                    company_tax_id: companyTaxId.text,
                                     company_email: companyEmail.text,
                                     company_store_condition:
                                         storeCondition.text,
@@ -148,7 +155,6 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
 
                               // If submit success
                               if (state is AsyncData) {
-                                print('asds sukses coy');
                                 // Clear all form data
                                 _storePhoto = null;
                                 _ktpPhoto = null;
@@ -173,8 +179,6 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                                 ownershipStatus.text = '';
                                 note.text = '';
 
-                                final result = state.value;
-
                                 showFeedbackDialog(
                                   context: context,
                                   type: 1,
@@ -194,7 +198,6 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                                 final apiException =
                                     state.error as ApiException;
 
-                                print('asds ${apiException.responseBody}');
                                 showFeedbackDialog(
                                   context: context,
                                   type: 3,
@@ -472,6 +475,17 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                     controller: companyPhone,
                     label: 'Company Phone Number',
                     validator: (value) {
+                      return (value != null && value != '')
+                          ? null
+                          : 'Required Field';
+                    },
+                  ),
+                  _buildInputRow(
+                    controller: companyTaxId,
+                    label: 'Company Tax ID',
+                    enabled: _customerType == '' || _customerType == 'Non PKP',
+                    validator: (value) {
+                      if (_customerType == 'PKP') return null;
                       return (value != null && value != '')
                           ? null
                           : 'Required Field';

@@ -25,6 +25,7 @@ abstract class CustomerRepository {
     required String company_name,
     required String company_address,
     required String company_phone_number,
+    required String company_tax_id,
     required String company_email,
     required String company_store_condition,
 

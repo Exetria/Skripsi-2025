@@ -34,6 +34,7 @@ class CreateCustomerRequestRepositoryImpl implements CustomerRepository {
     required String company_name,
     required String company_address,
     required String company_phone_number,
+    required String company_tax_id,
     required String company_email,
     required String company_store_condition,
 
@@ -59,6 +60,7 @@ class CreateCustomerRequestRepositoryImpl implements CustomerRepository {
         company_name: company_name,
         company_address: company_address,
         company_phone_number: company_phone_number,
+        company_tax_id: company_tax_id,
         company_email: company_email,
         company_store_condition: company_store_condition,
 

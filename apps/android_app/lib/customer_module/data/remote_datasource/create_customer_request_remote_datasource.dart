@@ -21,6 +21,7 @@ abstract class CreateCustomerRequestDatasource {
     required String company_name,
     required String company_address,
     required String company_phone_number,
+    required String company_tax_id,
     required String company_email,
     required String company_store_condition,
 
@@ -50,6 +51,7 @@ class CreateCustomerRequestDatasourceImpl
     required String company_name,
     required String company_address,
     required String company_phone_number,
+    required String company_tax_id,
     required String company_email,
     required String company_store_condition,
 
@@ -112,7 +114,6 @@ class CreateCustomerRequestDatasourceImpl
         'fields': {
           'company_store_photo': {'stringValue': storePhotoLink},
           'owner_national_id_photo': {'stringValue': ktpPhotoLink},
-          // TODO: Change field name to submit_location
           'company_location': {
             'mapValue': {
               'fields': {
@@ -132,6 +133,7 @@ class CreateCustomerRequestDatasourceImpl
           'company_name': {'stringValue': company_name},
           'company_address': {'stringValue': company_address},
           'company_phone_number': {'stringValue': company_phone_number},
+          'company_tax_id': {'stringValue': company_tax_id},
           'company_email': {'stringValue': company_email},
           'company_store_condition': {'stringValue': company_store_condition},
 
