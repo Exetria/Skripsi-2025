@@ -25,11 +25,7 @@ class ProductListRemoteDatasourceImpl implements ProductListRemoteDatasource {
       // Add ProductDomain to result
       ProductDomain instance = ProductDomain.fromJson(result);
 
-      // Filter if product is inactive
-      bool available = instance.fields?.available?.booleanValue ?? true;
-      if (available) {
-        productsList.add(instance);
-      }
+      productsList.add(instance);
     }
 
     return productsList;

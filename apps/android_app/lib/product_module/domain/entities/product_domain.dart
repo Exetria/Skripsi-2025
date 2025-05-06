@@ -7,7 +7,7 @@ part 'product_domain.g.dart';
 class ProductDomain with _$ProductDomain {
   const factory ProductDomain({
     @JsonKey(name: 'name') String? name,
-    @JsonKey(name: 'fields') Fields? fields,
+    @JsonKey(name: 'fields') ProductDomainFields? fields,
     @JsonKey(name: 'createTime') String? createTime,
     @JsonKey(name: 'updateTime') String? updateTime,
   }) = _ProductDomain;
@@ -17,23 +17,18 @@ class ProductDomain with _$ProductDomain {
 }
 
 @freezed
-class Fields with _$Fields {
-  const factory Fields({
-    @JsonKey(name: 'product_images') ProductImages? productImages,
-    @JsonKey(name: 'product_name') AddedBy? productName,
-    @JsonKey(name: 'category') AddedBy? category,
-    @JsonKey(name: 'available') Available? available,
-    @JsonKey(name: 'description') AddedBy? description,
-    @JsonKey(name: 'sizes') Sizes? sizes,
-    @JsonKey(name: 'price') MinimumOrder? price,
-    @JsonKey(name: 'minimum_order') MinimumOrder? minimumOrder,
-    @JsonKey(name: 'unit') AddedBy? unit,
-    @JsonKey(name: 'quantity_per_box') MinimumOrder? quantityPerBox,
-    @JsonKey(name: 'added_by') AddedBy? addedBy,
+class ProductDomainFields with _$ProductDomainFields {
+  const factory ProductDomainFields({
     @JsonKey(name: 'brand') AddedBy? brand,
-  }) = _Fields;
+    @JsonKey(name: 'product_name') AddedBy? productName,
+    @JsonKey(name: 'company_code') AddedBy? companyCode,
+    @JsonKey(name: 'description') AddedBy? description,
+    @JsonKey(name: 'added_by') AddedBy? addedBy,
+    @JsonKey(name: 'variants') Variants? variants,
+  }) = _ProductDomainFields;
 
-  factory Fields.fromJson(Map<String, dynamic> json) => _$FieldsFromJson(json);
+  factory ProductDomainFields.fromJson(Map<String, dynamic> json) =>
+      _$ProductDomainFieldsFromJson(json);
 }
 
 @freezed
@@ -46,6 +41,68 @@ class AddedBy with _$AddedBy {
 }
 
 @freezed
+class Variants with _$Variants {
+  const factory Variants({
+    @JsonKey(name: 'arrayValue') ArrayValue? arrayValue,
+  }) = _Variants;
+
+  factory Variants.fromJson(Map<String, dynamic> json) =>
+      _$VariantsFromJson(json);
+}
+
+@freezed
+class ArrayValue with _$ArrayValue {
+  const factory ArrayValue({@JsonKey(name: 'values') List<Value>? values}) =
+      _ArrayValue;
+
+  factory ArrayValue.fromJson(Map<String, dynamic> json) =>
+      _$ArrayValueFromJson(json);
+}
+
+@freezed
+class Value with _$Value {
+  const factory Value({@JsonKey(name: 'mapValue') ValueMapValue? mapValue}) =
+      _Value;
+
+  factory Value.fromJson(Map<String, dynamic> json) => _$ValueFromJson(json);
+}
+
+@freezed
+class ValueMapValue with _$ValueMapValue {
+  const factory ValueMapValue({@JsonKey(name: 'fields') PurpleFields? fields}) =
+      _ValueMapValue;
+
+  factory ValueMapValue.fromJson(Map<String, dynamic> json) =>
+      _$ValueMapValueFromJson(json);
+}
+
+@freezed
+class PurpleFields with _$PurpleFields {
+  const factory PurpleFields({
+    @JsonKey(name: 'price') Price? price,
+    @JsonKey(name: 'attributes') Attributes? attributes,
+    @JsonKey(name: 'variant_image') Image? variantImage,
+    @JsonKey(name: 'variant_name') AddedBy? variantName,
+    @JsonKey(name: 'units_per_package') Price? unitsPerPackage,
+    @JsonKey(name: 'available') Available? available,
+    @JsonKey(name: 'image') Image? image,
+  }) = _PurpleFields;
+
+  factory PurpleFields.fromJson(Map<String, dynamic> json) =>
+      _$PurpleFieldsFromJson(json);
+}
+
+@freezed
+class Attributes with _$Attributes {
+  const factory Attributes({
+    @JsonKey(name: 'mapValue') Map<String, dynamic>? mapValue,
+  }) = _Attributes;
+
+  factory Attributes.fromJson(Map<String, dynamic> json) =>
+      _$AttributesFromJson(json);
+}
+
+@freezed
 class Available with _$Available {
   const factory Available({@JsonKey(name: 'booleanValue') bool? booleanValue}) =
       _Available;
@@ -55,58 +112,17 @@ class Available with _$Available {
 }
 
 @freezed
-class MinimumOrder with _$MinimumOrder {
-  const factory MinimumOrder({
-    @JsonKey(name: 'integerValue') String? integerValue,
-  }) = _MinimumOrder;
+class Image with _$Image {
+  const factory Image({@JsonKey(name: 'stringValue') String? stringValue}) =
+      _Image;
 
-  factory MinimumOrder.fromJson(Map<String, dynamic> json) =>
-      _$MinimumOrderFromJson(json);
+  factory Image.fromJson(Map<String, dynamic> json) => _$ImageFromJson(json);
 }
 
 @freezed
-class ProductImages with _$ProductImages {
-  const factory ProductImages({
-    @JsonKey(name: 'arrayValue') ProductImagesArrayValue? arrayValue,
-  }) = _ProductImages;
+class Price with _$Price {
+  const factory Price({@JsonKey(name: 'integerValue') String? integerValue}) =
+      _Price;
 
-  factory ProductImages.fromJson(Map<String, dynamic> json) =>
-      _$ProductImagesFromJson(json);
-}
-
-@freezed
-class ProductImagesArrayValue with _$ProductImagesArrayValue {
-  const factory ProductImagesArrayValue({
-    @JsonKey(name: 'values') List<Value>? values,
-  }) = _ProductImagesArrayValue;
-
-  factory ProductImagesArrayValue.fromJson(Map<String, dynamic> json) =>
-      _$ProductImagesArrayValueFromJson(json);
-}
-
-@freezed
-class Value with _$Value {
-  const factory Value({@JsonKey(name: 'stringValue') String? stringValue}) =
-      _Value;
-
-  factory Value.fromJson(Map<String, dynamic> json) => _$ValueFromJson(json);
-}
-
-@freezed
-class Sizes with _$Sizes {
-  const factory Sizes({
-    @JsonKey(name: 'arrayValue') SizesArrayValue? arrayValue,
-  }) = _Sizes;
-
-  factory Sizes.fromJson(Map<String, dynamic> json) => _$SizesFromJson(json);
-}
-
-@freezed
-class SizesArrayValue with _$SizesArrayValue {
-  const factory SizesArrayValue({
-    @JsonKey(name: 'values') List<AddedBy>? values,
-  }) = _SizesArrayValue;
-
-  factory SizesArrayValue.fromJson(Map<String, dynamic> json) =>
-      _$SizesArrayValueFromJson(json);
+  factory Price.fromJson(Map<String, dynamic> json) => _$PriceFromJson(json);
 }
