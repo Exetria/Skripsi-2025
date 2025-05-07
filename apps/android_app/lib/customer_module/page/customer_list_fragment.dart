@@ -34,13 +34,14 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
 
               data: (customerList) {
                 if (customerList == null || customerList.isEmpty) {
-                  return const Center(child: Text('No Customer Data Found'));
+                  return refreshableInfoWidget(
+                    refreshFunction: _refreshCustomerList,
+                    content: const Text('No Customer Data Found'),
+                  );
                 }
 
                 return RefreshIndicator(
-                  onRefresh: () async {
-                    ref.invalidate(customerListControllerProvider);
-                  },
+                  onRefresh: _refreshCustomerList,
                   child: ListView.separated(
                     itemCount: customerList.length,
                     separatorBuilder:
@@ -71,8 +72,9 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
               error: (error, _) {
                 final exception = error as ApiException;
 
-                return Center(
-                  child: Text(
+                return refreshableInfoWidget(
+                  refreshFunction: _refreshCustomerList,
+                  content: Text(
                     'Error Loading Customer List: ${exception.message}',
                     style: errorStyle,
                   ),
@@ -83,5 +85,9 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
         ],
       ),
     );
+  }
+
+  Future<void> _refreshCustomerList() async {
+    ref.invalidate(customerListControllerProvider);
   }
 }

@@ -68,7 +68,7 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
             SizedBox(height: 24.h),
 
             // Info Card with name inside
-            buildInfoCard(
+            infoCard(
               title: 'Company Data',
               values: [
                 widget.data.fields?.companyName?.stringValue ?? '-',
@@ -85,7 +85,7 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
             ),
             SizedBox(height: 24.h),
 
-            buildInfoCard(
+            infoCard(
               title: 'Owner Data',
               values: [
                 widget.data.fields?.ownerName?.stringValue ?? '-',
@@ -97,7 +97,7 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
             ),
             SizedBox(height: 24.h),
 
-            buildInfoCard(
+            infoCard(
               title: 'Other Data',
               values: [
                 widget.data.fields?.customerType?.stringValue ?? '-',

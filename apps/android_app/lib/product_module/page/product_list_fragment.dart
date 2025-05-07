@@ -33,13 +33,14 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
               loading: () => const Center(child: CircularProgressIndicator()),
               data: (productList) {
                 if (productList == null || productList.isEmpty) {
-                  return const Center(child: Text('No Product Data Found'));
+                  return refreshableInfoWidget(
+                    refreshFunction: _refreshProductList,
+                    content: const Text('No Product Data Found'),
+                  );
                 }
 
                 return RefreshIndicator(
-                  onRefresh: () async {
-                    ref.invalidate(productListControllerProvider);
-                  },
+                  onRefresh: _refreshProductList,
                   child: ListView.separated(
                     itemCount: productList.length,
                     separatorBuilder:
@@ -69,8 +70,9 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
               error: (error, _) {
                 final exception = error as ApiException;
 
-                return Center(
-                  child: Text(
+                return refreshableInfoWidget(
+                  refreshFunction: _refreshProductList,
+                  content: Text(
                     'Error Loading Product List: ${exception.message}',
                     style: errorStyle,
                   ),
@@ -81,5 +83,9 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
         ],
       ),
     );
+  }
+
+  Future<void> _refreshProductList() async {
+    ref.invalidate(productListControllerProvider);
   }
 }

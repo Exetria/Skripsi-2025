@@ -273,8 +273,8 @@ void showFormDialog({
   );
 }
 
-// BUILD INFO CARD
-Widget buildInfoCard({
+// INFO CARD
+Widget infoCard({
   required String title,
   String? imageurl,
   required List<String> values,
@@ -372,6 +372,27 @@ Widget buildInfoCard({
 
         ...cardAttribute,
       ],
+    ),
+  );
+}
+
+// SCROLLABLE INFO TEXT
+Widget refreshableInfoWidget({
+  required Future<void> Function() refreshFunction,
+  required Widget content,
+}) {
+  return RefreshIndicator(
+    onRefresh: refreshFunction,
+    child: LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: Center(child: content),
+          ),
+        );
+      },
     ),
   );
 }

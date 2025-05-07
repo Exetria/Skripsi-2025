@@ -131,7 +131,7 @@ class _ProductDetailPage extends ConsumerState<ProductDetailPage> {
       });
 
       result.add(
-        buildInfoCard(
+        infoCard(
           title: variant.mapValue?.fields?.variantName?.stringValue ?? '-',
           imageurl: variant.mapValue?.fields?.variantImage?.stringValue ?? '',
           values: cardValues,

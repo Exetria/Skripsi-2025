@@ -15,6 +15,7 @@ class ProductListController extends _$ProductListController {
       (l) => AsyncError(l, StackTrace.empty),
       (r) => AsyncData(r),
     );
+
     return state.value;
   }
 }
