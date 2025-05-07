@@ -27,12 +27,12 @@ final Color darkModeTertiaryColor = const Color.fromRGBO(0, 105, 92, 1);
 final Color darkModeFillColor = const Color.fromRGBO(48, 48, 48, 1);
 final Color darkModeAccentColor = const Color.fromRGBO(0, 200, 180, 1);
 final Color darkModeBackgroundColor = const Color.fromRGBO(18, 18, 18, 1);
-final Color darkModeTextColor = const Color.fromRGBO(245, 245, 245, 1);
+final Color darkModeTextColor = const Color.fromRGBO(210, 210, 210, 1);
 final Color darkModeInvertedTextColor = const Color.fromRGBO(33, 33, 33, 1);
 final Color darkModeSuccessColor = const Color.fromRGBO(129, 199, 132, 1);
 final Color darkModeWarningColor = const Color.fromRGBO(255, 183, 77, 1);
 final Color darkModeErrorColor = const Color.fromRGBO(239, 83, 80, 1);
-final Color darkModeDividerColor = const Color.fromRGBO(97, 97, 97, 1);
+final Color darkModeDividerColor = const Color.fromRGBO(30, 30, 30, 1);
 final Color darkModeSelectedItemColor = darkModePrimaryColor;
 final Color darkModeUnselectedItemColor = darkModeTextColor.withAlpha(150);
 final Color darkModeTransparentColor = Colors.transparent;
@@ -41,37 +41,22 @@ final Color darkModeTransparentColor = Colors.transparent;
 final TextStyle titleStyle = TextStyle(
   fontSize: Platform.isWindows ? 24 : 24.sp,
   fontWeight: FontWeight.bold,
-  color: textColor,
 );
 final TextStyle sectionTitleStyle = TextStyle(
   fontSize: Platform.isWindows ? 20 : 20.sp,
   fontWeight: FontWeight.bold,
-  color: textColor,
 );
 final TextStyle subtitleStyle = TextStyle(
   fontSize: Platform.isWindows ? 18 : 18.sp,
   fontWeight: FontWeight.w600,
-  color: textColor,
 );
 final TextStyle bodyStyle = TextStyle(
   fontSize: Platform.isWindows ? 16 : 16.sp,
   fontWeight: FontWeight.normal,
-  color: textColor,
 );
 final TextStyle captionStyle = TextStyle(
   fontSize: Platform.isWindows ? 14 : 14.sp,
   fontWeight: FontWeight.w400,
-  color: textColor.withAlpha(178),
-);
-final TextStyle footnoteStyle = TextStyle(
-  fontSize: Platform.isWindows ? 12 : 12.sp,
-  fontWeight: FontWeight.w400,
-  color: textColor.withAlpha(160),
-);
-final TextStyle helperStyle = TextStyle(
-  fontSize: Platform.isWindows ? 10 : 10.sp,
-  fontWeight: FontWeight.w400,
-  color: textColor.withAlpha(140),
 );
 
 // MISC. TEXT STYLES
