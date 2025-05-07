@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:android_app/utils/functions.dart';
+import 'package:android_app/visit_module/domain/entities/visit_domain.dart';
 import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,7 +9,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
 class VisitDetailPage extends StatefulHookConsumerWidget {
-  const VisitDetailPage({super.key});
+  final Value data;
+
+  const VisitDetailPage({super.key, required this.data});
 
   @override
   ConsumerState<VisitDetailPage> createState() => _VisitDetailPage();

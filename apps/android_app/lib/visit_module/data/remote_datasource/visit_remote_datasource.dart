@@ -1,17 +1,32 @@
-// import 'package:common_components/common_components.dart';
+import 'package:android_app/visit_module/domain/entities/visit_domain.dart';
+import 'package:common_components/common_components.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-// abstract class ModuleNameRemoteDatasource {
-//   Future<List<DomainName>> fx();
-// }
+abstract class GetVisitDataRemoteDatasource {
+  Future<VisitDomain> getVisitData({required DateTime date});
+}
 
-// class ModuleNameRemoteDatasourceImpl implements ModuleNameRemoteDatasource {
-//   @override
-//   Future<List<DomainName>> fx() async {
-//     Map<String, dynamic> result = await apiCallGet('link');
+class GetVisitDataRemoteDatasourceImpl implements GetVisitDataRemoteDatasource {
+  @override
+  Future<VisitDomain> getVisitData({required DateTime date}) async {
+    final documentId = _generateDocumentIdFromDate(date);
 
-//     final documents = (result['documents'] as List<dynamic>? ?? []);
-//     return documents
-//         .map((e) => DomainName.fromJson(e as Map<String, dynamic>))
-//         .toList();
-//   }
-// }
+    Map<String, dynamic> result = await apiCallGet(
+      url:
+          'https://firestore.googleapis.com/v1/projects/${dotenv.env['PROJECT_ID']}/databases/(default)/documents/visits/$documentId',
+      headers: {
+        'Authorization': 'Bearer ${userDataHelper?.idToken}',
+        'Content-Type': 'application/json',
+      },
+    );
+
+    return VisitDomain.fromJson(result);
+  }
+
+  String _generateDocumentIdFromDate(DateTime date) {
+    final formattedDate =
+        '${date.day.toString().padLeft(2, '0')}${date.month.toString().padLeft(2, '0')}${date.year}';
+
+    return '${userDataHelper?.uid}-$formattedDate';
+  }
+}

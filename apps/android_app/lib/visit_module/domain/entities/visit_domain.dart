@@ -19,73 +19,21 @@ class VisitDomain with _$VisitDomain {
 @freezed
 class Fields with _$Fields {
   const factory Fields({
+    @JsonKey(name: 'visits') Visits? visits,
+    @JsonKey(name: 'created_by') CreatedBy? createdBy,
     @JsonKey(name: 'visit_date') VisitDate? visitDate,
-    @JsonKey(name: 'visit_purpose') CustomerId? visitPurpose,
-    @JsonKey(name: 'visit_notes') CustomerId? visitNotes,
-    @JsonKey(name: 'visit_status') CustomerId? visitStatus,
-    @JsonKey(name: 'sales_id') CustomerId? salesId,
-    @JsonKey(name: 'customer_id') CustomerId? customerId,
-    @JsonKey(name: 'location') Location? location,
   }) = _Fields;
 
   factory Fields.fromJson(Map<String, dynamic> json) => _$FieldsFromJson(json);
 }
 
 @freezed
-class CustomerId with _$CustomerId {
-  const factory CustomerId({
-    @JsonKey(name: 'stringValue') String? stringValue,
-  }) = _CustomerId;
+class CreatedBy with _$CreatedBy {
+  const factory CreatedBy({@JsonKey(name: 'stringValue') String? stringValue}) =
+      _CreatedBy;
 
-  factory CustomerId.fromJson(Map<String, dynamic> json) =>
-      _$CustomerIdFromJson(json);
-}
-
-@freezed
-class Location with _$Location {
-  const factory Location({@JsonKey(name: 'mapValue') MapValue? mapValue}) =
-      _Location;
-
-  factory Location.fromJson(Map<String, dynamic> json) =>
-      _$LocationFromJson(json);
-}
-
-@freezed
-class MapValue with _$MapValue {
-  const factory MapValue({@JsonKey(name: 'fields') MapValueFields? fields}) =
-      _MapValue;
-
-  factory MapValue.fromJson(Map<String, dynamic> json) =>
-      _$MapValueFromJson(json);
-}
-
-@freezed
-class MapValueFields with _$MapValueFields {
-  const factory MapValueFields({
-    @JsonKey(name: 'latitude') Itude? latitude,
-    @JsonKey(name: 'longitude') Itude? longitude,
-    @JsonKey(name: 'accuracy') Accuracy? accuracy,
-  }) = _MapValueFields;
-
-  factory MapValueFields.fromJson(Map<String, dynamic> json) =>
-      _$MapValueFieldsFromJson(json);
-}
-
-@freezed
-class Accuracy with _$Accuracy {
-  const factory Accuracy({@JsonKey(name: 'doubleValue') int? doubleValue}) =
-      _Accuracy;
-
-  factory Accuracy.fromJson(Map<String, dynamic> json) =>
-      _$AccuracyFromJson(json);
-}
-
-@freezed
-class Itude with _$Itude {
-  const factory Itude({@JsonKey(name: 'doubleValue') double? doubleValue}) =
-      _Itude;
-
-  factory Itude.fromJson(Map<String, dynamic> json) => _$ItudeFromJson(json);
+  factory CreatedBy.fromJson(Map<String, dynamic> json) =>
+      _$CreatedByFromJson(json);
 }
 
 @freezed
@@ -96,4 +44,103 @@ class VisitDate with _$VisitDate {
 
   factory VisitDate.fromJson(Map<String, dynamic> json) =>
       _$VisitDateFromJson(json);
+}
+
+@freezed
+class Visits with _$Visits {
+  const factory Visits({@JsonKey(name: 'arrayValue') ArrayValue? arrayValue}) =
+      _Visits;
+
+  factory Visits.fromJson(Map<String, dynamic> json) => _$VisitsFromJson(json);
+}
+
+@freezed
+class ArrayValue with _$ArrayValue {
+  const factory ArrayValue({@JsonKey(name: 'values') List<Value>? values}) =
+      _ArrayValue;
+
+  factory ArrayValue.fromJson(Map<String, dynamic> json) =>
+      _$ArrayValueFromJson(json);
+}
+
+@freezed
+class Value with _$Value {
+  const factory Value({@JsonKey(name: 'mapValue') ValueMapValue? mapValue}) =
+      _Value;
+
+  factory Value.fromJson(Map<String, dynamic> json) => _$ValueFromJson(json);
+}
+
+@freezed
+class ValueMapValue with _$ValueMapValue {
+  const factory ValueMapValue({@JsonKey(name: 'fields') PurpleFields? fields}) =
+      _ValueMapValue;
+
+  factory ValueMapValue.fromJson(Map<String, dynamic> json) =>
+      _$ValueMapValueFromJson(json);
+}
+
+@freezed
+class PurpleFields with _$PurpleFields {
+  const factory PurpleFields({
+    @JsonKey(name: 'customer_id') CreatedBy? customerId,
+    @JsonKey(name: 'visit_purpose') CreatedBy? visitPurpose,
+    @JsonKey(name: 'visit_status') VisitStatus? visitStatus,
+    @JsonKey(name: 'visit_notes') CreatedBy? visitNotes,
+    @JsonKey(name: 'location') Location? location,
+  }) = _PurpleFields;
+
+  factory PurpleFields.fromJson(Map<String, dynamic> json) =>
+      _$PurpleFieldsFromJson(json);
+}
+
+@freezed
+class Location with _$Location {
+  const factory Location({
+    @JsonKey(name: 'mapValue') LocationMapValue? mapValue,
+  }) = _Location;
+
+  factory Location.fromJson(Map<String, dynamic> json) =>
+      _$LocationFromJson(json);
+}
+
+@freezed
+class LocationMapValue with _$LocationMapValue {
+  const factory LocationMapValue({
+    @JsonKey(name: 'fields') FluffyFields? fields,
+  }) = _LocationMapValue;
+
+  factory LocationMapValue.fromJson(Map<String, dynamic> json) =>
+      _$LocationMapValueFromJson(json);
+}
+
+@freezed
+class FluffyFields with _$FluffyFields {
+  const factory FluffyFields({
+    @JsonKey(name: 'latitude') Accuracy? latitude,
+    @JsonKey(name: 'longitude') Accuracy? longitude,
+    @JsonKey(name: 'accuracy') Accuracy? accuracy,
+  }) = _FluffyFields;
+
+  factory FluffyFields.fromJson(Map<String, dynamic> json) =>
+      _$FluffyFieldsFromJson(json);
+}
+
+@freezed
+class Accuracy with _$Accuracy {
+  const factory Accuracy({@JsonKey(name: 'doubleValue') double? doubleValue}) =
+      _Accuracy;
+
+  factory Accuracy.fromJson(Map<String, dynamic> json) =>
+      _$AccuracyFromJson(json);
+}
+
+@freezed
+class VisitStatus with _$VisitStatus {
+  const factory VisitStatus({
+    @JsonKey(name: 'integerValue') String? integerValue,
+  }) = _VisitStatus;
+
+  factory VisitStatus.fromJson(Map<String, dynamic> json) =>
+      _$VisitStatusFromJson(json);
 }

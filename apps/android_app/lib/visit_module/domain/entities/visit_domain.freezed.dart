@@ -286,20 +286,12 @@ Fields _$FieldsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Fields {
+  @JsonKey(name: 'visits')
+  Visits? get visits => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_by')
+  CreatedBy? get createdBy => throw _privateConstructorUsedError;
   @JsonKey(name: 'visit_date')
   VisitDate? get visitDate => throw _privateConstructorUsedError;
-  @JsonKey(name: 'visit_purpose')
-  CustomerId? get visitPurpose => throw _privateConstructorUsedError;
-  @JsonKey(name: 'visit_notes')
-  CustomerId? get visitNotes => throw _privateConstructorUsedError;
-  @JsonKey(name: 'visit_status')
-  CustomerId? get visitStatus => throw _privateConstructorUsedError;
-  @JsonKey(name: 'sales_id')
-  CustomerId? get salesId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'customer_id')
-  CustomerId? get customerId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'location')
-  Location? get location => throw _privateConstructorUsedError;
 
   /// Serializes this Fields to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -316,22 +308,14 @@ abstract class $FieldsCopyWith<$Res> {
       _$FieldsCopyWithImpl<$Res, Fields>;
   @useResult
   $Res call({
+    @JsonKey(name: 'visits') Visits? visits,
+    @JsonKey(name: 'created_by') CreatedBy? createdBy,
     @JsonKey(name: 'visit_date') VisitDate? visitDate,
-    @JsonKey(name: 'visit_purpose') CustomerId? visitPurpose,
-    @JsonKey(name: 'visit_notes') CustomerId? visitNotes,
-    @JsonKey(name: 'visit_status') CustomerId? visitStatus,
-    @JsonKey(name: 'sales_id') CustomerId? salesId,
-    @JsonKey(name: 'customer_id') CustomerId? customerId,
-    @JsonKey(name: 'location') Location? location,
   });
 
+  $VisitsCopyWith<$Res>? get visits;
+  $CreatedByCopyWith<$Res>? get createdBy;
   $VisitDateCopyWith<$Res>? get visitDate;
-  $CustomerIdCopyWith<$Res>? get visitPurpose;
-  $CustomerIdCopyWith<$Res>? get visitNotes;
-  $CustomerIdCopyWith<$Res>? get visitStatus;
-  $CustomerIdCopyWith<$Res>? get salesId;
-  $CustomerIdCopyWith<$Res>? get customerId;
-  $LocationCopyWith<$Res>? get location;
 }
 
 /// @nodoc
@@ -349,54 +333,58 @@ class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? visits = freezed,
+    Object? createdBy = freezed,
     Object? visitDate = freezed,
-    Object? visitPurpose = freezed,
-    Object? visitNotes = freezed,
-    Object? visitStatus = freezed,
-    Object? salesId = freezed,
-    Object? customerId = freezed,
-    Object? location = freezed,
   }) {
     return _then(
       _value.copyWith(
+            visits:
+                freezed == visits
+                    ? _value.visits
+                    : visits // ignore: cast_nullable_to_non_nullable
+                        as Visits?,
+            createdBy:
+                freezed == createdBy
+                    ? _value.createdBy
+                    : createdBy // ignore: cast_nullable_to_non_nullable
+                        as CreatedBy?,
             visitDate:
                 freezed == visitDate
                     ? _value.visitDate
                     : visitDate // ignore: cast_nullable_to_non_nullable
                         as VisitDate?,
-            visitPurpose:
-                freezed == visitPurpose
-                    ? _value.visitPurpose
-                    : visitPurpose // ignore: cast_nullable_to_non_nullable
-                        as CustomerId?,
-            visitNotes:
-                freezed == visitNotes
-                    ? _value.visitNotes
-                    : visitNotes // ignore: cast_nullable_to_non_nullable
-                        as CustomerId?,
-            visitStatus:
-                freezed == visitStatus
-                    ? _value.visitStatus
-                    : visitStatus // ignore: cast_nullable_to_non_nullable
-                        as CustomerId?,
-            salesId:
-                freezed == salesId
-                    ? _value.salesId
-                    : salesId // ignore: cast_nullable_to_non_nullable
-                        as CustomerId?,
-            customerId:
-                freezed == customerId
-                    ? _value.customerId
-                    : customerId // ignore: cast_nullable_to_non_nullable
-                        as CustomerId?,
-            location:
-                freezed == location
-                    ? _value.location
-                    : location // ignore: cast_nullable_to_non_nullable
-                        as Location?,
           )
           as $Val,
     );
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $VisitsCopyWith<$Res>? get visits {
+    if (_value.visits == null) {
+      return null;
+    }
+
+    return $VisitsCopyWith<$Res>(_value.visits!, (value) {
+      return _then(_value.copyWith(visits: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CreatedByCopyWith<$Res>? get createdBy {
+    if (_value.createdBy == null) {
+      return null;
+    }
+
+    return $CreatedByCopyWith<$Res>(_value.createdBy!, (value) {
+      return _then(_value.copyWith(createdBy: value) as $Val);
+    });
   }
 
   /// Create a copy of Fields
@@ -412,90 +400,6 @@ class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
       return _then(_value.copyWith(visitDate: value) as $Val);
     });
   }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CustomerIdCopyWith<$Res>? get visitPurpose {
-    if (_value.visitPurpose == null) {
-      return null;
-    }
-
-    return $CustomerIdCopyWith<$Res>(_value.visitPurpose!, (value) {
-      return _then(_value.copyWith(visitPurpose: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CustomerIdCopyWith<$Res>? get visitNotes {
-    if (_value.visitNotes == null) {
-      return null;
-    }
-
-    return $CustomerIdCopyWith<$Res>(_value.visitNotes!, (value) {
-      return _then(_value.copyWith(visitNotes: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CustomerIdCopyWith<$Res>? get visitStatus {
-    if (_value.visitStatus == null) {
-      return null;
-    }
-
-    return $CustomerIdCopyWith<$Res>(_value.visitStatus!, (value) {
-      return _then(_value.copyWith(visitStatus: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CustomerIdCopyWith<$Res>? get salesId {
-    if (_value.salesId == null) {
-      return null;
-    }
-
-    return $CustomerIdCopyWith<$Res>(_value.salesId!, (value) {
-      return _then(_value.copyWith(salesId: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CustomerIdCopyWith<$Res>? get customerId {
-    if (_value.customerId == null) {
-      return null;
-    }
-
-    return $CustomerIdCopyWith<$Res>(_value.customerId!, (value) {
-      return _then(_value.copyWith(customerId: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $LocationCopyWith<$Res>? get location {
-    if (_value.location == null) {
-      return null;
-    }
-
-    return $LocationCopyWith<$Res>(_value.location!, (value) {
-      return _then(_value.copyWith(location: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -507,29 +411,17 @@ abstract class _$$FieldsImplCopyWith<$Res> implements $FieldsCopyWith<$Res> {
   @override
   @useResult
   $Res call({
+    @JsonKey(name: 'visits') Visits? visits,
+    @JsonKey(name: 'created_by') CreatedBy? createdBy,
     @JsonKey(name: 'visit_date') VisitDate? visitDate,
-    @JsonKey(name: 'visit_purpose') CustomerId? visitPurpose,
-    @JsonKey(name: 'visit_notes') CustomerId? visitNotes,
-    @JsonKey(name: 'visit_status') CustomerId? visitStatus,
-    @JsonKey(name: 'sales_id') CustomerId? salesId,
-    @JsonKey(name: 'customer_id') CustomerId? customerId,
-    @JsonKey(name: 'location') Location? location,
   });
 
   @override
+  $VisitsCopyWith<$Res>? get visits;
+  @override
+  $CreatedByCopyWith<$Res>? get createdBy;
+  @override
   $VisitDateCopyWith<$Res>? get visitDate;
-  @override
-  $CustomerIdCopyWith<$Res>? get visitPurpose;
-  @override
-  $CustomerIdCopyWith<$Res>? get visitNotes;
-  @override
-  $CustomerIdCopyWith<$Res>? get visitStatus;
-  @override
-  $CustomerIdCopyWith<$Res>? get salesId;
-  @override
-  $CustomerIdCopyWith<$Res>? get customerId;
-  @override
-  $LocationCopyWith<$Res>? get location;
 }
 
 /// @nodoc
@@ -546,51 +438,27 @@ class __$$FieldsImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? visits = freezed,
+    Object? createdBy = freezed,
     Object? visitDate = freezed,
-    Object? visitPurpose = freezed,
-    Object? visitNotes = freezed,
-    Object? visitStatus = freezed,
-    Object? salesId = freezed,
-    Object? customerId = freezed,
-    Object? location = freezed,
   }) {
     return _then(
       _$FieldsImpl(
+        visits:
+            freezed == visits
+                ? _value.visits
+                : visits // ignore: cast_nullable_to_non_nullable
+                    as Visits?,
+        createdBy:
+            freezed == createdBy
+                ? _value.createdBy
+                : createdBy // ignore: cast_nullable_to_non_nullable
+                    as CreatedBy?,
         visitDate:
             freezed == visitDate
                 ? _value.visitDate
                 : visitDate // ignore: cast_nullable_to_non_nullable
                     as VisitDate?,
-        visitPurpose:
-            freezed == visitPurpose
-                ? _value.visitPurpose
-                : visitPurpose // ignore: cast_nullable_to_non_nullable
-                    as CustomerId?,
-        visitNotes:
-            freezed == visitNotes
-                ? _value.visitNotes
-                : visitNotes // ignore: cast_nullable_to_non_nullable
-                    as CustomerId?,
-        visitStatus:
-            freezed == visitStatus
-                ? _value.visitStatus
-                : visitStatus // ignore: cast_nullable_to_non_nullable
-                    as CustomerId?,
-        salesId:
-            freezed == salesId
-                ? _value.salesId
-                : salesId // ignore: cast_nullable_to_non_nullable
-                    as CustomerId?,
-        customerId:
-            freezed == customerId
-                ? _value.customerId
-                : customerId // ignore: cast_nullable_to_non_nullable
-                    as CustomerId?,
-        location:
-            freezed == location
-                ? _value.location
-                : location // ignore: cast_nullable_to_non_nullable
-                    as Location?,
       ),
     );
   }
@@ -600,43 +468,27 @@ class __$$FieldsImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$FieldsImpl implements _Fields {
   const _$FieldsImpl({
+    @JsonKey(name: 'visits') this.visits,
+    @JsonKey(name: 'created_by') this.createdBy,
     @JsonKey(name: 'visit_date') this.visitDate,
-    @JsonKey(name: 'visit_purpose') this.visitPurpose,
-    @JsonKey(name: 'visit_notes') this.visitNotes,
-    @JsonKey(name: 'visit_status') this.visitStatus,
-    @JsonKey(name: 'sales_id') this.salesId,
-    @JsonKey(name: 'customer_id') this.customerId,
-    @JsonKey(name: 'location') this.location,
   });
 
   factory _$FieldsImpl.fromJson(Map<String, dynamic> json) =>
       _$$FieldsImplFromJson(json);
 
   @override
+  @JsonKey(name: 'visits')
+  final Visits? visits;
+  @override
+  @JsonKey(name: 'created_by')
+  final CreatedBy? createdBy;
+  @override
   @JsonKey(name: 'visit_date')
   final VisitDate? visitDate;
-  @override
-  @JsonKey(name: 'visit_purpose')
-  final CustomerId? visitPurpose;
-  @override
-  @JsonKey(name: 'visit_notes')
-  final CustomerId? visitNotes;
-  @override
-  @JsonKey(name: 'visit_status')
-  final CustomerId? visitStatus;
-  @override
-  @JsonKey(name: 'sales_id')
-  final CustomerId? salesId;
-  @override
-  @JsonKey(name: 'customer_id')
-  final CustomerId? customerId;
-  @override
-  @JsonKey(name: 'location')
-  final Location? location;
 
   @override
   String toString() {
-    return 'Fields(visitDate: $visitDate, visitPurpose: $visitPurpose, visitNotes: $visitNotes, visitStatus: $visitStatus, salesId: $salesId, customerId: $customerId, location: $location)';
+    return 'Fields(visits: $visits, createdBy: $createdBy, visitDate: $visitDate)';
   }
 
   @override
@@ -644,33 +496,16 @@ class _$FieldsImpl implements _Fields {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FieldsImpl &&
+            (identical(other.visits, visits) || other.visits == visits) &&
+            (identical(other.createdBy, createdBy) ||
+                other.createdBy == createdBy) &&
             (identical(other.visitDate, visitDate) ||
-                other.visitDate == visitDate) &&
-            (identical(other.visitPurpose, visitPurpose) ||
-                other.visitPurpose == visitPurpose) &&
-            (identical(other.visitNotes, visitNotes) ||
-                other.visitNotes == visitNotes) &&
-            (identical(other.visitStatus, visitStatus) ||
-                other.visitStatus == visitStatus) &&
-            (identical(other.salesId, salesId) || other.salesId == salesId) &&
-            (identical(other.customerId, customerId) ||
-                other.customerId == customerId) &&
-            (identical(other.location, location) ||
-                other.location == location));
+                other.visitDate == visitDate));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    visitDate,
-    visitPurpose,
-    visitNotes,
-    visitStatus,
-    salesId,
-    customerId,
-    location,
-  );
+  int get hashCode => Object.hash(runtimeType, visits, createdBy, visitDate);
 
   /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
@@ -688,38 +523,22 @@ class _$FieldsImpl implements _Fields {
 
 abstract class _Fields implements Fields {
   const factory _Fields({
+    @JsonKey(name: 'visits') final Visits? visits,
+    @JsonKey(name: 'created_by') final CreatedBy? createdBy,
     @JsonKey(name: 'visit_date') final VisitDate? visitDate,
-    @JsonKey(name: 'visit_purpose') final CustomerId? visitPurpose,
-    @JsonKey(name: 'visit_notes') final CustomerId? visitNotes,
-    @JsonKey(name: 'visit_status') final CustomerId? visitStatus,
-    @JsonKey(name: 'sales_id') final CustomerId? salesId,
-    @JsonKey(name: 'customer_id') final CustomerId? customerId,
-    @JsonKey(name: 'location') final Location? location,
   }) = _$FieldsImpl;
 
   factory _Fields.fromJson(Map<String, dynamic> json) = _$FieldsImpl.fromJson;
 
   @override
+  @JsonKey(name: 'visits')
+  Visits? get visits;
+  @override
+  @JsonKey(name: 'created_by')
+  CreatedBy? get createdBy;
+  @override
   @JsonKey(name: 'visit_date')
   VisitDate? get visitDate;
-  @override
-  @JsonKey(name: 'visit_purpose')
-  CustomerId? get visitPurpose;
-  @override
-  @JsonKey(name: 'visit_notes')
-  CustomerId? get visitNotes;
-  @override
-  @JsonKey(name: 'visit_status')
-  CustomerId? get visitStatus;
-  @override
-  @JsonKey(name: 'sales_id')
-  CustomerId? get salesId;
-  @override
-  @JsonKey(name: 'customer_id')
-  CustomerId? get customerId;
-  @override
-  @JsonKey(name: 'location')
-  Location? get location;
 
   /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
@@ -729,46 +548,44 @@ abstract class _Fields implements Fields {
       throw _privateConstructorUsedError;
 }
 
-CustomerId _$CustomerIdFromJson(Map<String, dynamic> json) {
-  return _CustomerId.fromJson(json);
+CreatedBy _$CreatedByFromJson(Map<String, dynamic> json) {
+  return _CreatedBy.fromJson(json);
 }
 
 /// @nodoc
-mixin _$CustomerId {
+mixin _$CreatedBy {
   @JsonKey(name: 'stringValue')
   String? get stringValue => throw _privateConstructorUsedError;
 
-  /// Serializes this CustomerId to a JSON map.
+  /// Serializes this CreatedBy to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of CustomerId
+  /// Create a copy of CreatedBy
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $CustomerIdCopyWith<CustomerId> get copyWith =>
+  $CreatedByCopyWith<CreatedBy> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CustomerIdCopyWith<$Res> {
-  factory $CustomerIdCopyWith(
-    CustomerId value,
-    $Res Function(CustomerId) then,
-  ) = _$CustomerIdCopyWithImpl<$Res, CustomerId>;
+abstract class $CreatedByCopyWith<$Res> {
+  factory $CreatedByCopyWith(CreatedBy value, $Res Function(CreatedBy) then) =
+      _$CreatedByCopyWithImpl<$Res, CreatedBy>;
   @useResult
   $Res call({@JsonKey(name: 'stringValue') String? stringValue});
 }
 
 /// @nodoc
-class _$CustomerIdCopyWithImpl<$Res, $Val extends CustomerId>
-    implements $CustomerIdCopyWith<$Res> {
-  _$CustomerIdCopyWithImpl(this._value, this._then);
+class _$CreatedByCopyWithImpl<$Res, $Val extends CreatedBy>
+    implements $CreatedByCopyWith<$Res> {
+  _$CreatedByCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of CustomerId
+  /// Create a copy of CreatedBy
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -787,33 +604,33 @@ class _$CustomerIdCopyWithImpl<$Res, $Val extends CustomerId>
 }
 
 /// @nodoc
-abstract class _$$CustomerIdImplCopyWith<$Res>
-    implements $CustomerIdCopyWith<$Res> {
-  factory _$$CustomerIdImplCopyWith(
-    _$CustomerIdImpl value,
-    $Res Function(_$CustomerIdImpl) then,
-  ) = __$$CustomerIdImplCopyWithImpl<$Res>;
+abstract class _$$CreatedByImplCopyWith<$Res>
+    implements $CreatedByCopyWith<$Res> {
+  factory _$$CreatedByImplCopyWith(
+    _$CreatedByImpl value,
+    $Res Function(_$CreatedByImpl) then,
+  ) = __$$CreatedByImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({@JsonKey(name: 'stringValue') String? stringValue});
 }
 
 /// @nodoc
-class __$$CustomerIdImplCopyWithImpl<$Res>
-    extends _$CustomerIdCopyWithImpl<$Res, _$CustomerIdImpl>
-    implements _$$CustomerIdImplCopyWith<$Res> {
-  __$$CustomerIdImplCopyWithImpl(
-    _$CustomerIdImpl _value,
-    $Res Function(_$CustomerIdImpl) _then,
+class __$$CreatedByImplCopyWithImpl<$Res>
+    extends _$CreatedByCopyWithImpl<$Res, _$CreatedByImpl>
+    implements _$$CreatedByImplCopyWith<$Res> {
+  __$$CreatedByImplCopyWithImpl(
+    _$CreatedByImpl _value,
+    $Res Function(_$CreatedByImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of CustomerId
+  /// Create a copy of CreatedBy
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({Object? stringValue = freezed}) {
     return _then(
-      _$CustomerIdImpl(
+      _$CreatedByImpl(
         stringValue:
             freezed == stringValue
                 ? _value.stringValue
@@ -826,11 +643,11 @@ class __$$CustomerIdImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$CustomerIdImpl implements _CustomerId {
-  const _$CustomerIdImpl({@JsonKey(name: 'stringValue') this.stringValue});
+class _$CreatedByImpl implements _CreatedBy {
+  const _$CreatedByImpl({@JsonKey(name: 'stringValue') this.stringValue});
 
-  factory _$CustomerIdImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CustomerIdImplFromJson(json);
+  factory _$CreatedByImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CreatedByImplFromJson(json);
 
   @override
   @JsonKey(name: 'stringValue')
@@ -838,14 +655,14 @@ class _$CustomerIdImpl implements _CustomerId {
 
   @override
   String toString() {
-    return 'CustomerId(stringValue: $stringValue)';
+    return 'CreatedBy(stringValue: $stringValue)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CustomerIdImpl &&
+            other is _$CreatedByImpl &&
             (identical(other.stringValue, stringValue) ||
                 other.stringValue == stringValue));
   }
@@ -854,976 +671,37 @@ class _$CustomerIdImpl implements _CustomerId {
   @override
   int get hashCode => Object.hash(runtimeType, stringValue);
 
-  /// Create a copy of CustomerId
+  /// Create a copy of CreatedBy
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$CustomerIdImplCopyWith<_$CustomerIdImpl> get copyWith =>
-      __$$CustomerIdImplCopyWithImpl<_$CustomerIdImpl>(this, _$identity);
+  _$$CreatedByImplCopyWith<_$CreatedByImpl> get copyWith =>
+      __$$CreatedByImplCopyWithImpl<_$CreatedByImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CustomerIdImplToJson(this);
+    return _$$CreatedByImplToJson(this);
   }
 }
 
-abstract class _CustomerId implements CustomerId {
-  const factory _CustomerId({
+abstract class _CreatedBy implements CreatedBy {
+  const factory _CreatedBy({
     @JsonKey(name: 'stringValue') final String? stringValue,
-  }) = _$CustomerIdImpl;
+  }) = _$CreatedByImpl;
 
-  factory _CustomerId.fromJson(Map<String, dynamic> json) =
-      _$CustomerIdImpl.fromJson;
+  factory _CreatedBy.fromJson(Map<String, dynamic> json) =
+      _$CreatedByImpl.fromJson;
 
   @override
   @JsonKey(name: 'stringValue')
   String? get stringValue;
 
-  /// Create a copy of CustomerId
+  /// Create a copy of CreatedBy
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CustomerIdImplCopyWith<_$CustomerIdImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-Location _$LocationFromJson(Map<String, dynamic> json) {
-  return _Location.fromJson(json);
-}
-
-/// @nodoc
-mixin _$Location {
-  @JsonKey(name: 'mapValue')
-  MapValue? get mapValue => throw _privateConstructorUsedError;
-
-  /// Serializes this Location to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of Location
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $LocationCopyWith<Location> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $LocationCopyWith<$Res> {
-  factory $LocationCopyWith(Location value, $Res Function(Location) then) =
-      _$LocationCopyWithImpl<$Res, Location>;
-  @useResult
-  $Res call({@JsonKey(name: 'mapValue') MapValue? mapValue});
-
-  $MapValueCopyWith<$Res>? get mapValue;
-}
-
-/// @nodoc
-class _$LocationCopyWithImpl<$Res, $Val extends Location>
-    implements $LocationCopyWith<$Res> {
-  _$LocationCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Location
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? mapValue = freezed}) {
-    return _then(
-      _value.copyWith(
-            mapValue:
-                freezed == mapValue
-                    ? _value.mapValue
-                    : mapValue // ignore: cast_nullable_to_non_nullable
-                        as MapValue?,
-          )
-          as $Val,
-    );
-  }
-
-  /// Create a copy of Location
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $MapValueCopyWith<$Res>? get mapValue {
-    if (_value.mapValue == null) {
-      return null;
-    }
-
-    return $MapValueCopyWith<$Res>(_value.mapValue!, (value) {
-      return _then(_value.copyWith(mapValue: value) as $Val);
-    });
-  }
-}
-
-/// @nodoc
-abstract class _$$LocationImplCopyWith<$Res>
-    implements $LocationCopyWith<$Res> {
-  factory _$$LocationImplCopyWith(
-    _$LocationImpl value,
-    $Res Function(_$LocationImpl) then,
-  ) = __$$LocationImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({@JsonKey(name: 'mapValue') MapValue? mapValue});
-
-  @override
-  $MapValueCopyWith<$Res>? get mapValue;
-}
-
-/// @nodoc
-class __$$LocationImplCopyWithImpl<$Res>
-    extends _$LocationCopyWithImpl<$Res, _$LocationImpl>
-    implements _$$LocationImplCopyWith<$Res> {
-  __$$LocationImplCopyWithImpl(
-    _$LocationImpl _value,
-    $Res Function(_$LocationImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of Location
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? mapValue = freezed}) {
-    return _then(
-      _$LocationImpl(
-        mapValue:
-            freezed == mapValue
-                ? _value.mapValue
-                : mapValue // ignore: cast_nullable_to_non_nullable
-                    as MapValue?,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$LocationImpl implements _Location {
-  const _$LocationImpl({@JsonKey(name: 'mapValue') this.mapValue});
-
-  factory _$LocationImpl.fromJson(Map<String, dynamic> json) =>
-      _$$LocationImplFromJson(json);
-
-  @override
-  @JsonKey(name: 'mapValue')
-  final MapValue? mapValue;
-
-  @override
-  String toString() {
-    return 'Location(mapValue: $mapValue)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$LocationImpl &&
-            (identical(other.mapValue, mapValue) ||
-                other.mapValue == mapValue));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, mapValue);
-
-  /// Create a copy of Location
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$LocationImplCopyWith<_$LocationImpl> get copyWith =>
-      __$$LocationImplCopyWithImpl<_$LocationImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$LocationImplToJson(this);
-  }
-}
-
-abstract class _Location implements Location {
-  const factory _Location({
-    @JsonKey(name: 'mapValue') final MapValue? mapValue,
-  }) = _$LocationImpl;
-
-  factory _Location.fromJson(Map<String, dynamic> json) =
-      _$LocationImpl.fromJson;
-
-  @override
-  @JsonKey(name: 'mapValue')
-  MapValue? get mapValue;
-
-  /// Create a copy of Location
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LocationImplCopyWith<_$LocationImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-MapValue _$MapValueFromJson(Map<String, dynamic> json) {
-  return _MapValue.fromJson(json);
-}
-
-/// @nodoc
-mixin _$MapValue {
-  @JsonKey(name: 'fields')
-  MapValueFields? get fields => throw _privateConstructorUsedError;
-
-  /// Serializes this MapValue to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of MapValue
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $MapValueCopyWith<MapValue> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $MapValueCopyWith<$Res> {
-  factory $MapValueCopyWith(MapValue value, $Res Function(MapValue) then) =
-      _$MapValueCopyWithImpl<$Res, MapValue>;
-  @useResult
-  $Res call({@JsonKey(name: 'fields') MapValueFields? fields});
-
-  $MapValueFieldsCopyWith<$Res>? get fields;
-}
-
-/// @nodoc
-class _$MapValueCopyWithImpl<$Res, $Val extends MapValue>
-    implements $MapValueCopyWith<$Res> {
-  _$MapValueCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of MapValue
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? fields = freezed}) {
-    return _then(
-      _value.copyWith(
-            fields:
-                freezed == fields
-                    ? _value.fields
-                    : fields // ignore: cast_nullable_to_non_nullable
-                        as MapValueFields?,
-          )
-          as $Val,
-    );
-  }
-
-  /// Create a copy of MapValue
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $MapValueFieldsCopyWith<$Res>? get fields {
-    if (_value.fields == null) {
-      return null;
-    }
-
-    return $MapValueFieldsCopyWith<$Res>(_value.fields!, (value) {
-      return _then(_value.copyWith(fields: value) as $Val);
-    });
-  }
-}
-
-/// @nodoc
-abstract class _$$MapValueImplCopyWith<$Res>
-    implements $MapValueCopyWith<$Res> {
-  factory _$$MapValueImplCopyWith(
-    _$MapValueImpl value,
-    $Res Function(_$MapValueImpl) then,
-  ) = __$$MapValueImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({@JsonKey(name: 'fields') MapValueFields? fields});
-
-  @override
-  $MapValueFieldsCopyWith<$Res>? get fields;
-}
-
-/// @nodoc
-class __$$MapValueImplCopyWithImpl<$Res>
-    extends _$MapValueCopyWithImpl<$Res, _$MapValueImpl>
-    implements _$$MapValueImplCopyWith<$Res> {
-  __$$MapValueImplCopyWithImpl(
-    _$MapValueImpl _value,
-    $Res Function(_$MapValueImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of MapValue
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? fields = freezed}) {
-    return _then(
-      _$MapValueImpl(
-        fields:
-            freezed == fields
-                ? _value.fields
-                : fields // ignore: cast_nullable_to_non_nullable
-                    as MapValueFields?,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$MapValueImpl implements _MapValue {
-  const _$MapValueImpl({@JsonKey(name: 'fields') this.fields});
-
-  factory _$MapValueImpl.fromJson(Map<String, dynamic> json) =>
-      _$$MapValueImplFromJson(json);
-
-  @override
-  @JsonKey(name: 'fields')
-  final MapValueFields? fields;
-
-  @override
-  String toString() {
-    return 'MapValue(fields: $fields)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$MapValueImpl &&
-            (identical(other.fields, fields) || other.fields == fields));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, fields);
-
-  /// Create a copy of MapValue
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$MapValueImplCopyWith<_$MapValueImpl> get copyWith =>
-      __$$MapValueImplCopyWithImpl<_$MapValueImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$MapValueImplToJson(this);
-  }
-}
-
-abstract class _MapValue implements MapValue {
-  const factory _MapValue({
-    @JsonKey(name: 'fields') final MapValueFields? fields,
-  }) = _$MapValueImpl;
-
-  factory _MapValue.fromJson(Map<String, dynamic> json) =
-      _$MapValueImpl.fromJson;
-
-  @override
-  @JsonKey(name: 'fields')
-  MapValueFields? get fields;
-
-  /// Create a copy of MapValue
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$MapValueImplCopyWith<_$MapValueImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-MapValueFields _$MapValueFieldsFromJson(Map<String, dynamic> json) {
-  return _MapValueFields.fromJson(json);
-}
-
-/// @nodoc
-mixin _$MapValueFields {
-  @JsonKey(name: 'latitude')
-  Itude? get latitude => throw _privateConstructorUsedError;
-  @JsonKey(name: 'longitude')
-  Itude? get longitude => throw _privateConstructorUsedError;
-  @JsonKey(name: 'accuracy')
-  Accuracy? get accuracy => throw _privateConstructorUsedError;
-
-  /// Serializes this MapValueFields to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of MapValueFields
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $MapValueFieldsCopyWith<MapValueFields> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $MapValueFieldsCopyWith<$Res> {
-  factory $MapValueFieldsCopyWith(
-    MapValueFields value,
-    $Res Function(MapValueFields) then,
-  ) = _$MapValueFieldsCopyWithImpl<$Res, MapValueFields>;
-  @useResult
-  $Res call({
-    @JsonKey(name: 'latitude') Itude? latitude,
-    @JsonKey(name: 'longitude') Itude? longitude,
-    @JsonKey(name: 'accuracy') Accuracy? accuracy,
-  });
-
-  $ItudeCopyWith<$Res>? get latitude;
-  $ItudeCopyWith<$Res>? get longitude;
-  $AccuracyCopyWith<$Res>? get accuracy;
-}
-
-/// @nodoc
-class _$MapValueFieldsCopyWithImpl<$Res, $Val extends MapValueFields>
-    implements $MapValueFieldsCopyWith<$Res> {
-  _$MapValueFieldsCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of MapValueFields
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? latitude = freezed,
-    Object? longitude = freezed,
-    Object? accuracy = freezed,
-  }) {
-    return _then(
-      _value.copyWith(
-            latitude:
-                freezed == latitude
-                    ? _value.latitude
-                    : latitude // ignore: cast_nullable_to_non_nullable
-                        as Itude?,
-            longitude:
-                freezed == longitude
-                    ? _value.longitude
-                    : longitude // ignore: cast_nullable_to_non_nullable
-                        as Itude?,
-            accuracy:
-                freezed == accuracy
-                    ? _value.accuracy
-                    : accuracy // ignore: cast_nullable_to_non_nullable
-                        as Accuracy?,
-          )
-          as $Val,
-    );
-  }
-
-  /// Create a copy of MapValueFields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ItudeCopyWith<$Res>? get latitude {
-    if (_value.latitude == null) {
-      return null;
-    }
-
-    return $ItudeCopyWith<$Res>(_value.latitude!, (value) {
-      return _then(_value.copyWith(latitude: value) as $Val);
-    });
-  }
-
-  /// Create a copy of MapValueFields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ItudeCopyWith<$Res>? get longitude {
-    if (_value.longitude == null) {
-      return null;
-    }
-
-    return $ItudeCopyWith<$Res>(_value.longitude!, (value) {
-      return _then(_value.copyWith(longitude: value) as $Val);
-    });
-  }
-
-  /// Create a copy of MapValueFields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $AccuracyCopyWith<$Res>? get accuracy {
-    if (_value.accuracy == null) {
-      return null;
-    }
-
-    return $AccuracyCopyWith<$Res>(_value.accuracy!, (value) {
-      return _then(_value.copyWith(accuracy: value) as $Val);
-    });
-  }
-}
-
-/// @nodoc
-abstract class _$$MapValueFieldsImplCopyWith<$Res>
-    implements $MapValueFieldsCopyWith<$Res> {
-  factory _$$MapValueFieldsImplCopyWith(
-    _$MapValueFieldsImpl value,
-    $Res Function(_$MapValueFieldsImpl) then,
-  ) = __$$MapValueFieldsImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({
-    @JsonKey(name: 'latitude') Itude? latitude,
-    @JsonKey(name: 'longitude') Itude? longitude,
-    @JsonKey(name: 'accuracy') Accuracy? accuracy,
-  });
-
-  @override
-  $ItudeCopyWith<$Res>? get latitude;
-  @override
-  $ItudeCopyWith<$Res>? get longitude;
-  @override
-  $AccuracyCopyWith<$Res>? get accuracy;
-}
-
-/// @nodoc
-class __$$MapValueFieldsImplCopyWithImpl<$Res>
-    extends _$MapValueFieldsCopyWithImpl<$Res, _$MapValueFieldsImpl>
-    implements _$$MapValueFieldsImplCopyWith<$Res> {
-  __$$MapValueFieldsImplCopyWithImpl(
-    _$MapValueFieldsImpl _value,
-    $Res Function(_$MapValueFieldsImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of MapValueFields
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? latitude = freezed,
-    Object? longitude = freezed,
-    Object? accuracy = freezed,
-  }) {
-    return _then(
-      _$MapValueFieldsImpl(
-        latitude:
-            freezed == latitude
-                ? _value.latitude
-                : latitude // ignore: cast_nullable_to_non_nullable
-                    as Itude?,
-        longitude:
-            freezed == longitude
-                ? _value.longitude
-                : longitude // ignore: cast_nullable_to_non_nullable
-                    as Itude?,
-        accuracy:
-            freezed == accuracy
-                ? _value.accuracy
-                : accuracy // ignore: cast_nullable_to_non_nullable
-                    as Accuracy?,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$MapValueFieldsImpl implements _MapValueFields {
-  const _$MapValueFieldsImpl({
-    @JsonKey(name: 'latitude') this.latitude,
-    @JsonKey(name: 'longitude') this.longitude,
-    @JsonKey(name: 'accuracy') this.accuracy,
-  });
-
-  factory _$MapValueFieldsImpl.fromJson(Map<String, dynamic> json) =>
-      _$$MapValueFieldsImplFromJson(json);
-
-  @override
-  @JsonKey(name: 'latitude')
-  final Itude? latitude;
-  @override
-  @JsonKey(name: 'longitude')
-  final Itude? longitude;
-  @override
-  @JsonKey(name: 'accuracy')
-  final Accuracy? accuracy;
-
-  @override
-  String toString() {
-    return 'MapValueFields(latitude: $latitude, longitude: $longitude, accuracy: $accuracy)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$MapValueFieldsImpl &&
-            (identical(other.latitude, latitude) ||
-                other.latitude == latitude) &&
-            (identical(other.longitude, longitude) ||
-                other.longitude == longitude) &&
-            (identical(other.accuracy, accuracy) ||
-                other.accuracy == accuracy));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, latitude, longitude, accuracy);
-
-  /// Create a copy of MapValueFields
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$MapValueFieldsImplCopyWith<_$MapValueFieldsImpl> get copyWith =>
-      __$$MapValueFieldsImplCopyWithImpl<_$MapValueFieldsImpl>(
-        this,
-        _$identity,
-      );
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$MapValueFieldsImplToJson(this);
-  }
-}
-
-abstract class _MapValueFields implements MapValueFields {
-  const factory _MapValueFields({
-    @JsonKey(name: 'latitude') final Itude? latitude,
-    @JsonKey(name: 'longitude') final Itude? longitude,
-    @JsonKey(name: 'accuracy') final Accuracy? accuracy,
-  }) = _$MapValueFieldsImpl;
-
-  factory _MapValueFields.fromJson(Map<String, dynamic> json) =
-      _$MapValueFieldsImpl.fromJson;
-
-  @override
-  @JsonKey(name: 'latitude')
-  Itude? get latitude;
-  @override
-  @JsonKey(name: 'longitude')
-  Itude? get longitude;
-  @override
-  @JsonKey(name: 'accuracy')
-  Accuracy? get accuracy;
-
-  /// Create a copy of MapValueFields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$MapValueFieldsImplCopyWith<_$MapValueFieldsImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-Accuracy _$AccuracyFromJson(Map<String, dynamic> json) {
-  return _Accuracy.fromJson(json);
-}
-
-/// @nodoc
-mixin _$Accuracy {
-  @JsonKey(name: 'doubleValue')
-  int? get doubleValue => throw _privateConstructorUsedError;
-
-  /// Serializes this Accuracy to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of Accuracy
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $AccuracyCopyWith<Accuracy> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $AccuracyCopyWith<$Res> {
-  factory $AccuracyCopyWith(Accuracy value, $Res Function(Accuracy) then) =
-      _$AccuracyCopyWithImpl<$Res, Accuracy>;
-  @useResult
-  $Res call({@JsonKey(name: 'doubleValue') int? doubleValue});
-}
-
-/// @nodoc
-class _$AccuracyCopyWithImpl<$Res, $Val extends Accuracy>
-    implements $AccuracyCopyWith<$Res> {
-  _$AccuracyCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Accuracy
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? doubleValue = freezed}) {
-    return _then(
-      _value.copyWith(
-            doubleValue:
-                freezed == doubleValue
-                    ? _value.doubleValue
-                    : doubleValue // ignore: cast_nullable_to_non_nullable
-                        as int?,
-          )
-          as $Val,
-    );
-  }
-}
-
-/// @nodoc
-abstract class _$$AccuracyImplCopyWith<$Res>
-    implements $AccuracyCopyWith<$Res> {
-  factory _$$AccuracyImplCopyWith(
-    _$AccuracyImpl value,
-    $Res Function(_$AccuracyImpl) then,
-  ) = __$$AccuracyImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({@JsonKey(name: 'doubleValue') int? doubleValue});
-}
-
-/// @nodoc
-class __$$AccuracyImplCopyWithImpl<$Res>
-    extends _$AccuracyCopyWithImpl<$Res, _$AccuracyImpl>
-    implements _$$AccuracyImplCopyWith<$Res> {
-  __$$AccuracyImplCopyWithImpl(
-    _$AccuracyImpl _value,
-    $Res Function(_$AccuracyImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of Accuracy
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? doubleValue = freezed}) {
-    return _then(
-      _$AccuracyImpl(
-        doubleValue:
-            freezed == doubleValue
-                ? _value.doubleValue
-                : doubleValue // ignore: cast_nullable_to_non_nullable
-                    as int?,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$AccuracyImpl implements _Accuracy {
-  const _$AccuracyImpl({@JsonKey(name: 'doubleValue') this.doubleValue});
-
-  factory _$AccuracyImpl.fromJson(Map<String, dynamic> json) =>
-      _$$AccuracyImplFromJson(json);
-
-  @override
-  @JsonKey(name: 'doubleValue')
-  final int? doubleValue;
-
-  @override
-  String toString() {
-    return 'Accuracy(doubleValue: $doubleValue)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$AccuracyImpl &&
-            (identical(other.doubleValue, doubleValue) ||
-                other.doubleValue == doubleValue));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, doubleValue);
-
-  /// Create a copy of Accuracy
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$AccuracyImplCopyWith<_$AccuracyImpl> get copyWith =>
-      __$$AccuracyImplCopyWithImpl<_$AccuracyImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$AccuracyImplToJson(this);
-  }
-}
-
-abstract class _Accuracy implements Accuracy {
-  const factory _Accuracy({
-    @JsonKey(name: 'doubleValue') final int? doubleValue,
-  }) = _$AccuracyImpl;
-
-  factory _Accuracy.fromJson(Map<String, dynamic> json) =
-      _$AccuracyImpl.fromJson;
-
-  @override
-  @JsonKey(name: 'doubleValue')
-  int? get doubleValue;
-
-  /// Create a copy of Accuracy
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$AccuracyImplCopyWith<_$AccuracyImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-Itude _$ItudeFromJson(Map<String, dynamic> json) {
-  return _Itude.fromJson(json);
-}
-
-/// @nodoc
-mixin _$Itude {
-  @JsonKey(name: 'doubleValue')
-  double? get doubleValue => throw _privateConstructorUsedError;
-
-  /// Serializes this Itude to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of Itude
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ItudeCopyWith<Itude> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ItudeCopyWith<$Res> {
-  factory $ItudeCopyWith(Itude value, $Res Function(Itude) then) =
-      _$ItudeCopyWithImpl<$Res, Itude>;
-  @useResult
-  $Res call({@JsonKey(name: 'doubleValue') double? doubleValue});
-}
-
-/// @nodoc
-class _$ItudeCopyWithImpl<$Res, $Val extends Itude>
-    implements $ItudeCopyWith<$Res> {
-  _$ItudeCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Itude
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? doubleValue = freezed}) {
-    return _then(
-      _value.copyWith(
-            doubleValue:
-                freezed == doubleValue
-                    ? _value.doubleValue
-                    : doubleValue // ignore: cast_nullable_to_non_nullable
-                        as double?,
-          )
-          as $Val,
-    );
-  }
-}
-
-/// @nodoc
-abstract class _$$ItudeImplCopyWith<$Res> implements $ItudeCopyWith<$Res> {
-  factory _$$ItudeImplCopyWith(
-    _$ItudeImpl value,
-    $Res Function(_$ItudeImpl) then,
-  ) = __$$ItudeImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({@JsonKey(name: 'doubleValue') double? doubleValue});
-}
-
-/// @nodoc
-class __$$ItudeImplCopyWithImpl<$Res>
-    extends _$ItudeCopyWithImpl<$Res, _$ItudeImpl>
-    implements _$$ItudeImplCopyWith<$Res> {
-  __$$ItudeImplCopyWithImpl(
-    _$ItudeImpl _value,
-    $Res Function(_$ItudeImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of Itude
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? doubleValue = freezed}) {
-    return _then(
-      _$ItudeImpl(
-        doubleValue:
-            freezed == doubleValue
-                ? _value.doubleValue
-                : doubleValue // ignore: cast_nullable_to_non_nullable
-                    as double?,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$ItudeImpl implements _Itude {
-  const _$ItudeImpl({@JsonKey(name: 'doubleValue') this.doubleValue});
-
-  factory _$ItudeImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ItudeImplFromJson(json);
-
-  @override
-  @JsonKey(name: 'doubleValue')
-  final double? doubleValue;
-
-  @override
-  String toString() {
-    return 'Itude(doubleValue: $doubleValue)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ItudeImpl &&
-            (identical(other.doubleValue, doubleValue) ||
-                other.doubleValue == doubleValue));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, doubleValue);
-
-  /// Create a copy of Itude
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ItudeImplCopyWith<_$ItudeImpl> get copyWith =>
-      __$$ItudeImplCopyWithImpl<_$ItudeImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ItudeImplToJson(this);
-  }
-}
-
-abstract class _Itude implements Itude {
-  const factory _Itude({
-    @JsonKey(name: 'doubleValue') final double? doubleValue,
-  }) = _$ItudeImpl;
-
-  factory _Itude.fromJson(Map<String, dynamic> json) = _$ItudeImpl.fromJson;
-
-  @override
-  @JsonKey(name: 'doubleValue')
-  double? get doubleValue;
-
-  /// Create a copy of Itude
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ItudeImplCopyWith<_$ItudeImpl> get copyWith =>
+  _$$CreatedByImplCopyWith<_$CreatedByImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1981,5 +859,2008 @@ abstract class _VisitDate implements VisitDate {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$VisitDateImplCopyWith<_$VisitDateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Visits _$VisitsFromJson(Map<String, dynamic> json) {
+  return _Visits.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Visits {
+  @JsonKey(name: 'arrayValue')
+  ArrayValue? get arrayValue => throw _privateConstructorUsedError;
+
+  /// Serializes this Visits to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of Visits
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $VisitsCopyWith<Visits> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $VisitsCopyWith<$Res> {
+  factory $VisitsCopyWith(Visits value, $Res Function(Visits) then) =
+      _$VisitsCopyWithImpl<$Res, Visits>;
+  @useResult
+  $Res call({@JsonKey(name: 'arrayValue') ArrayValue? arrayValue});
+
+  $ArrayValueCopyWith<$Res>? get arrayValue;
+}
+
+/// @nodoc
+class _$VisitsCopyWithImpl<$Res, $Val extends Visits>
+    implements $VisitsCopyWith<$Res> {
+  _$VisitsCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of Visits
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? arrayValue = freezed}) {
+    return _then(
+      _value.copyWith(
+            arrayValue:
+                freezed == arrayValue
+                    ? _value.arrayValue
+                    : arrayValue // ignore: cast_nullable_to_non_nullable
+                        as ArrayValue?,
+          )
+          as $Val,
+    );
+  }
+
+  /// Create a copy of Visits
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ArrayValueCopyWith<$Res>? get arrayValue {
+    if (_value.arrayValue == null) {
+      return null;
+    }
+
+    return $ArrayValueCopyWith<$Res>(_value.arrayValue!, (value) {
+      return _then(_value.copyWith(arrayValue: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$VisitsImplCopyWith<$Res> implements $VisitsCopyWith<$Res> {
+  factory _$$VisitsImplCopyWith(
+    _$VisitsImpl value,
+    $Res Function(_$VisitsImpl) then,
+  ) = __$$VisitsImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: 'arrayValue') ArrayValue? arrayValue});
+
+  @override
+  $ArrayValueCopyWith<$Res>? get arrayValue;
+}
+
+/// @nodoc
+class __$$VisitsImplCopyWithImpl<$Res>
+    extends _$VisitsCopyWithImpl<$Res, _$VisitsImpl>
+    implements _$$VisitsImplCopyWith<$Res> {
+  __$$VisitsImplCopyWithImpl(
+    _$VisitsImpl _value,
+    $Res Function(_$VisitsImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of Visits
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? arrayValue = freezed}) {
+    return _then(
+      _$VisitsImpl(
+        arrayValue:
+            freezed == arrayValue
+                ? _value.arrayValue
+                : arrayValue // ignore: cast_nullable_to_non_nullable
+                    as ArrayValue?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$VisitsImpl implements _Visits {
+  const _$VisitsImpl({@JsonKey(name: 'arrayValue') this.arrayValue});
+
+  factory _$VisitsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$VisitsImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'arrayValue')
+  final ArrayValue? arrayValue;
+
+  @override
+  String toString() {
+    return 'Visits(arrayValue: $arrayValue)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$VisitsImpl &&
+            (identical(other.arrayValue, arrayValue) ||
+                other.arrayValue == arrayValue));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, arrayValue);
+
+  /// Create a copy of Visits
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$VisitsImplCopyWith<_$VisitsImpl> get copyWith =>
+      __$$VisitsImplCopyWithImpl<_$VisitsImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$VisitsImplToJson(this);
+  }
+}
+
+abstract class _Visits implements Visits {
+  const factory _Visits({
+    @JsonKey(name: 'arrayValue') final ArrayValue? arrayValue,
+  }) = _$VisitsImpl;
+
+  factory _Visits.fromJson(Map<String, dynamic> json) = _$VisitsImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'arrayValue')
+  ArrayValue? get arrayValue;
+
+  /// Create a copy of Visits
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$VisitsImplCopyWith<_$VisitsImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+ArrayValue _$ArrayValueFromJson(Map<String, dynamic> json) {
+  return _ArrayValue.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ArrayValue {
+  @JsonKey(name: 'values')
+  List<Value>? get values => throw _privateConstructorUsedError;
+
+  /// Serializes this ArrayValue to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of ArrayValue
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $ArrayValueCopyWith<ArrayValue> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ArrayValueCopyWith<$Res> {
+  factory $ArrayValueCopyWith(
+    ArrayValue value,
+    $Res Function(ArrayValue) then,
+  ) = _$ArrayValueCopyWithImpl<$Res, ArrayValue>;
+  @useResult
+  $Res call({@JsonKey(name: 'values') List<Value>? values});
+}
+
+/// @nodoc
+class _$ArrayValueCopyWithImpl<$Res, $Val extends ArrayValue>
+    implements $ArrayValueCopyWith<$Res> {
+  _$ArrayValueCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of ArrayValue
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? values = freezed}) {
+    return _then(
+      _value.copyWith(
+            values:
+                freezed == values
+                    ? _value.values
+                    : values // ignore: cast_nullable_to_non_nullable
+                        as List<Value>?,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$ArrayValueImplCopyWith<$Res>
+    implements $ArrayValueCopyWith<$Res> {
+  factory _$$ArrayValueImplCopyWith(
+    _$ArrayValueImpl value,
+    $Res Function(_$ArrayValueImpl) then,
+  ) = __$$ArrayValueImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: 'values') List<Value>? values});
+}
+
+/// @nodoc
+class __$$ArrayValueImplCopyWithImpl<$Res>
+    extends _$ArrayValueCopyWithImpl<$Res, _$ArrayValueImpl>
+    implements _$$ArrayValueImplCopyWith<$Res> {
+  __$$ArrayValueImplCopyWithImpl(
+    _$ArrayValueImpl _value,
+    $Res Function(_$ArrayValueImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of ArrayValue
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? values = freezed}) {
+    return _then(
+      _$ArrayValueImpl(
+        values:
+            freezed == values
+                ? _value._values
+                : values // ignore: cast_nullable_to_non_nullable
+                    as List<Value>?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ArrayValueImpl implements _ArrayValue {
+  const _$ArrayValueImpl({@JsonKey(name: 'values') final List<Value>? values})
+    : _values = values;
+
+  factory _$ArrayValueImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ArrayValueImplFromJson(json);
+
+  final List<Value>? _values;
+  @override
+  @JsonKey(name: 'values')
+  List<Value>? get values {
+    final value = _values;
+    if (value == null) return null;
+    if (_values is EqualUnmodifiableListView) return _values;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  String toString() {
+    return 'ArrayValue(values: $values)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ArrayValueImpl &&
+            const DeepCollectionEquality().equals(other._values, _values));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_values));
+
+  /// Create a copy of ArrayValue
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ArrayValueImplCopyWith<_$ArrayValueImpl> get copyWith =>
+      __$$ArrayValueImplCopyWithImpl<_$ArrayValueImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ArrayValueImplToJson(this);
+  }
+}
+
+abstract class _ArrayValue implements ArrayValue {
+  const factory _ArrayValue({
+    @JsonKey(name: 'values') final List<Value>? values,
+  }) = _$ArrayValueImpl;
+
+  factory _ArrayValue.fromJson(Map<String, dynamic> json) =
+      _$ArrayValueImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'values')
+  List<Value>? get values;
+
+  /// Create a copy of ArrayValue
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ArrayValueImplCopyWith<_$ArrayValueImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Value _$ValueFromJson(Map<String, dynamic> json) {
+  return _Value.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Value {
+  @JsonKey(name: 'mapValue')
+  ValueMapValue? get mapValue => throw _privateConstructorUsedError;
+
+  /// Serializes this Value to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of Value
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $ValueCopyWith<Value> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ValueCopyWith<$Res> {
+  factory $ValueCopyWith(Value value, $Res Function(Value) then) =
+      _$ValueCopyWithImpl<$Res, Value>;
+  @useResult
+  $Res call({@JsonKey(name: 'mapValue') ValueMapValue? mapValue});
+
+  $ValueMapValueCopyWith<$Res>? get mapValue;
+}
+
+/// @nodoc
+class _$ValueCopyWithImpl<$Res, $Val extends Value>
+    implements $ValueCopyWith<$Res> {
+  _$ValueCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of Value
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? mapValue = freezed}) {
+    return _then(
+      _value.copyWith(
+            mapValue:
+                freezed == mapValue
+                    ? _value.mapValue
+                    : mapValue // ignore: cast_nullable_to_non_nullable
+                        as ValueMapValue?,
+          )
+          as $Val,
+    );
+  }
+
+  /// Create a copy of Value
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ValueMapValueCopyWith<$Res>? get mapValue {
+    if (_value.mapValue == null) {
+      return null;
+    }
+
+    return $ValueMapValueCopyWith<$Res>(_value.mapValue!, (value) {
+      return _then(_value.copyWith(mapValue: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$ValueImplCopyWith<$Res> implements $ValueCopyWith<$Res> {
+  factory _$$ValueImplCopyWith(
+    _$ValueImpl value,
+    $Res Function(_$ValueImpl) then,
+  ) = __$$ValueImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: 'mapValue') ValueMapValue? mapValue});
+
+  @override
+  $ValueMapValueCopyWith<$Res>? get mapValue;
+}
+
+/// @nodoc
+class __$$ValueImplCopyWithImpl<$Res>
+    extends _$ValueCopyWithImpl<$Res, _$ValueImpl>
+    implements _$$ValueImplCopyWith<$Res> {
+  __$$ValueImplCopyWithImpl(
+    _$ValueImpl _value,
+    $Res Function(_$ValueImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of Value
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? mapValue = freezed}) {
+    return _then(
+      _$ValueImpl(
+        mapValue:
+            freezed == mapValue
+                ? _value.mapValue
+                : mapValue // ignore: cast_nullable_to_non_nullable
+                    as ValueMapValue?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ValueImpl implements _Value {
+  const _$ValueImpl({@JsonKey(name: 'mapValue') this.mapValue});
+
+  factory _$ValueImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ValueImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'mapValue')
+  final ValueMapValue? mapValue;
+
+  @override
+  String toString() {
+    return 'Value(mapValue: $mapValue)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ValueImpl &&
+            (identical(other.mapValue, mapValue) ||
+                other.mapValue == mapValue));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, mapValue);
+
+  /// Create a copy of Value
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ValueImplCopyWith<_$ValueImpl> get copyWith =>
+      __$$ValueImplCopyWithImpl<_$ValueImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ValueImplToJson(this);
+  }
+}
+
+abstract class _Value implements Value {
+  const factory _Value({
+    @JsonKey(name: 'mapValue') final ValueMapValue? mapValue,
+  }) = _$ValueImpl;
+
+  factory _Value.fromJson(Map<String, dynamic> json) = _$ValueImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'mapValue')
+  ValueMapValue? get mapValue;
+
+  /// Create a copy of Value
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ValueImplCopyWith<_$ValueImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+ValueMapValue _$ValueMapValueFromJson(Map<String, dynamic> json) {
+  return _ValueMapValue.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ValueMapValue {
+  @JsonKey(name: 'fields')
+  PurpleFields? get fields => throw _privateConstructorUsedError;
+
+  /// Serializes this ValueMapValue to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of ValueMapValue
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $ValueMapValueCopyWith<ValueMapValue> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ValueMapValueCopyWith<$Res> {
+  factory $ValueMapValueCopyWith(
+    ValueMapValue value,
+    $Res Function(ValueMapValue) then,
+  ) = _$ValueMapValueCopyWithImpl<$Res, ValueMapValue>;
+  @useResult
+  $Res call({@JsonKey(name: 'fields') PurpleFields? fields});
+
+  $PurpleFieldsCopyWith<$Res>? get fields;
+}
+
+/// @nodoc
+class _$ValueMapValueCopyWithImpl<$Res, $Val extends ValueMapValue>
+    implements $ValueMapValueCopyWith<$Res> {
+  _$ValueMapValueCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of ValueMapValue
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? fields = freezed}) {
+    return _then(
+      _value.copyWith(
+            fields:
+                freezed == fields
+                    ? _value.fields
+                    : fields // ignore: cast_nullable_to_non_nullable
+                        as PurpleFields?,
+          )
+          as $Val,
+    );
+  }
+
+  /// Create a copy of ValueMapValue
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PurpleFieldsCopyWith<$Res>? get fields {
+    if (_value.fields == null) {
+      return null;
+    }
+
+    return $PurpleFieldsCopyWith<$Res>(_value.fields!, (value) {
+      return _then(_value.copyWith(fields: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$ValueMapValueImplCopyWith<$Res>
+    implements $ValueMapValueCopyWith<$Res> {
+  factory _$$ValueMapValueImplCopyWith(
+    _$ValueMapValueImpl value,
+    $Res Function(_$ValueMapValueImpl) then,
+  ) = __$$ValueMapValueImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: 'fields') PurpleFields? fields});
+
+  @override
+  $PurpleFieldsCopyWith<$Res>? get fields;
+}
+
+/// @nodoc
+class __$$ValueMapValueImplCopyWithImpl<$Res>
+    extends _$ValueMapValueCopyWithImpl<$Res, _$ValueMapValueImpl>
+    implements _$$ValueMapValueImplCopyWith<$Res> {
+  __$$ValueMapValueImplCopyWithImpl(
+    _$ValueMapValueImpl _value,
+    $Res Function(_$ValueMapValueImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of ValueMapValue
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? fields = freezed}) {
+    return _then(
+      _$ValueMapValueImpl(
+        fields:
+            freezed == fields
+                ? _value.fields
+                : fields // ignore: cast_nullable_to_non_nullable
+                    as PurpleFields?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ValueMapValueImpl implements _ValueMapValue {
+  const _$ValueMapValueImpl({@JsonKey(name: 'fields') this.fields});
+
+  factory _$ValueMapValueImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ValueMapValueImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'fields')
+  final PurpleFields? fields;
+
+  @override
+  String toString() {
+    return 'ValueMapValue(fields: $fields)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ValueMapValueImpl &&
+            (identical(other.fields, fields) || other.fields == fields));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, fields);
+
+  /// Create a copy of ValueMapValue
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ValueMapValueImplCopyWith<_$ValueMapValueImpl> get copyWith =>
+      __$$ValueMapValueImplCopyWithImpl<_$ValueMapValueImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ValueMapValueImplToJson(this);
+  }
+}
+
+abstract class _ValueMapValue implements ValueMapValue {
+  const factory _ValueMapValue({
+    @JsonKey(name: 'fields') final PurpleFields? fields,
+  }) = _$ValueMapValueImpl;
+
+  factory _ValueMapValue.fromJson(Map<String, dynamic> json) =
+      _$ValueMapValueImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'fields')
+  PurpleFields? get fields;
+
+  /// Create a copy of ValueMapValue
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ValueMapValueImplCopyWith<_$ValueMapValueImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+PurpleFields _$PurpleFieldsFromJson(Map<String, dynamic> json) {
+  return _PurpleFields.fromJson(json);
+}
+
+/// @nodoc
+mixin _$PurpleFields {
+  @JsonKey(name: 'customer_id')
+  CreatedBy? get customerId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'visit_purpose')
+  CreatedBy? get visitPurpose => throw _privateConstructorUsedError;
+  @JsonKey(name: 'visit_status')
+  VisitStatus? get visitStatus => throw _privateConstructorUsedError;
+  @JsonKey(name: 'visit_notes')
+  CreatedBy? get visitNotes => throw _privateConstructorUsedError;
+  @JsonKey(name: 'location')
+  Location? get location => throw _privateConstructorUsedError;
+
+  /// Serializes this PurpleFields to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of PurpleFields
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $PurpleFieldsCopyWith<PurpleFields> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PurpleFieldsCopyWith<$Res> {
+  factory $PurpleFieldsCopyWith(
+    PurpleFields value,
+    $Res Function(PurpleFields) then,
+  ) = _$PurpleFieldsCopyWithImpl<$Res, PurpleFields>;
+  @useResult
+  $Res call({
+    @JsonKey(name: 'customer_id') CreatedBy? customerId,
+    @JsonKey(name: 'visit_purpose') CreatedBy? visitPurpose,
+    @JsonKey(name: 'visit_status') VisitStatus? visitStatus,
+    @JsonKey(name: 'visit_notes') CreatedBy? visitNotes,
+    @JsonKey(name: 'location') Location? location,
+  });
+
+  $CreatedByCopyWith<$Res>? get customerId;
+  $CreatedByCopyWith<$Res>? get visitPurpose;
+  $VisitStatusCopyWith<$Res>? get visitStatus;
+  $CreatedByCopyWith<$Res>? get visitNotes;
+  $LocationCopyWith<$Res>? get location;
+}
+
+/// @nodoc
+class _$PurpleFieldsCopyWithImpl<$Res, $Val extends PurpleFields>
+    implements $PurpleFieldsCopyWith<$Res> {
+  _$PurpleFieldsCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of PurpleFields
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? customerId = freezed,
+    Object? visitPurpose = freezed,
+    Object? visitStatus = freezed,
+    Object? visitNotes = freezed,
+    Object? location = freezed,
+  }) {
+    return _then(
+      _value.copyWith(
+            customerId:
+                freezed == customerId
+                    ? _value.customerId
+                    : customerId // ignore: cast_nullable_to_non_nullable
+                        as CreatedBy?,
+            visitPurpose:
+                freezed == visitPurpose
+                    ? _value.visitPurpose
+                    : visitPurpose // ignore: cast_nullable_to_non_nullable
+                        as CreatedBy?,
+            visitStatus:
+                freezed == visitStatus
+                    ? _value.visitStatus
+                    : visitStatus // ignore: cast_nullable_to_non_nullable
+                        as VisitStatus?,
+            visitNotes:
+                freezed == visitNotes
+                    ? _value.visitNotes
+                    : visitNotes // ignore: cast_nullable_to_non_nullable
+                        as CreatedBy?,
+            location:
+                freezed == location
+                    ? _value.location
+                    : location // ignore: cast_nullable_to_non_nullable
+                        as Location?,
+          )
+          as $Val,
+    );
+  }
+
+  /// Create a copy of PurpleFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CreatedByCopyWith<$Res>? get customerId {
+    if (_value.customerId == null) {
+      return null;
+    }
+
+    return $CreatedByCopyWith<$Res>(_value.customerId!, (value) {
+      return _then(_value.copyWith(customerId: value) as $Val);
+    });
+  }
+
+  /// Create a copy of PurpleFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CreatedByCopyWith<$Res>? get visitPurpose {
+    if (_value.visitPurpose == null) {
+      return null;
+    }
+
+    return $CreatedByCopyWith<$Res>(_value.visitPurpose!, (value) {
+      return _then(_value.copyWith(visitPurpose: value) as $Val);
+    });
+  }
+
+  /// Create a copy of PurpleFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $VisitStatusCopyWith<$Res>? get visitStatus {
+    if (_value.visitStatus == null) {
+      return null;
+    }
+
+    return $VisitStatusCopyWith<$Res>(_value.visitStatus!, (value) {
+      return _then(_value.copyWith(visitStatus: value) as $Val);
+    });
+  }
+
+  /// Create a copy of PurpleFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CreatedByCopyWith<$Res>? get visitNotes {
+    if (_value.visitNotes == null) {
+      return null;
+    }
+
+    return $CreatedByCopyWith<$Res>(_value.visitNotes!, (value) {
+      return _then(_value.copyWith(visitNotes: value) as $Val);
+    });
+  }
+
+  /// Create a copy of PurpleFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LocationCopyWith<$Res>? get location {
+    if (_value.location == null) {
+      return null;
+    }
+
+    return $LocationCopyWith<$Res>(_value.location!, (value) {
+      return _then(_value.copyWith(location: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$PurpleFieldsImplCopyWith<$Res>
+    implements $PurpleFieldsCopyWith<$Res> {
+  factory _$$PurpleFieldsImplCopyWith(
+    _$PurpleFieldsImpl value,
+    $Res Function(_$PurpleFieldsImpl) then,
+  ) = __$$PurpleFieldsImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({
+    @JsonKey(name: 'customer_id') CreatedBy? customerId,
+    @JsonKey(name: 'visit_purpose') CreatedBy? visitPurpose,
+    @JsonKey(name: 'visit_status') VisitStatus? visitStatus,
+    @JsonKey(name: 'visit_notes') CreatedBy? visitNotes,
+    @JsonKey(name: 'location') Location? location,
+  });
+
+  @override
+  $CreatedByCopyWith<$Res>? get customerId;
+  @override
+  $CreatedByCopyWith<$Res>? get visitPurpose;
+  @override
+  $VisitStatusCopyWith<$Res>? get visitStatus;
+  @override
+  $CreatedByCopyWith<$Res>? get visitNotes;
+  @override
+  $LocationCopyWith<$Res>? get location;
+}
+
+/// @nodoc
+class __$$PurpleFieldsImplCopyWithImpl<$Res>
+    extends _$PurpleFieldsCopyWithImpl<$Res, _$PurpleFieldsImpl>
+    implements _$$PurpleFieldsImplCopyWith<$Res> {
+  __$$PurpleFieldsImplCopyWithImpl(
+    _$PurpleFieldsImpl _value,
+    $Res Function(_$PurpleFieldsImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of PurpleFields
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? customerId = freezed,
+    Object? visitPurpose = freezed,
+    Object? visitStatus = freezed,
+    Object? visitNotes = freezed,
+    Object? location = freezed,
+  }) {
+    return _then(
+      _$PurpleFieldsImpl(
+        customerId:
+            freezed == customerId
+                ? _value.customerId
+                : customerId // ignore: cast_nullable_to_non_nullable
+                    as CreatedBy?,
+        visitPurpose:
+            freezed == visitPurpose
+                ? _value.visitPurpose
+                : visitPurpose // ignore: cast_nullable_to_non_nullable
+                    as CreatedBy?,
+        visitStatus:
+            freezed == visitStatus
+                ? _value.visitStatus
+                : visitStatus // ignore: cast_nullable_to_non_nullable
+                    as VisitStatus?,
+        visitNotes:
+            freezed == visitNotes
+                ? _value.visitNotes
+                : visitNotes // ignore: cast_nullable_to_non_nullable
+                    as CreatedBy?,
+        location:
+            freezed == location
+                ? _value.location
+                : location // ignore: cast_nullable_to_non_nullable
+                    as Location?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$PurpleFieldsImpl implements _PurpleFields {
+  const _$PurpleFieldsImpl({
+    @JsonKey(name: 'customer_id') this.customerId,
+    @JsonKey(name: 'visit_purpose') this.visitPurpose,
+    @JsonKey(name: 'visit_status') this.visitStatus,
+    @JsonKey(name: 'visit_notes') this.visitNotes,
+    @JsonKey(name: 'location') this.location,
+  });
+
+  factory _$PurpleFieldsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PurpleFieldsImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'customer_id')
+  final CreatedBy? customerId;
+  @override
+  @JsonKey(name: 'visit_purpose')
+  final CreatedBy? visitPurpose;
+  @override
+  @JsonKey(name: 'visit_status')
+  final VisitStatus? visitStatus;
+  @override
+  @JsonKey(name: 'visit_notes')
+  final CreatedBy? visitNotes;
+  @override
+  @JsonKey(name: 'location')
+  final Location? location;
+
+  @override
+  String toString() {
+    return 'PurpleFields(customerId: $customerId, visitPurpose: $visitPurpose, visitStatus: $visitStatus, visitNotes: $visitNotes, location: $location)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PurpleFieldsImpl &&
+            (identical(other.customerId, customerId) ||
+                other.customerId == customerId) &&
+            (identical(other.visitPurpose, visitPurpose) ||
+                other.visitPurpose == visitPurpose) &&
+            (identical(other.visitStatus, visitStatus) ||
+                other.visitStatus == visitStatus) &&
+            (identical(other.visitNotes, visitNotes) ||
+                other.visitNotes == visitNotes) &&
+            (identical(other.location, location) ||
+                other.location == location));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+    runtimeType,
+    customerId,
+    visitPurpose,
+    visitStatus,
+    visitNotes,
+    location,
+  );
+
+  /// Create a copy of PurpleFields
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PurpleFieldsImplCopyWith<_$PurpleFieldsImpl> get copyWith =>
+      __$$PurpleFieldsImplCopyWithImpl<_$PurpleFieldsImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$PurpleFieldsImplToJson(this);
+  }
+}
+
+abstract class _PurpleFields implements PurpleFields {
+  const factory _PurpleFields({
+    @JsonKey(name: 'customer_id') final CreatedBy? customerId,
+    @JsonKey(name: 'visit_purpose') final CreatedBy? visitPurpose,
+    @JsonKey(name: 'visit_status') final VisitStatus? visitStatus,
+    @JsonKey(name: 'visit_notes') final CreatedBy? visitNotes,
+    @JsonKey(name: 'location') final Location? location,
+  }) = _$PurpleFieldsImpl;
+
+  factory _PurpleFields.fromJson(Map<String, dynamic> json) =
+      _$PurpleFieldsImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'customer_id')
+  CreatedBy? get customerId;
+  @override
+  @JsonKey(name: 'visit_purpose')
+  CreatedBy? get visitPurpose;
+  @override
+  @JsonKey(name: 'visit_status')
+  VisitStatus? get visitStatus;
+  @override
+  @JsonKey(name: 'visit_notes')
+  CreatedBy? get visitNotes;
+  @override
+  @JsonKey(name: 'location')
+  Location? get location;
+
+  /// Create a copy of PurpleFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$PurpleFieldsImplCopyWith<_$PurpleFieldsImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Location _$LocationFromJson(Map<String, dynamic> json) {
+  return _Location.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Location {
+  @JsonKey(name: 'mapValue')
+  LocationMapValue? get mapValue => throw _privateConstructorUsedError;
+
+  /// Serializes this Location to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of Location
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $LocationCopyWith<Location> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LocationCopyWith<$Res> {
+  factory $LocationCopyWith(Location value, $Res Function(Location) then) =
+      _$LocationCopyWithImpl<$Res, Location>;
+  @useResult
+  $Res call({@JsonKey(name: 'mapValue') LocationMapValue? mapValue});
+
+  $LocationMapValueCopyWith<$Res>? get mapValue;
+}
+
+/// @nodoc
+class _$LocationCopyWithImpl<$Res, $Val extends Location>
+    implements $LocationCopyWith<$Res> {
+  _$LocationCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of Location
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? mapValue = freezed}) {
+    return _then(
+      _value.copyWith(
+            mapValue:
+                freezed == mapValue
+                    ? _value.mapValue
+                    : mapValue // ignore: cast_nullable_to_non_nullable
+                        as LocationMapValue?,
+          )
+          as $Val,
+    );
+  }
+
+  /// Create a copy of Location
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LocationMapValueCopyWith<$Res>? get mapValue {
+    if (_value.mapValue == null) {
+      return null;
+    }
+
+    return $LocationMapValueCopyWith<$Res>(_value.mapValue!, (value) {
+      return _then(_value.copyWith(mapValue: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$LocationImplCopyWith<$Res>
+    implements $LocationCopyWith<$Res> {
+  factory _$$LocationImplCopyWith(
+    _$LocationImpl value,
+    $Res Function(_$LocationImpl) then,
+  ) = __$$LocationImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: 'mapValue') LocationMapValue? mapValue});
+
+  @override
+  $LocationMapValueCopyWith<$Res>? get mapValue;
+}
+
+/// @nodoc
+class __$$LocationImplCopyWithImpl<$Res>
+    extends _$LocationCopyWithImpl<$Res, _$LocationImpl>
+    implements _$$LocationImplCopyWith<$Res> {
+  __$$LocationImplCopyWithImpl(
+    _$LocationImpl _value,
+    $Res Function(_$LocationImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of Location
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? mapValue = freezed}) {
+    return _then(
+      _$LocationImpl(
+        mapValue:
+            freezed == mapValue
+                ? _value.mapValue
+                : mapValue // ignore: cast_nullable_to_non_nullable
+                    as LocationMapValue?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$LocationImpl implements _Location {
+  const _$LocationImpl({@JsonKey(name: 'mapValue') this.mapValue});
+
+  factory _$LocationImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LocationImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'mapValue')
+  final LocationMapValue? mapValue;
+
+  @override
+  String toString() {
+    return 'Location(mapValue: $mapValue)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LocationImpl &&
+            (identical(other.mapValue, mapValue) ||
+                other.mapValue == mapValue));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, mapValue);
+
+  /// Create a copy of Location
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LocationImplCopyWith<_$LocationImpl> get copyWith =>
+      __$$LocationImplCopyWithImpl<_$LocationImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$LocationImplToJson(this);
+  }
+}
+
+abstract class _Location implements Location {
+  const factory _Location({
+    @JsonKey(name: 'mapValue') final LocationMapValue? mapValue,
+  }) = _$LocationImpl;
+
+  factory _Location.fromJson(Map<String, dynamic> json) =
+      _$LocationImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'mapValue')
+  LocationMapValue? get mapValue;
+
+  /// Create a copy of Location
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LocationImplCopyWith<_$LocationImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+LocationMapValue _$LocationMapValueFromJson(Map<String, dynamic> json) {
+  return _LocationMapValue.fromJson(json);
+}
+
+/// @nodoc
+mixin _$LocationMapValue {
+  @JsonKey(name: 'fields')
+  FluffyFields? get fields => throw _privateConstructorUsedError;
+
+  /// Serializes this LocationMapValue to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of LocationMapValue
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $LocationMapValueCopyWith<LocationMapValue> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LocationMapValueCopyWith<$Res> {
+  factory $LocationMapValueCopyWith(
+    LocationMapValue value,
+    $Res Function(LocationMapValue) then,
+  ) = _$LocationMapValueCopyWithImpl<$Res, LocationMapValue>;
+  @useResult
+  $Res call({@JsonKey(name: 'fields') FluffyFields? fields});
+
+  $FluffyFieldsCopyWith<$Res>? get fields;
+}
+
+/// @nodoc
+class _$LocationMapValueCopyWithImpl<$Res, $Val extends LocationMapValue>
+    implements $LocationMapValueCopyWith<$Res> {
+  _$LocationMapValueCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of LocationMapValue
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? fields = freezed}) {
+    return _then(
+      _value.copyWith(
+            fields:
+                freezed == fields
+                    ? _value.fields
+                    : fields // ignore: cast_nullable_to_non_nullable
+                        as FluffyFields?,
+          )
+          as $Val,
+    );
+  }
+
+  /// Create a copy of LocationMapValue
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $FluffyFieldsCopyWith<$Res>? get fields {
+    if (_value.fields == null) {
+      return null;
+    }
+
+    return $FluffyFieldsCopyWith<$Res>(_value.fields!, (value) {
+      return _then(_value.copyWith(fields: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$LocationMapValueImplCopyWith<$Res>
+    implements $LocationMapValueCopyWith<$Res> {
+  factory _$$LocationMapValueImplCopyWith(
+    _$LocationMapValueImpl value,
+    $Res Function(_$LocationMapValueImpl) then,
+  ) = __$$LocationMapValueImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: 'fields') FluffyFields? fields});
+
+  @override
+  $FluffyFieldsCopyWith<$Res>? get fields;
+}
+
+/// @nodoc
+class __$$LocationMapValueImplCopyWithImpl<$Res>
+    extends _$LocationMapValueCopyWithImpl<$Res, _$LocationMapValueImpl>
+    implements _$$LocationMapValueImplCopyWith<$Res> {
+  __$$LocationMapValueImplCopyWithImpl(
+    _$LocationMapValueImpl _value,
+    $Res Function(_$LocationMapValueImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of LocationMapValue
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? fields = freezed}) {
+    return _then(
+      _$LocationMapValueImpl(
+        fields:
+            freezed == fields
+                ? _value.fields
+                : fields // ignore: cast_nullable_to_non_nullable
+                    as FluffyFields?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$LocationMapValueImpl implements _LocationMapValue {
+  const _$LocationMapValueImpl({@JsonKey(name: 'fields') this.fields});
+
+  factory _$LocationMapValueImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LocationMapValueImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'fields')
+  final FluffyFields? fields;
+
+  @override
+  String toString() {
+    return 'LocationMapValue(fields: $fields)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LocationMapValueImpl &&
+            (identical(other.fields, fields) || other.fields == fields));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, fields);
+
+  /// Create a copy of LocationMapValue
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LocationMapValueImplCopyWith<_$LocationMapValueImpl> get copyWith =>
+      __$$LocationMapValueImplCopyWithImpl<_$LocationMapValueImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$LocationMapValueImplToJson(this);
+  }
+}
+
+abstract class _LocationMapValue implements LocationMapValue {
+  const factory _LocationMapValue({
+    @JsonKey(name: 'fields') final FluffyFields? fields,
+  }) = _$LocationMapValueImpl;
+
+  factory _LocationMapValue.fromJson(Map<String, dynamic> json) =
+      _$LocationMapValueImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'fields')
+  FluffyFields? get fields;
+
+  /// Create a copy of LocationMapValue
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LocationMapValueImplCopyWith<_$LocationMapValueImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+FluffyFields _$FluffyFieldsFromJson(Map<String, dynamic> json) {
+  return _FluffyFields.fromJson(json);
+}
+
+/// @nodoc
+mixin _$FluffyFields {
+  @JsonKey(name: 'latitude')
+  Accuracy? get latitude => throw _privateConstructorUsedError;
+  @JsonKey(name: 'longitude')
+  Accuracy? get longitude => throw _privateConstructorUsedError;
+  @JsonKey(name: 'accuracy')
+  Accuracy? get accuracy => throw _privateConstructorUsedError;
+
+  /// Serializes this FluffyFields to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of FluffyFields
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $FluffyFieldsCopyWith<FluffyFields> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $FluffyFieldsCopyWith<$Res> {
+  factory $FluffyFieldsCopyWith(
+    FluffyFields value,
+    $Res Function(FluffyFields) then,
+  ) = _$FluffyFieldsCopyWithImpl<$Res, FluffyFields>;
+  @useResult
+  $Res call({
+    @JsonKey(name: 'latitude') Accuracy? latitude,
+    @JsonKey(name: 'longitude') Accuracy? longitude,
+    @JsonKey(name: 'accuracy') Accuracy? accuracy,
+  });
+
+  $AccuracyCopyWith<$Res>? get latitude;
+  $AccuracyCopyWith<$Res>? get longitude;
+  $AccuracyCopyWith<$Res>? get accuracy;
+}
+
+/// @nodoc
+class _$FluffyFieldsCopyWithImpl<$Res, $Val extends FluffyFields>
+    implements $FluffyFieldsCopyWith<$Res> {
+  _$FluffyFieldsCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of FluffyFields
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? latitude = freezed,
+    Object? longitude = freezed,
+    Object? accuracy = freezed,
+  }) {
+    return _then(
+      _value.copyWith(
+            latitude:
+                freezed == latitude
+                    ? _value.latitude
+                    : latitude // ignore: cast_nullable_to_non_nullable
+                        as Accuracy?,
+            longitude:
+                freezed == longitude
+                    ? _value.longitude
+                    : longitude // ignore: cast_nullable_to_non_nullable
+                        as Accuracy?,
+            accuracy:
+                freezed == accuracy
+                    ? _value.accuracy
+                    : accuracy // ignore: cast_nullable_to_non_nullable
+                        as Accuracy?,
+          )
+          as $Val,
+    );
+  }
+
+  /// Create a copy of FluffyFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AccuracyCopyWith<$Res>? get latitude {
+    if (_value.latitude == null) {
+      return null;
+    }
+
+    return $AccuracyCopyWith<$Res>(_value.latitude!, (value) {
+      return _then(_value.copyWith(latitude: value) as $Val);
+    });
+  }
+
+  /// Create a copy of FluffyFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AccuracyCopyWith<$Res>? get longitude {
+    if (_value.longitude == null) {
+      return null;
+    }
+
+    return $AccuracyCopyWith<$Res>(_value.longitude!, (value) {
+      return _then(_value.copyWith(longitude: value) as $Val);
+    });
+  }
+
+  /// Create a copy of FluffyFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AccuracyCopyWith<$Res>? get accuracy {
+    if (_value.accuracy == null) {
+      return null;
+    }
+
+    return $AccuracyCopyWith<$Res>(_value.accuracy!, (value) {
+      return _then(_value.copyWith(accuracy: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$FluffyFieldsImplCopyWith<$Res>
+    implements $FluffyFieldsCopyWith<$Res> {
+  factory _$$FluffyFieldsImplCopyWith(
+    _$FluffyFieldsImpl value,
+    $Res Function(_$FluffyFieldsImpl) then,
+  ) = __$$FluffyFieldsImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({
+    @JsonKey(name: 'latitude') Accuracy? latitude,
+    @JsonKey(name: 'longitude') Accuracy? longitude,
+    @JsonKey(name: 'accuracy') Accuracy? accuracy,
+  });
+
+  @override
+  $AccuracyCopyWith<$Res>? get latitude;
+  @override
+  $AccuracyCopyWith<$Res>? get longitude;
+  @override
+  $AccuracyCopyWith<$Res>? get accuracy;
+}
+
+/// @nodoc
+class __$$FluffyFieldsImplCopyWithImpl<$Res>
+    extends _$FluffyFieldsCopyWithImpl<$Res, _$FluffyFieldsImpl>
+    implements _$$FluffyFieldsImplCopyWith<$Res> {
+  __$$FluffyFieldsImplCopyWithImpl(
+    _$FluffyFieldsImpl _value,
+    $Res Function(_$FluffyFieldsImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of FluffyFields
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? latitude = freezed,
+    Object? longitude = freezed,
+    Object? accuracy = freezed,
+  }) {
+    return _then(
+      _$FluffyFieldsImpl(
+        latitude:
+            freezed == latitude
+                ? _value.latitude
+                : latitude // ignore: cast_nullable_to_non_nullable
+                    as Accuracy?,
+        longitude:
+            freezed == longitude
+                ? _value.longitude
+                : longitude // ignore: cast_nullable_to_non_nullable
+                    as Accuracy?,
+        accuracy:
+            freezed == accuracy
+                ? _value.accuracy
+                : accuracy // ignore: cast_nullable_to_non_nullable
+                    as Accuracy?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$FluffyFieldsImpl implements _FluffyFields {
+  const _$FluffyFieldsImpl({
+    @JsonKey(name: 'latitude') this.latitude,
+    @JsonKey(name: 'longitude') this.longitude,
+    @JsonKey(name: 'accuracy') this.accuracy,
+  });
+
+  factory _$FluffyFieldsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$FluffyFieldsImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'latitude')
+  final Accuracy? latitude;
+  @override
+  @JsonKey(name: 'longitude')
+  final Accuracy? longitude;
+  @override
+  @JsonKey(name: 'accuracy')
+  final Accuracy? accuracy;
+
+  @override
+  String toString() {
+    return 'FluffyFields(latitude: $latitude, longitude: $longitude, accuracy: $accuracy)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FluffyFieldsImpl &&
+            (identical(other.latitude, latitude) ||
+                other.latitude == latitude) &&
+            (identical(other.longitude, longitude) ||
+                other.longitude == longitude) &&
+            (identical(other.accuracy, accuracy) ||
+                other.accuracy == accuracy));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, latitude, longitude, accuracy);
+
+  /// Create a copy of FluffyFields
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FluffyFieldsImplCopyWith<_$FluffyFieldsImpl> get copyWith =>
+      __$$FluffyFieldsImplCopyWithImpl<_$FluffyFieldsImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$FluffyFieldsImplToJson(this);
+  }
+}
+
+abstract class _FluffyFields implements FluffyFields {
+  const factory _FluffyFields({
+    @JsonKey(name: 'latitude') final Accuracy? latitude,
+    @JsonKey(name: 'longitude') final Accuracy? longitude,
+    @JsonKey(name: 'accuracy') final Accuracy? accuracy,
+  }) = _$FluffyFieldsImpl;
+
+  factory _FluffyFields.fromJson(Map<String, dynamic> json) =
+      _$FluffyFieldsImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'latitude')
+  Accuracy? get latitude;
+  @override
+  @JsonKey(name: 'longitude')
+  Accuracy? get longitude;
+  @override
+  @JsonKey(name: 'accuracy')
+  Accuracy? get accuracy;
+
+  /// Create a copy of FluffyFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$FluffyFieldsImplCopyWith<_$FluffyFieldsImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Accuracy _$AccuracyFromJson(Map<String, dynamic> json) {
+  return _Accuracy.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Accuracy {
+  @JsonKey(name: 'doubleValue')
+  double? get doubleValue => throw _privateConstructorUsedError;
+
+  /// Serializes this Accuracy to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of Accuracy
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $AccuracyCopyWith<Accuracy> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AccuracyCopyWith<$Res> {
+  factory $AccuracyCopyWith(Accuracy value, $Res Function(Accuracy) then) =
+      _$AccuracyCopyWithImpl<$Res, Accuracy>;
+  @useResult
+  $Res call({@JsonKey(name: 'doubleValue') double? doubleValue});
+}
+
+/// @nodoc
+class _$AccuracyCopyWithImpl<$Res, $Val extends Accuracy>
+    implements $AccuracyCopyWith<$Res> {
+  _$AccuracyCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of Accuracy
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? doubleValue = freezed}) {
+    return _then(
+      _value.copyWith(
+            doubleValue:
+                freezed == doubleValue
+                    ? _value.doubleValue
+                    : doubleValue // ignore: cast_nullable_to_non_nullable
+                        as double?,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$AccuracyImplCopyWith<$Res>
+    implements $AccuracyCopyWith<$Res> {
+  factory _$$AccuracyImplCopyWith(
+    _$AccuracyImpl value,
+    $Res Function(_$AccuracyImpl) then,
+  ) = __$$AccuracyImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: 'doubleValue') double? doubleValue});
+}
+
+/// @nodoc
+class __$$AccuracyImplCopyWithImpl<$Res>
+    extends _$AccuracyCopyWithImpl<$Res, _$AccuracyImpl>
+    implements _$$AccuracyImplCopyWith<$Res> {
+  __$$AccuracyImplCopyWithImpl(
+    _$AccuracyImpl _value,
+    $Res Function(_$AccuracyImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of Accuracy
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? doubleValue = freezed}) {
+    return _then(
+      _$AccuracyImpl(
+        doubleValue:
+            freezed == doubleValue
+                ? _value.doubleValue
+                : doubleValue // ignore: cast_nullable_to_non_nullable
+                    as double?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$AccuracyImpl implements _Accuracy {
+  const _$AccuracyImpl({@JsonKey(name: 'doubleValue') this.doubleValue});
+
+  factory _$AccuracyImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AccuracyImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'doubleValue')
+  final double? doubleValue;
+
+  @override
+  String toString() {
+    return 'Accuracy(doubleValue: $doubleValue)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AccuracyImpl &&
+            (identical(other.doubleValue, doubleValue) ||
+                other.doubleValue == doubleValue));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, doubleValue);
+
+  /// Create a copy of Accuracy
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AccuracyImplCopyWith<_$AccuracyImpl> get copyWith =>
+      __$$AccuracyImplCopyWithImpl<_$AccuracyImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$AccuracyImplToJson(this);
+  }
+}
+
+abstract class _Accuracy implements Accuracy {
+  const factory _Accuracy({
+    @JsonKey(name: 'doubleValue') final double? doubleValue,
+  }) = _$AccuracyImpl;
+
+  factory _Accuracy.fromJson(Map<String, dynamic> json) =
+      _$AccuracyImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'doubleValue')
+  double? get doubleValue;
+
+  /// Create a copy of Accuracy
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$AccuracyImplCopyWith<_$AccuracyImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+VisitStatus _$VisitStatusFromJson(Map<String, dynamic> json) {
+  return _VisitStatus.fromJson(json);
+}
+
+/// @nodoc
+mixin _$VisitStatus {
+  @JsonKey(name: 'integerValue')
+  String? get integerValue => throw _privateConstructorUsedError;
+
+  /// Serializes this VisitStatus to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of VisitStatus
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $VisitStatusCopyWith<VisitStatus> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $VisitStatusCopyWith<$Res> {
+  factory $VisitStatusCopyWith(
+    VisitStatus value,
+    $Res Function(VisitStatus) then,
+  ) = _$VisitStatusCopyWithImpl<$Res, VisitStatus>;
+  @useResult
+  $Res call({@JsonKey(name: 'integerValue') String? integerValue});
+}
+
+/// @nodoc
+class _$VisitStatusCopyWithImpl<$Res, $Val extends VisitStatus>
+    implements $VisitStatusCopyWith<$Res> {
+  _$VisitStatusCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of VisitStatus
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? integerValue = freezed}) {
+    return _then(
+      _value.copyWith(
+            integerValue:
+                freezed == integerValue
+                    ? _value.integerValue
+                    : integerValue // ignore: cast_nullable_to_non_nullable
+                        as String?,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$VisitStatusImplCopyWith<$Res>
+    implements $VisitStatusCopyWith<$Res> {
+  factory _$$VisitStatusImplCopyWith(
+    _$VisitStatusImpl value,
+    $Res Function(_$VisitStatusImpl) then,
+  ) = __$$VisitStatusImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: 'integerValue') String? integerValue});
+}
+
+/// @nodoc
+class __$$VisitStatusImplCopyWithImpl<$Res>
+    extends _$VisitStatusCopyWithImpl<$Res, _$VisitStatusImpl>
+    implements _$$VisitStatusImplCopyWith<$Res> {
+  __$$VisitStatusImplCopyWithImpl(
+    _$VisitStatusImpl _value,
+    $Res Function(_$VisitStatusImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of VisitStatus
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? integerValue = freezed}) {
+    return _then(
+      _$VisitStatusImpl(
+        integerValue:
+            freezed == integerValue
+                ? _value.integerValue
+                : integerValue // ignore: cast_nullable_to_non_nullable
+                    as String?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$VisitStatusImpl implements _VisitStatus {
+  const _$VisitStatusImpl({@JsonKey(name: 'integerValue') this.integerValue});
+
+  factory _$VisitStatusImpl.fromJson(Map<String, dynamic> json) =>
+      _$$VisitStatusImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'integerValue')
+  final String? integerValue;
+
+  @override
+  String toString() {
+    return 'VisitStatus(integerValue: $integerValue)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$VisitStatusImpl &&
+            (identical(other.integerValue, integerValue) ||
+                other.integerValue == integerValue));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, integerValue);
+
+  /// Create a copy of VisitStatus
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$VisitStatusImplCopyWith<_$VisitStatusImpl> get copyWith =>
+      __$$VisitStatusImplCopyWithImpl<_$VisitStatusImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$VisitStatusImplToJson(this);
+  }
+}
+
+abstract class _VisitStatus implements VisitStatus {
+  const factory _VisitStatus({
+    @JsonKey(name: 'integerValue') final String? integerValue,
+  }) = _$VisitStatusImpl;
+
+  factory _VisitStatus.fromJson(Map<String, dynamic> json) =
+      _$VisitStatusImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'integerValue')
+  String? get integerValue;
+
+  /// Create a copy of VisitStatus
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$VisitStatusImplCopyWith<_$VisitStatusImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

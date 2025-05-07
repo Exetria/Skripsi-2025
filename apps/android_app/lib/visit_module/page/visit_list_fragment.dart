@@ -1,4 +1,9 @@
+import 'package:android_app/customer_module/page/controller/customer_list_controller.dart';
+import 'package:android_app/utils/functions.dart';
+import 'package:android_app/visit_module/domain/entities/visit_domain.dart';
+import 'package:android_app/visit_module/page/controller/visit_list_controller.dart';
 import 'package:android_app/visit_module/page/visit_detail_page.dart';
+import 'package:common_components/common_components.dart';
 import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,82 +22,106 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
 
   @override
   Widget build(BuildContext context) {
-    final visits = [
-      'Visit A',
-      'Visit B',
-      'Visit C',
-    ]; // Replace this with real data
+    // Initialize customer list
+    ref.watch(customerListControllerProvider);
+    final visitListState = ref.watch(visitListControllerProvider);
 
     return Padding(
       padding: EdgeInsets.all(8.r),
       child: Column(
         children: [
           // Date Selector
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-            decoration: BoxDecoration(
-              color: fillColor,
-              borderRadius: BorderRadius.circular(12.r),
-              border: Border.all(color: dividerColor),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  onPressed: () => changeDate(-1),
-                  icon: Icon(Icons.chevron_left, size: 28.sp, color: textColor),
-                ),
-                Expanded(
-                  child: Center(
-                    child: Text(
-                      DateFormat.yMMMMd().format(selectedDate),
-                      style: subtitleStyle,
-                    ),
-                  ),
-                ),
-                IconButton(
-                  onPressed: () => changeDate(1),
-                  icon: Icon(
-                    Icons.chevron_right,
-                    size: 28.sp,
-                    color: textColor,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          buildDateselector(),
           SizedBox(height: 12.h),
 
           // Visit List
           Expanded(
-            child: ListView.separated(
-              itemCount: visits.length,
-              separatorBuilder: (_, __) => SizedBox(height: 12.h),
-              itemBuilder: (context, index) {
-                return Card(
-                  elevation: 3,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.symmetric(
-                      horizontal: 16.w,
-                      vertical: 12.h,
-                    ),
-                    title: Text(visits[index], style: bodyStyle),
-                    trailing: Icon(
-                      Icons.arrow_forward_ios,
-                      size: 16.sp,
-                      color: unselectedItemColor,
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const VisitDetailPage(),
-                        ),
+            child: visitListState.when(
+              loading: () => const Center(child: CircularProgressIndicator()),
+              data: (visitDataList) {
+                // Get visit data from list (per day)
+                final visitData =
+                    visitDataList[_generateVisitIdFromDate(selectedDate)];
+
+                if (visitData == null || visitData.isLeft()) {
+                  return const Center(child: Text('No Visit Data Found'));
+                }
+
+                // Get visit data (visit document for a day)
+                final VisitDomain? data = visitData.getOrElse((error) => null);
+                if (data == null) {
+                  return const Center(child: Text('No Visit Data Found'));
+                }
+
+                // Get visit data (list of visit in a day)
+                List<Value> visits =
+                    data.fields?.visits?.arrayValue?.values ?? [];
+
+                return RefreshIndicator(
+                  onRefresh: () async {
+                    ref
+                        .read(visitListControllerProvider.notifier)
+                        .fetchVisitsForDate(
+                          date: selectedDate,
+                          forceFetch: true,
+                        );
+                  },
+                  child: ListView.separated(
+                    itemCount: visits.length,
+                    separatorBuilder:
+                        (context, index) => SizedBox(height: 12.h),
+                    itemBuilder: (context, index) {
+                      String visitStatus =
+                          visits[index]
+                              .mapValue
+                              ?.fields
+                              ?.visitStatus
+                              ?.integerValue ??
+                          '';
+
+                      return customListItem(
+                        leadIcon: Icons.location_on,
+                        title: ref
+                            .read(customerListControllerProvider.notifier)
+                            .getCustomerName(
+                              id:
+                                  visits[index]
+                                      .mapValue
+                                      ?.fields
+                                      ?.customerId
+                                      ?.stringValue ??
+                                  '',
+                            ),
+                        subtitle:
+                            visitStatus == '1'
+                                ? 'Pending'
+                                : visitStatus == '2'
+                                ? 'In Progress'
+                                : visitStatus == '3'
+                                ? 'Done'
+                                : 'Unknown',
+                        trailIcon: Icons.arrow_forward_ios,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) =>
+                                      VisitDetailPage(data: visits[index]),
+                            ),
+                          );
+                        },
                       );
                     },
+                  ),
+                );
+              },
+              error: (error, _) {
+                // Exception, not casted to ApiException bcs ApiException is collected in data
+                return Center(
+                  child: Text(
+                    'Error Loading Customer List: $error',
+                    style: errorStyle,
                   ),
                 );
               },
@@ -103,9 +132,50 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
     );
   }
 
+  Widget buildDateselector() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+      decoration: BoxDecoration(
+        color: fillColor,
+        borderRadius: BorderRadius.circular(12.r),
+        border: Border.all(color: dividerColor),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            onPressed: () => changeDate(-1),
+            icon: Icon(Icons.chevron_left, size: 28.sp, color: textColor),
+          ),
+          Expanded(
+            child: Center(
+              child: Text(
+                DateFormat.yMMMMd().format(selectedDate),
+                style: subtitleStyle,
+              ),
+            ),
+          ),
+          IconButton(
+            onPressed: () => changeDate(1),
+            icon: Icon(Icons.chevron_right, size: 28.sp, color: textColor),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _generateVisitIdFromDate(DateTime date) {
+    final formattedDate =
+        '${date.day.toString().padLeft(2, '0')}${date.month.toString().padLeft(2, '0')}${date.year}';
+    return formattedDate;
+  }
+
   void changeDate(int offset) {
     setState(() {
       selectedDate = selectedDate.add(Duration(days: offset));
     });
+    ref
+        .read(visitListControllerProvider.notifier)
+        .fetchVisitsForDate(date: selectedDate);
   }
 }
