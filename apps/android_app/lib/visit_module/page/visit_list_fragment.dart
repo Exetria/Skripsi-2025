@@ -1,5 +1,6 @@
 import 'package:android_app/customer_module/page/controller/customer_list_controller.dart';
 import 'package:android_app/utils/functions.dart';
+import 'package:android_app/utils/widget_settings.dart';
 import 'package:android_app/visit_module/domain/entities/visit_domain.dart';
 import 'package:android_app/visit_module/page/controller/visit_list_controller.dart';
 import 'package:android_app/visit_module/page/visit_detail_page.dart';
@@ -18,6 +19,16 @@ class VisitListFragment extends StatefulHookConsumerWidget {
 
 class _VisitListFragment extends ConsumerState<VisitListFragment> {
   DateTime selectedDate = DateTime.now();
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      ref
+          .read(visitListControllerProvider.notifier)
+          .fetchVisitsForDate(date: DateTime.now());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +99,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                           '';
 
                       return customListItem(
+                        context: context,
                         leadIcon: Icons.location_on,
                         title: customerListState.when(
                           loading: () => 'Loading...',
@@ -154,17 +166,20 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
     return Container(
       height: 50.h,
       padding: EdgeInsets.symmetric(horizontal: 16.w),
-      decoration: BoxDecoration(
-        color: fillColor,
-        borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: dividerColor),
-      ),
+      decoration: regularBoxDecoration(context),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
             onPressed: () => _changeDate(-1),
-            icon: Icon(Icons.chevron_left, size: 28.sp, color: textColor),
+            icon: Icon(
+              Icons.chevron_left,
+              size: 28.sp,
+              color:
+                  Theme.of(context).brightness == Brightness.light
+                      ? textColor
+                      : darkModeTextColor,
+            ),
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),
           ),
@@ -178,7 +193,14 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
           ),
           IconButton(
             onPressed: () => _changeDate(1),
-            icon: Icon(Icons.chevron_right, size: 28.sp, color: textColor),
+            icon: Icon(
+              Icons.chevron_right,
+              size: 28.sp,
+              color:
+                  Theme.of(context).brightness == Brightness.light
+                      ? textColor
+                      : darkModeTextColor,
+            ),
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),
           ),
