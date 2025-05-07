@@ -155,7 +155,6 @@ class CreateCustomerRequestDatasourceImpl
       },
     );
 
-    print('asds selesai call');
     return CustomerRequestDomain.fromJson(result);
   }
 }
