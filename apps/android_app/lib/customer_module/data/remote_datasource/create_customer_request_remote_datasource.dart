@@ -1,6 +1,3 @@
-// TODO: Delete ignore
-// ignore_for_file: unused_local_variable
-
 import 'dart:io';
 
 import 'package:android_app/customer_module/domain/entities/customer_request_domain.dart';
