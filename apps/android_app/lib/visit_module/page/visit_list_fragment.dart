@@ -134,7 +134,8 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
 
   Widget buildDateselector() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+      height: 50.h,
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
       decoration: BoxDecoration(
         color: fillColor,
         borderRadius: BorderRadius.circular(12.r),
@@ -146,6 +147,8 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
           IconButton(
             onPressed: () => changeDate(-1),
             icon: Icon(Icons.chevron_left, size: 28.sp, color: textColor),
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(),
           ),
           Expanded(
             child: Center(
@@ -158,6 +161,8 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
           IconButton(
             onPressed: () => changeDate(1),
             icon: Icon(Icons.chevron_right, size: 28.sp, color: textColor),
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(),
           ),
         ],
       ),

@@ -98,26 +98,29 @@ PreferredSizeWidget customAppBar({
 }
 
 // SEARCH BAR
-TextField customSearchBar({String? hint}) {
-  return TextField(
-    decoration: InputDecoration(
-      contentPadding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
-      hintText: hint ?? '',
-      hintStyle: hintStyle,
-      prefixIcon: Icon(Icons.search, color: unselectedItemColor),
-      filled: true,
-      fillColor: fillColor,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12.r),
-        borderSide: BorderSide(color: dividerColor),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12.r),
-        borderSide: BorderSide(color: dividerColor),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12.r),
-        borderSide: BorderSide(color: primaryColor, width: 2),
+Widget customSearchBar({String? hint}) {
+  return SizedBox(
+    height: 50.h,
+    child: TextField(
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
+        hintText: hint ?? '',
+        hintStyle: hintStyle,
+        prefixIcon: Icon(Icons.search, color: unselectedItemColor),
+        filled: true,
+        fillColor: fillColor,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.r),
+          borderSide: BorderSide(color: dividerColor),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.r),
+          borderSide: BorderSide(color: dividerColor),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.r),
+          borderSide: BorderSide(color: primaryColor, width: 2),
+        ),
       ),
     ),
   );
