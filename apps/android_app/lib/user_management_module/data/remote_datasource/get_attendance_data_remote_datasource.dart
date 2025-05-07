@@ -21,8 +21,6 @@ class GetAttendanceDataRemoteDatasourceImpl
       },
     );
 
-    print('asds result api $result');
-
     return AttendanceDomain.fromJson(result);
   }
 
