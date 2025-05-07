@@ -11,6 +11,7 @@ analyzer:
     prefer_interpolation_to_compose_strings: ignore
     use_build_context_synchronously: ignore
     file_names: ignore
+    implementation_imports: ignore
 
 custom_lint:
   enable_all_rules: true
