@@ -17,4 +17,22 @@ class CustomerListController extends _$CustomerListController {
     );
     return state.value;
   }
+
+  String getCustomerName({required String id}) {
+    if (state is! AsyncData) {
+      return 'Loading';
+    }
+
+    final customerList = state.value ?? [];
+
+    for (var customer in customerList) {
+      final customerId = customer.name?.substring(61) ?? '';
+
+      if (customerId == id) {
+        return customer.fields?.companyName?.stringValue ?? '-';
+      }
+    }
+
+    return 'Name Not Found';
+  }
 }
