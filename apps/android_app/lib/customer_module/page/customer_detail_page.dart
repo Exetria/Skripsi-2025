@@ -1,5 +1,6 @@
 import 'package:android_app/customer_module/domain/entities/customer_domain.dart';
 import 'package:android_app/utils/functions.dart';
+import 'package:android_app/utils/widget_settings.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,6 +20,7 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(
+        context: context,
         title: widget.data.fields?.companyName?.stringValue ?? '-',
         showLeftButton: true,
       ),
@@ -69,6 +71,7 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
 
             // Info Card with name inside
             infoCard(
+              context: context,
               title: 'Company Data',
               values: [
                 widget.data.fields?.companyName?.stringValue ?? '-',
@@ -86,6 +89,7 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
             SizedBox(height: 24.h),
 
             infoCard(
+              context: context,
               title: 'Owner Data',
               values: [
                 widget.data.fields?.ownerName?.stringValue ?? '-',
@@ -98,6 +102,7 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
             SizedBox(height: 24.h),
 
             infoCard(
+              context: context,
               title: 'Other Data',
               values: [
                 widget.data.fields?.customerType?.stringValue ?? '-',
@@ -115,18 +120,7 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
             Container(
               width: double.infinity,
               padding: EdgeInsets.all(16.r),
-              decoration: BoxDecoration(
-                color: fillColor,
-                borderRadius: BorderRadius.circular(12.r),
-                border: Border.all(color: dividerColor),
-                boxShadow: [
-                  BoxShadow(
-                    color: dividerColor,
-                    blurRadius: 8,
-                    offset: Offset(0, 6.h),
-                  ),
-                ],
-              ),
+              decoration: regularBoxDecoration(context),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

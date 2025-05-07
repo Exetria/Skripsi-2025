@@ -1,4 +1,5 @@
 import 'package:android_app/utils/functions.dart';
+import 'package:android_app/utils/widget_settings.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,7 +29,11 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
     );
 
     return Scaffold(
-      appBar: customAppBar(title: 'Order Detail', showLeftButton: true),
+      appBar: customAppBar(
+        context: context,
+        title: 'Order Detail',
+        showLeftButton: true,
+      ),
       body: Padding(
         padding: EdgeInsets.all(16.r),
         child: Column(
@@ -42,17 +47,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
               return Container(
                 margin: EdgeInsets.only(bottom: 12.h),
                 padding: EdgeInsets.all(12.r),
-                decoration: BoxDecoration(
-                  color: backgroundColor,
-                  borderRadius: BorderRadius.circular(12.r),
-                  boxShadow: [
-                    BoxShadow(
-                      color: dividerColor,
-                      blurRadius: 8,
-                      offset: Offset(0, 6.h),
-                    ),
-                  ],
-                ),
+                decoration: regularBoxDecoration(context),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

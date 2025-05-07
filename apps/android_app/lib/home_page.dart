@@ -6,6 +6,7 @@ import 'package:android_app/product_module/page/product_list_fragment.dart';
 import 'package:android_app/user_management_module/page/login_page.dart';
 import 'package:android_app/user_management_module/page/profile_fragment.dart';
 import 'package:android_app/utils/functions.dart';
+import 'package:android_app/visit_module/page/add_visit_page.dart';
 import 'package:android_app/visit_module/page/visit_list_fragment.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
@@ -77,6 +78,7 @@ class _HomePage extends ConsumerState<HomePage> {
       },
       child: Scaffold(
         appBar: customAppBar(
+          context: context,
           title: 'Salesku App',
           showLeftButton: true,
           leftButtonWidget: Image.asset('assets/logo.png', height: 60.h),
@@ -90,22 +92,31 @@ class _HomePage extends ConsumerState<HomePage> {
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: selectedIndex,
           onTap: (index) {
-            if (index == 1 || index == 2) {
+            if (index == 0 || index == 1 || index == 2) {
               rightButtonIcon = Icons.add;
               onRightPressed = () {
-                index == 1
+                index == 0
+                    ? Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AddVisitPage(),
+                      ),
+                    )
+                    : index == 1
                     ? Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const AddOrderPage(),
                       ),
                     )
-                    : Navigator.push(
+                    : index == 2
+                    ? Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const AddCustomerPage(),
                       ),
-                    );
+                    )
+                    : null;
               };
             } else {
               rightButtonIcon = null;
@@ -117,8 +128,14 @@ class _HomePage extends ConsumerState<HomePage> {
             });
           },
           type: BottomNavigationBarType.fixed,
-          selectedItemColor: selectedItemColor,
-          unselectedItemColor: unselectedItemColor,
+          selectedItemColor:
+              Theme.of(context).brightness == Brightness.light
+                  ? selectedItemColor
+                  : darkModeSelectedItemColor,
+          unselectedItemColor:
+              Theme.of(context).brightness == Brightness.light
+                  ? unselectedItemColor
+                  : darkModeUnselectedItemColor,
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.location_on),

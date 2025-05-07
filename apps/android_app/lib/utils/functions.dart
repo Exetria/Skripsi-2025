@@ -1,3 +1,4 @@
+import 'package:android_app/utils/widget_settings.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 
 // APP BAR
 PreferredSizeWidget customAppBar({
+  required BuildContext context,
   required String title,
   String? subtitle,
   bool showLeftButton = false,
@@ -17,20 +19,15 @@ PreferredSizeWidget customAppBar({
     preferredSize: Size.fromHeight(subtitle != null ? 80.h : 56.h),
     child: Container(
       padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 32.h, bottom: 8.h),
-      decoration: BoxDecoration(
-        color: tertiaryColor,
+      decoration: regularBoxDecoration(context).copyWith(
+        color:
+            Theme.of(context).brightness == Brightness.light
+                ? tertiaryColor
+                : darkModeTertiaryColor,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(12.r),
           bottomRight: Radius.circular(12.r),
         ),
-        boxShadow: [
-          BoxShadow(
-            color: dividerColor,
-            blurRadius: 8,
-            offset: Offset(0, 6.h),
-            spreadRadius: 1.r,
-          ),
-        ],
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -98,28 +95,22 @@ PreferredSizeWidget customAppBar({
 }
 
 // SEARCH BAR
-Widget customSearchBar({String? hint}) {
+Widget customSearchBar({required BuildContext context, String? hint}) {
   return SizedBox(
     height: 50.h,
     child: TextField(
-      decoration: InputDecoration(
+      decoration: regularInputDecoration(
+        context,
+        hint ?? '',
+        hintStyle,
+      ).copyWith(
         contentPadding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
-        hintText: hint ?? '',
-        hintStyle: hintStyle,
-        prefixIcon: Icon(Icons.search, color: unselectedItemColor),
-        filled: true,
-        fillColor: fillColor,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: BorderSide(color: dividerColor),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: BorderSide(color: dividerColor),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.r),
-          borderSide: BorderSide(color: primaryColor, width: 2),
+        prefixIcon: Icon(
+          Icons.search,
+          color:
+              Theme.of(context).brightness == Brightness.light
+                  ? unselectedItemColor
+                  : darkModeUnselectedItemColor,
         ),
       ),
     ),
@@ -128,6 +119,7 @@ Widget customSearchBar({String? hint}) {
 
 // CUSTOM LIST ITEM
 InkWell customListItem({
+  required BuildContext context,
   required VoidCallback? onTap,
   required IconData leadIcon,
   required String title,
@@ -139,23 +131,13 @@ InkWell customListItem({
     onTap: onTap,
     child: Container(
       padding: EdgeInsets.all(12.r),
-      decoration: BoxDecoration(
-        color: fillColor,
-        borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: dividerColor, width: 0.3),
-        boxShadow: [
-          BoxShadow(color: dividerColor, blurRadius: 8, offset: Offset(0, 6.h)),
-        ],
-      ),
+      decoration: regularBoxDecoration(context),
       child: Row(
         children: [
           Container(
             width: 48.w,
             height: 48.h,
-            decoration: BoxDecoration(
-              color: secondaryColor.withAlpha(51),
-              borderRadius: BorderRadius.circular(10.r),
-            ),
+            decoration: iconBoxDecoration(context),
             child: Icon(leadIcon, color: secondaryColor, size: 24.sp),
           ),
           SizedBox(width: 12.w),
@@ -209,14 +191,10 @@ void showFormDialog({
                     TextFormField(
                       controller: controller,
                       style: bodyStyle,
-                      decoration: InputDecoration(
-                        hintText: 'Enter value',
-                        hintStyle: hintStyle,
-                        filled: true,
-                        fillColor: backgroundColor,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
+                      decoration: regularInputDecoration(
+                        context,
+                        'Enter value',
+                        hintStyle,
                       ),
                       validator:
                           (value) =>
@@ -275,6 +253,7 @@ void showFormDialog({
 
 // INFO CARD
 Widget infoCard({
+  required BuildContext context,
   required String title,
   String? imageurl,
   required List<String> values,
@@ -311,14 +290,7 @@ Widget infoCard({
   return Container(
     width: double.infinity,
     padding: EdgeInsets.all(16.r),
-    decoration: BoxDecoration(
-      color: fillColor,
-      borderRadius: BorderRadius.circular(12.r),
-      border: Border.all(color: dividerColor),
-      boxShadow: [
-        BoxShadow(color: dividerColor, blurRadius: 8, offset: Offset(0, 6.h)),
-      ],
-    ),
+    decoration: regularBoxDecoration(context),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -413,7 +385,7 @@ Future<Position> getCurrentPosition() async {
     if (permission == LocationPermission.denied) {
       throw ApiException(
         statusCode: -1,
-        message: 'Location permissions are denied.',
+        message: 'Location Permission Denied.',
       );
     }
   }
@@ -421,7 +393,7 @@ Future<Position> getCurrentPosition() async {
   if (permission == LocationPermission.deniedForever) {
     throw ApiException(
       statusCode: -1,
-      message: 'Location permissions are permanently denied.',
+      message: 'Please Enable Location Permission in Settings ',
     );
   }
 

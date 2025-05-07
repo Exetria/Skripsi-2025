@@ -4,6 +4,7 @@ import 'package:android_app/user_management_module/domain/entities/sign_in_domai
 import 'package:android_app/user_management_module/page/controller/check_user_data_controller.dart';
 import 'package:android_app/user_management_module/page/controller/refresh_token_controller.dart';
 import 'package:android_app/user_management_module/page/controller/sign_in_controller.dart';
+import 'package:android_app/utils/widget_settings.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -62,30 +63,18 @@ class _LoginPage extends ConsumerState<LoginPage> {
               TextField(
                 controller: emailController,
                 style: bodyStyle,
-                decoration: InputDecoration(
+                decoration: regularInputDecoration(
+                  context,
+                  'Email',
+                  bodyStyle,
+                ).copyWith(
                   contentPadding: EdgeInsets.symmetric(
                     vertical: 14.h,
                     horizontal: 16.w,
                   ),
-                  labelText: 'Email',
-                  labelStyle: bodyStyle,
                   prefixIcon: Icon(
                     Icons.email,
                     color: textColor.withAlpha(178),
-                  ),
-                  filled: true,
-                  fillColor: fillColor,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                    borderSide: BorderSide(color: dividerColor),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                    borderSide: BorderSide(color: dividerColor),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                    borderSide: BorderSide(color: primaryColor, width: 2),
                   ),
                 ),
               ),
@@ -96,13 +85,15 @@ class _LoginPage extends ConsumerState<LoginPage> {
                 controller: passwordController,
                 obscureText: _obscurePassword,
                 style: bodyStyle,
-                decoration: InputDecoration(
+                decoration: regularInputDecoration(
+                  context,
+                  'Password',
+                  bodyStyle,
+                ).copyWith(
                   contentPadding: EdgeInsets.symmetric(
                     vertical: 14.h,
                     horizontal: 16.w,
                   ),
-                  labelText: 'Password',
-                  labelStyle: bodyStyle,
                   prefixIcon: Icon(Icons.lock, color: textColor.withAlpha(178)),
                   suffixIcon: IconButton(
                     onPressed: () {
@@ -117,20 +108,6 @@ class _LoginPage extends ConsumerState<LoginPage> {
                       color: textColor.withAlpha(178),
                     ),
                   ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                    borderSide: BorderSide(color: dividerColor),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                    borderSide: BorderSide(color: dividerColor),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                    borderSide: BorderSide(color: primaryColor, width: 2),
-                  ),
-                  filled: true,
-                  fillColor: fillColor,
                 ),
               ),
               SizedBox(height: 8.h),
@@ -140,7 +117,11 @@ class _LoginPage extends ConsumerState<LoginPage> {
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: () {
-                    // TODO: Implement forgot password action
+                    showFeedbackDialog(
+                      context: context,
+                      type: 2,
+                      message: 'Please Contact Your Admin',
+                    );
                   },
                   child: Text(
                     'Forgot Password?',

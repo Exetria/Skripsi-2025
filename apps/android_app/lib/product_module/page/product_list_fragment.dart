@@ -23,7 +23,7 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
       child: Column(
         children: [
           // Search Bar
-          customSearchBar(hint: 'Search Products...'),
+          customSearchBar(context: context, hint: 'Search Products...'),
 
           SizedBox(height: 12.h),
 
@@ -49,6 +49,7 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                       final data = productList[index];
 
                       return customListItem(
+                        context: context,
                         leadIcon: Icons.inventory_2,
                         title: data.fields?.productName?.stringValue ?? '-',
                         subtitle: data.fields?.brand?.stringValue ?? '-',

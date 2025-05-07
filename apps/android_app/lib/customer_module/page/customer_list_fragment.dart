@@ -23,7 +23,7 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
       child: Column(
         children: [
           // Search Bar
-          customSearchBar(hint: 'Search Customers...'),
+          customSearchBar(context: context, hint: 'Search Customers...'),
 
           SizedBox(height: 12.h),
 
@@ -50,6 +50,7 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                       final data = customerList[index];
 
                       return customListItem(
+                        context: context,
                         leadIcon: Icons.business,
                         title: data.fields?.companyName?.stringValue ?? '-',
                         subtitle: data.fields?.companyEmail?.stringValue ?? '-',

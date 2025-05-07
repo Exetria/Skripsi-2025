@@ -7,7 +7,7 @@ void showFeedbackDialog({
   required BuildContext context,
   required int type,
   required String message,
-  Duration duration = const Duration(seconds: 1),
+  Duration duration = const Duration(seconds: 2),
   VoidCallback? onClose,
 }) {
   showDialog(

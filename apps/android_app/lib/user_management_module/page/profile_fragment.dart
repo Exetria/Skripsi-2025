@@ -3,6 +3,7 @@ import 'package:android_app/user_management_module/page/controller/get_attendanc
 import 'package:android_app/user_management_module/page/controller/update_attendance_controller.dart';
 import 'package:android_app/user_management_module/page/login_page.dart';
 import 'package:android_app/utils/theme_controller.dart';
+import 'package:android_app/utils/widget_settings.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,30 +38,29 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
           Container(
             width: double.infinity,
             padding: EdgeInsets.all(8.r),
-            decoration: BoxDecoration(
-              color: fillColor,
-              borderRadius: BorderRadius.circular(16.r),
-              border: Border.all(color: dividerColor),
-              boxShadow: [
-                BoxShadow(
-                  color: dividerColor,
-                  blurRadius: 8,
-                  offset: Offset(0, 6.h),
-                ),
-              ],
-            ),
+            decoration: regularBoxDecoration(context),
             child: Row(
               children: [
                 CircleAvatar(
                   radius: 40.r,
-                  backgroundColor: secondaryColor.withAlpha(30),
+                  backgroundColor:
+                      Theme.of(context).brightness == Brightness.light
+                          ? secondaryColor.withAlpha(30)
+                          : darkModeSecondaryColor.withAlpha(30),
                   backgroundImage:
                       profilePictureLink.isNotEmpty
                           ? NetworkImage(profilePictureLink)
                           : null,
                   child:
                       profilePictureLink.isEmpty
-                          ? Icon(Icons.person, size: 40.sp, color: primaryColor)
+                          ? Icon(
+                            Icons.person,
+                            size: 40.sp,
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? primaryColor
+                                    : darkModePrimaryColor,
+                          )
                           : null,
                 ),
                 SizedBox(width: 24.w),
@@ -106,7 +106,7 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                   data: (data) {
                     if (isCheckedIn(data) && isCheckedOut(data)) {
                       return buildCheckedCheckInOutButton();
-                    } else if (isCheckedOut(data)) {
+                    } else if (isCheckedIn(data)) {
                       return buildCheckOutButton(data);
                     } else {
                       return buildCheckInButton();
@@ -133,8 +133,14 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                             doSignOut();
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: errorColor,
-                            foregroundColor: invertedTextColor,
+                            backgroundColor:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? errorColor
+                                    : darkModeErrorColor,
+                            foregroundColor:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? darkModeTextColor
+                                    : textColor,
                             padding: EdgeInsets.symmetric(vertical: 14.h),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12.r),
@@ -166,19 +172,6 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
       width: 40.w,
       child: const Center(child: CircularProgressIndicator()),
     );
-    // return ElevatedButton.icon(
-    //   onPressed: null,
-    //   style: ElevatedButton.styleFrom(
-    //     backgroundColor: unselectedItemColor,
-    //     foregroundColor: backgroundColor,
-    //     padding: EdgeInsets.symmetric(vertical: 14.h),
-    //     shape: RoundedRectangleBorder(
-    //       borderRadius: BorderRadius.circular(12.r),
-    //     ),
-    //   ),
-    //   icon: Icon(Icons.login, size: 20.sp),
-    //   label: Text('Loading', style: buttonStyle),
-    // );
   }
 
   Widget buildErrorCheckInOutButton() {
@@ -187,8 +180,14 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
         ref.invalidate(getAttendanceDataControllerProvider);
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: errorColor,
-        foregroundColor: backgroundColor,
+        backgroundColor:
+            Theme.of(context).brightness == Brightness.light
+                ? errorColor
+                : darkModeErrorColor,
+        foregroundColor:
+            Theme.of(context).brightness == Brightness.light
+                ? backgroundColor
+                : darkModeBackgroundColor,
         padding: EdgeInsets.symmetric(vertical: 14.h),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.r),
@@ -205,8 +204,14 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
         doCheckIn();
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: successColor,
-        foregroundColor: backgroundColor,
+        backgroundColor:
+            Theme.of(context).brightness == Brightness.light
+                ? successColor
+                : darkModeSuccessColor,
+        foregroundColor:
+            Theme.of(context).brightness == Brightness.light
+                ? backgroundColor
+                : darkModeBackgroundColor,
         padding: EdgeInsets.symmetric(vertical: 14.h),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.r),
@@ -253,7 +258,10 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: warningColor,
-        foregroundColor: backgroundColor,
+        foregroundColor:
+            Theme.of(context).brightness == Brightness.light
+                ? backgroundColor
+                : darkModeBackgroundColor,
         padding: EdgeInsets.symmetric(vertical: 14.h),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.r),
@@ -268,8 +276,14 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
     return ElevatedButton.icon(
       onPressed: null,
       style: ElevatedButton.styleFrom(
-        backgroundColor: unselectedItemColor,
-        foregroundColor: backgroundColor,
+        backgroundColor:
+            Theme.of(context).brightness == Brightness.light
+                ? unselectedItemColor
+                : darkModeUnselectedItemColor,
+        foregroundColor:
+            Theme.of(context).brightness == Brightness.light
+                ? backgroundColor
+                : darkModeBackgroundColor,
         padding: EdgeInsets.symmetric(vertical: 14.h),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.r),
@@ -278,95 +292,6 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
       icon: Icon(Icons.check_circle_outline, size: 20.sp),
       label: Text('Checked', style: buttonStyle),
     );
-  }
-
-  void doCheckIn() async {
-    // Post doc
-    final result =
-        await ref.read(updateAttendanceControllerProvider.notifier).checkIn();
-
-    // Check valid
-    if (result is AsyncData) {
-      showFeedbackDialog(
-        context: context,
-        type: 1,
-        message: 'Check In Success',
-      );
-      // Invalidate provider
-      ref.invalidate(getAttendanceDataControllerProvider);
-    } else {
-      showFeedbackDialog(context: context, type: 3, message: 'Check In Failed');
-    }
-  }
-
-  void doCheckOut({
-    required String checkInTime,
-    required double checkInLatitude,
-    required double checkInLongitude,
-    required double checkInAccuracy,
-  }) async {
-    // Post doc
-    final result = await ref
-        .read(updateAttendanceControllerProvider.notifier)
-        .checkOut(
-          checkInTime: checkInTime,
-          checkInLatitude: checkInLatitude,
-          checkInLongitude: checkInLongitude,
-          checkInAccuracy: checkInAccuracy,
-        );
-
-    // Check valid
-    if (result is AsyncData) {
-      showFeedbackDialog(
-        context: context,
-        type: 1,
-        message: 'Check Out Success',
-      );
-      // Invalidate provider
-      ref.invalidate(getAttendanceDataControllerProvider);
-    } else {
-      showFeedbackDialog(
-        context: context,
-        type: 1,
-        message: 'Check Out Failed',
-      );
-    }
-  }
-
-  void doSignOut() async {
-    setState(() {
-      logOutButtonEnable = false;
-    });
-
-    showConfirmationDialog(
-      context: context,
-      message: 'Are you sure you want to log out?',
-      onLeftButtonTap: () async {
-        // Delay to close popup
-        await Future.delayed(const Duration(microseconds: 750000));
-
-        // Clear user data
-        clearUserDataInSp();
-
-        // Show feedback
-        showFeedbackDialog(
-          context: context,
-          type: 2,
-          message: 'Log Out Success',
-          onClose: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => LoginPage()),
-            );
-          },
-        );
-      },
-      onRightButtonTap: () {},
-    );
-
-    setState(() {
-      logOutButtonEnable = true;
-    });
   }
 
   bool isCheckedIn(AttendanceDomain? data) {
@@ -425,5 +350,128 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                 ?.accuracy
                 ?.doubleValue !=
             null);
+  }
+
+  void doCheckIn() async {
+    showConfirmationDialog(
+      context: context,
+      message: 'Are you sure you want to check in?',
+      onLeftButtonTap: () async {
+        // Post doc
+        final result =
+            await ref
+                .read(updateAttendanceControllerProvider.notifier)
+                .checkIn();
+
+        // Check valid
+        if (result is AsyncData) {
+          showFeedbackDialog(
+            context: context,
+            type: 1,
+            message: 'Check In Success',
+          );
+          // Invalidate provider
+          ref.invalidate(getAttendanceDataControllerProvider);
+        } else if (result is AsyncError) {
+          final apiException = result.error as ApiException;
+          showFeedbackDialog(
+            context: context,
+            type: 3,
+            message: apiException.message,
+          );
+        } else {
+          showFeedbackDialog(
+            context: context,
+            type: 3,
+            message: 'Check In Failed',
+          );
+        }
+      },
+      onRightButtonTap: () {},
+    );
+  }
+
+  void doCheckOut({
+    required String checkInTime,
+    required double checkInLatitude,
+    required double checkInLongitude,
+    required double checkInAccuracy,
+  }) async {
+    showConfirmationDialog(
+      context: context,
+      message: 'Are you sure you want to check out?',
+      onLeftButtonTap: () async {
+        // Post doc
+        final result = await ref
+            .read(updateAttendanceControllerProvider.notifier)
+            .checkOut(
+              checkInTime: checkInTime,
+              checkInLatitude: checkInLatitude,
+              checkInLongitude: checkInLongitude,
+              checkInAccuracy: checkInAccuracy,
+            );
+
+        // Check valid
+        if (result is AsyncData) {
+          showFeedbackDialog(
+            context: context,
+            type: 1,
+            message: 'Check Out Success',
+          );
+          // Invalidate provider
+          ref.invalidate(getAttendanceDataControllerProvider);
+        } else if (result is AsyncError) {
+          final apiException = result.error as ApiException;
+          showFeedbackDialog(
+            context: context,
+            type: 3,
+            message: apiException.message,
+          );
+        } else {
+          showFeedbackDialog(
+            context: context,
+            type: 3,
+            message: 'Check Out Failed',
+          );
+        }
+      },
+      onRightButtonTap: () {},
+    );
+  }
+
+  void doSignOut() async {
+    setState(() {
+      logOutButtonEnable = false;
+    });
+
+    showConfirmationDialog(
+      context: context,
+      message: 'Are you sure you want to log out?',
+      onLeftButtonTap: () async {
+        // Delay to close popup
+        await Future.delayed(const Duration(microseconds: 750000));
+
+        // Clear user data
+        clearUserDataInSp();
+
+        // Show feedback
+        showFeedbackDialog(
+          context: context,
+          type: 2,
+          message: 'Log Out Success',
+          onClose: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => LoginPage()),
+            );
+          },
+        );
+      },
+      onRightButtonTap: () {},
+    );
+
+    setState(() {
+      logOutButtonEnable = true;
+    });
   }
 }

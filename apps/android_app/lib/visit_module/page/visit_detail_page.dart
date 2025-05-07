@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:android_app/utils/functions.dart';
+import 'package:android_app/utils/widget_settings.dart';
 import 'package:android_app/visit_module/domain/entities/visit_domain.dart';
 import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(
+        context: context,
         title: 'Visit Details',
         subtitle: '8 April 2025',
         showLeftButton: true,
@@ -37,15 +39,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
           children: [
             // Dropdown
             DropdownButtonFormField<String>(
-              decoration: InputDecoration(
-                labelText: 'Status',
-                labelStyle: bodyStyle,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                filled: true,
-                fillColor: fillColor,
-              ),
+              decoration: regularInputDecoration(context, 'Status', bodyStyle),
               value: selectedOption,
               items:
                   ['Pending', 'In Progress', 'Done', 'Delayed']
@@ -67,16 +61,11 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
             // Description
             TextField(
               controller: _descriptionController,
-              decoration: InputDecoration(
-                labelText: 'Description',
-                labelStyle: bodyStyle,
-                alignLabelWithHint: true,
-                filled: true,
-                fillColor: fillColor,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-              ),
+              decoration: regularInputDecoration(
+                context,
+                'Description',
+                bodyStyle,
+              ).copyWith(alignLabelWithHint: true),
               style: bodyStyle,
               maxLines: 4,
             ),
@@ -88,11 +77,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
               child: Container(
                 height: 140.h,
                 width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16.r),
-                  color: fillColor,
-                  border: Border.all(color: dividerColor),
-                ),
+                decoration: photoBoxDecoration(context),
                 child:
                     selectedImage != null
                         ? ClipRRect(

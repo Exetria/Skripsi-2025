@@ -48,15 +48,15 @@ final lightTheme = ThemeData(
       return IconThemeData(color: unselectedItemColor);
     }),
   ),
-  inputDecorationTheme: InputDecorationTheme(
-    focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: primaryColor),
-    ),
-    enabledBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: dividerColor),
-    ),
-    border: OutlineInputBorder(borderSide: BorderSide(color: dividerColor)),
-  ),
+  // inputDecorationTheme: InputDecorationTheme(
+  //   border: OutlineInputBorder(borderSide: BorderSide(color: dividerColor)),
+  //   focusedBorder: OutlineInputBorder(
+  //     borderSide: BorderSide(color: primaryColor),
+  //   ),
+  //   enabledBorder: OutlineInputBorder(
+  //     borderSide: BorderSide(color: dividerColor),
+  //   ),
+  // ),
   textTheme: GoogleFonts.montserratTextTheme(),
 );
 
@@ -101,17 +101,17 @@ final darkTheme = ThemeData(
       return IconThemeData(color: darkModeUnselectedItemColor);
     }),
   ),
-  inputDecorationTheme: InputDecorationTheme(
-    focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: darkModePrimaryColor),
-    ),
-    enabledBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: darkModeDividerColor),
-    ),
-    border: OutlineInputBorder(
-      borderSide: BorderSide(color: darkModeDividerColor),
-    ),
-  ),
+  // inputDecorationTheme: InputDecorationTheme(
+  //   focusedBorder: OutlineInputBorder(
+  //     borderSide: BorderSide(color: darkModePrimaryColor),
+  //   ),
+  //   enabledBorder: OutlineInputBorder(
+  //     borderSide: BorderSide(color: darkModeDividerColor),
+  //   ),
+  //   border: OutlineInputBorder(
+  //     borderSide: BorderSide(color: darkModeDividerColor),
+  //   ),
+  // ),
   textTheme: GoogleFonts.montserratTextTheme().apply(
     bodyColor: darkModeTextColor,
     displayColor: darkModeTextColor,

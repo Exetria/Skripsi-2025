@@ -1,5 +1,6 @@
 import 'package:android_app/product_module/domain/entities/product_domain.dart';
 import 'package:android_app/utils/functions.dart';
+import 'package:android_app/utils/widget_settings.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,6 +23,7 @@ class _ProductDetailPage extends ConsumerState<ProductDetailPage> {
 
     return Scaffold(
       appBar: customAppBar(
+        context: context,
         title: widget.data.fields?.productName?.stringValue ?? '-',
         showLeftButton: true,
       ),
@@ -36,18 +38,7 @@ class _ProductDetailPage extends ConsumerState<ProductDetailPage> {
             Container(
               width: double.infinity,
               padding: EdgeInsets.all(16.r),
-              decoration: BoxDecoration(
-                color: fillColor,
-                borderRadius: BorderRadius.circular(12.r),
-                border: Border.all(color: dividerColor),
-                boxShadow: [
-                  BoxShadow(
-                    color: dividerColor,
-                    blurRadius: 8,
-                    offset: Offset(0, 6.h),
-                  ),
-                ],
-              ),
+              decoration: regularBoxDecoration(context),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -68,16 +59,9 @@ class _ProductDetailPage extends ConsumerState<ProductDetailPage> {
 
                   // Description
                   Text('Description', style: subtitleStyle),
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: backgroundColor.withAlpha(20),
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
-                    child: Text(
-                      widget.data.fields?.description?.stringValue ?? '-',
-                      style: bodyStyle,
-                    ),
+                  Text(
+                    widget.data.fields?.description?.stringValue ?? '-',
+                    style: bodyStyle,
                   ),
                 ],
               ),
@@ -132,6 +116,7 @@ class _ProductDetailPage extends ConsumerState<ProductDetailPage> {
 
       result.add(
         infoCard(
+          context: context,
           title: variant.mapValue?.fields?.variantName?.stringValue ?? '-',
           imageurl: variant.mapValue?.fields?.variantImage?.stringValue ?? '',
           values: cardValues,

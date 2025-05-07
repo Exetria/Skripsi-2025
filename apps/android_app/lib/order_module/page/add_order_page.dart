@@ -1,4 +1,5 @@
 import 'package:android_app/utils/functions.dart';
+import 'package:android_app/utils/widget_settings.dart';
 import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,14 +35,17 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
   void _submit() {
     if (_formKey.currentState?.validate() ?? false) {
       // TODO: Save order to Firebase
-      print('Order added for ${_customerController.text}');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(title: 'Add Order', showLeftButton: true),
+      appBar: customAppBar(
+        context: context,
+        title: 'Add Order',
+        showLeftButton: true,
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.r),
         child: Form(
@@ -69,10 +73,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                     vertical: 14.h,
                   ),
                   margin: EdgeInsets.only(bottom: 16.h),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: dividerColor),
-                    borderRadius: BorderRadius.circular(10.r),
-                  ),
+                  decoration: regularBoxDecoration(context),
                   child: Row(
                     children: [
                       Icon(
@@ -150,22 +151,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
         keyboardType: keyboardType,
         maxLines: maxLines,
         validator: validator,
-        decoration: InputDecoration(
-          labelText: label,
-          labelStyle: hintStyle,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.r),
-            borderSide: BorderSide(color: dividerColor),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.r),
-            borderSide: BorderSide(color: dividerColor),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.r),
-            borderSide: BorderSide(color: primaryColor, width: 2),
-          ),
-        ),
+        decoration: regularInputDecoration(context, label, hintStyle),
       ),
     );
   }

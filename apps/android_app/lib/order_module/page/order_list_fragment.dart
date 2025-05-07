@@ -23,7 +23,7 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
       child: Column(
         children: [
           // Search Bar
-          customSearchBar(hint: 'Search Orders...'),
+          customSearchBar(context: context, hint: 'Search Orders...'),
 
           SizedBox(height: 12.h),
 
@@ -49,6 +49,7 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
                       final data = orderList[index];
 
                       return customListItem(
+                        context: context,
                         leadIcon: Icons.receipt_long,
                         title: 'Order ${data.name?.substring(58) ?? "-"}',
                         subtitle:

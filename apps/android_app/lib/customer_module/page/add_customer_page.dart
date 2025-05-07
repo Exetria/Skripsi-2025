@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:android_app/customer_module/page/controller/create_customer_request_controller.dart';
 import 'package:android_app/utils/functions.dart';
+import 'package:android_app/utils/widget_settings.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -45,7 +46,11 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
     final note = useTextEditingController();
 
     return Scaffold(
-      appBar: customAppBar(title: 'Add Customer Form', showLeftButton: true),
+      appBar: customAppBar(
+        context: context,
+        title: 'Add Customer',
+        showLeftButton: true,
+      ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.only(bottom: 8.h, top: 8.h),
         child: Row(
@@ -265,42 +270,25 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                       padding: EdgeInsets.all(8.r),
                       child: DropdownButtonFormField<String>(
                         value: _customerType,
-                        dropdownColor: fillColor,
+                        dropdownColor:
+                            Theme.of(context).brightness == Brightness.light
+                                ? fillColor
+                                : darkModeFillColor,
                         icon: Icon(
                           Icons.keyboard_arrow_down_rounded,
                           color: textColor,
                         ),
-                        decoration: InputDecoration(
-                          labelText: 'Customer Type',
-                          labelStyle: captionStyle,
-                          filled: true,
-                          fillColor: fillColor,
+                        decoration: regularInputDecoration(
+                          context,
+                          'Customer Type',
+                          captionStyle,
+                        ).copyWith(
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 12.w,
                             vertical: 14.h,
                           ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.r),
-                            borderSide: BorderSide(
-                              color: dividerColor,
-                              width: 2,
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.r),
-                            borderSide: BorderSide(
-                              color: dividerColor,
-                              width: 2,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.r),
-                            borderSide: BorderSide(
-                              color: dividerColor,
-                              width: 2,
-                            ),
-                          ),
                         ),
+
                         items:
                             ['', 'PKP', 'Non PKP'].map((item) {
                               return DropdownMenuItem<String>(
@@ -325,40 +313,22 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                       padding: EdgeInsets.all(8.r),
                       child: DropdownButtonFormField<String>(
                         value: _subscriptionType,
-                        dropdownColor: fillColor,
+                        dropdownColor:
+                            Theme.of(context).brightness == Brightness.light
+                                ? fillColor
+                                : darkModeFillColor,
                         icon: Icon(
                           Icons.keyboard_arrow_down_rounded,
                           color: textColor,
                         ),
-                        decoration: InputDecoration(
-                          labelText: 'Subscription Type',
-                          labelStyle: captionStyle,
-                          filled: true,
-                          fillColor: fillColor,
+                        decoration: regularInputDecoration(
+                          context,
+                          'Subscription Type',
+                          captionStyle,
+                        ).copyWith(
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 12.w,
                             vertical: 14.h,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.r),
-                            borderSide: BorderSide(
-                              color: dividerColor,
-                              width: 2,
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.r),
-                            borderSide: BorderSide(
-                              color: dividerColor,
-                              width: 2,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.r),
-                            borderSide: BorderSide(
-                              color: dividerColor,
-                              width: 2,
-                            ),
                           ),
                         ),
                         items:
@@ -388,21 +358,56 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                   ),
                 ],
               ),
-
               SizedBox(height: 16.h),
+              _buildInputRow(
+                controller: requestDestination,
+                label: 'Request Destination',
+                validator: (value) {
+                  return (value != null && value != '')
+                      ? null
+                      : 'Required Field';
+                },
+              ),
+              _buildInputRow(
+                controller: carbonCopy,
+                label: 'Carbon Copy',
+                validator: (value) {
+                  return (value != null && value != '')
+                      ? null
+                      : 'Required Field';
+                },
+              ),
 
               ExpansionTile(
                 title: Text('Company Data', style: bodyStyle),
                 childrenPadding: EdgeInsets.symmetric(horizontal: 8.w),
-                backgroundColor: fillColor,
-                collapsedBackgroundColor: fillColor,
+                backgroundColor:
+                    Theme.of(context).brightness == Brightness.light
+                        ? fillColor
+                        : darkModeFillColor,
+                collapsedBackgroundColor:
+                    Theme.of(context).brightness == Brightness.light
+                        ? fillColor
+                        : darkModeFillColor,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.r),
-                  side: BorderSide(color: primaryColor, width: 2),
+                  borderRadius: BorderRadius.circular(12.r),
+                  side: BorderSide(
+                    color:
+                        Theme.of(context).brightness == Brightness.light
+                            ? primaryColor
+                            : darkModePrimaryColor,
+                    width: 2,
+                  ),
                 ),
                 collapsedShape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.r),
-                  side: BorderSide(color: dividerColor, width: 2),
+                  borderRadius: BorderRadius.circular(12.r),
+                  side: BorderSide(
+                    color:
+                        Theme.of(context).brightness == Brightness.light
+                            ? dividerColor
+                            : darkModeDividerColor,
+                    width: 2,
+                  ),
                 ),
                 children: [
                   // Profile Image Picker
@@ -412,9 +417,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                     child: Container(
                       width: 120.w,
                       height: 120.w,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        border: Border.all(color: dividerColor),
+                      decoration: photoBoxDecoration(context).copyWith(
                         image:
                             _storePhoto != null
                                 ? DecorationImage(
@@ -435,24 +438,6 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                   ),
                   SizedBox(height: 16.h),
 
-                  _buildInputRow(
-                    controller: requestDestination,
-                    label: 'Request Destination',
-                    validator: (value) {
-                      return (value != null && value != '')
-                          ? null
-                          : 'Required Field';
-                    },
-                  ),
-                  _buildInputRow(
-                    controller: carbonCopy,
-                    label: 'Carbon Copy',
-                    validator: (value) {
-                      return (value != null && value != '')
-                          ? null
-                          : 'Required Field';
-                    },
-                  ),
                   _buildInputRow(
                     controller: companyName,
                     label: 'Company Name',
@@ -480,17 +465,20 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                           : 'Required Field';
                     },
                   ),
-                  _buildInputRow(
-                    controller: companyTaxId,
-                    label: 'Company Tax ID',
-                    enabled: _customerType == '' || _customerType == 'Non PKP',
-                    validator: (value) {
-                      if (_customerType == 'PKP') return null;
-                      return (value != null && value != '')
-                          ? null
-                          : 'Required Field';
-                    },
-                  ),
+                  _customerType != 'PKP'
+                      ? _buildInputRow(
+                        controller: companyTaxId,
+                        label: 'Company Tax ID',
+                        enabled:
+                            _customerType == '' || _customerType == 'Non PKP',
+                        validator: (value) {
+                          if (_customerType == 'PKP') return null;
+                          return (value != null && value != '')
+                              ? null
+                              : 'Required Field';
+                        },
+                      )
+                      : const SizedBox.shrink(),
                   _buildInputRow(
                     controller: companyEmail,
                     label: 'Company Email',
@@ -517,15 +505,33 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
               ExpansionTile(
                 title: Text('Owner Data', style: bodyStyle),
                 childrenPadding: EdgeInsets.symmetric(horizontal: 8.w),
-                backgroundColor: fillColor,
-                collapsedBackgroundColor: fillColor,
+                backgroundColor:
+                    Theme.of(context).brightness == Brightness.light
+                        ? fillColor
+                        : darkModeFillColor,
+                collapsedBackgroundColor:
+                    Theme.of(context).brightness == Brightness.light
+                        ? fillColor
+                        : darkModeFillColor,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.r),
-                  side: BorderSide(color: primaryColor, width: 2),
+                  borderRadius: BorderRadius.circular(12.r),
+                  side: BorderSide(
+                    color:
+                        Theme.of(context).brightness == Brightness.light
+                            ? primaryColor
+                            : darkModePrimaryColor,
+                    width: 2,
+                  ),
                 ),
                 collapsedShape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.r),
-                  side: BorderSide(color: dividerColor, width: 2),
+                  borderRadius: BorderRadius.circular(12.r),
+                  side: BorderSide(
+                    color:
+                        Theme.of(context).brightness == Brightness.light
+                            ? dividerColor
+                            : darkModeDividerColor,
+                    width: 2,
+                  ),
                 ),
                 children: [
                   // KTP Photo
@@ -535,9 +541,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                     child: Container(
                       width: 120.w,
                       height: 120.w,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        border: Border.all(color: dividerColor),
+                      decoration: photoBoxDecoration(context).copyWith(
                         image:
                             _ktpPhoto != null
                                 ? DecorationImage(
@@ -594,17 +598,19 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                           : 'Required Field';
                     },
                   ),
-                  _buildInputRow(
-                    controller: ownerTaxId,
-                    label: 'Owner Tax ID',
-                    enabled: _customerType == '' || _customerType == 'PKP',
-                    validator: (value) {
-                      if (_customerType == 'Non PKP') return null;
-                      return (value != null && value != '')
-                          ? null
-                          : 'Required Field';
-                    },
-                  ),
+                  _customerType != 'Non PKP'
+                      ? _buildInputRow(
+                        controller: ownerTaxId,
+                        label: 'Owner Tax ID',
+                        enabled: _customerType == '' || _customerType == 'PKP',
+                        validator: (value) {
+                          if (_customerType == 'Non PKP') return null;
+                          return (value != null && value != '')
+                              ? null
+                              : 'Required Field';
+                        },
+                      )
+                      : const SizedBox.shrink(),
 
                   _buildInputRow(
                     controller: ownershipStatus,
@@ -666,24 +672,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
         validator: validator,
         keyboardType: keyboardType,
         maxLines: maxLines,
-        decoration: InputDecoration(
-          labelText: label,
-          labelStyle: bodyStyle,
-          filled: true,
-          fillColor: fillColor,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.r),
-            borderSide: BorderSide(color: dividerColor),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.r),
-            borderSide: BorderSide(color: dividerColor),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.r),
-            borderSide: BorderSide(color: primaryColor, width: 2),
-          ),
-        ),
+        decoration: regularInputDecoration(context, label, bodyStyle),
       ),
     );
   }
