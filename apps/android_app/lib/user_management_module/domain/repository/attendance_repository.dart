@@ -1,5 +1,5 @@
-import 'package:android_app/user_management_module/data/repository_impl/attendance_repository_impl.dart';
 import 'package:android_app/user_management_module/data/repository_impl/get_attendance_data_repository_impl.dart';
+import 'package:android_app/user_management_module/data/repository_impl/update_attendance_repository_impl.dart';
 import 'package:android_app/user_management_module/domain/entities/attendance_domain.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
