@@ -50,8 +50,7 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
 
                       return customListItem(
                         leadIcon: Icons.receipt_long,
-                        title:
-                            'Order ${(data.name != null) ? data.name?.substring(58) : "-"}',
+                        title: 'Order ${data.name?.substring(58) ?? "-"}',
                         subtitle:
                             'Status: ${data.fields?.orderStatus?.stringValue ?? "-"}',
                         trailIcon: Icons.arrow_forward_ios,
