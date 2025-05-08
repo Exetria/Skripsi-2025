@@ -3,12 +3,12 @@ import 'package:common_components/common_components.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 abstract class GetVisitDataRemoteDatasource {
-  Future<VisitDomain> getVisitData({required DateTime date});
+  Future<VisitDomain> getVisitList({required DateTime date});
 }
 
-class GetVisitDataRemoteDatasourceImpl implements GetVisitDataRemoteDatasource {
+class GetVisitListRemoteDatasourceImpl implements GetVisitDataRemoteDatasource {
   @override
-  Future<VisitDomain> getVisitData({required DateTime date}) async {
+  Future<VisitDomain> getVisitList({required DateTime date}) async {
     final documentId = _generateDocumentIdFromDate(date);
 
     Map<String, dynamic> result = await apiCallGet(

@@ -29,9 +29,9 @@ class VisitListController extends _$VisitListController {
     }
 
     // Call API
-    final repository = ref.watch(getVisitDataRepositoryProvider);
+    final repository = ref.watch(getVisitListRepositoryProvider);
     state = const AsyncLoading();
-    final result = await repository.getVisitData(date: date);
+    final result = await repository.getVisitList(date: date);
 
     // Add result to map
     previousMap[_generateVisitIdFromDate(date)] = result;
