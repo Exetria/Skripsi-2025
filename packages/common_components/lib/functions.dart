@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // Feedback Dialog
 void showFeedbackDialog({
@@ -27,9 +30,11 @@ void showFeedbackDialog({
       });
 
       return Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(Platform.isWindows ? 16 : 16.r),
+        ),
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: EdgeInsets.all(Platform.isWindows ? 24 : 24.r),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -39,10 +44,10 @@ void showFeedbackDialog({
                     : type == 2
                     ? Icons.error_outline
                     : Icons.highlight_off,
-                size: 48,
+                size: Platform.isWindows ? 48 : 48.r,
                 color: Theme.of(context).colorScheme.primary,
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: Platform.isWindows ? 16 : 16.h),
               Text(message, style: bodyStyle, textAlign: TextAlign.center),
             ],
           ),
@@ -72,25 +77,25 @@ void showConfirmationDialog({
       return Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: EdgeInsets.all(Platform.isWindows ? 24 : 24.r),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 Icons.help_outline,
-                size: 48,
+                size: Platform.isWindows ? 48 : 48.r,
                 color: Theme.of(context).colorScheme.primary,
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: Platform.isWindows ? 16 : 16.h),
               Text(message, style: bodyStyle, textAlign: TextAlign.center),
-              const SizedBox(height: 24),
+              SizedBox(height: Platform.isWindows ? 24 : 24.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   // Left button
                   SizedBox(
-                    width: 100,
+                    width: Platform.isWindows ? 100 : 100.w,
                     child: ElevatedButton(
                       onPressed: () {
                         if (Navigator.of(context).canPop()) {
@@ -105,18 +110,22 @@ void showConfirmationDialog({
                         foregroundColor:
                             leftButtonForegroundColor ??
                             Theme.of(context).colorScheme.onPrimary,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        padding: EdgeInsets.symmetric(
+                          vertical: Platform.isWindows ? 12 : 12.h,
+                        ),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(
+                            Platform.isWindows ? 12 : 12.r,
+                          ),
                         ),
                       ),
-                      child: const Text('Yes'),
+                      child: Text(leftButtonText),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: Platform.isWindows ? 12 : 12.w),
                   // Right button
                   SizedBox(
-                    width: 100,
+                    width: Platform.isWindows ? 100 : 100.w,
                     child: ElevatedButton(
                       onPressed: () {
                         if (Navigator.of(context).canPop()) {
@@ -131,12 +140,16 @@ void showConfirmationDialog({
                         foregroundColor:
                             rightButtonForegroundColor ??
                             Theme.of(context).colorScheme.onPrimary,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        padding: EdgeInsets.symmetric(
+                          vertical: Platform.isWindows ? 12 : 12.h,
+                        ),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(
+                            Platform.isWindows ? 12 : 12.r,
+                          ),
                         ),
                       ),
-                      child: const Text('No'),
+                      child: Text(rightButtonText),
                     ),
                   ),
                 ],
