@@ -246,7 +246,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
         ),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
+        padding: EdgeInsets.all(16.r),
         child: Form(
           key: _formKey,
           child: Column(
