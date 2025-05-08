@@ -7,7 +7,6 @@ import 'package:android_app/user_management_module/page/controller/get_attendanc
 import 'package:android_app/user_management_module/page/login_page.dart';
 import 'package:android_app/user_management_module/page/profile_fragment.dart';
 import 'package:android_app/utils/functions.dart';
-import 'package:android_app/visit_module/page/add_visit_page.dart';
 import 'package:android_app/visit_module/page/visit_list_fragment.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
@@ -93,17 +92,10 @@ class _HomePage extends ConsumerState<HomePage> {
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: selectedIndex,
           onTap: (index) {
-            if (index != 3) {
+            if (index != 0 && index != 3) {
               rightButtonIcon = index == 4 ? Icons.refresh : Icons.add;
               onRightPressed = () {
-                index == 0
-                    ? Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AddVisitPage(),
-                      ),
-                    )
-                    : index == 1
+                index == 1
                     ? Navigator.push(
                       context,
                       MaterialPageRoute(
