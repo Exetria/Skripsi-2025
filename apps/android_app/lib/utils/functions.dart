@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:android_app/utils/widget_settings.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
@@ -134,7 +136,10 @@ InkWell customListItem({
           Container(
             width: 48.w,
             height: 48.h,
-            decoration: iconBoxDecoration(context),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.secondary.withAlpha(50),
+              borderRadius: BorderRadius.circular(10.r),
+            ),
             child: Icon(
               leadIcon,
               color: Theme.of(context).colorScheme.secondary,

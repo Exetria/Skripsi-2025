@@ -20,15 +20,7 @@ BoxDecoration regularBoxDecoration(BuildContext context) {
   );
 }
 
-BoxDecoration iconBoxDecoration(BuildContext context) {
-  final bool lightMode = Theme.of(context).brightness == Brightness.light;
-
-  return BoxDecoration(
-    color: Theme.of(context).colorScheme.secondary.withAlpha(50),
-    borderRadius: BorderRadius.circular(10.r),
-  );
-}
-
+// Photo box decorations
 BoxDecoration photoBoxDecoration(BuildContext context) {
   final bool lightMode = Theme.of(context).brightness == Brightness.light;
 
