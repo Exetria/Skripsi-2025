@@ -43,10 +43,9 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
               children: [
                 CircleAvatar(
                   radius: 40.r,
-                  backgroundColor:
-                      Theme.of(context).brightness == Brightness.light
-                          ? secondaryColor.withAlpha(30)
-                          : darkModeSecondaryColor.withAlpha(30),
+                  backgroundColor: Theme.of(
+                    context,
+                  ).colorScheme.secondary.withAlpha(30),
                   backgroundImage:
                       profilePictureLink.isNotEmpty
                           ? NetworkImage(profilePictureLink)
@@ -141,10 +140,7 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                                 Theme.of(context).brightness == Brightness.light
                                     ? darkModeTextColor
                                     : textColor,
-                            padding: EdgeInsets.symmetric(vertical: 14.h),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.r),
-                            ),
+                            padding: EdgeInsets.symmetric(vertical: 12.h),
                           ),
                           icon: Icon(Icons.exit_to_app, size: 20.sp),
                           label: Text('Logout', style: buttonStyle),
@@ -189,9 +185,6 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                 ? backgroundColor
                 : darkModeBackgroundColor,
         padding: EdgeInsets.symmetric(vertical: 14.h),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.r),
-        ),
       ),
       icon: Icon(Icons.error_outline, size: 20.sp),
       label: Text('Error', style: buttonStyle),
@@ -213,9 +206,6 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                 ? backgroundColor
                 : darkModeBackgroundColor,
         padding: EdgeInsets.symmetric(vertical: 14.h),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.r),
-        ),
       ),
       icon: Icon(Icons.login, size: 20.sp),
       label: Text('Check In', style: buttonStyle),
@@ -263,9 +253,6 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                 ? backgroundColor
                 : darkModeBackgroundColor,
         padding: EdgeInsets.symmetric(vertical: 14.h),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.r),
-        ),
       ),
       icon: Icon(Icons.login, size: 20.sp),
       label: Text('Check Out', style: buttonStyle),
@@ -285,9 +272,6 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                 ? backgroundColor
                 : darkModeBackgroundColor,
         padding: EdgeInsets.symmetric(vertical: 14.h),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.r),
-        ),
       ),
       icon: Icon(Icons.check_circle_outline, size: 20.sp),
       label: Text('Checked', style: buttonStyle),
@@ -356,6 +340,14 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
     showConfirmationDialog(
       context: context,
       message: 'Are you sure you want to check in?',
+      leftButtonBackgroundColor:
+          Theme.of(context).brightness == Brightness.light
+              ? successColor
+              : darkModeSuccessColor,
+      rightButtonBackgroundColor:
+          Theme.of(context).brightness == Brightness.light
+              ? errorColor
+              : errorColor,
       onLeftButtonTap: () async {
         // Post doc
         final result =
@@ -400,6 +392,14 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
     showConfirmationDialog(
       context: context,
       message: 'Are you sure you want to check out?',
+      leftButtonBackgroundColor:
+          Theme.of(context).brightness == Brightness.light
+              ? successColor
+              : darkModeSuccessColor,
+      rightButtonBackgroundColor:
+          Theme.of(context).brightness == Brightness.light
+              ? errorColor
+              : errorColor,
       onLeftButtonTap: () async {
         // Post doc
         final result = await ref

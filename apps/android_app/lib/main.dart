@@ -10,108 +10,165 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final lightTheme = ThemeData(
+  useMaterial3: true,
   brightness: Brightness.light,
-  primaryColor: primaryColor,
+
   scaffoldBackgroundColor: backgroundColor,
-  cardColor: backgroundColor,
+
   colorScheme: ColorScheme.light(
     primary: primaryColor,
-    secondary: accentColor,
-    surface: Colors.white,
-    onPrimary: Colors.white,
-    onSecondary: Colors.white,
+    onPrimary: invertedTextColor,
+
+    secondary: secondaryColor,
+    onSecondary: invertedTextColor,
+
+    surface: fillColor,
     onSurface: textColor,
   ),
-  appBarTheme: AppBarTheme(
-    backgroundColor: primaryColor,
-    foregroundColor: Colors.white,
-    elevation: 2,
+
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ButtonStyle(
+      // Content alignment
+      alignment: Alignment.center,
+
+      // Background color
+      backgroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
+        if (states.contains(WidgetState.disabled)) {
+          return unselectedItemColor;
+        }
+        return primaryColor;
+      }),
+
+      // Text & icon color
+      foregroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
+        if (states.contains(WidgetState.disabled)) {
+          return textColor;
+        }
+        return invertedTextColor;
+      }),
+
+      // Overlay color
+      overlayColor: WidgetStateProperty.resolveWith<Color?>((states) {
+        if (states.contains(WidgetState.pressed)) {
+          return accentColor.withAlpha(60);
+        }
+        if (states.contains(WidgetState.hovered)) {
+          return accentColor.withAlpha(30);
+        }
+        return null;
+      }),
+
+      // Padding
+      padding: WidgetStateProperty.all(
+        const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+      ),
+
+      // Button shape
+      shape: WidgetStateProperty.all(
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+      ),
+    ),
   ),
-  iconTheme: IconThemeData(color: textColor),
-  floatingActionButtonTheme: FloatingActionButtonThemeData(
-    backgroundColor: primaryColor,
-    foregroundColor: Colors.white,
+
+  inputDecorationTheme: InputDecorationTheme(
+    filled: true,
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12.r),
+      borderSide: BorderSide(color: dividerColor, width: 2),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12.r),
+      borderSide: BorderSide(color: dividerColor, width: 2),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12.r),
+      borderSide: BorderSide(color: dividerColor, width: 2),
+    ),
   ),
-  cardTheme: CardTheme(
-    color: Colors.white,
-    elevation: 4,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+
+  textTheme: GoogleFonts.montserratTextTheme().apply(
+    bodyColor: textColor,
+    displayColor: textColor,
   ),
-  navigationBarTheme: NavigationBarThemeData(
-    backgroundColor: backgroundColor,
-    indicatorColor: primaryColor.withAlpha(30),
-    labelTextStyle: WidgetStateProperty.all(TextStyle(color: primaryColor)),
-    iconTheme: WidgetStateProperty.resolveWith((states) {
-      if (states.contains(WidgetState.selected)) {
-        return IconThemeData(color: primaryColor);
-      }
-      return IconThemeData(color: unselectedItemColor);
-    }),
-  ),
-  // inputDecorationTheme: InputDecorationTheme(
-  //   border: OutlineInputBorder(borderSide: BorderSide(color: dividerColor)),
-  //   focusedBorder: OutlineInputBorder(
-  //     borderSide: BorderSide(color: primaryColor),
-  //   ),
-  //   enabledBorder: OutlineInputBorder(
-  //     borderSide: BorderSide(color: dividerColor),
-  //   ),
-  // ),
-  textTheme: GoogleFonts.montserratTextTheme(),
 );
 
 final darkTheme = ThemeData(
+  useMaterial3: true,
   brightness: Brightness.dark,
-  primaryColor: darkModePrimaryColor,
+
   scaffoldBackgroundColor: darkModeBackgroundColor,
-  cardColor: darkModeFillColor,
+
   colorScheme: ColorScheme.dark(
     primary: darkModePrimaryColor,
-    secondary: darkModeAccentColor,
+    onPrimary: darkModeInvertedTextColor,
+
+    secondary: darkModeSecondaryColor,
+    onSecondary: darkModeInvertedTextColor,
+
     surface: darkModeFillColor,
-    onPrimary: Colors.white,
-    onSecondary: Colors.white,
     onSurface: darkModeTextColor,
   ),
-  appBarTheme: AppBarTheme(
-    backgroundColor: darkModePrimaryColor,
-    foregroundColor: Colors.white,
-    elevation: 2,
-  ),
-  iconTheme: IconThemeData(color: darkModeTextColor),
-  floatingActionButtonTheme: FloatingActionButtonThemeData(
-    backgroundColor: darkModePrimaryColor,
-    foregroundColor: Colors.white,
-  ),
-  cardTheme: CardTheme(
-    color: darkModeFillColor,
-    elevation: 4,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-  ),
-  navigationBarTheme: NavigationBarThemeData(
-    backgroundColor: darkModeBackgroundColor,
-    indicatorColor: darkModePrimaryColor.withAlpha(30),
-    labelTextStyle: WidgetStateProperty.all(
-      TextStyle(color: darkModePrimaryColor),
+
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ButtonStyle(
+      // Content alignment
+      alignment: Alignment.center,
+
+      // Background color
+      backgroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
+        if (states.contains(WidgetState.disabled)) {
+          return darkModeUnselectedItemColor;
+        }
+        return darkModePrimaryColor;
+      }),
+
+      // Text & icon color
+      foregroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
+        if (states.contains(WidgetState.disabled)) {
+          return darkModeTextColor;
+        }
+        return darkModeInvertedTextColor;
+      }),
+
+      // Overlay color
+      overlayColor: WidgetStateProperty.resolveWith<Color?>((states) {
+        if (states.contains(WidgetState.pressed)) {
+          return darkModeAccentColor.withAlpha(60);
+        }
+        if (states.contains(WidgetState.hovered)) {
+          return darkModeAccentColor.withAlpha(30);
+        }
+        return null;
+      }),
+
+      // Padding
+      padding: WidgetStateProperty.all(
+        const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+      ),
+
+      // Button shape
+      shape: WidgetStateProperty.all(
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+      ),
     ),
-    iconTheme: WidgetStateProperty.resolveWith((states) {
-      if (states.contains(WidgetState.selected)) {
-        return IconThemeData(color: darkModePrimaryColor);
-      }
-      return IconThemeData(color: darkModeUnselectedItemColor);
-    }),
   ),
-  // inputDecorationTheme: InputDecorationTheme(
-  //   focusedBorder: OutlineInputBorder(
-  //     borderSide: BorderSide(color: darkModePrimaryColor),
-  //   ),
-  //   enabledBorder: OutlineInputBorder(
-  //     borderSide: BorderSide(color: darkModeDividerColor),
-  //   ),
-  //   border: OutlineInputBorder(
-  //     borderSide: BorderSide(color: darkModeDividerColor),
-  //   ),
-  // ),
+
+  inputDecorationTheme: InputDecorationTheme(
+    filled: true,
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12.r),
+      borderSide: BorderSide(color: darkModeDividerColor, width: 2),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12.r),
+      borderSide: BorderSide(color: darkModeDividerColor, width: 2),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12.r),
+      borderSide: BorderSide(color: darkModeDividerColor, width: 2),
+    ),
+  ),
+
   textTheme: GoogleFonts.montserratTextTheme().apply(
     bodyColor: darkModeTextColor,
     displayColor: darkModeTextColor,

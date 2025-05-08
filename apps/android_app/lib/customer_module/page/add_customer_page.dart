@@ -239,18 +239,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                             }
                           }
                           : null,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryColor,
-                    foregroundColor: backgroundColor,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 32.w,
-                      vertical: 14.h,
-                    ),
-                  ),
-                  child: Text(
-                    'Add Customer',
-                    style: buttonStyle.copyWith(fontSize: 16.sp),
-                  ),
+                  child: Text('Add Customer', style: buttonStyle),
                 )
                 : const CircularProgressIndicator(),
           ],
@@ -278,17 +267,13 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                           Icons.keyboard_arrow_down_rounded,
                           color: textColor,
                         ),
-                        decoration: regularInputDecoration(
-                          context,
-                          'Customer Type',
-                          captionStyle,
-                        ).copyWith(
+                        decoration: InputDecoration(
+                          labelText: 'Customer Type',
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 12.w,
                             vertical: 14.h,
                           ),
                         ),
-
                         items:
                             ['', 'PKP', 'Non PKP'].map((item) {
                               return DropdownMenuItem<String>(
@@ -321,11 +306,8 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                           Icons.keyboard_arrow_down_rounded,
                           color: textColor,
                         ),
-                        decoration: regularInputDecoration(
-                          context,
-                          'Subscription Type',
-                          captionStyle,
-                        ).copyWith(
+                        decoration: InputDecoration(
+                          labelText: 'Subscription Type',
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 12.w,
                             vertical: 14.h,
@@ -672,7 +654,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
         validator: validator,
         keyboardType: keyboardType,
         maxLines: maxLines,
-        decoration: regularInputDecoration(context, label, bodyStyle),
+        decoration: InputDecoration(labelText: label),
       ),
     );
   }

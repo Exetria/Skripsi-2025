@@ -116,14 +116,6 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: _submit,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryColor,
-                    foregroundColor: backgroundColor,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 32.w,
-                      vertical: 14.h,
-                    ),
-                  ),
                   child: Text(
                     'Add Order',
                     style: buttonStyle.copyWith(fontSize: 16.sp),
@@ -151,7 +143,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
         keyboardType: keyboardType,
         maxLines: maxLines,
         validator: validator,
-        decoration: regularInputDecoration(context, label, hintStyle),
+        decoration: InputDecoration(labelText: label),
       ),
     );
   }

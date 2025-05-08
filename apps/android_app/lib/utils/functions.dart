@@ -99,11 +99,8 @@ Widget customSearchBar({required BuildContext context, String? hint}) {
   return SizedBox(
     height: 50.h,
     child: TextField(
-      decoration: regularInputDecoration(
-        context,
-        hint ?? '',
-        hintStyle,
-      ).copyWith(
+      decoration: InputDecoration(
+        labelText: hint ?? '',
         contentPadding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
         prefixIcon: Icon(
           Icons.search,
@@ -138,7 +135,11 @@ InkWell customListItem({
             width: 48.w,
             height: 48.h,
             decoration: iconBoxDecoration(context),
-            child: Icon(leadIcon, color: secondaryColor, size: 24.sp),
+            child: Icon(
+              leadIcon,
+              color: Theme.of(context).colorScheme.secondary,
+              size: 24.sp,
+            ),
           ),
           SizedBox(width: 12.w),
           Expanded(
@@ -191,10 +192,8 @@ void showFormDialog({
                     TextFormField(
                       controller: controller,
                       style: bodyStyle,
-                      decoration: regularInputDecoration(
-                        context,
-                        'Enter value',
-                        hintStyle,
+                      decoration: const InputDecoration(
+                        labelText: 'Enter value',
                       ),
                       validator:
                           (value) =>
@@ -207,10 +206,6 @@ void showFormDialog({
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: primaryColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.r),
-                          ),
                           padding: EdgeInsets.symmetric(vertical: 14.h),
                         ),
                         onPressed:

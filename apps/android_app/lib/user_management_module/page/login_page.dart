@@ -4,7 +4,6 @@ import 'package:android_app/user_management_module/domain/entities/sign_in_domai
 import 'package:android_app/user_management_module/page/controller/check_user_data_controller.dart';
 import 'package:android_app/user_management_module/page/controller/refresh_token_controller.dart';
 import 'package:android_app/user_management_module/page/controller/sign_in_controller.dart';
-import 'package:android_app/utils/widget_settings.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -63,11 +62,8 @@ class _LoginPage extends ConsumerState<LoginPage> {
               TextField(
                 controller: emailController,
                 style: bodyStyle,
-                decoration: regularInputDecoration(
-                  context,
-                  'Email',
-                  bodyStyle,
-                ).copyWith(
+                decoration: InputDecoration(
+                  labelText: 'Email',
                   contentPadding: EdgeInsets.symmetric(
                     vertical: 14.h,
                     horizontal: 16.w,
@@ -85,11 +81,8 @@ class _LoginPage extends ConsumerState<LoginPage> {
                 controller: passwordController,
                 obscureText: _obscurePassword,
                 style: bodyStyle,
-                decoration: regularInputDecoration(
-                  context,
-                  'Password',
-                  bodyStyle,
-                ).copyWith(
+                decoration: InputDecoration(
+                  labelText: 'Password',
                   contentPadding: EdgeInsets.symmetric(
                     vertical: 14.h,
                     horizontal: 16.w,
@@ -146,14 +139,9 @@ class _LoginPage extends ConsumerState<LoginPage> {
                             );
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: primaryColor,
-                            foregroundColor: backgroundColor,
                             padding: EdgeInsets.symmetric(
                               horizontal: 80.w,
                               vertical: 10.h,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.r),
                             ),
                           ),
                           child: Text('Login', style: buttonStyle),

@@ -39,7 +39,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
           children: [
             // Dropdown
             DropdownButtonFormField<String>(
-              decoration: regularInputDecoration(context, 'Status', bodyStyle),
+              decoration: const InputDecoration(labelText: 'Status'),
               value: selectedOption,
               items:
                   ['Pending', 'In Progress', 'Done', 'Delayed']
@@ -61,11 +61,10 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
             // Description
             TextField(
               controller: _descriptionController,
-              decoration: regularInputDecoration(
-                context,
-                'Description',
-                bodyStyle,
-              ).copyWith(alignLabelWithHint: true),
+              decoration: const InputDecoration(
+                labelText: 'Description',
+                alignLabelWithHint: true,
+              ),
               style: bodyStyle,
               maxLines: 4,
             ),
@@ -121,13 +120,6 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
                 onPressed: () {
                   // TODO: Confirm logic
                 },
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
-                  backgroundColor: primaryColor,
-                ),
                 child: Text(
                   'Confirm',
                   style: buttonStyle.copyWith(color: invertedTextColor),

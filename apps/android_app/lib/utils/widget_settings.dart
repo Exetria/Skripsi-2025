@@ -24,10 +24,7 @@ BoxDecoration iconBoxDecoration(BuildContext context) {
   final bool lightMode = Theme.of(context).brightness == Brightness.light;
 
   return BoxDecoration(
-    color:
-        lightMode
-            ? secondaryColor.withAlpha(50)
-            : darkModeSecondaryColor.withAlpha(50),
+    color: Theme.of(context).colorScheme.secondary.withAlpha(50),
     borderRadius: BorderRadius.circular(10.r),
   );
 }
@@ -40,42 +37,5 @@ BoxDecoration photoBoxDecoration(BuildContext context) {
     color: lightMode ? fillColor : darkModeFillColor,
     borderRadius: BorderRadius.circular(16.r),
     border: Border.all(color: lightMode ? dividerColor : darkModeDividerColor),
-  );
-}
-
-// Input decorations
-InputDecoration regularInputDecoration(
-  BuildContext context,
-  String label,
-  TextStyle labelStyle,
-) {
-  final bool lightMode = Theme.of(context).brightness == Brightness.light;
-
-  return InputDecoration(
-    labelText: label,
-    labelStyle: labelStyle,
-    filled: true,
-    fillColor: lightMode ? fillColor : darkModeFillColor,
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12.r),
-      borderSide: BorderSide(
-        color: lightMode ? dividerColor : darkModeDividerColor,
-        width: 2,
-      ),
-    ),
-    enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12.r),
-      borderSide: BorderSide(
-        color: lightMode ? dividerColor : darkModeDividerColor,
-        width: 2,
-      ),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12.r),
-      borderSide: BorderSide(
-        color: lightMode ? dividerColor : darkModeDividerColor,
-        width: 2,
-      ),
-    ),
   );
 }
