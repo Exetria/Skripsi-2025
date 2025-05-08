@@ -3,6 +3,7 @@ import 'package:android_app/customer_module/page/customer_list_fragment.dart';
 import 'package:android_app/order_module/page/add_order_page.dart';
 import 'package:android_app/order_module/page/order_list_fragment.dart';
 import 'package:android_app/product_module/page/product_list_fragment.dart';
+import 'package:android_app/user_management_module/page/controller/get_attendance_data_controller.dart';
 import 'package:android_app/user_management_module/page/login_page.dart';
 import 'package:android_app/user_management_module/page/profile_fragment.dart';
 import 'package:android_app/utils/functions.dart';
@@ -92,8 +93,8 @@ class _HomePage extends ConsumerState<HomePage> {
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: selectedIndex,
           onTap: (index) {
-            if (index == 0 || index == 1 || index == 2) {
-              rightButtonIcon = Icons.add;
+            if (index != 3) {
+              rightButtonIcon = index == 4 ? Icons.refresh : Icons.add;
               onRightPressed = () {
                 index == 0
                     ? Navigator.push(
@@ -116,6 +117,8 @@ class _HomePage extends ConsumerState<HomePage> {
                         builder: (context) => const AddCustomerPage(),
                       ),
                     )
+                    : index == 4
+                    ? ref.invalidate(getAttendanceDataControllerProvider)
                     : null;
               };
             } else {
