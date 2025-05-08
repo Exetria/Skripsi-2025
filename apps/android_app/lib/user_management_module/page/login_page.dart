@@ -23,6 +23,8 @@ class LoginPage extends StatefulHookConsumerWidget {
 class _LoginPage extends ConsumerState<LoginPage> {
   bool _obscurePassword = true;
   bool _signInButtonEnabled = true;
+  final FocusNode _emailFocusNode = FocusNode();
+  final FocusNode _passwordFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -37,6 +39,13 @@ class _LoginPage extends ConsumerState<LoginPage> {
   }
 
   @override
+  void dispose() {
+    _emailFocusNode.dispose();
+    _passwordFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
@@ -46,7 +55,6 @@ class _LoginPage extends ConsumerState<LoginPage> {
     );
 
     return Scaffold(
-      backgroundColor: backgroundColor,
       body: Center(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -60,6 +68,8 @@ class _LoginPage extends ConsumerState<LoginPage> {
 
               // Email Field
               TextField(
+                autofocus: false,
+                focusNode: _emailFocusNode,
                 controller: emailController,
                 style: bodyStyle,
                 decoration: InputDecoration(
@@ -78,6 +88,8 @@ class _LoginPage extends ConsumerState<LoginPage> {
 
               // Password Field
               TextField(
+                autofocus: false,
+                focusNode: _passwordFocusNode,
                 controller: passwordController,
                 obscureText: _obscurePassword,
                 style: bodyStyle,
@@ -156,6 +168,8 @@ class _LoginPage extends ConsumerState<LoginPage> {
   }
 
   void doSignIn({required String email, required String password}) async {
+    _emailFocusNode.unfocus();
+    _passwordFocusNode.unfocus();
     if (email != '' && password != '') {
       final state = await ref
           .read(signInControllerProvider.notifier)
@@ -285,18 +299,21 @@ class _LoginPage extends ConsumerState<LoginPage> {
 
       ref.read(refreshTokenControllerProvider.notifier).startAutoRefreshToken();
 
+      setState(() {
+        _signInButtonEnabled = true;
+      });
+
       showFeedbackDialog(
         context: context,
         type: 1,
         message: 'Login Successful',
         onClose: () {
-          setState(() {
-            _signInButtonEnabled = true;
+          Future.delayed(const Duration(milliseconds: 250), () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const HomePage()),
+            );
           });
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const HomePage()),
-          );
         },
       );
     } else {

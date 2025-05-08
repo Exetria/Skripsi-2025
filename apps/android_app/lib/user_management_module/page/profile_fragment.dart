@@ -85,7 +85,8 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
           SwitchListTile(
             title: const Text('Dark Mode'),
             value: ref.watch(themeModeProvider) == ThemeMode.dark,
-            onChanged: (val) {
+            onChanged: (val) async {
+              await saveDataToSp(key: 'themeMode', data: val ? '1' : '0');
               ref.read(themeModeProvider.notifier).state =
                   val ? ThemeMode.dark : ThemeMode.light;
             },
@@ -440,16 +441,17 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
   }
 
   void doSignOut() async {
-    setState(() {
-      logOutButtonEnable = false;
-    });
-
     showConfirmationDialog(
       context: context,
       message: 'Are you sure you want to log out?',
       onLeftButtonTap: () async {
         // Delay to close popup
-        await Future.delayed(const Duration(microseconds: 750000));
+        await Future.delayed(const Duration(milliseconds: 250));
+
+        // Deactivate button
+        setState(() {
+          logOutButtonEnable = false;
+        });
 
         // Clear user data
         clearUserDataInSp();
@@ -460,18 +462,19 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
           type: 2,
           message: 'Log Out Success',
           onClose: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => LoginPage()),
-            );
+            Future.delayed(const Duration(milliseconds: 250), () {
+              setState(() {
+                logOutButtonEnable = true;
+              });
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+              );
+            });
           },
         );
       },
       onRightButtonTap: () {},
     );
-
-    setState(() {
-      logOutButtonEnable = true;
-    });
   }
 }
