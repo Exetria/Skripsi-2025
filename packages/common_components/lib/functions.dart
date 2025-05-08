@@ -28,7 +28,6 @@ void showFeedbackDialog({
 
       return Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        backgroundColor: backgroundColor,
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Column(
@@ -41,7 +40,7 @@ void showFeedbackDialog({
                     ? Icons.error_outline
                     : Icons.highlight_off,
                 size: 48,
-                color: primaryColor,
+                color: Theme.of(context).colorScheme.primary,
               ),
               const SizedBox(height: 16),
               Text(message, style: bodyStyle, textAlign: TextAlign.center),
@@ -72,13 +71,16 @@ void showConfirmationDialog({
     builder: (context) {
       return Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        backgroundColor: backgroundColor,
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.help_outline, size: 48, color: primaryColor),
+              Icon(
+                Icons.help_outline,
+                size: 48,
+                color: Theme.of(context).colorScheme.primary,
+              ),
               const SizedBox(height: 16),
               Text(message, style: bodyStyle, textAlign: TextAlign.center),
               const SizedBox(height: 24),
@@ -98,9 +100,11 @@ void showConfirmationDialog({
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
-                            leftButtonBackgroundColor ?? successColor,
+                            leftButtonBackgroundColor ??
+                            Theme.of(context).colorScheme.primary,
                         foregroundColor:
-                            leftButtonForegroundColor ?? backgroundColor,
+                            leftButtonForegroundColor ??
+                            Theme.of(context).colorScheme.onPrimary,
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -122,9 +126,11 @@ void showConfirmationDialog({
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
-                            rightButtonBackgroundColor ?? errorColor,
+                            rightButtonBackgroundColor ??
+                            Theme.of(context).colorScheme.primary,
                         foregroundColor:
-                            rightButtonForegroundColor ?? backgroundColor,
+                            rightButtonForegroundColor ??
+                            Theme.of(context).colorScheme.onPrimary,
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),

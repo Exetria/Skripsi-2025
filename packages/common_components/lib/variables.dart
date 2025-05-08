@@ -29,9 +29,9 @@ final Color darkModeAccentColor = const Color.fromRGBO(0, 200, 180, 1);
 final Color darkModeBackgroundColor = const Color.fromRGBO(18, 18, 18, 1);
 final Color darkModeTextColor = const Color.fromRGBO(210, 210, 210, 1);
 final Color darkModeInvertedTextColor = const Color.fromRGBO(33, 33, 33, 1);
-final Color darkModeSuccessColor = const Color.fromRGBO(129, 199, 132, 1);
-final Color darkModeWarningColor = const Color.fromRGBO(255, 183, 77, 1);
-final Color darkModeErrorColor = const Color.fromRGBO(239, 83, 80, 1);
+final Color darkModeSuccessColor = const Color.fromRGBO(76, 175, 80, 1);
+final Color darkModeWarningColor = const Color.fromRGBO(255, 160, 0, 1);
+final Color darkModeErrorColor = const Color.fromRGBO(211, 47, 47, 1);
 final Color darkModeDividerColor = const Color.fromRGBO(30, 30, 30, 1);
 final Color darkModeSelectedItemColor = darkModePrimaryColor;
 final Color darkModeUnselectedItemColor = darkModeTextColor.withAlpha(150);
@@ -60,15 +60,9 @@ final TextStyle captionStyle = TextStyle(
 );
 
 // MISC. TEXT STYLES
-final TextStyle hintStyle = TextStyle(
-  fontSize: Platform.isWindows ? 16 : 16.sp,
-  fontWeight: FontWeight.w600,
-  color: unselectedItemColor,
-);
 final TextStyle buttonStyle = TextStyle(
   fontSize: Platform.isWindows ? 16 : 16.sp,
   fontWeight: FontWeight.w600,
-  color: invertedTextColor,
 );
 final TextStyle successStyle = TextStyle(
   fontSize: Platform.isWindows ? 16 : 16.sp,
