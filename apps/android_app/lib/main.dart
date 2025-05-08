@@ -179,7 +179,17 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: '.env');
 
-  runApp(const ProviderScope(child: Main()));
+  // Check previous theme setting
+  String? themeString = await getDataFromSp(key: 'themeMode');
+  final initialThemeMode =
+      themeString == '1' ? ThemeMode.dark : ThemeMode.light;
+
+  runApp(
+    ProviderScope(
+      overrides: [themeModeProvider.overrideWith((ref) => initialThemeMode)],
+      child: const Main(),
+    ),
+  );
 }
 
 class Main extends StatefulHookConsumerWidget {
