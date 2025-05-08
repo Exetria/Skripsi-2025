@@ -1,0 +1,52 @@
+import 'package:android_app/visit_module/data/remote_datasource/update_visit_remote_datasource.dart';
+import 'package:android_app/visit_module/domain/entities/visit_domain.dart';
+import 'package:android_app/visit_module/domain/repository/visit_repository.dart';
+import 'package:common_components/common_components.dart';
+import 'package:fpdart/src/either.dart';
+
+class UpdateVisitRepositoryImpl implements VisitRepository {
+  final remoteDataSource = UpdateVisitDataRemoteDatasourceImpl();
+
+  @override
+  Future<Either<ApiException, VisitDomain?>> getVisitList({
+    required DateTime date,
+  }) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<ApiException, VisitDomain?>> createVisit({
+    required DateTime date,
+    required String customerId,
+    required List<Value> previousVisitData,
+  }) async {
+    final resp = await remoteProcess(
+      remoteDataSource.createVisit(
+        date: date,
+        customerId: customerId,
+        previousVisitData: previousVisitData,
+      ),
+    );
+
+    return resp.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  @override
+  Future<Either<ApiException, VisitDomain?>> updateVisit({
+    required DateTime date,
+    required String customerId,
+    required String notes,
+    required List<Value> previousVisitData,
+  }) async {
+    final resp = await remoteProcess(
+      remoteDataSource.updateVisit(
+        date: date,
+        customerId: customerId,
+        notes: notes,
+        previousVisitData: previousVisitData,
+      ),
+    );
+
+    return resp.fold((l) => Left(l), (r) => Right(r));
+  }
+}
