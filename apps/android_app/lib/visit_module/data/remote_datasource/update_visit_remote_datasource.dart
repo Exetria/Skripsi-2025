@@ -28,10 +28,21 @@ class UpdateVisitDataRemoteDatasourceImpl
   }) async {
     final documentId = _generateDocumentIdFromDate(date);
 
-    Map<String, dynamic> callBody = _createCallBody(
-      visitDate: date,
-      visitData: previousVisitData,
+    // Map previous visit data
+    List<Map<String, dynamic>> visitArray = _createPreviousVisitArray(
+      previousVisitData: previousVisitData,
     );
+
+    // Add new visit data
+    visitArray.add({
+      'mapValue': {
+        'fields': {
+          'customer_id': {'stringValue': customerId},
+          'visit_status': {'integerValue': '1'},
+          'visit_notes': {'stringValue': ''},
+        },
+      },
+    });
 
     Map<String, dynamic> result = await apiCallPatch(
       url:
@@ -40,7 +51,15 @@ class UpdateVisitDataRemoteDatasourceImpl
         'Authorization': 'Bearer ${userDataHelper?.idToken}',
         'Content-Type': 'application/json',
       },
-      body: callBody,
+      body: {
+        'fields': {
+          'created_by': {'stringValue': userDataHelper?.uid},
+          'visit_date': {'timestampValue': date.toUtc().toIso8601String()},
+          'visits': {
+            'arrayValue': {'values': visitArray},
+          },
+        },
+      },
     );
 
     return VisitDomain.fromJson(result);
@@ -97,22 +116,17 @@ class UpdateVisitDataRemoteDatasourceImpl
     return VisitDomain.fromJson(result);
   }
 
-  Map<String, dynamic> _createCallBody({
-    required DateTime visitDate,
-    required List<Value> visitData,
+  List<Map<String, dynamic>> _createPreviousVisitArray({
+    required List<Value> previousVisitData,
   }) {
     final List<Map<String, dynamic>> visitArray = [];
-    for (var visit in visitData) {
+    for (var visit in previousVisitData) {
       visitArray.add({
         'mapValue': {
           'fields': {
             'customer_id': {
               'stringValue':
                   visit.mapValue?.fields?.customerId?.stringValue ?? '',
-            },
-            'visit_purpose': {
-              'stringValue':
-                  visit.mapValue?.fields?.visitPurpose?.stringValue ?? '',
             },
             'visit_status': {
               'integerValue':
@@ -169,15 +183,7 @@ class UpdateVisitDataRemoteDatasourceImpl
       });
     }
 
-    return {
-      'fields': {
-        'created_by': {'stringValue': userDataHelper?.uid},
-        'visit_date': {'timestampValue': visitDate.toUtc().toIso8601String()},
-        'visits': {
-          'arrayValue': {'values': visitArray},
-        },
-      },
-    };
+    return visitArray;
   }
 
   String _generateDocumentIdFromDate(DateTime date) {

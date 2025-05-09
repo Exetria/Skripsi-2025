@@ -7,7 +7,7 @@ part of 'update_visit_controller.dart';
 // **************************************************************************
 
 String _$updateVisitControllerHash() =>
-    r'2191fb50edab83d82b05b255b51907c71af9e3b5';
+    r'a11c44e899eab8cce9f11fbd3cb56f57b67a11e4';
 
 /// See also [UpdateVisitController].
 @ProviderFor(UpdateVisitController)

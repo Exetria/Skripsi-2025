@@ -1560,8 +1560,6 @@ PurpleFields _$PurpleFieldsFromJson(Map<String, dynamic> json) {
 mixin _$PurpleFields {
   @JsonKey(name: 'customer_id')
   CreatedBy? get customerId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'visit_purpose')
-  CreatedBy? get visitPurpose => throw _privateConstructorUsedError;
   @JsonKey(name: 'visit_status')
   VisitStatus? get visitStatus => throw _privateConstructorUsedError;
   @JsonKey(name: 'visit_notes')
@@ -1588,14 +1586,12 @@ abstract class $PurpleFieldsCopyWith<$Res> {
   @useResult
   $Res call({
     @JsonKey(name: 'customer_id') CreatedBy? customerId,
-    @JsonKey(name: 'visit_purpose') CreatedBy? visitPurpose,
     @JsonKey(name: 'visit_status') VisitStatus? visitStatus,
     @JsonKey(name: 'visit_notes') CreatedBy? visitNotes,
     @JsonKey(name: 'location') Location? location,
   });
 
   $CreatedByCopyWith<$Res>? get customerId;
-  $CreatedByCopyWith<$Res>? get visitPurpose;
   $VisitStatusCopyWith<$Res>? get visitStatus;
   $CreatedByCopyWith<$Res>? get visitNotes;
   $LocationCopyWith<$Res>? get location;
@@ -1617,7 +1613,6 @@ class _$PurpleFieldsCopyWithImpl<$Res, $Val extends PurpleFields>
   @override
   $Res call({
     Object? customerId = freezed,
-    Object? visitPurpose = freezed,
     Object? visitStatus = freezed,
     Object? visitNotes = freezed,
     Object? location = freezed,
@@ -1628,11 +1623,6 @@ class _$PurpleFieldsCopyWithImpl<$Res, $Val extends PurpleFields>
                 freezed == customerId
                     ? _value.customerId
                     : customerId // ignore: cast_nullable_to_non_nullable
-                        as CreatedBy?,
-            visitPurpose:
-                freezed == visitPurpose
-                    ? _value.visitPurpose
-                    : visitPurpose // ignore: cast_nullable_to_non_nullable
                         as CreatedBy?,
             visitStatus:
                 freezed == visitStatus
@@ -1665,20 +1655,6 @@ class _$PurpleFieldsCopyWithImpl<$Res, $Val extends PurpleFields>
 
     return $CreatedByCopyWith<$Res>(_value.customerId!, (value) {
       return _then(_value.copyWith(customerId: value) as $Val);
-    });
-  }
-
-  /// Create a copy of PurpleFields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CreatedByCopyWith<$Res>? get visitPurpose {
-    if (_value.visitPurpose == null) {
-      return null;
-    }
-
-    return $CreatedByCopyWith<$Res>(_value.visitPurpose!, (value) {
-      return _then(_value.copyWith(visitPurpose: value) as $Val);
     });
   }
 
@@ -1736,7 +1712,6 @@ abstract class _$$PurpleFieldsImplCopyWith<$Res>
   @useResult
   $Res call({
     @JsonKey(name: 'customer_id') CreatedBy? customerId,
-    @JsonKey(name: 'visit_purpose') CreatedBy? visitPurpose,
     @JsonKey(name: 'visit_status') VisitStatus? visitStatus,
     @JsonKey(name: 'visit_notes') CreatedBy? visitNotes,
     @JsonKey(name: 'location') Location? location,
@@ -1744,8 +1719,6 @@ abstract class _$$PurpleFieldsImplCopyWith<$Res>
 
   @override
   $CreatedByCopyWith<$Res>? get customerId;
-  @override
-  $CreatedByCopyWith<$Res>? get visitPurpose;
   @override
   $VisitStatusCopyWith<$Res>? get visitStatus;
   @override
@@ -1769,7 +1742,6 @@ class __$$PurpleFieldsImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? customerId = freezed,
-    Object? visitPurpose = freezed,
     Object? visitStatus = freezed,
     Object? visitNotes = freezed,
     Object? location = freezed,
@@ -1780,11 +1752,6 @@ class __$$PurpleFieldsImplCopyWithImpl<$Res>
             freezed == customerId
                 ? _value.customerId
                 : customerId // ignore: cast_nullable_to_non_nullable
-                    as CreatedBy?,
-        visitPurpose:
-            freezed == visitPurpose
-                ? _value.visitPurpose
-                : visitPurpose // ignore: cast_nullable_to_non_nullable
                     as CreatedBy?,
         visitStatus:
             freezed == visitStatus
@@ -1811,7 +1778,6 @@ class __$$PurpleFieldsImplCopyWithImpl<$Res>
 class _$PurpleFieldsImpl implements _PurpleFields {
   const _$PurpleFieldsImpl({
     @JsonKey(name: 'customer_id') this.customerId,
-    @JsonKey(name: 'visit_purpose') this.visitPurpose,
     @JsonKey(name: 'visit_status') this.visitStatus,
     @JsonKey(name: 'visit_notes') this.visitNotes,
     @JsonKey(name: 'location') this.location,
@@ -1824,9 +1790,6 @@ class _$PurpleFieldsImpl implements _PurpleFields {
   @JsonKey(name: 'customer_id')
   final CreatedBy? customerId;
   @override
-  @JsonKey(name: 'visit_purpose')
-  final CreatedBy? visitPurpose;
-  @override
   @JsonKey(name: 'visit_status')
   final VisitStatus? visitStatus;
   @override
@@ -1838,7 +1801,7 @@ class _$PurpleFieldsImpl implements _PurpleFields {
 
   @override
   String toString() {
-    return 'PurpleFields(customerId: $customerId, visitPurpose: $visitPurpose, visitStatus: $visitStatus, visitNotes: $visitNotes, location: $location)';
+    return 'PurpleFields(customerId: $customerId, visitStatus: $visitStatus, visitNotes: $visitNotes, location: $location)';
   }
 
   @override
@@ -1848,8 +1811,6 @@ class _$PurpleFieldsImpl implements _PurpleFields {
             other is _$PurpleFieldsImpl &&
             (identical(other.customerId, customerId) ||
                 other.customerId == customerId) &&
-            (identical(other.visitPurpose, visitPurpose) ||
-                other.visitPurpose == visitPurpose) &&
             (identical(other.visitStatus, visitStatus) ||
                 other.visitStatus == visitStatus) &&
             (identical(other.visitNotes, visitNotes) ||
@@ -1860,14 +1821,8 @@ class _$PurpleFieldsImpl implements _PurpleFields {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    customerId,
-    visitPurpose,
-    visitStatus,
-    visitNotes,
-    location,
-  );
+  int get hashCode =>
+      Object.hash(runtimeType, customerId, visitStatus, visitNotes, location);
 
   /// Create a copy of PurpleFields
   /// with the given fields replaced by the non-null parameter values.
@@ -1886,7 +1841,6 @@ class _$PurpleFieldsImpl implements _PurpleFields {
 abstract class _PurpleFields implements PurpleFields {
   const factory _PurpleFields({
     @JsonKey(name: 'customer_id') final CreatedBy? customerId,
-    @JsonKey(name: 'visit_purpose') final CreatedBy? visitPurpose,
     @JsonKey(name: 'visit_status') final VisitStatus? visitStatus,
     @JsonKey(name: 'visit_notes') final CreatedBy? visitNotes,
     @JsonKey(name: 'location') final Location? location,
@@ -1898,9 +1852,6 @@ abstract class _PurpleFields implements PurpleFields {
   @override
   @JsonKey(name: 'customer_id')
   CreatedBy? get customerId;
-  @override
-  @JsonKey(name: 'visit_purpose')
-  CreatedBy? get visitPurpose;
   @override
   @JsonKey(name: 'visit_status')
   VisitStatus? get visitStatus;

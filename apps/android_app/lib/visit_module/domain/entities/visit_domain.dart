@@ -84,7 +84,6 @@ class ValueMapValue with _$ValueMapValue {
 class PurpleFields with _$PurpleFields {
   const factory PurpleFields({
     @JsonKey(name: 'customer_id') CreatedBy? customerId,
-    @JsonKey(name: 'visit_purpose') CreatedBy? visitPurpose,
     @JsonKey(name: 'visit_status') VisitStatus? visitStatus,
     @JsonKey(name: 'visit_notes') CreatedBy? visitNotes,
     @JsonKey(name: 'location') Location? location,

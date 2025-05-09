@@ -101,35 +101,31 @@ _$ValueMapValueImpl _$$ValueMapValueImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$ValueMapValueImplToJson(_$ValueMapValueImpl instance) =>
     <String, dynamic>{'fields': instance.fields};
 
-_$PurpleFieldsImpl _$$PurpleFieldsImplFromJson(
-  Map<String, dynamic> json,
-) => _$PurpleFieldsImpl(
-  customerId:
-      json['customer_id'] == null
-          ? null
-          : CreatedBy.fromJson(json['customer_id'] as Map<String, dynamic>),
-  visitPurpose:
-      json['visit_purpose'] == null
-          ? null
-          : CreatedBy.fromJson(json['visit_purpose'] as Map<String, dynamic>),
-  visitStatus:
-      json['visit_status'] == null
-          ? null
-          : VisitStatus.fromJson(json['visit_status'] as Map<String, dynamic>),
-  visitNotes:
-      json['visit_notes'] == null
-          ? null
-          : CreatedBy.fromJson(json['visit_notes'] as Map<String, dynamic>),
-  location:
-      json['location'] == null
-          ? null
-          : Location.fromJson(json['location'] as Map<String, dynamic>),
-);
+_$PurpleFieldsImpl _$$PurpleFieldsImplFromJson(Map<String, dynamic> json) =>
+    _$PurpleFieldsImpl(
+      customerId:
+          json['customer_id'] == null
+              ? null
+              : CreatedBy.fromJson(json['customer_id'] as Map<String, dynamic>),
+      visitStatus:
+          json['visit_status'] == null
+              ? null
+              : VisitStatus.fromJson(
+                json['visit_status'] as Map<String, dynamic>,
+              ),
+      visitNotes:
+          json['visit_notes'] == null
+              ? null
+              : CreatedBy.fromJson(json['visit_notes'] as Map<String, dynamic>),
+      location:
+          json['location'] == null
+              ? null
+              : Location.fromJson(json['location'] as Map<String, dynamic>),
+    );
 
 Map<String, dynamic> _$$PurpleFieldsImplToJson(_$PurpleFieldsImpl instance) =>
     <String, dynamic>{
       'customer_id': instance.customerId,
-      'visit_purpose': instance.visitPurpose,
       'visit_status': instance.visitStatus,
       'visit_notes': instance.visitNotes,
       'location': instance.location,

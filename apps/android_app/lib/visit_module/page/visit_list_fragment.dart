@@ -141,6 +141,13 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                       };
                     });
 
+                    if (visits.isEmpty) {
+                      return refreshableInfoWidget(
+                        refreshFunction: _refreshVisitList,
+                        content: const Text('No Visit Data Found'),
+                      );
+                    }
+
                     return RefreshIndicator(
                       onRefresh: _refreshVisitList,
                       child: ListView.separated(
@@ -183,11 +190,11 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                             ),
                             subtitle:
                                 visitStatus == '1'
-                                    ? 'Pending'
+                                    ? 'Planned'
                                     : visitStatus == '2'
-                                    ? 'In Progress'
+                                    ? 'Finished'
                                     : visitStatus == '3'
-                                    ? 'Done'
+                                    ? 'Cancelled'
                                     : 'Unknown',
                             trailIcon: Icons.arrow_forward_ios,
                             onTap: () {
