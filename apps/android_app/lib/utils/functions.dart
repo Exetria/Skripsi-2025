@@ -126,6 +126,7 @@ InkWell customListItem({
   required IconData trailIcon,
 }) {
   return InkWell(
+    // TODO: Check if borderrad is needed
     borderRadius: BorderRadius.circular(12.r),
     onTap: onTap,
     child: Container(

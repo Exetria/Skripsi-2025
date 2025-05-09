@@ -11,6 +11,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 
+final markerListProvider = StateProvider<List<Marker>>((ref) => []);
+
 // ignore: must_be_immutable
 class AddVisitPage extends StatefulHookConsumerWidget {
   DateTime date;
@@ -23,9 +25,12 @@ class AddVisitPage extends StatefulHookConsumerWidget {
 }
 
 class _AddVisitPageState extends ConsumerState<AddVisitPage> {
+  final _mapController = MapController();
+
   @override
   Widget build(BuildContext context) {
     final customerListState = ref.watch(customerListControllerProvider);
+    final markers = ref.watch(markerListProvider);
 
     return Scaffold(
       appBar: customAppBar(
@@ -42,6 +47,7 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
         children: [
           Expanded(
             child: FlutterMap(
+              mapController: _mapController,
               options: const MapOptions(
                 initialCenter: LatLng(-7.3421267, 112.7363611),
                 initialZoom: 15.0,
@@ -51,23 +57,9 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
               ),
               children: [
                 TileLayer(
-                  urlTemplate:
-                      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  subdomains: const ['a', 'b', 'c'],
+                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                 ),
-                MarkerLayer(
-                  markers: [
-                    Marker(
-                      width: 40,
-                      height: 40,
-                      point: const LatLng(-7.3421267, 112.7363611),
-                      child: Icon(
-                        Icons.location_pin,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    ),
-                  ],
-                ),
+                MarkerLayer(markers: markers),
               ],
             ),
           ),
@@ -75,7 +67,11 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
           SizedBox(
             height: ScreenUtil().screenHeight / 4,
             child: customerListState.when(
-              loading: () => const Center(child: CircularProgressIndicator()),
+              loading: () {
+                // Clear markers
+                ref.read(markerListProvider.notifier).state = [];
+                return const Center(child: CircularProgressIndicator());
+              },
               data: (customerList) {
                 if (customerList == null || customerList.isEmpty) {
                   return refreshableInfoWidget(
@@ -83,6 +79,44 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
                     content: const Text('No Customer Data Found'),
                   );
                 }
+
+                // Set customer markers after widget has been built
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  List<Marker> customerMarker = [];
+                  for (var customerData in customerList) {
+                    final point = LatLng(
+                      customerData
+                              .fields
+                              ?.companyLocation
+                              ?.mapValue
+                              ?.fields
+                              ?.latitude
+                              ?.doubleValue ??
+                          0,
+                      customerData
+                              .fields
+                              ?.companyLocation
+                              ?.mapValue
+                              ?.fields
+                              ?.longitude
+                              ?.doubleValue ??
+                          0,
+                    );
+                    customerMarker.add(
+                      Marker(
+                        height: 20.h,
+                        width: 20.w,
+                        point: point,
+                        child: Icon(
+                          Icons.location_pin,
+                          color: Theme.of(context).colorScheme.primary,
+                          size: 20.r,
+                        ),
+                      ),
+                    );
+                  }
+                  ref.read(markerListProvider.notifier).state = customerMarker;
+                });
 
                 return ListView.separated(
                   itemCount: customerList.length,
@@ -107,28 +141,48 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
                             children: [
                               GestureDetector(
                                 onTap: () async {
-                                  await ref
-                                      .read(
-                                        updateVisitControllerProvider.notifier,
-                                      )
-                                      .createVisit(
-                                        date: widget.date,
-                                        customerId:
-                                            customerList[index].name != null
-                                                ? customerList[index].name!
-                                                    .substring(61)
-                                                : '',
-                                        previousVisitData: widget.visitData,
-                                      );
-                                  await ref
-                                      .read(
-                                        visitListControllerProvider.notifier,
-                                      )
-                                      .fetchVisitsForDate(
-                                        date: widget.date,
-                                        forceFetch: true,
-                                      );
-                                  Navigator.pop(context);
+                                  showConfirmationDialog(
+                                    context: context,
+                                    message:
+                                        'Are you sure to add visit to\n${customerList[index].fields?.companyName?.stringValue ?? "-"}',
+                                    leftButtonBackgroundColor:
+                                        Theme.of(context).brightness ==
+                                                Brightness.light
+                                            ? successColor
+                                            : darkModeSuccessColor,
+                                    rightButtonBackgroundColor:
+                                        Theme.of(context).brightness ==
+                                                Brightness.light
+                                            ? errorColor
+                                            : errorColor,
+                                    onLeftButtonTap: () async {
+                                      await ref
+                                          .read(
+                                            updateVisitControllerProvider
+                                                .notifier,
+                                          )
+                                          .createVisit(
+                                            date: widget.date,
+                                            customerId:
+                                                customerList[index].name != null
+                                                    ? customerList[index].name!
+                                                        .substring(61)
+                                                    : '',
+                                            previousVisitData: widget.visitData,
+                                          );
+                                      await ref
+                                          .read(
+                                            visitListControllerProvider
+                                                .notifier,
+                                          )
+                                          .fetchVisitsForDate(
+                                            date: widget.date,
+                                            forceFetch: true,
+                                          );
+                                      Navigator.pop(context);
+                                    },
+                                    onRightButtonTap: () {},
+                                  );
                                 },
                                 child: Container(
                                   padding: EdgeInsets.all(8.r),
@@ -144,7 +198,26 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
                               SizedBox(width: 8.w),
                               GestureDetector(
                                 onTap: () {
-                                  // TODO: Add locate company logic here
+                                  moveCamera(
+                                    latitude:
+                                        customerList[index]
+                                            .fields
+                                            ?.companyLocation
+                                            ?.mapValue
+                                            ?.fields
+                                            ?.latitude
+                                            ?.doubleValue ??
+                                        0,
+                                    longitude:
+                                        customerList[index]
+                                            .fields
+                                            ?.companyLocation
+                                            ?.mapValue
+                                            ?.fields
+                                            ?.longitude
+                                            ?.doubleValue ??
+                                        0,
+                                  );
                                 },
                                 child: Container(
                                   padding: EdgeInsets.all(8.r),
@@ -171,6 +244,9 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
               error: (error, stackTrace) {
                 final exception = error as ApiException;
 
+                // Clear markers
+                ref.read(markerListProvider.notifier).state = [];
+
                 return refreshableInfoWidget(
                   refreshFunction: _refreshCustomerList,
                   content: Text(
@@ -188,5 +264,13 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
 
   Future<void> _refreshCustomerList() async {
     ref.invalidate(customerListControllerProvider);
+  }
+
+  void moveCamera({
+    required double latitude,
+    required double longitude,
+    double zoomLevel = 18,
+  }) {
+    _mapController.move(LatLng(latitude, longitude), zoomLevel);
   }
 }
