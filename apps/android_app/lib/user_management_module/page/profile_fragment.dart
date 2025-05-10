@@ -444,6 +444,14 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
     showConfirmationDialog(
       context: context,
       message: 'Are you sure you want to log out?',
+      leftButtonBackgroundColor:
+          Theme.of(context).brightness == Brightness.light
+              ? successColor
+              : darkModeSuccessColor,
+      rightButtonBackgroundColor:
+          Theme.of(context).brightness == Brightness.light
+              ? errorColor
+              : darkModeErrorColor,
       onLeftButtonTap: () async {
         // Delay to close popup
         await Future.delayed(const Duration(milliseconds: 250));
