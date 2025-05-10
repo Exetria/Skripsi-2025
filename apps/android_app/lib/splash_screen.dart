@@ -1,5 +1,4 @@
 import 'package:android_app/user_management_module/page/login_page.dart';
-import 'package:common_components/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -58,7 +57,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
             children: [
               Image.asset('assets/logo.png', width: 100.w, height: 100.h),
               SizedBox(height: 20.h),
-              Text('Salesku App', style: titleStyle),
+              Text(
+                'Salesku App',
+                style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold),
+              ),
             ],
           ),
         ),

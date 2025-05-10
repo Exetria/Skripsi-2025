@@ -9,172 +9,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-final lightTheme = ThemeData(
-  useMaterial3: true,
-  brightness: Brightness.light,
-
-  scaffoldBackgroundColor: backgroundColor,
-
-  colorScheme: ColorScheme.light(
-    primary: primaryColor,
-    onPrimary: invertedTextColor,
-
-    secondary: secondaryColor,
-    onSecondary: invertedTextColor,
-
-    surface: fillColor,
-    onSurface: textColor,
-  ),
-
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ButtonStyle(
-      // Content alignment
-      alignment: Alignment.center,
-
-      // Background color
-      backgroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
-        if (states.contains(WidgetState.disabled)) {
-          return unselectedItemColor;
-        }
-        return primaryColor;
-      }),
-
-      // Text & icon color
-      foregroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
-        if (states.contains(WidgetState.disabled)) {
-          return textColor;
-        }
-        return invertedTextColor;
-      }),
-
-      // Overlay color
-      overlayColor: WidgetStateProperty.resolveWith<Color?>((states) {
-        if (states.contains(WidgetState.pressed)) {
-          return accentColor.withAlpha(60);
-        }
-        if (states.contains(WidgetState.hovered)) {
-          return accentColor.withAlpha(30);
-        }
-        return null;
-      }),
-
-      // Padding
-      padding: WidgetStateProperty.all(
-        const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-      ),
-
-      // Button shape
-      shape: WidgetStateProperty.all(
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
-      ),
-    ),
-  ),
-
-  inputDecorationTheme: InputDecorationTheme(
-    filled: true,
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12.r),
-      borderSide: BorderSide(color: dividerColor, width: 2),
-    ),
-    enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12.r),
-      borderSide: BorderSide(color: dividerColor, width: 2),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12.r),
-      borderSide: BorderSide(color: dividerColor, width: 2),
-    ),
-  ),
-
-  textTheme: GoogleFonts.montserratTextTheme().apply(
-    bodyColor: textColor,
-    displayColor: textColor,
-  ),
-);
-
-final darkTheme = ThemeData(
-  useMaterial3: true,
-  brightness: Brightness.dark,
-
-  scaffoldBackgroundColor: darkModeBackgroundColor,
-
-  colorScheme: ColorScheme.dark(
-    primary: darkModePrimaryColor,
-    onPrimary: darkModeInvertedTextColor,
-
-    secondary: darkModeSecondaryColor,
-    onSecondary: darkModeInvertedTextColor,
-
-    surface: darkModeFillColor,
-    onSurface: darkModeTextColor,
-  ),
-
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ButtonStyle(
-      // Content alignment
-      alignment: Alignment.center,
-
-      // Background color
-      backgroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
-        if (states.contains(WidgetState.disabled)) {
-          return darkModeUnselectedItemColor;
-        }
-        return darkModePrimaryColor;
-      }),
-
-      // Text & icon color
-      foregroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
-        if (states.contains(WidgetState.disabled)) {
-          return darkModeTextColor;
-        }
-        return darkModeInvertedTextColor;
-      }),
-
-      // Overlay color
-      overlayColor: WidgetStateProperty.resolveWith<Color?>((states) {
-        if (states.contains(WidgetState.pressed)) {
-          return darkModeAccentColor.withAlpha(60);
-        }
-        if (states.contains(WidgetState.hovered)) {
-          return darkModeAccentColor.withAlpha(30);
-        }
-        return null;
-      }),
-
-      // Padding
-      padding: WidgetStateProperty.all(
-        const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-      ),
-
-      // Button shape
-      shape: WidgetStateProperty.all(
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
-      ),
-    ),
-  ),
-
-  inputDecorationTheme: InputDecorationTheme(
-    filled: true,
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12.r),
-      borderSide: BorderSide(color: darkModeDividerColor, width: 2),
-    ),
-    enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12.r),
-      borderSide: BorderSide(color: darkModeDividerColor, width: 2),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12.r),
-      borderSide: BorderSide(color: darkModeDividerColor, width: 2),
-    ),
-  ),
-
-  textTheme: GoogleFonts.montserratTextTheme().apply(
-    bodyColor: darkModeTextColor,
-    displayColor: darkModeTextColor,
-  ),
-);
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: '.env');
@@ -208,6 +42,184 @@ class _MainApp extends ConsumerState<Main> {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
+        final lightTheme = ThemeData(
+          useMaterial3: true,
+          brightness: Brightness.light,
+
+          scaffoldBackgroundColor: backgroundColor,
+
+          colorScheme: ColorScheme.light(
+            primary: primaryColor,
+            onPrimary: invertedTextColor,
+
+            secondary: secondaryColor,
+            onSecondary: invertedTextColor,
+
+            surface: fillColor,
+            onSurface: textColor,
+          ),
+
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+              // Content alignment
+              alignment: Alignment.center,
+
+              // Background color
+              backgroundColor: WidgetStateProperty.resolveWith<Color?>((
+                states,
+              ) {
+                if (states.contains(WidgetState.disabled)) {
+                  return unselectedItemColor;
+                }
+                return primaryColor;
+              }),
+
+              // Text & icon color
+              foregroundColor: WidgetStateProperty.resolveWith<Color?>((
+                states,
+              ) {
+                if (states.contains(WidgetState.disabled)) {
+                  return textColor;
+                }
+                return invertedTextColor;
+              }),
+
+              // Overlay color
+              overlayColor: WidgetStateProperty.resolveWith<Color?>((states) {
+                if (states.contains(WidgetState.pressed)) {
+                  return accentColor.withAlpha(60);
+                }
+                if (states.contains(WidgetState.hovered)) {
+                  return accentColor.withAlpha(30);
+                }
+                return null;
+              }),
+
+              // Padding
+              padding: WidgetStateProperty.all(
+                const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+              ),
+
+              // Button shape
+              shape: WidgetStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+              ),
+            ),
+          ),
+
+          inputDecorationTheme: InputDecorationTheme(
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: dividerColor, width: 2),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: dividerColor, width: 2),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: dividerColor, width: 2),
+            ),
+          ),
+
+          textTheme: GoogleFonts.montserratTextTheme().apply(
+            bodyColor: textColor,
+            displayColor: textColor,
+          ),
+        );
+
+        final darkTheme = ThemeData(
+          useMaterial3: true,
+          brightness: Brightness.dark,
+
+          scaffoldBackgroundColor: darkModeBackgroundColor,
+
+          colorScheme: ColorScheme.dark(
+            primary: darkModePrimaryColor,
+            onPrimary: darkModeInvertedTextColor,
+
+            secondary: darkModeSecondaryColor,
+            onSecondary: darkModeInvertedTextColor,
+
+            surface: darkModeFillColor,
+            onSurface: darkModeTextColor,
+          ),
+
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+              // Content alignment
+              alignment: Alignment.center,
+
+              // Background color
+              backgroundColor: WidgetStateProperty.resolveWith<Color?>((
+                states,
+              ) {
+                if (states.contains(WidgetState.disabled)) {
+                  return darkModeUnselectedItemColor;
+                }
+                return darkModePrimaryColor;
+              }),
+
+              // Text & icon color
+              foregroundColor: WidgetStateProperty.resolveWith<Color?>((
+                states,
+              ) {
+                if (states.contains(WidgetState.disabled)) {
+                  return darkModeTextColor;
+                }
+                return darkModeInvertedTextColor;
+              }),
+
+              // Overlay color
+              overlayColor: WidgetStateProperty.resolveWith<Color?>((states) {
+                if (states.contains(WidgetState.pressed)) {
+                  return darkModeAccentColor.withAlpha(60);
+                }
+                if (states.contains(WidgetState.hovered)) {
+                  return darkModeAccentColor.withAlpha(30);
+                }
+                return null;
+              }),
+
+              // Padding
+              padding: WidgetStateProperty.all(
+                const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+              ),
+
+              // Button shape
+              shape: WidgetStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+              ),
+            ),
+          ),
+
+          inputDecorationTheme: InputDecorationTheme(
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: darkModeDividerColor, width: 2),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: darkModeDividerColor, width: 2),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: darkModeDividerColor, width: 2),
+            ),
+          ),
+
+          textTheme: GoogleFonts.montserratTextTheme().apply(
+            bodyColor: darkModeTextColor,
+            displayColor: darkModeTextColor,
+          ),
+        );
+
         return MaterialApp(
           navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
@@ -220,4 +232,88 @@ class _MainApp extends ConsumerState<Main> {
       child: const SplashScreen(),
     );
   }
+
+  // TextTheme _buildCustomTextTheme(Color color) {
+  //   return TextTheme(
+  //     displayLarge: TextStyle(
+  //       fontFamily: 'Montserrat',
+  //       fontWeight: FontWeight.w900,
+  //       color: color,
+  //     ),
+  //     displayMedium: TextStyle(
+  //       fontFamily: 'Montserrat',
+  //       fontWeight: FontWeight.w800,
+  //       color: color,
+  //     ),
+  //     displaySmall: TextStyle(
+  //       fontFamily: 'Montserrat',
+  //       fontWeight: FontWeight.w700,
+  //       color: color,
+  //     ),
+
+  //     headlineLarge: TextStyle(
+  //       fontFamily: 'Montserrat',
+  //       fontWeight: FontWeight.w600,
+  //       color: color,
+  //     ),
+  //     headlineMedium: TextStyle(
+  //       fontFamily: 'Montserrat',
+  //       fontWeight: FontWeight.w500,
+  //       color: color,
+  //     ),
+  //     headlineSmall: TextStyle(
+  //       fontFamily: 'Montserrat',
+  //       fontWeight: FontWeight.w400,
+  //       color: color,
+  //     ),
+
+  //     titleLarge: TextStyle(
+  //       fontFamily: 'Montserrat',
+  //       fontWeight: FontWeight.w700,
+  //       color: color,
+  //     ),
+  //     titleMedium: TextStyle(
+  //       fontFamily: 'Montserrat',
+  //       fontWeight: FontWeight.w600,
+  //       color: color,
+  //     ),
+  //     titleSmall: TextStyle(
+  //       fontFamily: 'Montserrat',
+  //       fontWeight: FontWeight.w500,
+  //       color: color,
+  //     ),
+
+  //     bodyLarge: TextStyle(
+  //       fontFamily: 'Montserrat',
+  //       fontWeight: FontWeight.w400,
+  //       color: color,
+  //     ),
+  //     bodyMedium: TextStyle(
+  //       fontFamily: 'Montserrat',
+  //       fontWeight: FontWeight.w300,
+  //       color: color,
+  //     ),
+  //     bodySmall: TextStyle(
+  //       fontFamily: 'Montserrat',
+  //       fontWeight: FontWeight.w200,
+  //       color: color,
+  //     ),
+
+  //     labelLarge: TextStyle(
+  //       fontFamily: 'Montserrat',
+  //       fontWeight: FontWeight.w500,
+  //       color: color,
+  //     ),
+  //     labelMedium: TextStyle(
+  //       fontFamily: 'Montserrat',
+  //       fontWeight: FontWeight.w400,
+  //       color: color,
+  //     ),
+  //     labelSmall: TextStyle(
+  //       fontFamily: 'Montserrat',
+  //       fontWeight: FontWeight.w300,
+  //       color: color,
+  //     ),
+  //   );
+  // }
 }

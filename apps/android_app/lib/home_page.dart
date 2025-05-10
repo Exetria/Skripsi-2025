@@ -10,6 +10,7 @@ import 'package:android_app/utils/functions.dart';
 import 'package:android_app/visit_module/page/visit_list_fragment.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -73,7 +74,7 @@ class _HomePage extends ConsumerState<HomePage> {
             ),
           );
         } else {
-          Navigator.of(context).pop();
+          SystemNavigator.pop();
         }
       },
       child: Scaffold(
