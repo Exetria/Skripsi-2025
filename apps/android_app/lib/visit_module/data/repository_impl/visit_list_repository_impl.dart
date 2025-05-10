@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:android_app/visit_module/data/remote_datasource/visit_list_remote_datasource.dart';
 import 'package:android_app/visit_module/domain/entities/visit_domain.dart';
 import 'package:android_app/visit_module/domain/repository/visit_repository.dart';
@@ -28,9 +30,9 @@ class GetVisitListRepositoryImpl implements VisitRepository {
   @override
   Future<Either<ApiException, VisitDomain?>> updateVisit({
     required DateTime date,
-    required String customerId,
-    required String notes,
-    required List<Value> previousVisitData,
+    required List<Map<String, dynamic>> visitDataList,
+    int? updateLocationIndex,
+    File? visitPhoto,
   }) {
     throw UnimplementedError();
   }

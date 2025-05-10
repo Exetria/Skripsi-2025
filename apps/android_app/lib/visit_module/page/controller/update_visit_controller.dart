@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:android_app/visit_module/domain/entities/visit_domain.dart';
 import 'package:android_app/visit_module/domain/repository/visit_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -24,6 +26,29 @@ class UpdateVisitController extends _$UpdateVisitController {
       date: date,
       customerId: customerId,
       previousVisitData: previousVisitData,
+    );
+
+    state = await result.fold(
+      (l) => AsyncError(l, StackTrace.empty),
+      (r) => AsyncData(r),
+    );
+
+    return state;
+  }
+
+  Future<AsyncValue<VisitDomain?>> updateVisitData({
+    required DateTime date,
+    required List<Map<String, dynamic>> visitDataList,
+    int? updateLocationIndex,
+    File? visitPhoto,
+  }) async {
+    final repository = ref.watch(updateVisitRepositoryProvider);
+
+    state = const AsyncLoading();
+
+    final result = await repository.updateVisit(
+      date: date,
+      visitDataList: visitDataList,
     );
 
     state = await result.fold(

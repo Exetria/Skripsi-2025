@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:android_app/utils/functions.dart';
 import 'package:android_app/visit_module/domain/entities/visit_domain.dart';
 import 'package:common_components/common_components.dart';
@@ -12,9 +14,9 @@ abstract class UpdateVisitDataRemoteDatasource {
 
   Future<VisitDomain> updateVisit({
     required DateTime date,
-    required String customerId,
-    required String notes,
-    required List<Value> previousVisitData,
+    required List<Map<String, dynamic>> visitDataList,
+    int? updateLocationIndex,
+    File? visitPhoto,
   });
 }
 
@@ -68,14 +70,46 @@ class UpdateVisitDataRemoteDatasourceImpl
   @override
   Future<VisitDomain> updateVisit({
     required DateTime date,
-    required String customerId,
-    required String notes,
-    required List<Value> previousVisitData,
+    required List<Map<String, dynamic>> visitDataList,
+    int? updateLocationIndex,
+    File? visitPhoto,
   }) async {
-    final currentPosition = await getCurrentPosition();
+    final documentId = _generateDocumentIdFromDate(date);
 
-    // TODO: Change with real docid
-    final documentId = 'dwlajhgvdw';
+    // Update location if needed
+    if (updateLocationIndex != null) {
+      final currentPosition = await getCurrentPosition();
+
+      final locationFields =
+          visitDataList[updateLocationIndex]['mapValue']?['fields']?['location']?['mapValue']?['fields'];
+
+      locationFields?['latitude']?['doubleValue'] = currentPosition.latitude;
+      locationFields?['longitude']?['doubleValue'] = currentPosition.longitude;
+      locationFields?['accuracy']?['doubleValue'] = currentPosition.accuracy;
+    }
+
+    String? visitPhotoLink;
+
+    // Upload files if exist
+    if (visitPhoto != null) {
+      final storePhotoresponse = await uploadFileToStorage(
+        url:
+            'https://firebasestorage.googleapis.com/v0/b/${dotenv.env['PROJECT_ID']}.appspot.com/o?uploadType=media&name=store/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg',
+        headers: {
+          'Authorization': 'Bearer ${userDataHelper?.idToken}',
+          'Content-Type': 'application/json',
+        },
+        file: visitPhoto,
+      );
+
+      final String photoFileName = storePhotoresponse['name'].replaceAll(
+        '/',
+        '%2F',
+      );
+
+      visitPhotoLink =
+          'https://firebasestorage.googleapis.com/v0/b/${storePhotoresponse['bucket']}/o/$photoFileName?alt=media&token=${storePhotoresponse['downloadTokens']}';
+    }
 
     Map<String, dynamic> result = await apiCallPatch(
       url:
@@ -87,27 +121,9 @@ class UpdateVisitDataRemoteDatasourceImpl
       body: {
         'fields': {
           'created_by': {'stringValue': userDataHelper?.uid},
-          // 'checkin_time': {'timestampValue': checkinTime},
-          'checkout_time': {
-            'timestampValue': DateTime.now().toUtc().toIso8601String(),
-          },
-          'checkin_location': {
-            'mapValue': {
-              'fields': {
-                // 'latitude': {'doubleValue': checkinLatitude},
-                // 'longitude': {'doubleValue': checkinLongitude},
-                // 'accuracy': {'doubleValue': checkinAccuracy},
-              },
-            },
-          },
-          'checkout_location': {
-            'mapValue': {
-              'fields': {
-                'latitude': {'doubleValue': currentPosition.latitude},
-                'longitude': {'doubleValue': currentPosition.longitude},
-                'accuracy': {'doubleValue': currentPosition.accuracy},
-              },
-            },
+          'visit_date': {'timestampValue': date.toUtc().toIso8601String()},
+          'visits': {
+            'arrayValue': {'values': visitDataList},
           },
         },
       },

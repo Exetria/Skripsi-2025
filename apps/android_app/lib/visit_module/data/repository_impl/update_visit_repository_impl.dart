@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:android_app/visit_module/data/remote_datasource/update_visit_remote_datasource.dart';
 import 'package:android_app/visit_module/domain/entities/visit_domain.dart';
 import 'package:android_app/visit_module/domain/repository/visit_repository.dart';
@@ -34,17 +36,12 @@ class UpdateVisitRepositoryImpl implements VisitRepository {
   @override
   Future<Either<ApiException, VisitDomain?>> updateVisit({
     required DateTime date,
-    required String customerId,
-    required String notes,
-    required List<Value> previousVisitData,
+    required List<Map<String, dynamic>> visitDataList,
+    int? updateLocationIndex,
+    File? visitPhoto,
   }) async {
     final resp = await remoteProcess(
-      remoteDataSource.updateVisit(
-        date: date,
-        customerId: customerId,
-        notes: notes,
-        previousVisitData: previousVisitData,
-      ),
+      remoteDataSource.updateVisit(date: date, visitDataList: visitDataList),
     );
 
     return resp.fold((l) => Left(l), (r) => Right(r));

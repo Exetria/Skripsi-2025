@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:android_app/visit_module/data/repository_impl/update_visit_repository_impl.dart';
 import 'package:android_app/visit_module/data/repository_impl/visit_list_repository_impl.dart';
 import 'package:android_app/visit_module/domain/entities/visit_domain.dart';
@@ -18,9 +20,9 @@ abstract class VisitRepository {
 
   Future<Either<ApiException, VisitDomain?>> updateVisit({
     required DateTime date,
-    required String customerId,
-    required String notes,
-    required List<Value> previousVisitData,
+    required List<Map<String, dynamic>> visitDataList,
+    int? updateLocationIndex,
+    File? visitPhoto,
   });
 }
 
