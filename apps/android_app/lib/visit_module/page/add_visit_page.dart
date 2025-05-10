@@ -1,7 +1,6 @@
 import 'package:android_app/customer_module/page/controller/customer_list_controller.dart';
 import 'package:android_app/utils/functions.dart';
 import 'package:android_app/utils/widget_settings.dart';
-import 'package:android_app/visit_module/domain/entities/visit_domain.dart';
 import 'package:android_app/visit_module/page/controller/update_visit_controller.dart';
 import 'package:android_app/visit_module/page/controller/visit_list_controller.dart';
 import 'package:common_components/common_components.dart';
@@ -16,9 +15,9 @@ final markerListProvider = StateProvider<List<Marker>>((ref) => []);
 // ignore: must_be_immutable
 class AddVisitPage extends StatefulHookConsumerWidget {
   DateTime date;
-  List<Value> visitData;
+  List<Map<String, dynamic>> visitDataList;
 
-  AddVisitPage({super.key, required this.date, required this.visitData});
+  AddVisitPage({super.key, required this.date, required this.visitDataList});
 
   @override
   ConsumerState<AddVisitPage> createState() => _AddVisitPageState();
@@ -31,6 +30,70 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
   Widget build(BuildContext context) {
     final customerListState = ref.watch(customerListControllerProvider);
     final markers = ref.watch(markerListProvider);
+
+    customerListState.when(
+      loading: () {
+        // Clear markers
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (ref.read(markerListProvider.notifier).state.isNotEmpty) {
+            ref.read(markerListProvider.notifier).state = [];
+          }
+        });
+      },
+      data: (customerList) {
+        // Set customer markers after widget has been built
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          List<Marker> customerMarker = [];
+          if (customerList != null && customerList.isNotEmpty) {
+            if (ref.read(markerListProvider.notifier).state.length ==
+                customerList.length) {
+              return;
+            }
+            for (var customerData in customerList) {
+              final point = LatLng(
+                customerData
+                        .fields
+                        ?.companyLocation
+                        ?.mapValue
+                        ?.fields
+                        ?.latitude
+                        ?.doubleValue ??
+                    0,
+                customerData
+                        .fields
+                        ?.companyLocation
+                        ?.mapValue
+                        ?.fields
+                        ?.longitude
+                        ?.doubleValue ??
+                    0,
+              );
+              customerMarker.add(
+                Marker(
+                  height: 20.h,
+                  width: 20.w,
+                  point: point,
+                  child: Icon(
+                    Icons.location_pin,
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 20.r,
+                  ),
+                ),
+              );
+            }
+          }
+          ref.read(markerListProvider.notifier).state = customerMarker;
+        });
+      },
+      error: (error, stackTrace) {
+        // Clear markers
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (ref.read(markerListProvider.notifier).state.isNotEmpty) {
+            ref.read(markerListProvider.notifier).state = [];
+          }
+        });
+      },
+    );
 
     return Scaffold(
       appBar: customAppBar(
@@ -68,8 +131,6 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
             height: ScreenUtil().screenHeight / 4,
             child: customerListState.when(
               loading: () {
-                // Clear markers
-                ref.read(markerListProvider.notifier).state = [];
                 return const Center(child: CircularProgressIndicator());
               },
               data: (customerList) {
@@ -79,44 +140,6 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
                     content: const Text('No Customer Data Found'),
                   );
                 }
-
-                // Set customer markers after widget has been built
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  List<Marker> customerMarker = [];
-                  for (var customerData in customerList) {
-                    final point = LatLng(
-                      customerData
-                              .fields
-                              ?.companyLocation
-                              ?.mapValue
-                              ?.fields
-                              ?.latitude
-                              ?.doubleValue ??
-                          0,
-                      customerData
-                              .fields
-                              ?.companyLocation
-                              ?.mapValue
-                              ?.fields
-                              ?.longitude
-                              ?.doubleValue ??
-                          0,
-                    );
-                    customerMarker.add(
-                      Marker(
-                        height: 20.h,
-                        width: 20.w,
-                        point: point,
-                        child: Icon(
-                          Icons.location_pin,
-                          color: Theme.of(context).colorScheme.primary,
-                          size: 20.r,
-                        ),
-                      ),
-                    );
-                  }
-                  ref.read(markerListProvider.notifier).state = customerMarker;
-                });
 
                 return ListView.separated(
                   itemCount: customerList.length,
@@ -156,20 +179,39 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
                                             ? errorColor
                                             : errorColor,
                                     onLeftButtonTap: () async {
+                                      // Add new data to visit data list array
+                                      widget.visitDataList.add({
+                                        'mapValue': {
+                                          'fields': {
+                                            'customer_id': {
+                                              'stringValue':
+                                                  customerList[index].name !=
+                                                          null
+                                                      ? customerList[index]
+                                                          .name!
+                                                          .substring(61)
+                                                      : '',
+                                            },
+                                            'visit_status': {
+                                              'integerValue': '1',
+                                            },
+                                            'visit_notes': {'stringValue': ''},
+                                          },
+                                        },
+                                      });
+
+                                      // Submit new visit data
                                       await ref
                                           .read(
                                             updateVisitControllerProvider
                                                 .notifier,
                                           )
-                                          .createVisit(
+                                          .updateVisitData(
                                             date: widget.date,
-                                            customerId:
-                                                customerList[index].name != null
-                                                    ? customerList[index].name!
-                                                        .substring(61)
-                                                    : '',
-                                            previousVisitData: widget.visitData,
+                                            visitDataList: widget.visitDataList,
                                           );
+
+                                      // Refresh visit list
                                       await ref
                                           .read(
                                             visitListControllerProvider
@@ -192,7 +234,11 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
                                     shape: BoxShape.rectangle,
                                     borderRadius: BorderRadius.circular(12.r),
                                   ),
-                                  child: Icon(Icons.add, color: textColor),
+                                  child: Icon(
+                                    Icons.add,
+                                    color:
+                                        Theme.of(context).colorScheme.onPrimary,
+                                  ),
                                 ),
                               ),
                               SizedBox(width: 8.w),
@@ -229,7 +275,8 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
                                   ),
                                   child: Icon(
                                     Icons.location_on_outlined,
-                                    color: textColor,
+                                    color:
+                                        Theme.of(context).colorScheme.onPrimary,
                                   ),
                                 ),
                               ),
@@ -243,9 +290,6 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
               },
               error: (error, stackTrace) {
                 final exception = error as ApiException;
-
-                // Clear markers
-                ref.read(markerListProvider.notifier).state = [];
 
                 return refreshableInfoWidget(
                   refreshFunction: _refreshCustomerList,

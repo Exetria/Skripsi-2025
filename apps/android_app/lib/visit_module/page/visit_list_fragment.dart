@@ -55,13 +55,13 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                     floatingButtonFunction = null;
                     return const Center(child: CircularProgressIndicator());
                   },
-                  data: (visitDataList) {
+                  data: (visitDayData) {
                     // Get visit data from list (per day)
-                    final visitData =
-                        visitDataList[_generateVisitIdFromDate(selectedDate)];
+                    final visitList =
+                        visitDayData[_generateVisitIdFromDate(selectedDate)];
 
-                    if (visitData == null || visitData.isLeft()) {
-                      final error = visitData?.swap().getOrElse(
+                    if (visitList == null || visitList.isLeft()) {
+                      final error = visitList?.swap().getOrElse(
                         (l) => ApiException(
                           statusCode: -1,
                           message: 'Unknown Error',
@@ -77,7 +77,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                                 builder:
                                     (context) => AddVisitPage(
                                       date: selectedDate,
-                                      visitData: [],
+                                      visitDataList: [],
                                     ),
                               ),
                             );
@@ -97,7 +97,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                     }
 
                     // Get visit data (visit document for a day)
-                    final VisitDomain? data = visitData.getOrElse(
+                    final VisitDomain? data = visitList.getOrElse(
                       (error) => null,
                     );
                     if (data == null) {
@@ -109,7 +109,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                               builder:
                                   (context) => AddVisitPage(
                                     date: selectedDate,
-                                    visitData: [],
+                                    visitDataList: [],
                                   ),
                             ),
                           );
@@ -126,6 +126,76 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                       data.fields?.visits?.arrayValue?.values ?? [],
                     );
 
+                    // Convert into List<Map<String, dynamic>>
+                    List<Map<String, dynamic>> visitDataList = [];
+                    for (var visit in visits) {
+                      // Base visit data
+                      Map<String, dynamic> newMap = {
+                        'mapValue': {
+                          'fields': {
+                            'customer_id': {
+                              'stringValue':
+                                  visit
+                                      .mapValue
+                                      ?.fields
+                                      ?.customerId
+                                      ?.stringValue ??
+                                  '',
+                            },
+                            'visit_status': {
+                              'integerValue':
+                                  visit
+                                      .mapValue
+                                      ?.fields
+                                      ?.visitStatus
+                                      ?.integerValue ??
+                                  0,
+                            },
+                            'visit_notes': {
+                              'stringValue':
+                                  visit
+                                      .mapValue
+                                      ?.fields
+                                      ?.visitNotes
+                                      ?.stringValue ??
+                                  '',
+                            },
+                          },
+                        },
+                      };
+
+                      // If photo exist, save it
+                      String? photoUrl =
+                          visit.mapValue?.fields?.visitPhotoUrl?.stringValue;
+                      if (photoUrl != null) {
+                        newMap['mapValue']['fields']['visit_photo_url'] = {
+                          'stringValue': photoUrl,
+                        };
+                      }
+
+                      final locationFields =
+                          visit.mapValue?.fields?.location?.mapValue?.fields;
+                      final lat = locationFields?.latitude?.doubleValue;
+                      final lng = locationFields?.longitude?.doubleValue;
+                      final acc = locationFields?.accuracy?.doubleValue;
+
+                      // If location not set, do not include
+                      if (lat != null && lng != null && acc != null) {
+                        newMap['mapValue']['fields']['location'] = {
+                          'mapValue': {
+                            'fields': {
+                              'latitude': {'doubleValue': lat},
+                              'longitude': {'doubleValue': lng},
+                              'accuracy': {'doubleValue': acc},
+                            },
+                          },
+                        };
+                      }
+
+                      // Add visit data to list
+                      visitDataList.add(newMap);
+                    }
+
                     setState(() {
                       floatingButtonFunction = () {
                         Navigator.push(
@@ -134,14 +204,14 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                             builder:
                                 (context) => AddVisitPage(
                                   date: selectedDate,
-                                  visitData: visits,
+                                  visitDataList: visitDataList,
                                 ),
                           ),
                         );
                       };
                     });
 
-                    if (visits.isEmpty) {
+                    if (visitDataList.isEmpty) {
                       return refreshableInfoWidget(
                         refreshFunction: _refreshVisitList,
                         content: const Text('No Visit Data Found'),
@@ -151,17 +221,13 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                     return RefreshIndicator(
                       onRefresh: _refreshVisitList,
                       child: ListView.separated(
-                        itemCount: visits.length,
+                        itemCount: visitDataList.length,
                         separatorBuilder:
                             (context, index) => SizedBox(height: 12.h),
                         itemBuilder: (context, index) {
                           String visitStatus =
-                              visits[index]
-                                  .mapValue
-                                  ?.fields
-                                  ?.visitStatus
-                                  ?.integerValue ??
-                              '';
+                              visitDataList[index]['mapValue']?['fields']?['visit_status']?['integerValue'] ??
+                              '0';
 
                           return customListItem(
                             context: context,
@@ -175,11 +241,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                                     )
                                     .getCustomerName(
                                       id:
-                                          visits[index]
-                                              .mapValue
-                                              ?.fields
-                                              ?.customerId
-                                              ?.stringValue ??
+                                          visitDataList[index]['mapValue']?['fields']?['customer_id']?['stringValue'] ??
                                           '',
                                     );
                               },
@@ -202,8 +264,11 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                                 context,
                                 MaterialPageRoute(
                                   builder:
-                                      (context) =>
-                                          VisitDetailPage(data: visits[index]),
+                                      (context) => VisitDetailPage(
+                                        date: selectedDate,
+                                        visitDataList: visitDataList,
+                                        index: index,
+                                      ),
                                 ),
                               );
                             },
@@ -227,6 +292,8 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
               ),
             ],
           ),
+
+          // Floating action button
           Align(
             alignment: Alignment.bottomRight,
             child: FloatingActionButton(
