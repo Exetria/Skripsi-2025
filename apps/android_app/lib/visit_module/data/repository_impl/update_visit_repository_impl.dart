@@ -41,7 +41,12 @@ class UpdateVisitRepositoryImpl implements VisitRepository {
     File? visitPhoto,
   }) async {
     final resp = await remoteProcess(
-      remoteDataSource.updateVisit(date: date, visitDataList: visitDataList),
+      remoteDataSource.updateVisit(
+        date: date,
+        visitDataList: visitDataList,
+        updateLocationIndex: updateLocationIndex,
+        visitPhoto: visitPhoto,
+      ),
     );
 
     return resp.fold((l) => Left(l), (r) => Right(r));

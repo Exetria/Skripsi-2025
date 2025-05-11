@@ -91,10 +91,10 @@ class UpdateVisitDataRemoteDatasourceImpl
     String? visitPhotoLink;
 
     // Upload files if exist
-    if (visitPhoto != null) {
+    if (updateLocationIndex != null && visitPhoto != null) {
       final storePhotoresponse = await uploadFileToStorage(
         url:
-            'https://firebasestorage.googleapis.com/v0/b/${dotenv.env['PROJECT_ID']}.appspot.com/o?uploadType=media&name=store/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg',
+            'https://firebasestorage.googleapis.com/v0/b/${dotenv.env['PROJECT_ID']}.appspot.com/o?uploadType=media&name=visit/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg',
         headers: {
           'Authorization': 'Bearer ${userDataHelper?.idToken}',
           'Content-Type': 'application/json',
@@ -102,14 +102,24 @@ class UpdateVisitDataRemoteDatasourceImpl
         file: visitPhoto,
       );
 
+      // Create photo link
       final String photoFileName = storePhotoresponse['name'].replaceAll(
         '/',
         '%2F',
       );
-
       visitPhotoLink =
           'https://firebasestorage.googleapis.com/v0/b/${storePhotoresponse['bucket']}/o/$photoFileName?alt=media&token=${storePhotoresponse['downloadTokens']}';
+
+      print('asds berhasil upload photo $visitPhotoLink');
+
+      // Insert photo link
+      visitDataList[updateLocationIndex]['mapValue']['fields']['visit_photo_url'] =
+          {'stringValue': visitPhotoLink};
+    } else {
+      print('asds gajadi upload');
     }
+
+    print('asds index = ${visitDataList[updateLocationIndex!]}');
 
     Map<String, dynamic> result = await apiCallPatch(
       url:

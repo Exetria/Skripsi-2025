@@ -49,6 +49,8 @@ class UpdateVisitController extends _$UpdateVisitController {
     final result = await repository.updateVisit(
       date: date,
       visitDataList: visitDataList,
+      updateLocationIndex: updateLocationIndex,
+      visitPhoto: visitPhoto,
     );
 
     state = await result.fold(
