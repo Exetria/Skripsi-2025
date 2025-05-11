@@ -26,7 +26,15 @@ void saveUserDataToSp({
 // Clear User Data in SP
 void clearUserDataInSp() async {
   final prefs = await SharedPreferences.getInstance();
-  prefs.clear();
+  await prefs.remove('localId');
+  await prefs.remove('displayName');
+  await prefs.remove('email');
+  await prefs.remove('password');
+  await prefs.remove('phoneNumber');
+  await prefs.remove('role');
+  await prefs.remove('idToken');
+  await prefs.remove('refreshToken');
+  // prefs.clear();
 }
 
 // Save encrypted data to SharedPreferences
