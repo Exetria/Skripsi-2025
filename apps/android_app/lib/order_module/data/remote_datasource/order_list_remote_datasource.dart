@@ -9,12 +9,26 @@ abstract class OrderListRemoteDatasource {
 class OrderListRemoteDatasourceImpl implements OrderListRemoteDatasource {
   @override
   Future<List<OrderDomain>> getOrderList() async {
-    Map<String, dynamic> result = await apiCallGet(
+    Map<String, dynamic> result = await apiCallPost(
       url:
-          'https://firestore.googleapis.com/v1/projects/${dotenv.env['PROJECT_ID']}/databases/(default)/documents/orders',
+          'https://firestore.googleapis.com/v1/projects/${dotenv.env['PROJECT_ID']}/databases/(default)/documents:runQuery',
       headers: {
         'Authorization': 'Bearer ${userDataHelper?.idToken}',
         'Content-Type': 'application/json',
+      },
+      body: {
+        'structuredQuery': {
+          'from': [
+            {'collectionId': 'orders'},
+          ],
+          'where': {
+            'fieldFilter': {
+              'field': {'fieldPath': 'created_by'},
+              'op': 'EQUAL',
+              'value': {'stringValue': userDataHelper?.uid ?? ''},
+            },
+          },
+        },
       },
     );
 
