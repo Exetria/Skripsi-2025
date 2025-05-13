@@ -93,6 +93,42 @@ Future<Map<String, dynamic>> apiCallPost({
   }
 }
 
+Future<List<dynamic>> apiCallPostList({
+  required String url,
+  required Map<String, String> headers,
+  Map<String, dynamic>? body,
+}) async {
+  final uri = Uri.parse(url);
+
+  final response = await http.post(
+    uri,
+    headers: headers,
+    body: jsonEncode(body ?? {}),
+  );
+
+  if (response.statusCode == 200) {
+    return json.decode(response.body);
+  } else if (response.statusCode == 404) {
+    throw ApiException(
+      statusCode: response.statusCode,
+      message: "Not Found",
+      responseBody: json.decode(response.body),
+    );
+  } else if (response.statusCode == 400 || response.statusCode == 401) {
+    throw ApiException(
+      statusCode: response.statusCode,
+      message: json.decode(response.body)['error']['message'],
+      responseBody: json.decode(response.body),
+    );
+  } else {
+    throw ApiException(
+      statusCode: response.statusCode,
+      message: "Unknown Error",
+      responseBody: json.decode(response.body),
+    );
+  }
+}
+
 // PATCH request (partial update)
 Future<Map<String, dynamic>> apiCallPatch({
   required String url,
