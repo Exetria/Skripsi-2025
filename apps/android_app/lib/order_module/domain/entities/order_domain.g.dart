@@ -26,6 +26,42 @@ Map<String, dynamic> _$$OrderDomainImplToJson(_$OrderDomainImpl instance) =>
     };
 
 _$FieldsImpl _$$FieldsImplFromJson(Map<String, dynamic> json) => _$FieldsImpl(
+  customerId:
+      json['customer_id'] == null
+          ? null
+          : CreatedBy.fromJson(json['customer_id'] as Map<String, dynamic>),
+  notes:
+      json['notes'] == null
+          ? null
+          : CreatedBy.fromJson(json['notes'] as Map<String, dynamic>),
+  products:
+      json['products'] == null
+          ? null
+          : Products.fromJson(json['products'] as Map<String, dynamic>),
+  paymentMethod:
+      json['payment_method'] == null
+          ? null
+          : CreatedBy.fromJson(json['payment_method'] as Map<String, dynamic>),
+  orderStatus:
+      json['order_status'] == null
+          ? null
+          : CreatedBy.fromJson(json['order_status'] as Map<String, dynamic>),
+  totalDiscount:
+      json['total_discount'] == null
+          ? null
+          : SubtotalPrice.fromJson(
+            json['total_discount'] as Map<String, dynamic>,
+          ),
+  createdBy:
+      json['created_by'] == null
+          ? null
+          : CreatedBy.fromJson(json['created_by'] as Map<String, dynamic>),
+  subtotalPrice:
+      json['subtotal_price'] == null
+          ? null
+          : SubtotalPrice.fromJson(
+            json['subtotal_price'] as Map<String, dynamic>,
+          ),
   totalPrice:
       json['total_price'] == null
           ? null
@@ -33,83 +69,38 @@ _$FieldsImpl _$$FieldsImplFromJson(Map<String, dynamic> json) => _$FieldsImpl(
   deliveryDate:
       json['delivery_date'] == null
           ? null
-          : DeliveryDate.fromJson(
-            json['delivery_date'] as Map<String, dynamic>,
-          ),
-  orderStatus:
-      json['order_status'] == null
+          : Date.fromJson(json['delivery_date'] as Map<String, dynamic>),
+  paymentDate:
+      json['payment_date'] == null
           ? null
-          : CustomerId.fromJson(json['order_status'] as Map<String, dynamic>),
-  customerId:
-      json['customer_id'] == null
-          ? null
-          : CustomerId.fromJson(json['customer_id'] as Map<String, dynamic>),
-  subtotalPrice:
-      json['subtotal_price'] == null
-          ? null
-          : SubtotalPrice.fromJson(
-            json['subtotal_price'] as Map<String, dynamic>,
-          ),
-  paymentStatus:
-      json['payment_status'] == null
-          ? null
-          : CustomerId.fromJson(json['payment_status'] as Map<String, dynamic>),
-  salesId:
-      json['sales_id'] == null
-          ? null
-          : CustomerId.fromJson(json['sales_id'] as Map<String, dynamic>),
-  notes:
-      json['notes'] == null
-          ? null
-          : CustomerId.fromJson(json['notes'] as Map<String, dynamic>),
-  paymentMethod:
-      json['payment_method'] == null
-          ? null
-          : CustomerId.fromJson(json['payment_method'] as Map<String, dynamic>),
-  products:
-      json['products'] == null
-          ? null
-          : Products.fromJson(json['products'] as Map<String, dynamic>),
-  totalDiscount:
-      json['total_discount'] == null
-          ? null
-          : SubtotalPrice.fromJson(
-            json['total_discount'] as Map<String, dynamic>,
-          ),
-  deliveryStatus:
-      json['delivery_status'] == null
-          ? null
-          : CustomerId.fromJson(
-            json['delivery_status'] as Map<String, dynamic>,
-          ),
+          : Date.fromJson(json['payment_date'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$$FieldsImplToJson(_$FieldsImpl instance) =>
     <String, dynamic>{
+      'customer_id': instance.customerId,
+      'notes': instance.notes,
+      'products': instance.products,
+      'payment_method': instance.paymentMethod,
+      'order_status': instance.orderStatus,
+      'total_discount': instance.totalDiscount,
+      'created_by': instance.createdBy,
+      'subtotal_price': instance.subtotalPrice,
       'total_price': instance.totalPrice,
       'delivery_date': instance.deliveryDate,
-      'order_status': instance.orderStatus,
-      'customer_id': instance.customerId,
-      'subtotal_price': instance.subtotalPrice,
-      'payment_status': instance.paymentStatus,
-      'sales_id': instance.salesId,
-      'notes': instance.notes,
-      'payment_method': instance.paymentMethod,
-      'products': instance.products,
-      'total_discount': instance.totalDiscount,
-      'delivery_status': instance.deliveryStatus,
+      'payment_date': instance.paymentDate,
     };
 
-_$CustomerIdImpl _$$CustomerIdImplFromJson(Map<String, dynamic> json) =>
-    _$CustomerIdImpl(stringValue: json['stringValue'] as String?);
+_$CreatedByImpl _$$CreatedByImplFromJson(Map<String, dynamic> json) =>
+    _$CreatedByImpl(stringValue: json['stringValue'] as String?);
 
-Map<String, dynamic> _$$CustomerIdImplToJson(_$CustomerIdImpl instance) =>
+Map<String, dynamic> _$$CreatedByImplToJson(_$CreatedByImpl instance) =>
     <String, dynamic>{'stringValue': instance.stringValue};
 
-_$DeliveryDateImpl _$$DeliveryDateImplFromJson(Map<String, dynamic> json) =>
-    _$DeliveryDateImpl(timestampValue: json['timestampValue'] as String?);
+_$DateImpl _$$DateImplFromJson(Map<String, dynamic> json) =>
+    _$DateImpl(timestampValue: json['timestampValue'] as String?);
 
-Map<String, dynamic> _$$DeliveryDateImplToJson(_$DeliveryDateImpl instance) =>
+Map<String, dynamic> _$$DateImplToJson(_$DateImpl instance) =>
     <String, dynamic>{'timestampValue': instance.timestampValue};
 
 _$ProductsImpl _$$ProductsImplFromJson(Map<String, dynamic> json) =>
@@ -158,18 +149,6 @@ Map<String, dynamic> _$$MapValueImplToJson(_$MapValueImpl instance) =>
 _$MapValueFieldsImpl _$$MapValueFieldsImplFromJson(
   Map<String, dynamic> json,
 ) => _$MapValueFieldsImpl(
-  productId:
-      json['product_id'] == null
-          ? null
-          : CustomerId.fromJson(json['product_id'] as Map<String, dynamic>),
-  quantity:
-      json['quantity'] == null
-          ? null
-          : SubtotalPrice.fromJson(json['quantity'] as Map<String, dynamic>),
-  discount:
-      json['discount'] == null
-          ? null
-          : Discount.fromJson(json['discount'] as Map<String, dynamic>),
   unitPrice:
       json['unit_price'] == null
           ? null
@@ -178,26 +157,51 @@ _$MapValueFieldsImpl _$$MapValueFieldsImplFromJson(
       json['total_price'] == null
           ? null
           : SubtotalPrice.fromJson(json['total_price'] as Map<String, dynamic>),
+  discountAmount:
+      json['discount_amount'] == null
+          ? null
+          : SubtotalPrice.fromJson(
+            json['discount_amount'] as Map<String, dynamic>,
+          ),
+  productId:
+      json['product_id'] == null
+          ? null
+          : CreatedBy.fromJson(json['product_id'] as Map<String, dynamic>),
+  quantity:
+      json['quantity'] == null
+          ? null
+          : SubtotalPrice.fromJson(json['quantity'] as Map<String, dynamic>),
+  discountPercentage:
+      json['discount_percentage'] == null
+          ? null
+          : DiscountPercentage.fromJson(
+            json['discount_percentage'] as Map<String, dynamic>,
+          ),
 );
 
 Map<String, dynamic> _$$MapValueFieldsImplToJson(
   _$MapValueFieldsImpl instance,
 ) => <String, dynamic>{
-  'product_id': instance.productId,
-  'quantity': instance.quantity,
-  'discount': instance.discount,
   'unit_price': instance.unitPrice,
   'total_price': instance.totalPrice,
+  'discount_amount': instance.discountAmount,
+  'product_id': instance.productId,
+  'quantity': instance.quantity,
+  'discount_percentage': instance.discountPercentage,
 };
-
-_$DiscountImpl _$$DiscountImplFromJson(Map<String, dynamic> json) =>
-    _$DiscountImpl(doubleValue: (json['doubleValue'] as num?)?.toInt());
-
-Map<String, dynamic> _$$DiscountImplToJson(_$DiscountImpl instance) =>
-    <String, dynamic>{'doubleValue': instance.doubleValue};
 
 _$SubtotalPriceImpl _$$SubtotalPriceImplFromJson(Map<String, dynamic> json) =>
     _$SubtotalPriceImpl(integerValue: json['integerValue'] as String?);
 
 Map<String, dynamic> _$$SubtotalPriceImplToJson(_$SubtotalPriceImpl instance) =>
     <String, dynamic>{'integerValue': instance.integerValue};
+
+_$DiscountPercentageImpl _$$DiscountPercentageImplFromJson(
+  Map<String, dynamic> json,
+) => _$DiscountPercentageImpl(
+  doubleValue: (json['doubleValue'] as num?)?.toDouble(),
+);
+
+Map<String, dynamic> _$$DiscountPercentageImplToJson(
+  _$DiscountPercentageImpl instance,
+) => <String, dynamic>{'doubleValue': instance.doubleValue};

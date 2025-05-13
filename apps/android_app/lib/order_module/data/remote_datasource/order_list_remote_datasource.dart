@@ -9,7 +9,9 @@ abstract class OrderListRemoteDatasource {
 class OrderListRemoteDatasourceImpl implements OrderListRemoteDatasource {
   @override
   Future<List<OrderDomain>> getOrderList() async {
-    Map<String, dynamic> result = await apiCallPost(
+    List<OrderDomain> orderList = [];
+
+    List<dynamic> result = await apiCallPostList(
       url:
           'https://firestore.googleapis.com/v1/projects/${dotenv.env['PROJECT_ID']}/databases/(default)/documents:runQuery',
       headers: {
@@ -32,9 +34,18 @@ class OrderListRemoteDatasourceImpl implements OrderListRemoteDatasource {
       },
     );
 
-    final documents = (result['documents'] as List<dynamic>? ?? []);
-    return documents
-        .map((e) => OrderDomain.fromJson(e as Map<String, dynamic>))
-        .toList();
+    for (final doc in result) {
+      final document = doc['document'];
+      if (document == null) continue;
+
+      try {
+        final order = OrderDomain.fromJson(document);
+        orderList.add(order);
+      } catch (_) {
+        continue;
+      }
+    }
+
+    return orderList;
   }
 }

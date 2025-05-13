@@ -13,4 +13,18 @@ class OrderListRepositoryImpl implements OrderListRepository {
 
     return resp.fold((l) => Left(l), (r) => Right(r));
   }
+
+  @override
+  Future<Either<ApiException, OrderDomain>> createOrder({
+    required String customerId,
+    required String paymentMethod,
+    required List<Map<String, dynamic>> productDataList,
+  }) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<ApiException, OrderDomain>> updateOrder() {
+    throw UnimplementedError();
+  }
 }

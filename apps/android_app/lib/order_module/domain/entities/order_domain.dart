@@ -19,41 +19,38 @@ class OrderDomain with _$OrderDomain {
 @freezed
 class Fields with _$Fields {
   const factory Fields({
-    @JsonKey(name: 'total_price') SubtotalPrice? totalPrice,
-    @JsonKey(name: 'delivery_date') DeliveryDate? deliveryDate,
-    @JsonKey(name: 'order_status') CustomerId? orderStatus,
-    @JsonKey(name: 'customer_id') CustomerId? customerId,
-    @JsonKey(name: 'subtotal_price') SubtotalPrice? subtotalPrice,
-    @JsonKey(name: 'payment_status') CustomerId? paymentStatus,
-    @JsonKey(name: 'sales_id') CustomerId? salesId,
-    @JsonKey(name: 'notes') CustomerId? notes,
-    @JsonKey(name: 'payment_method') CustomerId? paymentMethod,
+    @JsonKey(name: 'customer_id') CreatedBy? customerId,
+    @JsonKey(name: 'notes') CreatedBy? notes,
     @JsonKey(name: 'products') Products? products,
+    @JsonKey(name: 'payment_method') CreatedBy? paymentMethod,
+    @JsonKey(name: 'order_status') CreatedBy? orderStatus,
     @JsonKey(name: 'total_discount') SubtotalPrice? totalDiscount,
-    @JsonKey(name: 'delivery_status') CustomerId? deliveryStatus,
+    @JsonKey(name: 'created_by') CreatedBy? createdBy,
+    @JsonKey(name: 'subtotal_price') SubtotalPrice? subtotalPrice,
+    @JsonKey(name: 'total_price') SubtotalPrice? totalPrice,
+    @JsonKey(name: 'delivery_date') Date? deliveryDate,
+    @JsonKey(name: 'payment_date') Date? paymentDate,
   }) = _Fields;
 
   factory Fields.fromJson(Map<String, dynamic> json) => _$FieldsFromJson(json);
 }
 
 @freezed
-class CustomerId with _$CustomerId {
-  const factory CustomerId({
-    @JsonKey(name: 'stringValue') String? stringValue,
-  }) = _CustomerId;
+class CreatedBy with _$CreatedBy {
+  const factory CreatedBy({@JsonKey(name: 'stringValue') String? stringValue}) =
+      _CreatedBy;
 
-  factory CustomerId.fromJson(Map<String, dynamic> json) =>
-      _$CustomerIdFromJson(json);
+  factory CreatedBy.fromJson(Map<String, dynamic> json) =>
+      _$CreatedByFromJson(json);
 }
 
 @freezed
-class DeliveryDate with _$DeliveryDate {
-  const factory DeliveryDate({
+class Date with _$Date {
+  const factory Date({
     @JsonKey(name: 'timestampValue') String? timestampValue,
-  }) = _DeliveryDate;
+  }) = _Date;
 
-  factory DeliveryDate.fromJson(Map<String, dynamic> json) =>
-      _$DeliveryDateFromJson(json);
+  factory Date.fromJson(Map<String, dynamic> json) => _$DateFromJson(json);
 }
 
 @freezed
@@ -94,24 +91,17 @@ class MapValue with _$MapValue {
 @freezed
 class MapValueFields with _$MapValueFields {
   const factory MapValueFields({
-    @JsonKey(name: 'product_id') CustomerId? productId,
-    @JsonKey(name: 'quantity') SubtotalPrice? quantity,
-    @JsonKey(name: 'discount') Discount? discount,
     @JsonKey(name: 'unit_price') SubtotalPrice? unitPrice,
     @JsonKey(name: 'total_price') SubtotalPrice? totalPrice,
+    @JsonKey(name: 'discount_amount') SubtotalPrice? discountAmount,
+    @JsonKey(name: 'product_id') CreatedBy? productId,
+    @JsonKey(name: 'quantity') SubtotalPrice? quantity,
+    @JsonKey(name: 'discount_percentage')
+    DiscountPercentage? discountPercentage,
   }) = _MapValueFields;
 
   factory MapValueFields.fromJson(Map<String, dynamic> json) =>
       _$MapValueFieldsFromJson(json);
-}
-
-@freezed
-class Discount with _$Discount {
-  const factory Discount({@JsonKey(name: 'doubleValue') int? doubleValue}) =
-      _Discount;
-
-  factory Discount.fromJson(Map<String, dynamic> json) =>
-      _$DiscountFromJson(json);
 }
 
 @freezed
@@ -122,4 +112,14 @@ class SubtotalPrice with _$SubtotalPrice {
 
   factory SubtotalPrice.fromJson(Map<String, dynamic> json) =>
       _$SubtotalPriceFromJson(json);
+}
+
+@freezed
+class DiscountPercentage with _$DiscountPercentage {
+  const factory DiscountPercentage({
+    @JsonKey(name: 'doubleValue') double? doubleValue,
+  }) = _DiscountPercentage;
+
+  factory DiscountPercentage.fromJson(Map<String, dynamic> json) =>
+      _$DiscountPercentageFromJson(json);
 }

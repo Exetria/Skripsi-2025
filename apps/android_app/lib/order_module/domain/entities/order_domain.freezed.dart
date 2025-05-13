@@ -286,30 +286,28 @@ Fields _$FieldsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Fields {
+  @JsonKey(name: 'customer_id')
+  CreatedBy? get customerId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'notes')
+  CreatedBy? get notes => throw _privateConstructorUsedError;
+  @JsonKey(name: 'products')
+  Products? get products => throw _privateConstructorUsedError;
+  @JsonKey(name: 'payment_method')
+  CreatedBy? get paymentMethod => throw _privateConstructorUsedError;
+  @JsonKey(name: 'order_status')
+  CreatedBy? get orderStatus => throw _privateConstructorUsedError;
+  @JsonKey(name: 'total_discount')
+  SubtotalPrice? get totalDiscount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_by')
+  CreatedBy? get createdBy => throw _privateConstructorUsedError;
+  @JsonKey(name: 'subtotal_price')
+  SubtotalPrice? get subtotalPrice => throw _privateConstructorUsedError;
   @JsonKey(name: 'total_price')
   SubtotalPrice? get totalPrice => throw _privateConstructorUsedError;
   @JsonKey(name: 'delivery_date')
-  DeliveryDate? get deliveryDate => throw _privateConstructorUsedError;
-  @JsonKey(name: 'order_status')
-  CustomerId? get orderStatus => throw _privateConstructorUsedError;
-  @JsonKey(name: 'customer_id')
-  CustomerId? get customerId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'subtotal_price')
-  SubtotalPrice? get subtotalPrice => throw _privateConstructorUsedError;
-  @JsonKey(name: 'payment_status')
-  CustomerId? get paymentStatus => throw _privateConstructorUsedError;
-  @JsonKey(name: 'sales_id')
-  CustomerId? get salesId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'notes')
-  CustomerId? get notes => throw _privateConstructorUsedError;
-  @JsonKey(name: 'payment_method')
-  CustomerId? get paymentMethod => throw _privateConstructorUsedError;
-  @JsonKey(name: 'products')
-  Products? get products => throw _privateConstructorUsedError;
-  @JsonKey(name: 'total_discount')
-  SubtotalPrice? get totalDiscount => throw _privateConstructorUsedError;
-  @JsonKey(name: 'delivery_status')
-  CustomerId? get deliveryStatus => throw _privateConstructorUsedError;
+  Date? get deliveryDate => throw _privateConstructorUsedError;
+  @JsonKey(name: 'payment_date')
+  Date? get paymentDate => throw _privateConstructorUsedError;
 
   /// Serializes this Fields to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -326,32 +324,30 @@ abstract class $FieldsCopyWith<$Res> {
       _$FieldsCopyWithImpl<$Res, Fields>;
   @useResult
   $Res call({
-    @JsonKey(name: 'total_price') SubtotalPrice? totalPrice,
-    @JsonKey(name: 'delivery_date') DeliveryDate? deliveryDate,
-    @JsonKey(name: 'order_status') CustomerId? orderStatus,
-    @JsonKey(name: 'customer_id') CustomerId? customerId,
-    @JsonKey(name: 'subtotal_price') SubtotalPrice? subtotalPrice,
-    @JsonKey(name: 'payment_status') CustomerId? paymentStatus,
-    @JsonKey(name: 'sales_id') CustomerId? salesId,
-    @JsonKey(name: 'notes') CustomerId? notes,
-    @JsonKey(name: 'payment_method') CustomerId? paymentMethod,
+    @JsonKey(name: 'customer_id') CreatedBy? customerId,
+    @JsonKey(name: 'notes') CreatedBy? notes,
     @JsonKey(name: 'products') Products? products,
+    @JsonKey(name: 'payment_method') CreatedBy? paymentMethod,
+    @JsonKey(name: 'order_status') CreatedBy? orderStatus,
     @JsonKey(name: 'total_discount') SubtotalPrice? totalDiscount,
-    @JsonKey(name: 'delivery_status') CustomerId? deliveryStatus,
+    @JsonKey(name: 'created_by') CreatedBy? createdBy,
+    @JsonKey(name: 'subtotal_price') SubtotalPrice? subtotalPrice,
+    @JsonKey(name: 'total_price') SubtotalPrice? totalPrice,
+    @JsonKey(name: 'delivery_date') Date? deliveryDate,
+    @JsonKey(name: 'payment_date') Date? paymentDate,
   });
 
-  $SubtotalPriceCopyWith<$Res>? get totalPrice;
-  $DeliveryDateCopyWith<$Res>? get deliveryDate;
-  $CustomerIdCopyWith<$Res>? get orderStatus;
-  $CustomerIdCopyWith<$Res>? get customerId;
-  $SubtotalPriceCopyWith<$Res>? get subtotalPrice;
-  $CustomerIdCopyWith<$Res>? get paymentStatus;
-  $CustomerIdCopyWith<$Res>? get salesId;
-  $CustomerIdCopyWith<$Res>? get notes;
-  $CustomerIdCopyWith<$Res>? get paymentMethod;
+  $CreatedByCopyWith<$Res>? get customerId;
+  $CreatedByCopyWith<$Res>? get notes;
   $ProductsCopyWith<$Res>? get products;
+  $CreatedByCopyWith<$Res>? get paymentMethod;
+  $CreatedByCopyWith<$Res>? get orderStatus;
   $SubtotalPriceCopyWith<$Res>? get totalDiscount;
-  $CustomerIdCopyWith<$Res>? get deliveryStatus;
+  $CreatedByCopyWith<$Res>? get createdBy;
+  $SubtotalPriceCopyWith<$Res>? get subtotalPrice;
+  $SubtotalPriceCopyWith<$Res>? get totalPrice;
+  $DateCopyWith<$Res>? get deliveryDate;
+  $DateCopyWith<$Res>? get paymentDate;
 }
 
 /// @nodoc
@@ -369,21 +365,60 @@ class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? customerId = freezed,
+    Object? notes = freezed,
+    Object? products = freezed,
+    Object? paymentMethod = freezed,
+    Object? orderStatus = freezed,
+    Object? totalDiscount = freezed,
+    Object? createdBy = freezed,
+    Object? subtotalPrice = freezed,
     Object? totalPrice = freezed,
     Object? deliveryDate = freezed,
-    Object? orderStatus = freezed,
-    Object? customerId = freezed,
-    Object? subtotalPrice = freezed,
-    Object? paymentStatus = freezed,
-    Object? salesId = freezed,
-    Object? notes = freezed,
-    Object? paymentMethod = freezed,
-    Object? products = freezed,
-    Object? totalDiscount = freezed,
-    Object? deliveryStatus = freezed,
+    Object? paymentDate = freezed,
   }) {
     return _then(
       _value.copyWith(
+            customerId:
+                freezed == customerId
+                    ? _value.customerId
+                    : customerId // ignore: cast_nullable_to_non_nullable
+                        as CreatedBy?,
+            notes:
+                freezed == notes
+                    ? _value.notes
+                    : notes // ignore: cast_nullable_to_non_nullable
+                        as CreatedBy?,
+            products:
+                freezed == products
+                    ? _value.products
+                    : products // ignore: cast_nullable_to_non_nullable
+                        as Products?,
+            paymentMethod:
+                freezed == paymentMethod
+                    ? _value.paymentMethod
+                    : paymentMethod // ignore: cast_nullable_to_non_nullable
+                        as CreatedBy?,
+            orderStatus:
+                freezed == orderStatus
+                    ? _value.orderStatus
+                    : orderStatus // ignore: cast_nullable_to_non_nullable
+                        as CreatedBy?,
+            totalDiscount:
+                freezed == totalDiscount
+                    ? _value.totalDiscount
+                    : totalDiscount // ignore: cast_nullable_to_non_nullable
+                        as SubtotalPrice?,
+            createdBy:
+                freezed == createdBy
+                    ? _value.createdBy
+                    : createdBy // ignore: cast_nullable_to_non_nullable
+                        as CreatedBy?,
+            subtotalPrice:
+                freezed == subtotalPrice
+                    ? _value.subtotalPrice
+                    : subtotalPrice // ignore: cast_nullable_to_non_nullable
+                        as SubtotalPrice?,
             totalPrice:
                 freezed == totalPrice
                     ? _value.totalPrice
@@ -393,57 +428,12 @@ class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
                 freezed == deliveryDate
                     ? _value.deliveryDate
                     : deliveryDate // ignore: cast_nullable_to_non_nullable
-                        as DeliveryDate?,
-            orderStatus:
-                freezed == orderStatus
-                    ? _value.orderStatus
-                    : orderStatus // ignore: cast_nullable_to_non_nullable
-                        as CustomerId?,
-            customerId:
-                freezed == customerId
-                    ? _value.customerId
-                    : customerId // ignore: cast_nullable_to_non_nullable
-                        as CustomerId?,
-            subtotalPrice:
-                freezed == subtotalPrice
-                    ? _value.subtotalPrice
-                    : subtotalPrice // ignore: cast_nullable_to_non_nullable
-                        as SubtotalPrice?,
-            paymentStatus:
-                freezed == paymentStatus
-                    ? _value.paymentStatus
-                    : paymentStatus // ignore: cast_nullable_to_non_nullable
-                        as CustomerId?,
-            salesId:
-                freezed == salesId
-                    ? _value.salesId
-                    : salesId // ignore: cast_nullable_to_non_nullable
-                        as CustomerId?,
-            notes:
-                freezed == notes
-                    ? _value.notes
-                    : notes // ignore: cast_nullable_to_non_nullable
-                        as CustomerId?,
-            paymentMethod:
-                freezed == paymentMethod
-                    ? _value.paymentMethod
-                    : paymentMethod // ignore: cast_nullable_to_non_nullable
-                        as CustomerId?,
-            products:
-                freezed == products
-                    ? _value.products
-                    : products // ignore: cast_nullable_to_non_nullable
-                        as Products?,
-            totalDiscount:
-                freezed == totalDiscount
-                    ? _value.totalDiscount
-                    : totalDiscount // ignore: cast_nullable_to_non_nullable
-                        as SubtotalPrice?,
-            deliveryStatus:
-                freezed == deliveryStatus
-                    ? _value.deliveryStatus
-                    : deliveryStatus // ignore: cast_nullable_to_non_nullable
-                        as CustomerId?,
+                        as Date?,
+            paymentDate:
+                freezed == paymentDate
+                    ? _value.paymentDate
+                    : paymentDate // ignore: cast_nullable_to_non_nullable
+                        as Date?,
           )
           as $Val,
     );
@@ -453,54 +443,12 @@ class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $SubtotalPriceCopyWith<$Res>? get totalPrice {
-    if (_value.totalPrice == null) {
-      return null;
-    }
-
-    return $SubtotalPriceCopyWith<$Res>(_value.totalPrice!, (value) {
-      return _then(_value.copyWith(totalPrice: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $DeliveryDateCopyWith<$Res>? get deliveryDate {
-    if (_value.deliveryDate == null) {
-      return null;
-    }
-
-    return $DeliveryDateCopyWith<$Res>(_value.deliveryDate!, (value) {
-      return _then(_value.copyWith(deliveryDate: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CustomerIdCopyWith<$Res>? get orderStatus {
-    if (_value.orderStatus == null) {
-      return null;
-    }
-
-    return $CustomerIdCopyWith<$Res>(_value.orderStatus!, (value) {
-      return _then(_value.copyWith(orderStatus: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CustomerIdCopyWith<$Res>? get customerId {
+  $CreatedByCopyWith<$Res>? get customerId {
     if (_value.customerId == null) {
       return null;
     }
 
-    return $CustomerIdCopyWith<$Res>(_value.customerId!, (value) {
+    return $CreatedByCopyWith<$Res>(_value.customerId!, (value) {
       return _then(_value.copyWith(customerId: value) as $Val);
     });
   }
@@ -509,69 +457,13 @@ class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $SubtotalPriceCopyWith<$Res>? get subtotalPrice {
-    if (_value.subtotalPrice == null) {
-      return null;
-    }
-
-    return $SubtotalPriceCopyWith<$Res>(_value.subtotalPrice!, (value) {
-      return _then(_value.copyWith(subtotalPrice: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CustomerIdCopyWith<$Res>? get paymentStatus {
-    if (_value.paymentStatus == null) {
-      return null;
-    }
-
-    return $CustomerIdCopyWith<$Res>(_value.paymentStatus!, (value) {
-      return _then(_value.copyWith(paymentStatus: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CustomerIdCopyWith<$Res>? get salesId {
-    if (_value.salesId == null) {
-      return null;
-    }
-
-    return $CustomerIdCopyWith<$Res>(_value.salesId!, (value) {
-      return _then(_value.copyWith(salesId: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CustomerIdCopyWith<$Res>? get notes {
+  $CreatedByCopyWith<$Res>? get notes {
     if (_value.notes == null) {
       return null;
     }
 
-    return $CustomerIdCopyWith<$Res>(_value.notes!, (value) {
+    return $CreatedByCopyWith<$Res>(_value.notes!, (value) {
       return _then(_value.copyWith(notes: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CustomerIdCopyWith<$Res>? get paymentMethod {
-    if (_value.paymentMethod == null) {
-      return null;
-    }
-
-    return $CustomerIdCopyWith<$Res>(_value.paymentMethod!, (value) {
-      return _then(_value.copyWith(paymentMethod: value) as $Val);
     });
   }
 
@@ -593,6 +485,34 @@ class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
+  $CreatedByCopyWith<$Res>? get paymentMethod {
+    if (_value.paymentMethod == null) {
+      return null;
+    }
+
+    return $CreatedByCopyWith<$Res>(_value.paymentMethod!, (value) {
+      return _then(_value.copyWith(paymentMethod: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CreatedByCopyWith<$Res>? get orderStatus {
+    if (_value.orderStatus == null) {
+      return null;
+    }
+
+    return $CreatedByCopyWith<$Res>(_value.orderStatus!, (value) {
+      return _then(_value.copyWith(orderStatus: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
   $SubtotalPriceCopyWith<$Res>? get totalDiscount {
     if (_value.totalDiscount == null) {
       return null;
@@ -607,13 +527,69 @@ class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CustomerIdCopyWith<$Res>? get deliveryStatus {
-    if (_value.deliveryStatus == null) {
+  $CreatedByCopyWith<$Res>? get createdBy {
+    if (_value.createdBy == null) {
       return null;
     }
 
-    return $CustomerIdCopyWith<$Res>(_value.deliveryStatus!, (value) {
-      return _then(_value.copyWith(deliveryStatus: value) as $Val);
+    return $CreatedByCopyWith<$Res>(_value.createdBy!, (value) {
+      return _then(_value.copyWith(createdBy: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SubtotalPriceCopyWith<$Res>? get subtotalPrice {
+    if (_value.subtotalPrice == null) {
+      return null;
+    }
+
+    return $SubtotalPriceCopyWith<$Res>(_value.subtotalPrice!, (value) {
+      return _then(_value.copyWith(subtotalPrice: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SubtotalPriceCopyWith<$Res>? get totalPrice {
+    if (_value.totalPrice == null) {
+      return null;
+    }
+
+    return $SubtotalPriceCopyWith<$Res>(_value.totalPrice!, (value) {
+      return _then(_value.copyWith(totalPrice: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $DateCopyWith<$Res>? get deliveryDate {
+    if (_value.deliveryDate == null) {
+      return null;
+    }
+
+    return $DateCopyWith<$Res>(_value.deliveryDate!, (value) {
+      return _then(_value.copyWith(deliveryDate: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $DateCopyWith<$Res>? get paymentDate {
+    if (_value.paymentDate == null) {
+      return null;
+    }
+
+    return $DateCopyWith<$Res>(_value.paymentDate!, (value) {
+      return _then(_value.copyWith(paymentDate: value) as $Val);
     });
   }
 }
@@ -627,44 +603,41 @@ abstract class _$$FieldsImplCopyWith<$Res> implements $FieldsCopyWith<$Res> {
   @override
   @useResult
   $Res call({
-    @JsonKey(name: 'total_price') SubtotalPrice? totalPrice,
-    @JsonKey(name: 'delivery_date') DeliveryDate? deliveryDate,
-    @JsonKey(name: 'order_status') CustomerId? orderStatus,
-    @JsonKey(name: 'customer_id') CustomerId? customerId,
-    @JsonKey(name: 'subtotal_price') SubtotalPrice? subtotalPrice,
-    @JsonKey(name: 'payment_status') CustomerId? paymentStatus,
-    @JsonKey(name: 'sales_id') CustomerId? salesId,
-    @JsonKey(name: 'notes') CustomerId? notes,
-    @JsonKey(name: 'payment_method') CustomerId? paymentMethod,
+    @JsonKey(name: 'customer_id') CreatedBy? customerId,
+    @JsonKey(name: 'notes') CreatedBy? notes,
     @JsonKey(name: 'products') Products? products,
+    @JsonKey(name: 'payment_method') CreatedBy? paymentMethod,
+    @JsonKey(name: 'order_status') CreatedBy? orderStatus,
     @JsonKey(name: 'total_discount') SubtotalPrice? totalDiscount,
-    @JsonKey(name: 'delivery_status') CustomerId? deliveryStatus,
+    @JsonKey(name: 'created_by') CreatedBy? createdBy,
+    @JsonKey(name: 'subtotal_price') SubtotalPrice? subtotalPrice,
+    @JsonKey(name: 'total_price') SubtotalPrice? totalPrice,
+    @JsonKey(name: 'delivery_date') Date? deliveryDate,
+    @JsonKey(name: 'payment_date') Date? paymentDate,
   });
 
   @override
-  $SubtotalPriceCopyWith<$Res>? get totalPrice;
+  $CreatedByCopyWith<$Res>? get customerId;
   @override
-  $DeliveryDateCopyWith<$Res>? get deliveryDate;
-  @override
-  $CustomerIdCopyWith<$Res>? get orderStatus;
-  @override
-  $CustomerIdCopyWith<$Res>? get customerId;
-  @override
-  $SubtotalPriceCopyWith<$Res>? get subtotalPrice;
-  @override
-  $CustomerIdCopyWith<$Res>? get paymentStatus;
-  @override
-  $CustomerIdCopyWith<$Res>? get salesId;
-  @override
-  $CustomerIdCopyWith<$Res>? get notes;
-  @override
-  $CustomerIdCopyWith<$Res>? get paymentMethod;
+  $CreatedByCopyWith<$Res>? get notes;
   @override
   $ProductsCopyWith<$Res>? get products;
   @override
+  $CreatedByCopyWith<$Res>? get paymentMethod;
+  @override
+  $CreatedByCopyWith<$Res>? get orderStatus;
+  @override
   $SubtotalPriceCopyWith<$Res>? get totalDiscount;
   @override
-  $CustomerIdCopyWith<$Res>? get deliveryStatus;
+  $CreatedByCopyWith<$Res>? get createdBy;
+  @override
+  $SubtotalPriceCopyWith<$Res>? get subtotalPrice;
+  @override
+  $SubtotalPriceCopyWith<$Res>? get totalPrice;
+  @override
+  $DateCopyWith<$Res>? get deliveryDate;
+  @override
+  $DateCopyWith<$Res>? get paymentDate;
 }
 
 /// @nodoc
@@ -681,21 +654,60 @@ class __$$FieldsImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? customerId = freezed,
+    Object? notes = freezed,
+    Object? products = freezed,
+    Object? paymentMethod = freezed,
+    Object? orderStatus = freezed,
+    Object? totalDiscount = freezed,
+    Object? createdBy = freezed,
+    Object? subtotalPrice = freezed,
     Object? totalPrice = freezed,
     Object? deliveryDate = freezed,
-    Object? orderStatus = freezed,
-    Object? customerId = freezed,
-    Object? subtotalPrice = freezed,
-    Object? paymentStatus = freezed,
-    Object? salesId = freezed,
-    Object? notes = freezed,
-    Object? paymentMethod = freezed,
-    Object? products = freezed,
-    Object? totalDiscount = freezed,
-    Object? deliveryStatus = freezed,
+    Object? paymentDate = freezed,
   }) {
     return _then(
       _$FieldsImpl(
+        customerId:
+            freezed == customerId
+                ? _value.customerId
+                : customerId // ignore: cast_nullable_to_non_nullable
+                    as CreatedBy?,
+        notes:
+            freezed == notes
+                ? _value.notes
+                : notes // ignore: cast_nullable_to_non_nullable
+                    as CreatedBy?,
+        products:
+            freezed == products
+                ? _value.products
+                : products // ignore: cast_nullable_to_non_nullable
+                    as Products?,
+        paymentMethod:
+            freezed == paymentMethod
+                ? _value.paymentMethod
+                : paymentMethod // ignore: cast_nullable_to_non_nullable
+                    as CreatedBy?,
+        orderStatus:
+            freezed == orderStatus
+                ? _value.orderStatus
+                : orderStatus // ignore: cast_nullable_to_non_nullable
+                    as CreatedBy?,
+        totalDiscount:
+            freezed == totalDiscount
+                ? _value.totalDiscount
+                : totalDiscount // ignore: cast_nullable_to_non_nullable
+                    as SubtotalPrice?,
+        createdBy:
+            freezed == createdBy
+                ? _value.createdBy
+                : createdBy // ignore: cast_nullable_to_non_nullable
+                    as CreatedBy?,
+        subtotalPrice:
+            freezed == subtotalPrice
+                ? _value.subtotalPrice
+                : subtotalPrice // ignore: cast_nullable_to_non_nullable
+                    as SubtotalPrice?,
         totalPrice:
             freezed == totalPrice
                 ? _value.totalPrice
@@ -705,57 +717,12 @@ class __$$FieldsImplCopyWithImpl<$Res>
             freezed == deliveryDate
                 ? _value.deliveryDate
                 : deliveryDate // ignore: cast_nullable_to_non_nullable
-                    as DeliveryDate?,
-        orderStatus:
-            freezed == orderStatus
-                ? _value.orderStatus
-                : orderStatus // ignore: cast_nullable_to_non_nullable
-                    as CustomerId?,
-        customerId:
-            freezed == customerId
-                ? _value.customerId
-                : customerId // ignore: cast_nullable_to_non_nullable
-                    as CustomerId?,
-        subtotalPrice:
-            freezed == subtotalPrice
-                ? _value.subtotalPrice
-                : subtotalPrice // ignore: cast_nullable_to_non_nullable
-                    as SubtotalPrice?,
-        paymentStatus:
-            freezed == paymentStatus
-                ? _value.paymentStatus
-                : paymentStatus // ignore: cast_nullable_to_non_nullable
-                    as CustomerId?,
-        salesId:
-            freezed == salesId
-                ? _value.salesId
-                : salesId // ignore: cast_nullable_to_non_nullable
-                    as CustomerId?,
-        notes:
-            freezed == notes
-                ? _value.notes
-                : notes // ignore: cast_nullable_to_non_nullable
-                    as CustomerId?,
-        paymentMethod:
-            freezed == paymentMethod
-                ? _value.paymentMethod
-                : paymentMethod // ignore: cast_nullable_to_non_nullable
-                    as CustomerId?,
-        products:
-            freezed == products
-                ? _value.products
-                : products // ignore: cast_nullable_to_non_nullable
-                    as Products?,
-        totalDiscount:
-            freezed == totalDiscount
-                ? _value.totalDiscount
-                : totalDiscount // ignore: cast_nullable_to_non_nullable
-                    as SubtotalPrice?,
-        deliveryStatus:
-            freezed == deliveryStatus
-                ? _value.deliveryStatus
-                : deliveryStatus // ignore: cast_nullable_to_non_nullable
-                    as CustomerId?,
+                    as Date?,
+        paymentDate:
+            freezed == paymentDate
+                ? _value.paymentDate
+                : paymentDate // ignore: cast_nullable_to_non_nullable
+                    as Date?,
       ),
     );
   }
@@ -765,63 +732,59 @@ class __$$FieldsImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$FieldsImpl implements _Fields {
   const _$FieldsImpl({
+    @JsonKey(name: 'customer_id') this.customerId,
+    @JsonKey(name: 'notes') this.notes,
+    @JsonKey(name: 'products') this.products,
+    @JsonKey(name: 'payment_method') this.paymentMethod,
+    @JsonKey(name: 'order_status') this.orderStatus,
+    @JsonKey(name: 'total_discount') this.totalDiscount,
+    @JsonKey(name: 'created_by') this.createdBy,
+    @JsonKey(name: 'subtotal_price') this.subtotalPrice,
     @JsonKey(name: 'total_price') this.totalPrice,
     @JsonKey(name: 'delivery_date') this.deliveryDate,
-    @JsonKey(name: 'order_status') this.orderStatus,
-    @JsonKey(name: 'customer_id') this.customerId,
-    @JsonKey(name: 'subtotal_price') this.subtotalPrice,
-    @JsonKey(name: 'payment_status') this.paymentStatus,
-    @JsonKey(name: 'sales_id') this.salesId,
-    @JsonKey(name: 'notes') this.notes,
-    @JsonKey(name: 'payment_method') this.paymentMethod,
-    @JsonKey(name: 'products') this.products,
-    @JsonKey(name: 'total_discount') this.totalDiscount,
-    @JsonKey(name: 'delivery_status') this.deliveryStatus,
+    @JsonKey(name: 'payment_date') this.paymentDate,
   });
 
   factory _$FieldsImpl.fromJson(Map<String, dynamic> json) =>
       _$$FieldsImplFromJson(json);
 
   @override
-  @JsonKey(name: 'total_price')
-  final SubtotalPrice? totalPrice;
-  @override
-  @JsonKey(name: 'delivery_date')
-  final DeliveryDate? deliveryDate;
-  @override
-  @JsonKey(name: 'order_status')
-  final CustomerId? orderStatus;
-  @override
   @JsonKey(name: 'customer_id')
-  final CustomerId? customerId;
-  @override
-  @JsonKey(name: 'subtotal_price')
-  final SubtotalPrice? subtotalPrice;
-  @override
-  @JsonKey(name: 'payment_status')
-  final CustomerId? paymentStatus;
-  @override
-  @JsonKey(name: 'sales_id')
-  final CustomerId? salesId;
+  final CreatedBy? customerId;
   @override
   @JsonKey(name: 'notes')
-  final CustomerId? notes;
-  @override
-  @JsonKey(name: 'payment_method')
-  final CustomerId? paymentMethod;
+  final CreatedBy? notes;
   @override
   @JsonKey(name: 'products')
   final Products? products;
   @override
+  @JsonKey(name: 'payment_method')
+  final CreatedBy? paymentMethod;
+  @override
+  @JsonKey(name: 'order_status')
+  final CreatedBy? orderStatus;
+  @override
   @JsonKey(name: 'total_discount')
   final SubtotalPrice? totalDiscount;
   @override
-  @JsonKey(name: 'delivery_status')
-  final CustomerId? deliveryStatus;
+  @JsonKey(name: 'created_by')
+  final CreatedBy? createdBy;
+  @override
+  @JsonKey(name: 'subtotal_price')
+  final SubtotalPrice? subtotalPrice;
+  @override
+  @JsonKey(name: 'total_price')
+  final SubtotalPrice? totalPrice;
+  @override
+  @JsonKey(name: 'delivery_date')
+  final Date? deliveryDate;
+  @override
+  @JsonKey(name: 'payment_date')
+  final Date? paymentDate;
 
   @override
   String toString() {
-    return 'Fields(totalPrice: $totalPrice, deliveryDate: $deliveryDate, orderStatus: $orderStatus, customerId: $customerId, subtotalPrice: $subtotalPrice, paymentStatus: $paymentStatus, salesId: $salesId, notes: $notes, paymentMethod: $paymentMethod, products: $products, totalDiscount: $totalDiscount, deliveryStatus: $deliveryStatus)';
+    return 'Fields(customerId: $customerId, notes: $notes, products: $products, paymentMethod: $paymentMethod, orderStatus: $orderStatus, totalDiscount: $totalDiscount, createdBy: $createdBy, subtotalPrice: $subtotalPrice, totalPrice: $totalPrice, deliveryDate: $deliveryDate, paymentDate: $paymentDate)';
   }
 
   @override
@@ -829,46 +792,44 @@ class _$FieldsImpl implements _Fields {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FieldsImpl &&
+            (identical(other.customerId, customerId) ||
+                other.customerId == customerId) &&
+            (identical(other.notes, notes) || other.notes == notes) &&
+            (identical(other.products, products) ||
+                other.products == products) &&
+            (identical(other.paymentMethod, paymentMethod) ||
+                other.paymentMethod == paymentMethod) &&
+            (identical(other.orderStatus, orderStatus) ||
+                other.orderStatus == orderStatus) &&
+            (identical(other.totalDiscount, totalDiscount) ||
+                other.totalDiscount == totalDiscount) &&
+            (identical(other.createdBy, createdBy) ||
+                other.createdBy == createdBy) &&
+            (identical(other.subtotalPrice, subtotalPrice) ||
+                other.subtotalPrice == subtotalPrice) &&
             (identical(other.totalPrice, totalPrice) ||
                 other.totalPrice == totalPrice) &&
             (identical(other.deliveryDate, deliveryDate) ||
                 other.deliveryDate == deliveryDate) &&
-            (identical(other.orderStatus, orderStatus) ||
-                other.orderStatus == orderStatus) &&
-            (identical(other.customerId, customerId) ||
-                other.customerId == customerId) &&
-            (identical(other.subtotalPrice, subtotalPrice) ||
-                other.subtotalPrice == subtotalPrice) &&
-            (identical(other.paymentStatus, paymentStatus) ||
-                other.paymentStatus == paymentStatus) &&
-            (identical(other.salesId, salesId) || other.salesId == salesId) &&
-            (identical(other.notes, notes) || other.notes == notes) &&
-            (identical(other.paymentMethod, paymentMethod) ||
-                other.paymentMethod == paymentMethod) &&
-            (identical(other.products, products) ||
-                other.products == products) &&
-            (identical(other.totalDiscount, totalDiscount) ||
-                other.totalDiscount == totalDiscount) &&
-            (identical(other.deliveryStatus, deliveryStatus) ||
-                other.deliveryStatus == deliveryStatus));
+            (identical(other.paymentDate, paymentDate) ||
+                other.paymentDate == paymentDate));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
     runtimeType,
+    customerId,
+    notes,
+    products,
+    paymentMethod,
+    orderStatus,
+    totalDiscount,
+    createdBy,
+    subtotalPrice,
     totalPrice,
     deliveryDate,
-    orderStatus,
-    customerId,
-    subtotalPrice,
-    paymentStatus,
-    salesId,
-    notes,
-    paymentMethod,
-    products,
-    totalDiscount,
-    deliveryStatus,
+    paymentDate,
   );
 
   /// Create a copy of Fields
@@ -887,58 +848,54 @@ class _$FieldsImpl implements _Fields {
 
 abstract class _Fields implements Fields {
   const factory _Fields({
-    @JsonKey(name: 'total_price') final SubtotalPrice? totalPrice,
-    @JsonKey(name: 'delivery_date') final DeliveryDate? deliveryDate,
-    @JsonKey(name: 'order_status') final CustomerId? orderStatus,
-    @JsonKey(name: 'customer_id') final CustomerId? customerId,
-    @JsonKey(name: 'subtotal_price') final SubtotalPrice? subtotalPrice,
-    @JsonKey(name: 'payment_status') final CustomerId? paymentStatus,
-    @JsonKey(name: 'sales_id') final CustomerId? salesId,
-    @JsonKey(name: 'notes') final CustomerId? notes,
-    @JsonKey(name: 'payment_method') final CustomerId? paymentMethod,
+    @JsonKey(name: 'customer_id') final CreatedBy? customerId,
+    @JsonKey(name: 'notes') final CreatedBy? notes,
     @JsonKey(name: 'products') final Products? products,
+    @JsonKey(name: 'payment_method') final CreatedBy? paymentMethod,
+    @JsonKey(name: 'order_status') final CreatedBy? orderStatus,
     @JsonKey(name: 'total_discount') final SubtotalPrice? totalDiscount,
-    @JsonKey(name: 'delivery_status') final CustomerId? deliveryStatus,
+    @JsonKey(name: 'created_by') final CreatedBy? createdBy,
+    @JsonKey(name: 'subtotal_price') final SubtotalPrice? subtotalPrice,
+    @JsonKey(name: 'total_price') final SubtotalPrice? totalPrice,
+    @JsonKey(name: 'delivery_date') final Date? deliveryDate,
+    @JsonKey(name: 'payment_date') final Date? paymentDate,
   }) = _$FieldsImpl;
 
   factory _Fields.fromJson(Map<String, dynamic> json) = _$FieldsImpl.fromJson;
 
   @override
-  @JsonKey(name: 'total_price')
-  SubtotalPrice? get totalPrice;
-  @override
-  @JsonKey(name: 'delivery_date')
-  DeliveryDate? get deliveryDate;
-  @override
-  @JsonKey(name: 'order_status')
-  CustomerId? get orderStatus;
-  @override
   @JsonKey(name: 'customer_id')
-  CustomerId? get customerId;
-  @override
-  @JsonKey(name: 'subtotal_price')
-  SubtotalPrice? get subtotalPrice;
-  @override
-  @JsonKey(name: 'payment_status')
-  CustomerId? get paymentStatus;
-  @override
-  @JsonKey(name: 'sales_id')
-  CustomerId? get salesId;
+  CreatedBy? get customerId;
   @override
   @JsonKey(name: 'notes')
-  CustomerId? get notes;
-  @override
-  @JsonKey(name: 'payment_method')
-  CustomerId? get paymentMethod;
+  CreatedBy? get notes;
   @override
   @JsonKey(name: 'products')
   Products? get products;
   @override
+  @JsonKey(name: 'payment_method')
+  CreatedBy? get paymentMethod;
+  @override
+  @JsonKey(name: 'order_status')
+  CreatedBy? get orderStatus;
+  @override
   @JsonKey(name: 'total_discount')
   SubtotalPrice? get totalDiscount;
   @override
-  @JsonKey(name: 'delivery_status')
-  CustomerId? get deliveryStatus;
+  @JsonKey(name: 'created_by')
+  CreatedBy? get createdBy;
+  @override
+  @JsonKey(name: 'subtotal_price')
+  SubtotalPrice? get subtotalPrice;
+  @override
+  @JsonKey(name: 'total_price')
+  SubtotalPrice? get totalPrice;
+  @override
+  @JsonKey(name: 'delivery_date')
+  Date? get deliveryDate;
+  @override
+  @JsonKey(name: 'payment_date')
+  Date? get paymentDate;
 
   /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
@@ -948,46 +905,44 @@ abstract class _Fields implements Fields {
       throw _privateConstructorUsedError;
 }
 
-CustomerId _$CustomerIdFromJson(Map<String, dynamic> json) {
-  return _CustomerId.fromJson(json);
+CreatedBy _$CreatedByFromJson(Map<String, dynamic> json) {
+  return _CreatedBy.fromJson(json);
 }
 
 /// @nodoc
-mixin _$CustomerId {
+mixin _$CreatedBy {
   @JsonKey(name: 'stringValue')
   String? get stringValue => throw _privateConstructorUsedError;
 
-  /// Serializes this CustomerId to a JSON map.
+  /// Serializes this CreatedBy to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of CustomerId
+  /// Create a copy of CreatedBy
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $CustomerIdCopyWith<CustomerId> get copyWith =>
+  $CreatedByCopyWith<CreatedBy> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CustomerIdCopyWith<$Res> {
-  factory $CustomerIdCopyWith(
-    CustomerId value,
-    $Res Function(CustomerId) then,
-  ) = _$CustomerIdCopyWithImpl<$Res, CustomerId>;
+abstract class $CreatedByCopyWith<$Res> {
+  factory $CreatedByCopyWith(CreatedBy value, $Res Function(CreatedBy) then) =
+      _$CreatedByCopyWithImpl<$Res, CreatedBy>;
   @useResult
   $Res call({@JsonKey(name: 'stringValue') String? stringValue});
 }
 
 /// @nodoc
-class _$CustomerIdCopyWithImpl<$Res, $Val extends CustomerId>
-    implements $CustomerIdCopyWith<$Res> {
-  _$CustomerIdCopyWithImpl(this._value, this._then);
+class _$CreatedByCopyWithImpl<$Res, $Val extends CreatedBy>
+    implements $CreatedByCopyWith<$Res> {
+  _$CreatedByCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of CustomerId
+  /// Create a copy of CreatedBy
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -1006,33 +961,33 @@ class _$CustomerIdCopyWithImpl<$Res, $Val extends CustomerId>
 }
 
 /// @nodoc
-abstract class _$$CustomerIdImplCopyWith<$Res>
-    implements $CustomerIdCopyWith<$Res> {
-  factory _$$CustomerIdImplCopyWith(
-    _$CustomerIdImpl value,
-    $Res Function(_$CustomerIdImpl) then,
-  ) = __$$CustomerIdImplCopyWithImpl<$Res>;
+abstract class _$$CreatedByImplCopyWith<$Res>
+    implements $CreatedByCopyWith<$Res> {
+  factory _$$CreatedByImplCopyWith(
+    _$CreatedByImpl value,
+    $Res Function(_$CreatedByImpl) then,
+  ) = __$$CreatedByImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({@JsonKey(name: 'stringValue') String? stringValue});
 }
 
 /// @nodoc
-class __$$CustomerIdImplCopyWithImpl<$Res>
-    extends _$CustomerIdCopyWithImpl<$Res, _$CustomerIdImpl>
-    implements _$$CustomerIdImplCopyWith<$Res> {
-  __$$CustomerIdImplCopyWithImpl(
-    _$CustomerIdImpl _value,
-    $Res Function(_$CustomerIdImpl) _then,
+class __$$CreatedByImplCopyWithImpl<$Res>
+    extends _$CreatedByCopyWithImpl<$Res, _$CreatedByImpl>
+    implements _$$CreatedByImplCopyWith<$Res> {
+  __$$CreatedByImplCopyWithImpl(
+    _$CreatedByImpl _value,
+    $Res Function(_$CreatedByImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of CustomerId
+  /// Create a copy of CreatedBy
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({Object? stringValue = freezed}) {
     return _then(
-      _$CustomerIdImpl(
+      _$CreatedByImpl(
         stringValue:
             freezed == stringValue
                 ? _value.stringValue
@@ -1045,11 +1000,11 @@ class __$$CustomerIdImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$CustomerIdImpl implements _CustomerId {
-  const _$CustomerIdImpl({@JsonKey(name: 'stringValue') this.stringValue});
+class _$CreatedByImpl implements _CreatedBy {
+  const _$CreatedByImpl({@JsonKey(name: 'stringValue') this.stringValue});
 
-  factory _$CustomerIdImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CustomerIdImplFromJson(json);
+  factory _$CreatedByImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CreatedByImplFromJson(json);
 
   @override
   @JsonKey(name: 'stringValue')
@@ -1057,14 +1012,14 @@ class _$CustomerIdImpl implements _CustomerId {
 
   @override
   String toString() {
-    return 'CustomerId(stringValue: $stringValue)';
+    return 'CreatedBy(stringValue: $stringValue)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CustomerIdImpl &&
+            other is _$CreatedByImpl &&
             (identical(other.stringValue, stringValue) ||
                 other.stringValue == stringValue));
   }
@@ -1073,80 +1028,77 @@ class _$CustomerIdImpl implements _CustomerId {
   @override
   int get hashCode => Object.hash(runtimeType, stringValue);
 
-  /// Create a copy of CustomerId
+  /// Create a copy of CreatedBy
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$CustomerIdImplCopyWith<_$CustomerIdImpl> get copyWith =>
-      __$$CustomerIdImplCopyWithImpl<_$CustomerIdImpl>(this, _$identity);
+  _$$CreatedByImplCopyWith<_$CreatedByImpl> get copyWith =>
+      __$$CreatedByImplCopyWithImpl<_$CreatedByImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CustomerIdImplToJson(this);
+    return _$$CreatedByImplToJson(this);
   }
 }
 
-abstract class _CustomerId implements CustomerId {
-  const factory _CustomerId({
+abstract class _CreatedBy implements CreatedBy {
+  const factory _CreatedBy({
     @JsonKey(name: 'stringValue') final String? stringValue,
-  }) = _$CustomerIdImpl;
+  }) = _$CreatedByImpl;
 
-  factory _CustomerId.fromJson(Map<String, dynamic> json) =
-      _$CustomerIdImpl.fromJson;
+  factory _CreatedBy.fromJson(Map<String, dynamic> json) =
+      _$CreatedByImpl.fromJson;
 
   @override
   @JsonKey(name: 'stringValue')
   String? get stringValue;
 
-  /// Create a copy of CustomerId
+  /// Create a copy of CreatedBy
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CustomerIdImplCopyWith<_$CustomerIdImpl> get copyWith =>
+  _$$CreatedByImplCopyWith<_$CreatedByImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-DeliveryDate _$DeliveryDateFromJson(Map<String, dynamic> json) {
-  return _DeliveryDate.fromJson(json);
+Date _$DateFromJson(Map<String, dynamic> json) {
+  return _Date.fromJson(json);
 }
 
 /// @nodoc
-mixin _$DeliveryDate {
+mixin _$Date {
   @JsonKey(name: 'timestampValue')
   String? get timestampValue => throw _privateConstructorUsedError;
 
-  /// Serializes this DeliveryDate to a JSON map.
+  /// Serializes this Date to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of DeliveryDate
+  /// Create a copy of Date
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $DeliveryDateCopyWith<DeliveryDate> get copyWith =>
-      throw _privateConstructorUsedError;
+  $DateCopyWith<Date> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $DeliveryDateCopyWith<$Res> {
-  factory $DeliveryDateCopyWith(
-    DeliveryDate value,
-    $Res Function(DeliveryDate) then,
-  ) = _$DeliveryDateCopyWithImpl<$Res, DeliveryDate>;
+abstract class $DateCopyWith<$Res> {
+  factory $DateCopyWith(Date value, $Res Function(Date) then) =
+      _$DateCopyWithImpl<$Res, Date>;
   @useResult
   $Res call({@JsonKey(name: 'timestampValue') String? timestampValue});
 }
 
 /// @nodoc
-class _$DeliveryDateCopyWithImpl<$Res, $Val extends DeliveryDate>
-    implements $DeliveryDateCopyWith<$Res> {
-  _$DeliveryDateCopyWithImpl(this._value, this._then);
+class _$DateCopyWithImpl<$Res, $Val extends Date>
+    implements $DateCopyWith<$Res> {
+  _$DateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of DeliveryDate
+  /// Create a copy of Date
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -1165,33 +1117,30 @@ class _$DeliveryDateCopyWithImpl<$Res, $Val extends DeliveryDate>
 }
 
 /// @nodoc
-abstract class _$$DeliveryDateImplCopyWith<$Res>
-    implements $DeliveryDateCopyWith<$Res> {
-  factory _$$DeliveryDateImplCopyWith(
-    _$DeliveryDateImpl value,
-    $Res Function(_$DeliveryDateImpl) then,
-  ) = __$$DeliveryDateImplCopyWithImpl<$Res>;
+abstract class _$$DateImplCopyWith<$Res> implements $DateCopyWith<$Res> {
+  factory _$$DateImplCopyWith(
+    _$DateImpl value,
+    $Res Function(_$DateImpl) then,
+  ) = __$$DateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({@JsonKey(name: 'timestampValue') String? timestampValue});
 }
 
 /// @nodoc
-class __$$DeliveryDateImplCopyWithImpl<$Res>
-    extends _$DeliveryDateCopyWithImpl<$Res, _$DeliveryDateImpl>
-    implements _$$DeliveryDateImplCopyWith<$Res> {
-  __$$DeliveryDateImplCopyWithImpl(
-    _$DeliveryDateImpl _value,
-    $Res Function(_$DeliveryDateImpl) _then,
-  ) : super(_value, _then);
+class __$$DateImplCopyWithImpl<$Res>
+    extends _$DateCopyWithImpl<$Res, _$DateImpl>
+    implements _$$DateImplCopyWith<$Res> {
+  __$$DateImplCopyWithImpl(_$DateImpl _value, $Res Function(_$DateImpl) _then)
+    : super(_value, _then);
 
-  /// Create a copy of DeliveryDate
+  /// Create a copy of Date
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({Object? timestampValue = freezed}) {
     return _then(
-      _$DeliveryDateImpl(
+      _$DateImpl(
         timestampValue:
             freezed == timestampValue
                 ? _value.timestampValue
@@ -1204,13 +1153,11 @@ class __$$DeliveryDateImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$DeliveryDateImpl implements _DeliveryDate {
-  const _$DeliveryDateImpl({
-    @JsonKey(name: 'timestampValue') this.timestampValue,
-  });
+class _$DateImpl implements _Date {
+  const _$DateImpl({@JsonKey(name: 'timestampValue') this.timestampValue});
 
-  factory _$DeliveryDateImpl.fromJson(Map<String, dynamic> json) =>
-      _$$DeliveryDateImplFromJson(json);
+  factory _$DateImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DateImplFromJson(json);
 
   @override
   @JsonKey(name: 'timestampValue')
@@ -1218,14 +1165,14 @@ class _$DeliveryDateImpl implements _DeliveryDate {
 
   @override
   String toString() {
-    return 'DeliveryDate(timestampValue: $timestampValue)';
+    return 'Date(timestampValue: $timestampValue)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$DeliveryDateImpl &&
+            other is _$DateImpl &&
             (identical(other.timestampValue, timestampValue) ||
                 other.timestampValue == timestampValue));
   }
@@ -1234,37 +1181,36 @@ class _$DeliveryDateImpl implements _DeliveryDate {
   @override
   int get hashCode => Object.hash(runtimeType, timestampValue);
 
-  /// Create a copy of DeliveryDate
+  /// Create a copy of Date
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$DeliveryDateImplCopyWith<_$DeliveryDateImpl> get copyWith =>
-      __$$DeliveryDateImplCopyWithImpl<_$DeliveryDateImpl>(this, _$identity);
+  _$$DateImplCopyWith<_$DateImpl> get copyWith =>
+      __$$DateImplCopyWithImpl<_$DateImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$DeliveryDateImplToJson(this);
+    return _$$DateImplToJson(this);
   }
 }
 
-abstract class _DeliveryDate implements DeliveryDate {
-  const factory _DeliveryDate({
+abstract class _Date implements Date {
+  const factory _Date({
     @JsonKey(name: 'timestampValue') final String? timestampValue,
-  }) = _$DeliveryDateImpl;
+  }) = _$DateImpl;
 
-  factory _DeliveryDate.fromJson(Map<String, dynamic> json) =
-      _$DeliveryDateImpl.fromJson;
+  factory _Date.fromJson(Map<String, dynamic> json) = _$DateImpl.fromJson;
 
   @override
   @JsonKey(name: 'timestampValue')
   String? get timestampValue;
 
-  /// Create a copy of DeliveryDate
+  /// Create a copy of Date
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$DeliveryDateImplCopyWith<_$DeliveryDateImpl> get copyWith =>
+  _$$DateImplCopyWith<_$DateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1964,16 +1910,19 @@ MapValueFields _$MapValueFieldsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$MapValueFields {
-  @JsonKey(name: 'product_id')
-  CustomerId? get productId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'quantity')
-  SubtotalPrice? get quantity => throw _privateConstructorUsedError;
-  @JsonKey(name: 'discount')
-  Discount? get discount => throw _privateConstructorUsedError;
   @JsonKey(name: 'unit_price')
   SubtotalPrice? get unitPrice => throw _privateConstructorUsedError;
   @JsonKey(name: 'total_price')
   SubtotalPrice? get totalPrice => throw _privateConstructorUsedError;
+  @JsonKey(name: 'discount_amount')
+  SubtotalPrice? get discountAmount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'product_id')
+  CreatedBy? get productId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'quantity')
+  SubtotalPrice? get quantity => throw _privateConstructorUsedError;
+  @JsonKey(name: 'discount_percentage')
+  DiscountPercentage? get discountPercentage =>
+      throw _privateConstructorUsedError;
 
   /// Serializes this MapValueFields to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -1993,18 +1942,21 @@ abstract class $MapValueFieldsCopyWith<$Res> {
   ) = _$MapValueFieldsCopyWithImpl<$Res, MapValueFields>;
   @useResult
   $Res call({
-    @JsonKey(name: 'product_id') CustomerId? productId,
-    @JsonKey(name: 'quantity') SubtotalPrice? quantity,
-    @JsonKey(name: 'discount') Discount? discount,
     @JsonKey(name: 'unit_price') SubtotalPrice? unitPrice,
     @JsonKey(name: 'total_price') SubtotalPrice? totalPrice,
+    @JsonKey(name: 'discount_amount') SubtotalPrice? discountAmount,
+    @JsonKey(name: 'product_id') CreatedBy? productId,
+    @JsonKey(name: 'quantity') SubtotalPrice? quantity,
+    @JsonKey(name: 'discount_percentage')
+    DiscountPercentage? discountPercentage,
   });
 
-  $CustomerIdCopyWith<$Res>? get productId;
-  $SubtotalPriceCopyWith<$Res>? get quantity;
-  $DiscountCopyWith<$Res>? get discount;
   $SubtotalPriceCopyWith<$Res>? get unitPrice;
   $SubtotalPriceCopyWith<$Res>? get totalPrice;
+  $SubtotalPriceCopyWith<$Res>? get discountAmount;
+  $CreatedByCopyWith<$Res>? get productId;
+  $SubtotalPriceCopyWith<$Res>? get quantity;
+  $DiscountPercentageCopyWith<$Res>? get discountPercentage;
 }
 
 /// @nodoc
@@ -2022,29 +1974,15 @@ class _$MapValueFieldsCopyWithImpl<$Res, $Val extends MapValueFields>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? productId = freezed,
-    Object? quantity = freezed,
-    Object? discount = freezed,
     Object? unitPrice = freezed,
     Object? totalPrice = freezed,
+    Object? discountAmount = freezed,
+    Object? productId = freezed,
+    Object? quantity = freezed,
+    Object? discountPercentage = freezed,
   }) {
     return _then(
       _value.copyWith(
-            productId:
-                freezed == productId
-                    ? _value.productId
-                    : productId // ignore: cast_nullable_to_non_nullable
-                        as CustomerId?,
-            quantity:
-                freezed == quantity
-                    ? _value.quantity
-                    : quantity // ignore: cast_nullable_to_non_nullable
-                        as SubtotalPrice?,
-            discount:
-                freezed == discount
-                    ? _value.discount
-                    : discount // ignore: cast_nullable_to_non_nullable
-                        as Discount?,
             unitPrice:
                 freezed == unitPrice
                     ? _value.unitPrice
@@ -2055,51 +1993,29 @@ class _$MapValueFieldsCopyWithImpl<$Res, $Val extends MapValueFields>
                     ? _value.totalPrice
                     : totalPrice // ignore: cast_nullable_to_non_nullable
                         as SubtotalPrice?,
+            discountAmount:
+                freezed == discountAmount
+                    ? _value.discountAmount
+                    : discountAmount // ignore: cast_nullable_to_non_nullable
+                        as SubtotalPrice?,
+            productId:
+                freezed == productId
+                    ? _value.productId
+                    : productId // ignore: cast_nullable_to_non_nullable
+                        as CreatedBy?,
+            quantity:
+                freezed == quantity
+                    ? _value.quantity
+                    : quantity // ignore: cast_nullable_to_non_nullable
+                        as SubtotalPrice?,
+            discountPercentage:
+                freezed == discountPercentage
+                    ? _value.discountPercentage
+                    : discountPercentage // ignore: cast_nullable_to_non_nullable
+                        as DiscountPercentage?,
           )
           as $Val,
     );
-  }
-
-  /// Create a copy of MapValueFields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CustomerIdCopyWith<$Res>? get productId {
-    if (_value.productId == null) {
-      return null;
-    }
-
-    return $CustomerIdCopyWith<$Res>(_value.productId!, (value) {
-      return _then(_value.copyWith(productId: value) as $Val);
-    });
-  }
-
-  /// Create a copy of MapValueFields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $SubtotalPriceCopyWith<$Res>? get quantity {
-    if (_value.quantity == null) {
-      return null;
-    }
-
-    return $SubtotalPriceCopyWith<$Res>(_value.quantity!, (value) {
-      return _then(_value.copyWith(quantity: value) as $Val);
-    });
-  }
-
-  /// Create a copy of MapValueFields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $DiscountCopyWith<$Res>? get discount {
-    if (_value.discount == null) {
-      return null;
-    }
-
-    return $DiscountCopyWith<$Res>(_value.discount!, (value) {
-      return _then(_value.copyWith(discount: value) as $Val);
-    });
   }
 
   /// Create a copy of MapValueFields
@@ -2129,6 +2045,64 @@ class _$MapValueFieldsCopyWithImpl<$Res, $Val extends MapValueFields>
       return _then(_value.copyWith(totalPrice: value) as $Val);
     });
   }
+
+  /// Create a copy of MapValueFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SubtotalPriceCopyWith<$Res>? get discountAmount {
+    if (_value.discountAmount == null) {
+      return null;
+    }
+
+    return $SubtotalPriceCopyWith<$Res>(_value.discountAmount!, (value) {
+      return _then(_value.copyWith(discountAmount: value) as $Val);
+    });
+  }
+
+  /// Create a copy of MapValueFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CreatedByCopyWith<$Res>? get productId {
+    if (_value.productId == null) {
+      return null;
+    }
+
+    return $CreatedByCopyWith<$Res>(_value.productId!, (value) {
+      return _then(_value.copyWith(productId: value) as $Val);
+    });
+  }
+
+  /// Create a copy of MapValueFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SubtotalPriceCopyWith<$Res>? get quantity {
+    if (_value.quantity == null) {
+      return null;
+    }
+
+    return $SubtotalPriceCopyWith<$Res>(_value.quantity!, (value) {
+      return _then(_value.copyWith(quantity: value) as $Val);
+    });
+  }
+
+  /// Create a copy of MapValueFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $DiscountPercentageCopyWith<$Res>? get discountPercentage {
+    if (_value.discountPercentage == null) {
+      return null;
+    }
+
+    return $DiscountPercentageCopyWith<$Res>(_value.discountPercentage!, (
+      value,
+    ) {
+      return _then(_value.copyWith(discountPercentage: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -2141,23 +2115,27 @@ abstract class _$$MapValueFieldsImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    @JsonKey(name: 'product_id') CustomerId? productId,
-    @JsonKey(name: 'quantity') SubtotalPrice? quantity,
-    @JsonKey(name: 'discount') Discount? discount,
     @JsonKey(name: 'unit_price') SubtotalPrice? unitPrice,
     @JsonKey(name: 'total_price') SubtotalPrice? totalPrice,
+    @JsonKey(name: 'discount_amount') SubtotalPrice? discountAmount,
+    @JsonKey(name: 'product_id') CreatedBy? productId,
+    @JsonKey(name: 'quantity') SubtotalPrice? quantity,
+    @JsonKey(name: 'discount_percentage')
+    DiscountPercentage? discountPercentage,
   });
 
-  @override
-  $CustomerIdCopyWith<$Res>? get productId;
-  @override
-  $SubtotalPriceCopyWith<$Res>? get quantity;
-  @override
-  $DiscountCopyWith<$Res>? get discount;
   @override
   $SubtotalPriceCopyWith<$Res>? get unitPrice;
   @override
   $SubtotalPriceCopyWith<$Res>? get totalPrice;
+  @override
+  $SubtotalPriceCopyWith<$Res>? get discountAmount;
+  @override
+  $CreatedByCopyWith<$Res>? get productId;
+  @override
+  $SubtotalPriceCopyWith<$Res>? get quantity;
+  @override
+  $DiscountPercentageCopyWith<$Res>? get discountPercentage;
 }
 
 /// @nodoc
@@ -2174,29 +2152,15 @@ class __$$MapValueFieldsImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? productId = freezed,
-    Object? quantity = freezed,
-    Object? discount = freezed,
     Object? unitPrice = freezed,
     Object? totalPrice = freezed,
+    Object? discountAmount = freezed,
+    Object? productId = freezed,
+    Object? quantity = freezed,
+    Object? discountPercentage = freezed,
   }) {
     return _then(
       _$MapValueFieldsImpl(
-        productId:
-            freezed == productId
-                ? _value.productId
-                : productId // ignore: cast_nullable_to_non_nullable
-                    as CustomerId?,
-        quantity:
-            freezed == quantity
-                ? _value.quantity
-                : quantity // ignore: cast_nullable_to_non_nullable
-                    as SubtotalPrice?,
-        discount:
-            freezed == discount
-                ? _value.discount
-                : discount // ignore: cast_nullable_to_non_nullable
-                    as Discount?,
         unitPrice:
             freezed == unitPrice
                 ? _value.unitPrice
@@ -2207,6 +2171,26 @@ class __$$MapValueFieldsImplCopyWithImpl<$Res>
                 ? _value.totalPrice
                 : totalPrice // ignore: cast_nullable_to_non_nullable
                     as SubtotalPrice?,
+        discountAmount:
+            freezed == discountAmount
+                ? _value.discountAmount
+                : discountAmount // ignore: cast_nullable_to_non_nullable
+                    as SubtotalPrice?,
+        productId:
+            freezed == productId
+                ? _value.productId
+                : productId // ignore: cast_nullable_to_non_nullable
+                    as CreatedBy?,
+        quantity:
+            freezed == quantity
+                ? _value.quantity
+                : quantity // ignore: cast_nullable_to_non_nullable
+                    as SubtotalPrice?,
+        discountPercentage:
+            freezed == discountPercentage
+                ? _value.discountPercentage
+                : discountPercentage // ignore: cast_nullable_to_non_nullable
+                    as DiscountPercentage?,
       ),
     );
   }
@@ -2216,35 +2200,39 @@ class __$$MapValueFieldsImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$MapValueFieldsImpl implements _MapValueFields {
   const _$MapValueFieldsImpl({
-    @JsonKey(name: 'product_id') this.productId,
-    @JsonKey(name: 'quantity') this.quantity,
-    @JsonKey(name: 'discount') this.discount,
     @JsonKey(name: 'unit_price') this.unitPrice,
     @JsonKey(name: 'total_price') this.totalPrice,
+    @JsonKey(name: 'discount_amount') this.discountAmount,
+    @JsonKey(name: 'product_id') this.productId,
+    @JsonKey(name: 'quantity') this.quantity,
+    @JsonKey(name: 'discount_percentage') this.discountPercentage,
   });
 
   factory _$MapValueFieldsImpl.fromJson(Map<String, dynamic> json) =>
       _$$MapValueFieldsImplFromJson(json);
 
   @override
-  @JsonKey(name: 'product_id')
-  final CustomerId? productId;
-  @override
-  @JsonKey(name: 'quantity')
-  final SubtotalPrice? quantity;
-  @override
-  @JsonKey(name: 'discount')
-  final Discount? discount;
-  @override
   @JsonKey(name: 'unit_price')
   final SubtotalPrice? unitPrice;
   @override
   @JsonKey(name: 'total_price')
   final SubtotalPrice? totalPrice;
+  @override
+  @JsonKey(name: 'discount_amount')
+  final SubtotalPrice? discountAmount;
+  @override
+  @JsonKey(name: 'product_id')
+  final CreatedBy? productId;
+  @override
+  @JsonKey(name: 'quantity')
+  final SubtotalPrice? quantity;
+  @override
+  @JsonKey(name: 'discount_percentage')
+  final DiscountPercentage? discountPercentage;
 
   @override
   String toString() {
-    return 'MapValueFields(productId: $productId, quantity: $quantity, discount: $discount, unitPrice: $unitPrice, totalPrice: $totalPrice)';
+    return 'MapValueFields(unitPrice: $unitPrice, totalPrice: $totalPrice, discountAmount: $discountAmount, productId: $productId, quantity: $quantity, discountPercentage: $discountPercentage)';
   }
 
   @override
@@ -2252,27 +2240,30 @@ class _$MapValueFieldsImpl implements _MapValueFields {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MapValueFieldsImpl &&
+            (identical(other.unitPrice, unitPrice) ||
+                other.unitPrice == unitPrice) &&
+            (identical(other.totalPrice, totalPrice) ||
+                other.totalPrice == totalPrice) &&
+            (identical(other.discountAmount, discountAmount) ||
+                other.discountAmount == discountAmount) &&
             (identical(other.productId, productId) ||
                 other.productId == productId) &&
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity) &&
-            (identical(other.discount, discount) ||
-                other.discount == discount) &&
-            (identical(other.unitPrice, unitPrice) ||
-                other.unitPrice == unitPrice) &&
-            (identical(other.totalPrice, totalPrice) ||
-                other.totalPrice == totalPrice));
+            (identical(other.discountPercentage, discountPercentage) ||
+                other.discountPercentage == discountPercentage));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
     runtimeType,
-    productId,
-    quantity,
-    discount,
     unitPrice,
     totalPrice,
+    discountAmount,
+    productId,
+    quantity,
+    discountPercentage,
   );
 
   /// Create a copy of MapValueFields
@@ -2294,194 +2285,42 @@ class _$MapValueFieldsImpl implements _MapValueFields {
 
 abstract class _MapValueFields implements MapValueFields {
   const factory _MapValueFields({
-    @JsonKey(name: 'product_id') final CustomerId? productId,
-    @JsonKey(name: 'quantity') final SubtotalPrice? quantity,
-    @JsonKey(name: 'discount') final Discount? discount,
     @JsonKey(name: 'unit_price') final SubtotalPrice? unitPrice,
     @JsonKey(name: 'total_price') final SubtotalPrice? totalPrice,
+    @JsonKey(name: 'discount_amount') final SubtotalPrice? discountAmount,
+    @JsonKey(name: 'product_id') final CreatedBy? productId,
+    @JsonKey(name: 'quantity') final SubtotalPrice? quantity,
+    @JsonKey(name: 'discount_percentage')
+    final DiscountPercentage? discountPercentage,
   }) = _$MapValueFieldsImpl;
 
   factory _MapValueFields.fromJson(Map<String, dynamic> json) =
       _$MapValueFieldsImpl.fromJson;
 
   @override
-  @JsonKey(name: 'product_id')
-  CustomerId? get productId;
-  @override
-  @JsonKey(name: 'quantity')
-  SubtotalPrice? get quantity;
-  @override
-  @JsonKey(name: 'discount')
-  Discount? get discount;
-  @override
   @JsonKey(name: 'unit_price')
   SubtotalPrice? get unitPrice;
   @override
   @JsonKey(name: 'total_price')
   SubtotalPrice? get totalPrice;
+  @override
+  @JsonKey(name: 'discount_amount')
+  SubtotalPrice? get discountAmount;
+  @override
+  @JsonKey(name: 'product_id')
+  CreatedBy? get productId;
+  @override
+  @JsonKey(name: 'quantity')
+  SubtotalPrice? get quantity;
+  @override
+  @JsonKey(name: 'discount_percentage')
+  DiscountPercentage? get discountPercentage;
 
   /// Create a copy of MapValueFields
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MapValueFieldsImplCopyWith<_$MapValueFieldsImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-Discount _$DiscountFromJson(Map<String, dynamic> json) {
-  return _Discount.fromJson(json);
-}
-
-/// @nodoc
-mixin _$Discount {
-  @JsonKey(name: 'doubleValue')
-  int? get doubleValue => throw _privateConstructorUsedError;
-
-  /// Serializes this Discount to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of Discount
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $DiscountCopyWith<Discount> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $DiscountCopyWith<$Res> {
-  factory $DiscountCopyWith(Discount value, $Res Function(Discount) then) =
-      _$DiscountCopyWithImpl<$Res, Discount>;
-  @useResult
-  $Res call({@JsonKey(name: 'doubleValue') int? doubleValue});
-}
-
-/// @nodoc
-class _$DiscountCopyWithImpl<$Res, $Val extends Discount>
-    implements $DiscountCopyWith<$Res> {
-  _$DiscountCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Discount
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? doubleValue = freezed}) {
-    return _then(
-      _value.copyWith(
-            doubleValue:
-                freezed == doubleValue
-                    ? _value.doubleValue
-                    : doubleValue // ignore: cast_nullable_to_non_nullable
-                        as int?,
-          )
-          as $Val,
-    );
-  }
-}
-
-/// @nodoc
-abstract class _$$DiscountImplCopyWith<$Res>
-    implements $DiscountCopyWith<$Res> {
-  factory _$$DiscountImplCopyWith(
-    _$DiscountImpl value,
-    $Res Function(_$DiscountImpl) then,
-  ) = __$$DiscountImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({@JsonKey(name: 'doubleValue') int? doubleValue});
-}
-
-/// @nodoc
-class __$$DiscountImplCopyWithImpl<$Res>
-    extends _$DiscountCopyWithImpl<$Res, _$DiscountImpl>
-    implements _$$DiscountImplCopyWith<$Res> {
-  __$$DiscountImplCopyWithImpl(
-    _$DiscountImpl _value,
-    $Res Function(_$DiscountImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of Discount
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? doubleValue = freezed}) {
-    return _then(
-      _$DiscountImpl(
-        doubleValue:
-            freezed == doubleValue
-                ? _value.doubleValue
-                : doubleValue // ignore: cast_nullable_to_non_nullable
-                    as int?,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$DiscountImpl implements _Discount {
-  const _$DiscountImpl({@JsonKey(name: 'doubleValue') this.doubleValue});
-
-  factory _$DiscountImpl.fromJson(Map<String, dynamic> json) =>
-      _$$DiscountImplFromJson(json);
-
-  @override
-  @JsonKey(name: 'doubleValue')
-  final int? doubleValue;
-
-  @override
-  String toString() {
-    return 'Discount(doubleValue: $doubleValue)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$DiscountImpl &&
-            (identical(other.doubleValue, doubleValue) ||
-                other.doubleValue == doubleValue));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, doubleValue);
-
-  /// Create a copy of Discount
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$DiscountImplCopyWith<_$DiscountImpl> get copyWith =>
-      __$$DiscountImplCopyWithImpl<_$DiscountImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$DiscountImplToJson(this);
-  }
-}
-
-abstract class _Discount implements Discount {
-  const factory _Discount({
-    @JsonKey(name: 'doubleValue') final int? doubleValue,
-  }) = _$DiscountImpl;
-
-  factory _Discount.fromJson(Map<String, dynamic> json) =
-      _$DiscountImpl.fromJson;
-
-  @override
-  @JsonKey(name: 'doubleValue')
-  int? get doubleValue;
-
-  /// Create a copy of Discount
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$DiscountImplCopyWith<_$DiscountImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -2641,5 +2480,169 @@ abstract class _SubtotalPrice implements SubtotalPrice {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SubtotalPriceImplCopyWith<_$SubtotalPriceImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+DiscountPercentage _$DiscountPercentageFromJson(Map<String, dynamic> json) {
+  return _DiscountPercentage.fromJson(json);
+}
+
+/// @nodoc
+mixin _$DiscountPercentage {
+  @JsonKey(name: 'doubleValue')
+  double? get doubleValue => throw _privateConstructorUsedError;
+
+  /// Serializes this DiscountPercentage to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of DiscountPercentage
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $DiscountPercentageCopyWith<DiscountPercentage> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $DiscountPercentageCopyWith<$Res> {
+  factory $DiscountPercentageCopyWith(
+    DiscountPercentage value,
+    $Res Function(DiscountPercentage) then,
+  ) = _$DiscountPercentageCopyWithImpl<$Res, DiscountPercentage>;
+  @useResult
+  $Res call({@JsonKey(name: 'doubleValue') double? doubleValue});
+}
+
+/// @nodoc
+class _$DiscountPercentageCopyWithImpl<$Res, $Val extends DiscountPercentage>
+    implements $DiscountPercentageCopyWith<$Res> {
+  _$DiscountPercentageCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of DiscountPercentage
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? doubleValue = freezed}) {
+    return _then(
+      _value.copyWith(
+            doubleValue:
+                freezed == doubleValue
+                    ? _value.doubleValue
+                    : doubleValue // ignore: cast_nullable_to_non_nullable
+                        as double?,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$DiscountPercentageImplCopyWith<$Res>
+    implements $DiscountPercentageCopyWith<$Res> {
+  factory _$$DiscountPercentageImplCopyWith(
+    _$DiscountPercentageImpl value,
+    $Res Function(_$DiscountPercentageImpl) then,
+  ) = __$$DiscountPercentageImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: 'doubleValue') double? doubleValue});
+}
+
+/// @nodoc
+class __$$DiscountPercentageImplCopyWithImpl<$Res>
+    extends _$DiscountPercentageCopyWithImpl<$Res, _$DiscountPercentageImpl>
+    implements _$$DiscountPercentageImplCopyWith<$Res> {
+  __$$DiscountPercentageImplCopyWithImpl(
+    _$DiscountPercentageImpl _value,
+    $Res Function(_$DiscountPercentageImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of DiscountPercentage
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? doubleValue = freezed}) {
+    return _then(
+      _$DiscountPercentageImpl(
+        doubleValue:
+            freezed == doubleValue
+                ? _value.doubleValue
+                : doubleValue // ignore: cast_nullable_to_non_nullable
+                    as double?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$DiscountPercentageImpl implements _DiscountPercentage {
+  const _$DiscountPercentageImpl({
+    @JsonKey(name: 'doubleValue') this.doubleValue,
+  });
+
+  factory _$DiscountPercentageImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DiscountPercentageImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'doubleValue')
+  final double? doubleValue;
+
+  @override
+  String toString() {
+    return 'DiscountPercentage(doubleValue: $doubleValue)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DiscountPercentageImpl &&
+            (identical(other.doubleValue, doubleValue) ||
+                other.doubleValue == doubleValue));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, doubleValue);
+
+  /// Create a copy of DiscountPercentage
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DiscountPercentageImplCopyWith<_$DiscountPercentageImpl> get copyWith =>
+      __$$DiscountPercentageImplCopyWithImpl<_$DiscountPercentageImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$DiscountPercentageImplToJson(this);
+  }
+}
+
+abstract class _DiscountPercentage implements DiscountPercentage {
+  const factory _DiscountPercentage({
+    @JsonKey(name: 'doubleValue') final double? doubleValue,
+  }) = _$DiscountPercentageImpl;
+
+  factory _DiscountPercentage.fromJson(Map<String, dynamic> json) =
+      _$DiscountPercentageImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'doubleValue')
+  double? get doubleValue;
+
+  /// Create a copy of DiscountPercentage
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$DiscountPercentageImplCopyWith<_$DiscountPercentageImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

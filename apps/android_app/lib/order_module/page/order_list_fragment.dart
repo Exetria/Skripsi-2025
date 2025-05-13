@@ -1,3 +1,5 @@
+import 'package:android_app/customer_module/page/controller/customer_list_controller.dart';
+import 'package:android_app/order_module/domain/entities/order_domain.dart';
 import 'package:android_app/order_module/page/controller/order_list_controller.dart';
 import 'package:android_app/order_module/page/order_detail_page.dart';
 import 'package:android_app/utils/functions.dart';
@@ -5,6 +7,7 @@ import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 
 class OrderListFragment extends StatefulHookConsumerWidget {
   const OrderListFragment({super.key});
@@ -16,6 +19,7 @@ class OrderListFragment extends StatefulHookConsumerWidget {
 class _OrderListFragment extends ConsumerState<OrderListFragment> {
   @override
   Widget build(BuildContext context) {
+    final customerListState = ref.watch(customerListControllerProvider);
     final orderListState = ref.watch(orderListControllerProvider);
 
     return Padding(
@@ -34,9 +38,11 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
 
               data: (orderList) {
                 if (orderList == null || orderList.isEmpty) {
-                  return const Center(child: Text('No Order Data Found.'));
+                  return refreshableInfoWidget(
+                    refreshFunction: _refreshCustomerList,
+                    content: const Text('No Order Data Found'),
+                  );
                 }
-
                 return RefreshIndicator(
                   onRefresh: () async {
                     ref.invalidate(orderListControllerProvider);
@@ -47,19 +53,39 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
                         (context, index) => SizedBox(height: 12.h),
                     itemBuilder: (context, index) {
                       final data = orderList[index];
+                      List<Value> productValueList =
+                          data.fields?.products?.arrayValue?.values ?? [];
+
+                      // LANJUT DARISINI, CONVERT - PASSING KE DETAILS - UPDATE PAKE DATA BARU
+                      // Create product list
+                      List<Map<String, dynamic>> productDataList =
+                          createVisitDataList(products: productValueList);
 
                       return customListItem(
                         context: context,
                         leadIcon: Icons.receipt_long,
-                        title: 'Order ${data.name?.substring(58) ?? "-"}',
+                        title: customerListState.when(
+                          loading: () => 'Loading...',
+                          data: (customerList) {
+                            return "Order ${ref.read(customerListControllerProvider.notifier).getCustomerName(id: data.fields?.customerId?.stringValue ?? '')}";
+                          },
+                          error: (error, stackTrace) {
+                            ref.invalidate(customerListControllerProvider);
+                            return 'Error Loading Name';
+                          },
+                        ),
                         subtitle:
-                            'Status: ${data.fields?.orderStatus?.stringValue ?? "-"}',
+                            '${(data.createTime != null && data.createTime != '') ? DateFormat.yMMMMd().format(DateTime.parse(data.createTime!)) : "Error Loading Date"}\nStatus: ${data.fields?.orderStatus?.stringValue ?? "-"}',
                         trailIcon: Icons.arrow_forward_ios,
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const OrderDetailPage(),
+                              builder:
+                                  (context) => OrderDetailPage(
+                                    orderData: data,
+                                    productDataList: productDataList,
+                                  ),
                             ),
                           );
                         },
@@ -72,8 +98,9 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
               error: (error, _) {
                 final exception = error as ApiException;
 
-                return Center(
-                  child: Text(
+                return refreshableInfoWidget(
+                  refreshFunction: _refreshCustomerList,
+                  content: Text(
                     'Error Loading Order List: ${exception.message}',
                     style: errorStyle,
                   ),
@@ -84,5 +111,57 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
         ],
       ),
     );
+  }
+
+  Future<void> _refreshCustomerList() async {
+    ref.invalidate(orderListControllerProvider);
+  }
+
+  List<Map<String, dynamic>> createVisitDataList({
+    required List<Value> products,
+  }) {
+    List<Map<String, dynamic>> result = [];
+    for (var product in products) {
+      Map<String, dynamic> newMap = {
+        'mapValue': {
+          'fields': {
+            'product_id': {
+              'stringValue':
+                  product.mapValue?.fields?.productId?.stringValue ?? '',
+            },
+            'quantity': {
+              'integerValue':
+                  product.mapValue?.fields?.quantity?.integerValue ?? '0',
+            },
+            'unit_price': {
+              'integerValue':
+                  product.mapValue?.fields?.unitPrice?.integerValue ?? '',
+            },
+            'total_price': {
+              'integerValue':
+                  product.mapValue?.fields?.totalPrice?.integerValue ?? '',
+            },
+          },
+        },
+      };
+
+      // Add discount fields conditionally (fixed amount or percentage)
+      if (product.mapValue?.fields?.discountAmount?.integerValue != null) {
+        newMap['mapValue']['fields']['discount_amount'] = {
+          'integerValue':
+              product.mapValue?.fields?.discountAmount?.integerValue ?? '0',
+        };
+      } else if (product.mapValue?.fields?.discountPercentage?.doubleValue !=
+          null) {
+        newMap['mapValue']['fields']['discount_percentage'] = {
+          'doubleValue':
+              product.mapValue?.fields?.discountPercentage?.doubleValue ?? '0',
+        };
+      }
+
+      // Add product data to list
+      result.add(newMap);
+    }
+    return result;
   }
 }
