@@ -57,6 +57,8 @@ class _MainApp extends ConsumerState<Main> {
 
             surface: fillColor,
             onSurface: textColor,
+
+            outline: dividerColor,
           ),
 
           elevatedButtonTheme: ElevatedButtonThemeData(
@@ -146,6 +148,8 @@ class _MainApp extends ConsumerState<Main> {
 
             surface: darkModeFillColor,
             onSurface: darkModeTextColor,
+
+            outline: darkModeDividerColor,
           ),
 
           elevatedButtonTheme: ElevatedButtonThemeData(
