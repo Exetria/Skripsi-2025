@@ -4,7 +4,7 @@ import 'package:android_app/order_module/domain/repository/order_repository.dart
 import 'package:common_components/common_components.dart';
 import 'package:fpdart/fpdart.dart';
 
-class OrderListRepositoryImpl implements OrderListRepository {
+class OrderListRepositoryImpl implements OrderRepository {
   final remoteDataSource = OrderListRemoteDatasourceImpl();
 
   @override
@@ -18,6 +18,7 @@ class OrderListRepositoryImpl implements OrderListRepository {
   Future<Either<ApiException, OrderDomain>> createOrder({
     required String customerId,
     required String paymentMethod,
+    required String notes,
     required List<Map<String, dynamic>> productDataList,
   }) {
     throw UnimplementedError();

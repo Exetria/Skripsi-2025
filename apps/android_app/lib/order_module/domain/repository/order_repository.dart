@@ -5,20 +5,21 @@ import 'package:common_components/common_components.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 
-abstract class OrderListRepository {
+abstract class OrderRepository {
   Future<Either<ApiException, List<OrderDomain>?>> getOrderList();
   Future<Either<ApiException, OrderDomain>> createOrder({
     required String customerId,
     required String paymentMethod,
+    required String notes,
     required List<Map<String, dynamic>> productDataList,
   });
   Future<Either<ApiException, OrderDomain>> updateOrder();
 }
 
-final OrderListRepositoryProvider = Provider<OrderListRepository>(
+final OrderListRepositoryProvider = Provider<OrderRepository>(
   (ref) => OrderListRepositoryImpl(),
 );
 
-final UpdateOrderRepositoryProvider = Provider<OrderListRepository>(
+final UpdateOrderRepositoryProvider = Provider<OrderRepository>(
   (ref) => UpdateOrderRepositoryImpl(),
 );
