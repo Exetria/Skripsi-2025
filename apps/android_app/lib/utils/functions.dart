@@ -158,7 +158,11 @@ InkWell customListItem({
               ],
             ),
           ),
-          Icon(trailIcon, size: 16.sp, color: unselectedItemColor),
+          Icon(
+            trailIcon,
+            size: 16.sp,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
         ],
       ),
     ),
@@ -404,14 +408,4 @@ Future<Position> getCurrentPosition() async {
       distanceFilter: 0,
     ),
   );
-}
-
-// PARSE PRODUCT VARIANT ATTRIBUTE
-Map<String, String> parseVariantAttributes(Map<String, dynamic> attributesMap) {
-  final fields = attributesMap['fields'] as Map<String, dynamic>? ?? {};
-  return {
-    for (final entry in fields.entries)
-      if (entry.value['stringValue'] != null)
-        entry.key: entry.value['stringValue'] as String,
-  };
 }
