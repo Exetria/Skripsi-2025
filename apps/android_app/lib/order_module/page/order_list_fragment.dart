@@ -155,7 +155,9 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
           null) {
         newMap['mapValue']['fields']['discount_percentage'] = {
           'doubleValue':
-              product.mapValue?.fields?.discountPercentage?.doubleValue ?? '0',
+              product.mapValue?.fields?.discountPercentage?.doubleValue
+                  .toString() ??
+              '0',
         };
       }
 
