@@ -6,12 +6,6 @@ import 'package:common_components/common_components.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 abstract class UpdateVisitDataRemoteDatasource {
-  Future<VisitDomain> createVisit({
-    required DateTime date,
-    required String customerId,
-    required List<Value> previousVisitData,
-  });
-
   Future<VisitDomain> updateVisit({
     required DateTime date,
     required List<Map<String, dynamic>> visitDataList,
@@ -22,51 +16,6 @@ abstract class UpdateVisitDataRemoteDatasource {
 
 class UpdateVisitDataRemoteDatasourceImpl
     implements UpdateVisitDataRemoteDatasource {
-  @override
-  Future<VisitDomain> createVisit({
-    required DateTime date,
-    required String customerId,
-    required List<Value> previousVisitData,
-  }) async {
-    final documentId = _generateDocumentIdFromDate(date);
-
-    // Map previous visit data
-    List<Map<String, dynamic>> visitArray = _createPreviousVisitArray(
-      previousVisitData: previousVisitData,
-    );
-
-    // Add new visit data
-    visitArray.add({
-      'mapValue': {
-        'fields': {
-          'customer_id': {'stringValue': customerId},
-          'visit_status': {'integerValue': '1'},
-          'visit_notes': {'stringValue': ''},
-        },
-      },
-    });
-
-    Map<String, dynamic> result = await apiCallPatch(
-      url:
-          'https://firestore.googleapis.com/v1/projects/${dotenv.env['PROJECT_ID']}/databases/(default)/documents/visits/$documentId',
-      headers: {
-        'Authorization': 'Bearer ${userDataHelper?.idToken}',
-        'Content-Type': 'application/json',
-      },
-      body: {
-        'fields': {
-          'created_by': {'stringValue': userDataHelper?.uid},
-          'visit_date': {'timestampValue': date.toUtc().toIso8601String()},
-          'visits': {
-            'arrayValue': {'values': visitArray},
-          },
-        },
-      },
-    );
-
-    return VisitDomain.fromJson(result);
-  }
-
   @override
   Future<VisitDomain> updateVisit({
     required DateTime date,
@@ -110,16 +59,10 @@ class UpdateVisitDataRemoteDatasourceImpl
       visitPhotoLink =
           'https://firebasestorage.googleapis.com/v0/b/${storePhotoresponse['bucket']}/o/$photoFileName?alt=media&token=${storePhotoresponse['downloadTokens']}';
 
-      print('asds berhasil upload photo $visitPhotoLink');
-
       // Insert photo link
       visitDataList[updateLocationIndex]['mapValue']['fields']['visit_photo_url'] =
           {'stringValue': visitPhotoLink};
-    } else {
-      print('asds gajadi upload');
     }
-
-    print('asds index = ${visitDataList[updateLocationIndex!]}');
 
     Map<String, dynamic> result = await apiCallPatch(
       url:
@@ -140,76 +83,6 @@ class UpdateVisitDataRemoteDatasourceImpl
     );
 
     return VisitDomain.fromJson(result);
-  }
-
-  List<Map<String, dynamic>> _createPreviousVisitArray({
-    required List<Value> previousVisitData,
-  }) {
-    final List<Map<String, dynamic>> visitArray = [];
-    for (var visit in previousVisitData) {
-      visitArray.add({
-        'mapValue': {
-          'fields': {
-            'customer_id': {
-              'stringValue':
-                  visit.mapValue?.fields?.customerId?.stringValue ?? '',
-            },
-            'visit_status': {
-              'integerValue':
-                  visit.mapValue?.fields?.visitStatus?.integerValue ?? '',
-            },
-            'visit_notes': {
-              'stringValue':
-                  visit.mapValue?.fields?.visitNotes?.stringValue ?? '',
-            },
-            'location': {
-              'mapValue': {
-                'fields': {
-                  'latitude': {
-                    'doubleValue':
-                        visit
-                            .mapValue
-                            ?.fields
-                            ?.location
-                            ?.mapValue
-                            ?.fields
-                            ?.latitude
-                            ?.doubleValue ??
-                        '0',
-                  },
-                  'longitude': {
-                    'doubleValue':
-                        visit
-                            .mapValue
-                            ?.fields
-                            ?.location
-                            ?.mapValue
-                            ?.fields
-                            ?.longitude
-                            ?.doubleValue ??
-                        '0',
-                  },
-                  'accuracy': {
-                    'doubleValue':
-                        visit
-                            .mapValue
-                            ?.fields
-                            ?.location
-                            ?.mapValue
-                            ?.fields
-                            ?.accuracy
-                            ?.doubleValue ??
-                        '0',
-                  },
-                },
-              },
-            },
-          },
-        },
-      });
-    }
-
-    return visitArray;
   }
 
   String _generateDocumentIdFromDate(DateTime date) {

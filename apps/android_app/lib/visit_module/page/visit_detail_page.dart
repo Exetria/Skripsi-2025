@@ -38,6 +38,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
   int? selectedStatus;
   final TextEditingController _notesController = TextEditingController();
   File? visitPhoto;
+  String? visitPhotoLink;
 
   final Map<int, String> statusOptions = {
     1: 'Planned',
@@ -49,28 +50,30 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
   void initState() {
     super.initState();
 
+    // Init status
     final statusString =
         widget.visitDataList[widget
             .index]['mapValue']?['fields']?['visit_status']?['integerValue'];
 
     selectedStatus = int.tryParse(statusString);
+
+    // Init notes
+    final visitNote =
+        widget.visitDataList[widget
+            .index]['mapValue']?['fields']?['visit_notes']?['stringValue'];
+    if (visitNote != null && visitNote.isNotEmpty) {
+      _notesController.text = visitNote;
+    }
+
+    // Init photo url
+    visitPhotoLink =
+        widget.visitDataList[widget
+            .index]['mapValue']?['fields']?['visit_photo_url']?['stringValue'];
   }
 
   @override
   Widget build(BuildContext context) {
     final customerListState = ref.watch(customerListControllerProvider);
-
-    String? visitNote =
-        widget.visitDataList[widget
-            .index]['mapValue']?['fields']?['visit_notes']?['stringValue'];
-
-    String? visitPhotoLink =
-        widget.visitDataList[widget
-            .index]['mapValue']?['fields']?['visit_photo_url']?['stringValue'];
-
-    if (visitNote != null) {
-      _notesController.text = visitNote;
-    }
 
     return Scaffold(
       appBar: customAppBar(
@@ -172,7 +175,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
                             ? ClipRRect(
                               borderRadius: BorderRadius.circular(16.r),
                               child: Image.network(
-                                visitPhotoLink,
+                                visitPhotoLink ?? '',
                                 fit: BoxFit.cover,
                                 width: double.infinity,
                                 height: double.infinity,
@@ -299,7 +302,9 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
                           : null,
                   child: Text(
                     'Confirm',
-                    style: buttonStyle.copyWith(color: invertedTextColor),
+                    style: buttonStyle.copyWith(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                   ),
                 )
                 : const CircularProgressIndicator(),

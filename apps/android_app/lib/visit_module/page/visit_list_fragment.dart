@@ -127,74 +127,8 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                     );
 
                     // Convert into List<Map<String, dynamic>>
-                    List<Map<String, dynamic>> visitDataList = [];
-                    for (var visit in visits) {
-                      // Base visit data
-                      Map<String, dynamic> newMap = {
-                        'mapValue': {
-                          'fields': {
-                            'customer_id': {
-                              'stringValue':
-                                  visit
-                                      .mapValue
-                                      ?.fields
-                                      ?.customerId
-                                      ?.stringValue ??
-                                  '',
-                            },
-                            'visit_status': {
-                              'integerValue':
-                                  visit
-                                      .mapValue
-                                      ?.fields
-                                      ?.visitStatus
-                                      ?.integerValue ??
-                                  0,
-                            },
-                            'visit_notes': {
-                              'stringValue':
-                                  visit
-                                      .mapValue
-                                      ?.fields
-                                      ?.visitNotes
-                                      ?.stringValue ??
-                                  '',
-                            },
-                          },
-                        },
-                      };
-
-                      // If photo exist, save it
-                      String? photoUrl =
-                          visit.mapValue?.fields?.visitPhotoUrl?.stringValue;
-                      if (photoUrl != null) {
-                        newMap['mapValue']['fields']['visit_photo_url'] = {
-                          'stringValue': photoUrl,
-                        };
-                      }
-
-                      final locationFields =
-                          visit.mapValue?.fields?.location?.mapValue?.fields;
-                      final lat = locationFields?.latitude?.doubleValue;
-                      final lng = locationFields?.longitude?.doubleValue;
-                      final acc = locationFields?.accuracy?.doubleValue;
-
-                      // If location not set, do not include
-                      if (lat != null && lng != null && acc != null) {
-                        newMap['mapValue']['fields']['location'] = {
-                          'mapValue': {
-                            'fields': {
-                              'latitude': {'doubleValue': lat},
-                              'longitude': {'doubleValue': lng},
-                              'accuracy': {'doubleValue': acc},
-                            },
-                          },
-                        };
-                      }
-
-                      // Add visit data to list
-                      visitDataList.add(newMap);
-                    }
+                    List<Map<String, dynamic>> visitDataList =
+                        createVisitDataList(visits: visits);
 
                     setState(() {
                       floatingButtonFunction = () {
@@ -234,7 +168,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                             leadIcon: Icons.location_on,
                             title: customerListState.when(
                               loading: () => 'Loading...',
-                              data: (data) {
+                              data: (customerList) {
                                 return ref
                                     .read(
                                       customerListControllerProvider.notifier,
@@ -372,5 +306,62 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
     ref
         .read(visitListControllerProvider.notifier)
         .fetchVisitsForDate(date: selectedDate);
+  }
+
+  List<Map<String, dynamic>> createVisitDataList({
+    required List<Value> visits,
+  }) {
+    List<Map<String, dynamic>> result = [];
+    for (var visit in visits) {
+      // Base visit data
+      Map<String, dynamic> newMap = {
+        'mapValue': {
+          'fields': {
+            'customer_id': {
+              'stringValue':
+                  visit.mapValue?.fields?.customerId?.stringValue ?? '',
+            },
+            'visit_status': {
+              'integerValue':
+                  visit.mapValue?.fields?.visitStatus?.integerValue ?? 0,
+            },
+            'visit_notes': {
+              'stringValue':
+                  visit.mapValue?.fields?.visitNotes?.stringValue ?? '',
+            },
+          },
+        },
+      };
+
+      // If photo exist, save it
+      String? photoUrl = visit.mapValue?.fields?.visitPhotoUrl?.stringValue;
+      if (photoUrl != null) {
+        newMap['mapValue']['fields']['visit_photo_url'] = {
+          'stringValue': photoUrl,
+        };
+      }
+
+      final locationFields = visit.mapValue?.fields?.location?.mapValue?.fields;
+      final lat = locationFields?.latitude?.doubleValue;
+      final lng = locationFields?.longitude?.doubleValue;
+      final acc = locationFields?.accuracy?.doubleValue;
+
+      // If location not set, do not include
+      if (lat != null && lng != null && acc != null) {
+        newMap['mapValue']['fields']['location'] = {
+          'mapValue': {
+            'fields': {
+              'latitude': {'doubleValue': lat},
+              'longitude': {'doubleValue': lng},
+              'accuracy': {'doubleValue': acc},
+            },
+          },
+        };
+      }
+
+      // Add visit data to list
+      result.add(newMap);
+    }
+    return result;
   }
 }

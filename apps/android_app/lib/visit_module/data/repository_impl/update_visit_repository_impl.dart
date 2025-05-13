@@ -17,23 +17,6 @@ class UpdateVisitRepositoryImpl implements VisitRepository {
   }
 
   @override
-  Future<Either<ApiException, VisitDomain?>> createVisit({
-    required DateTime date,
-    required String customerId,
-    required List<Value> previousVisitData,
-  }) async {
-    final resp = await remoteProcess(
-      remoteDataSource.createVisit(
-        date: date,
-        customerId: customerId,
-        previousVisitData: previousVisitData,
-      ),
-    );
-
-    return resp.fold((l) => Left(l), (r) => Right(r));
-  }
-
-  @override
   Future<Either<ApiException, VisitDomain?>> updateVisit({
     required DateTime date,
     required List<Map<String, dynamic>> visitDataList,

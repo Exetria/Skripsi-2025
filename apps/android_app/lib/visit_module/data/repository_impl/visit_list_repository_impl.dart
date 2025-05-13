@@ -19,15 +19,6 @@ class GetVisitListRepositoryImpl implements VisitRepository {
   }
 
   @override
-  Future<Either<ApiException, VisitDomain?>> createVisit({
-    required DateTime date,
-    required String customerId,
-    required List<Value> previousVisitData,
-  }) {
-    throw UnimplementedError();
-  }
-
-  @override
   Future<Either<ApiException, VisitDomain?>> updateVisit({
     required DateTime date,
     required List<Map<String, dynamic>> visitDataList,

@@ -13,29 +13,6 @@ class UpdateVisitController extends _$UpdateVisitController {
     return const AsyncLoading();
   }
 
-  Future<AsyncValue<VisitDomain?>> createVisit({
-    required DateTime date,
-    required String customerId,
-    required List<Value> previousVisitData,
-  }) async {
-    final repository = ref.watch(updateVisitRepositoryProvider);
-
-    state = const AsyncLoading();
-
-    final result = await repository.createVisit(
-      date: date,
-      customerId: customerId,
-      previousVisitData: previousVisitData,
-    );
-
-    state = await result.fold(
-      (l) => AsyncError(l, StackTrace.empty),
-      (r) => AsyncData(r),
-    );
-
-    return state;
-  }
-
   Future<AsyncValue<VisitDomain?>> updateVisitData({
     required DateTime date,
     required List<Map<String, dynamic>> visitDataList,
