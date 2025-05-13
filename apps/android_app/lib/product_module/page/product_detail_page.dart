@@ -18,13 +18,14 @@ class ProductDetailPage extends StatefulHookConsumerWidget {
 class _ProductDetailPage extends ConsumerState<ProductDetailPage> {
   @override
   Widget build(BuildContext context) {
-    final variants = widget.data.fields?.variants?.arrayValue?.values ?? [];
-    List<Widget> variantCards = createVariantCards(variants);
+    Map<String, dynamic> attributes =
+        widget.data.fields?.attributes?.mapValue?.fields ?? {};
 
     return Scaffold(
       appBar: customAppBar(
         context: context,
-        title: widget.data.fields?.productName?.stringValue ?? '-',
+        title: 'Product Details',
+        // title: widget.data.fields?.productName?.stringValue ?? '-',
         showLeftButton: true,
       ),
       body: SingleChildScrollView(
@@ -32,7 +33,58 @@ class _ProductDetailPage extends ConsumerState<ProductDetailPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('General Informations', style: sectionTitleStyle),
+            // Customer Image
+            Center(
+              child: SizedBox(
+                height: 200.h,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16.r),
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Image.network(
+                      widget.data.fields?.productImage?.stringValue ?? '',
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                      errorBuilder:
+                          (_, __, ___) => Container(
+                            color: dividerColor,
+                            child: Icon(
+                              Icons.error,
+                              color: errorColor,
+                              size: 40.sp,
+                            ),
+                          ),
+                      loadingBuilder: (_, child, progress) {
+                        if (progress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value:
+                                progress.expectedTotalBytes != null
+                                    ? progress.cumulativeBytesLoaded /
+                                        progress.expectedTotalBytes!
+                                    : null,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 12.h),
+
+            infoCard(
+              context: context,
+              title: 'Brand Info',
+              values: [
+                'Brand : ${widget.data.fields?.brand?.stringValue ?? "-"}',
+                'Company : ${widget.data.fields?.companyCode?.stringValue ?? "-"}',
+              ],
+              icons: [Icons.donut_small, Icons.donut_small],
+            ),
+            SizedBox(height: 12.h),
+
+            createAttributeCard(attributes),
             SizedBox(height: 12.h),
 
             Container(
@@ -42,23 +94,10 @@ class _ProductDetailPage extends ConsumerState<ProductDetailPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Brand Info', style: subtitleStyle),
-                  // Brand
-                  Text(
-                    'Brand : ${widget.data.fields?.brand?.stringValue ?? "-"}',
-                    style: bodyStyle,
-                  ),
-                  SizedBox(height: 8.h),
-
-                  // Company
-                  Text(
-                    'Company : ${widget.data.fields?.companyCode?.stringValue ?? "-"}',
-                    style: bodyStyle,
-                  ),
-                  SizedBox(height: 12.h),
-
                   // Description
                   Text('Description', style: subtitleStyle),
+                  SizedBox(height: 8.h),
+
                   Text(
                     widget.data.fields?.description?.stringValue ?? '-',
                     style: bodyStyle,
@@ -68,64 +107,40 @@ class _ProductDetailPage extends ConsumerState<ProductDetailPage> {
             ),
             SizedBox(height: 12.h),
 
-            Text('Variants', style: sectionTitleStyle),
-            SizedBox(height: 12.h),
-
-            // Product Variants
-            ...variantCards,
+            // ...variantCards,
           ],
         ),
       ),
     );
   }
 
-  List<Widget> createVariantCards(List<Value> variants) {
-    List<Widget> result = [];
+  Widget createAttributeCard(Map<String, dynamic> attributes) {
+    List<String> cardValues = [];
+    List<IconData> cardIcons = [];
 
-    for (final variant in variants) {
-      List<String> cardValues = [];
-      List<IconData> cardIcons = [];
+    final attributeData = parseVariantAttributes(attributes);
 
-      // Map of attributes
-      Map<String, String> variantAttributes = parseVariantAttributes(
-        variant.mapValue?.fields?.attributes?.mapValue ?? {},
-      );
-
-      // Availability
-      bool available =
-          variant.mapValue?.fields?.available?.booleanValue ?? false;
-      cardValues.add("Status: ${available ? 'Available' : 'Not Available'}");
-      cardIcons.add(Icons.category);
-
-      // Price
-      cardValues.add(
-        "Price: ${variant.mapValue?.fields?.price?.integerValue ?? '-'}",
-      );
+    attributeData.forEach((key, value) {
+      cardValues.add('$key: $value');
       cardIcons.add(Icons.donut_small);
+    });
 
-      // Units per package
-      cardValues.add(
-        "Units per package: ${variant.mapValue?.fields?.unitsPerPackage?.integerValue ?? '-'}",
-      );
-      cardIcons.add(Icons.donut_small);
+    return infoCard(
+      context: context,
+      title: 'Attributes',
+      values: cardValues,
+      icons: cardIcons,
+    );
+  }
 
-      variantAttributes.forEach((key, value) {
-        cardValues.add('$key: $value');
-        cardIcons.add(Icons.donut_small);
-      });
-
-      result.add(
-        infoCard(
-          context: context,
-          title: variant.mapValue?.fields?.variantName?.stringValue ?? '-',
-          imageurl: variant.mapValue?.fields?.variantImage?.stringValue ?? '',
-          values: cardValues,
-          icons: cardIcons,
-        ),
-      );
-      result.add(SizedBox(height: 8.h));
-    }
-
-    return result;
+  // Parse map of map of str:str to map of str:str
+  Map<String, String> parseVariantAttributes(
+    Map<String, dynamic> attributesMap,
+  ) {
+    return {
+      for (final entry in attributesMap.entries)
+        if (entry.value is Map<String, dynamic> && entry.value.isNotEmpty)
+          entry.key: entry.value.values.first.toString(),
+    };
   }
 }

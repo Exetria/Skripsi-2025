@@ -18,4 +18,40 @@ class ProductListController extends _$ProductListController {
 
     return state.value;
   }
+
+  String getProductName({required String id}) {
+    if (state is! AsyncData) {
+      return 'Loading...';
+    }
+
+    final productList = state.value ?? [];
+
+    for (var product in productList) {
+      final productId = product.name?.substring(60) ?? '';
+
+      if (productId == id) {
+        return product.fields?.productName?.stringValue ?? '-';
+      }
+    }
+
+    return 'Name Not Found';
+  }
+
+  Future<String> getProductPrice({required String id}) async {
+    while (state is! AsyncData) {
+      await Future.delayed(const Duration(milliseconds: 100));
+    }
+
+    final productList = state.value ?? [];
+
+    for (var product in productList) {
+      final productId = product.name?.substring(60) ?? '';
+
+      if (productId == id) {
+        return product.fields?.price?.integerValue ?? '-';
+      }
+    }
+
+    return '0';
+  }
 }
