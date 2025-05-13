@@ -21,7 +21,8 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
     return Scaffold(
       appBar: customAppBar(
         context: context,
-        title: widget.data.fields?.companyName?.stringValue ?? '-',
+        title: 'Customer Details',
+        // title: widget.data.fields?.companyName?.stringValue ?? '-',
         showLeftButton: true,
       ),
       body: SingleChildScrollView(
@@ -67,7 +68,7 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
                 ),
               ),
             ),
-            SizedBox(height: 24.h),
+            SizedBox(height: 12.h),
 
             // Info Card with name inside
             infoCard(
@@ -86,7 +87,7 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
                 Icons.phone_outlined,
               ],
             ),
-            SizedBox(height: 24.h),
+            SizedBox(height: 12.h),
 
             infoCard(
               context: context,
@@ -99,7 +100,7 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
               ],
               icons: [Icons.person_outline, Icons.phone_outlined],
             ),
-            SizedBox(height: 24.h),
+            SizedBox(height: 12.h),
 
             infoCard(
               context: context,
@@ -115,7 +116,7 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
                 Icons.subscriptions_outlined,
               ],
             ),
-            SizedBox(height: 24.h),
+            SizedBox(height: 12.h),
 
             Container(
               width: double.infinity,

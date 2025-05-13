@@ -51,200 +51,6 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
         title: 'Add Customer',
         showLeftButton: true,
       ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.only(bottom: 8.h, top: 8.h),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Submit Button
-            _submitButtonEnabled
-                ? ElevatedButton(
-                  onPressed:
-                      _submitButtonEnabled
-                          ? () async {
-                            setState(() {
-                              _submitButtonEnabled = false;
-                            });
-                            // Validate to trigger warning
-                            _formKey.currentState?.validate();
-
-                            final storePhotoStatus = _storePhoto != null;
-                            final ktpPhotoStatus = _ktpPhoto != null;
-
-                            final customerTypeStatus = _customerType != null;
-                            final subscriptionTypeStatus =
-                                _subscriptionType != null;
-
-                            final requestDestinationFilled =
-                                requestDestination.text != '';
-                            final carbonCopyFilled = carbonCopy.text != '';
-
-                            final companyNameFilled = companyName.text != '';
-                            final companyAddressFilled =
-                                companyAddress.text != '';
-                            final companyPhoneFilled = companyPhone.text != '';
-                            final companyTaxIdFilled =
-                                _customerType == 'PKP'
-                                    ? true
-                                    : (companyTaxId.text != '');
-                            final companyEmailFilled = companyEmail.text != '';
-                            final storeConditionFilled =
-                                storeCondition.text != '';
-
-                            final ownerNameFilled = ownerName.text != '';
-                            final ownerAddressFilled = ownerAddress.text != '';
-                            final ownerPhoneFilled = ownerPhone.text != '';
-                            final ownerTaxIdFilled =
-                                _customerType == 'Non PKP'
-                                    ? true
-                                    : (ownerTaxId.text != '');
-                            final ownerNationalIdFilled =
-                                ownerNationalId.text != '';
-                            final ownershipStatusFilled =
-                                ownershipStatus.text != '';
-
-                            final noteFilled = true;
-
-                            if (storePhotoStatus &&
-                                ktpPhotoStatus &&
-                                customerTypeStatus &&
-                                subscriptionTypeStatus &&
-                                requestDestinationFilled &&
-                                carbonCopyFilled &&
-                                companyNameFilled &&
-                                companyAddressFilled &&
-                                companyPhoneFilled &&
-                                companyTaxIdFilled &&
-                                companyEmailFilled &&
-                                storeConditionFilled &&
-                                ownerNameFilled &&
-                                ownerAddressFilled &&
-                                ownerPhoneFilled &&
-                                ownerTaxIdFilled &&
-                                ownerNationalIdFilled &&
-                                ownershipStatusFilled &&
-                                noteFilled) {
-                              final state = await ref
-                                  .read(
-                                    createCustomerRequestControllerProvider
-                                        .notifier,
-                                  )
-                                  .createCustomerRequest(
-                                    storePhoto: _storePhoto,
-                                    ktpPhoto: _ktpPhoto,
-                                    customer_type: _customerType ?? '',
-                                    subscription_type: _subscriptionType ?? '',
-
-                                    request_destination:
-                                        requestDestination.text,
-                                    carbon_copy: carbonCopy.text,
-
-                                    company_name: companyName.text,
-                                    company_address: companyAddress.text,
-                                    company_phone_number: companyPhone.text,
-                                    company_tax_id: companyTaxId.text,
-                                    company_email: companyEmail.text,
-                                    company_store_condition:
-                                        storeCondition.text,
-
-                                    owner_name: ownerName.text,
-                                    owner_address: ownerAddress.text,
-                                    owner_phone_number: ownerPhone.text,
-                                    owner_tax_id: ownerTaxId.text,
-                                    owner_national_id: ownerNationalId.text,
-                                    ownership_status: ownershipStatus.text,
-
-                                    note: note.text,
-                                  );
-
-                              // If submit success
-                              if (state is AsyncData) {
-                                // Clear all form data
-                                _storePhoto = null;
-                                _ktpPhoto = null;
-
-                                _customerType = null;
-                                _subscriptionType = null;
-
-                                requestDestination.text = '';
-                                carbonCopy.text = '';
-
-                                companyName.text = '';
-                                companyAddress.text = '';
-                                companyPhone.text = '';
-                                companyEmail.text = '';
-                                storeCondition.text = '';
-
-                                ownerName.text = '';
-                                ownerAddress.text = '';
-                                ownerPhone.text = '';
-                                ownerTaxId.text = '';
-                                ownerNationalId.text = '';
-                                ownershipStatus.text = '';
-                                note.text = '';
-
-                                showFeedbackDialog(
-                                  context: context,
-                                  type: 1,
-                                  message: 'Customer Form Submitted',
-                                  onClose: () {
-                                    setState(() {
-                                      _submitButtonEnabled = true;
-                                    });
-                                  },
-                                );
-                                setState(() {
-                                  _submitButtonEnabled = true;
-                                });
-                              }
-                              //  If submit fail
-                              else if (state is AsyncError) {
-                                final apiException =
-                                    state.error as ApiException;
-
-                                showFeedbackDialog(
-                                  context: context,
-                                  type: 3,
-                                  message: apiException.message,
-                                  onClose: () {
-                                    setState(() {
-                                      _submitButtonEnabled = true;
-                                    });
-                                  },
-                                );
-                              } else {
-                                showFeedbackDialog(
-                                  context: context,
-                                  type: 3,
-                                  message: 'Unknown Error',
-                                  onClose: () {
-                                    setState(() {
-                                      _submitButtonEnabled = true;
-                                    });
-                                  },
-                                );
-                              }
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Data not Complete'),
-                                  behavior: SnackBarBehavior.floating,
-                                  duration: Duration(seconds: 2),
-                                ),
-                              );
-                              setState(() {
-                                _submitButtonEnabled = true;
-                              });
-                            }
-                          }
-                          : null,
-                  child: Text('Add Customer', style: buttonStyle),
-                )
-                : const CircularProgressIndicator(),
-          ],
-        ),
-      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.r),
         child: Form(
@@ -259,13 +65,10 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                       padding: EdgeInsets.all(8.r),
                       child: DropdownButtonFormField<String>(
                         value: _customerType,
-                        dropdownColor:
-                            Theme.of(context).brightness == Brightness.light
-                                ? fillColor
-                                : darkModeFillColor,
+                        dropdownColor: Theme.of(context).colorScheme.surface,
                         icon: Icon(
                           Icons.keyboard_arrow_down_rounded,
-                          color: textColor,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                         decoration: InputDecoration(
                           labelText: 'Customer Type',
@@ -298,13 +101,10 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                       padding: EdgeInsets.all(8.r),
                       child: DropdownButtonFormField<String>(
                         value: _subscriptionType,
-                        dropdownColor:
-                            Theme.of(context).brightness == Brightness.light
-                                ? fillColor
-                                : darkModeFillColor,
+                        dropdownColor: Theme.of(context).colorScheme.surface,
                         icon: Icon(
                           Icons.keyboard_arrow_down_rounded,
-                          color: textColor,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                         decoration: InputDecoration(
                           labelText: 'Subscription Type',
@@ -618,6 +418,200 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
               ),
             ],
           ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.only(bottom: 8.h, top: 8.h),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Submit Button
+            _submitButtonEnabled
+                ? ElevatedButton(
+                  onPressed:
+                      _submitButtonEnabled
+                          ? () async {
+                            setState(() {
+                              _submitButtonEnabled = false;
+                            });
+                            // Validate to trigger warning
+                            _formKey.currentState?.validate();
+
+                            final storePhotoStatus = _storePhoto != null;
+                            final ktpPhotoStatus = _ktpPhoto != null;
+
+                            final customerTypeStatus = _customerType != null;
+                            final subscriptionTypeStatus =
+                                _subscriptionType != null;
+
+                            final requestDestinationFilled =
+                                requestDestination.text != '';
+                            final carbonCopyFilled = carbonCopy.text != '';
+
+                            final companyNameFilled = companyName.text != '';
+                            final companyAddressFilled =
+                                companyAddress.text != '';
+                            final companyPhoneFilled = companyPhone.text != '';
+                            final companyTaxIdFilled =
+                                _customerType == 'PKP'
+                                    ? true
+                                    : (companyTaxId.text != '');
+                            final companyEmailFilled = companyEmail.text != '';
+                            final storeConditionFilled =
+                                storeCondition.text != '';
+
+                            final ownerNameFilled = ownerName.text != '';
+                            final ownerAddressFilled = ownerAddress.text != '';
+                            final ownerPhoneFilled = ownerPhone.text != '';
+                            final ownerTaxIdFilled =
+                                _customerType == 'Non PKP'
+                                    ? true
+                                    : (ownerTaxId.text != '');
+                            final ownerNationalIdFilled =
+                                ownerNationalId.text != '';
+                            final ownershipStatusFilled =
+                                ownershipStatus.text != '';
+
+                            final noteFilled = true;
+
+                            if (storePhotoStatus &&
+                                ktpPhotoStatus &&
+                                customerTypeStatus &&
+                                subscriptionTypeStatus &&
+                                requestDestinationFilled &&
+                                carbonCopyFilled &&
+                                companyNameFilled &&
+                                companyAddressFilled &&
+                                companyPhoneFilled &&
+                                companyTaxIdFilled &&
+                                companyEmailFilled &&
+                                storeConditionFilled &&
+                                ownerNameFilled &&
+                                ownerAddressFilled &&
+                                ownerPhoneFilled &&
+                                ownerTaxIdFilled &&
+                                ownerNationalIdFilled &&
+                                ownershipStatusFilled &&
+                                noteFilled) {
+                              final state = await ref
+                                  .read(
+                                    createCustomerRequestControllerProvider
+                                        .notifier,
+                                  )
+                                  .createCustomerRequest(
+                                    storePhoto: _storePhoto,
+                                    ktpPhoto: _ktpPhoto,
+                                    customer_type: _customerType ?? '',
+                                    subscription_type: _subscriptionType ?? '',
+
+                                    request_destination:
+                                        requestDestination.text,
+                                    carbon_copy: carbonCopy.text,
+
+                                    company_name: companyName.text,
+                                    company_address: companyAddress.text,
+                                    company_phone_number: companyPhone.text,
+                                    company_tax_id: companyTaxId.text,
+                                    company_email: companyEmail.text,
+                                    company_store_condition:
+                                        storeCondition.text,
+
+                                    owner_name: ownerName.text,
+                                    owner_address: ownerAddress.text,
+                                    owner_phone_number: ownerPhone.text,
+                                    owner_tax_id: ownerTaxId.text,
+                                    owner_national_id: ownerNationalId.text,
+                                    ownership_status: ownershipStatus.text,
+
+                                    note: note.text,
+                                  );
+
+                              // If submit success
+                              if (state is AsyncData) {
+                                // Clear all form data
+                                _storePhoto = null;
+                                _ktpPhoto = null;
+
+                                _customerType = null;
+                                _subscriptionType = null;
+
+                                requestDestination.text = '';
+                                carbonCopy.text = '';
+
+                                companyName.text = '';
+                                companyAddress.text = '';
+                                companyPhone.text = '';
+                                companyEmail.text = '';
+                                storeCondition.text = '';
+
+                                ownerName.text = '';
+                                ownerAddress.text = '';
+                                ownerPhone.text = '';
+                                ownerTaxId.text = '';
+                                ownerNationalId.text = '';
+                                ownershipStatus.text = '';
+                                note.text = '';
+
+                                showFeedbackDialog(
+                                  context: context,
+                                  type: 1,
+                                  message: 'Customer Form Submitted',
+                                  onClose: () {
+                                    setState(() {
+                                      _submitButtonEnabled = true;
+                                    });
+                                  },
+                                );
+                                setState(() {
+                                  _submitButtonEnabled = true;
+                                });
+                              }
+                              //  If submit fail
+                              else if (state is AsyncError) {
+                                final apiException =
+                                    state.error as ApiException;
+
+                                showFeedbackDialog(
+                                  context: context,
+                                  type: 3,
+                                  message: apiException.message,
+                                  onClose: () {
+                                    setState(() {
+                                      _submitButtonEnabled = true;
+                                    });
+                                  },
+                                );
+                              } else {
+                                showFeedbackDialog(
+                                  context: context,
+                                  type: 3,
+                                  message: 'Unknown Error',
+                                  onClose: () {
+                                    setState(() {
+                                      _submitButtonEnabled = true;
+                                    });
+                                  },
+                                );
+                              }
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Data not Complete'),
+                                  behavior: SnackBarBehavior.floating,
+                                  duration: Duration(seconds: 2),
+                                ),
+                              );
+                              setState(() {
+                                _submitButtonEnabled = true;
+                              });
+                            }
+                          }
+                          : null,
+                  child: Text('Add Customer', style: buttonStyle),
+                )
+                : const CircularProgressIndicator(),
+          ],
         ),
       ),
     );

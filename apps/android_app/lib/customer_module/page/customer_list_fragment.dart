@@ -53,7 +53,8 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                         context: context,
                         leadIcon: Icons.business,
                         title: data.fields?.companyName?.stringValue ?? '-',
-                        subtitle: data.fields?.companyEmail?.stringValue ?? '-',
+                        subtitle:
+                            data.fields?.companyAddress?.stringValue ?? '-',
                         trailIcon: Icons.arrow_forward_ios,
                         onTap: () {
                           Navigator.push(
