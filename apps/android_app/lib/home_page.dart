@@ -124,14 +124,10 @@ class _HomePage extends ConsumerState<HomePage> {
             });
           },
           type: BottomNavigationBarType.fixed,
-          selectedItemColor:
-              Theme.of(context).brightness == Brightness.light
-                  ? selectedItemColor
-                  : darkModeSelectedItemColor,
-          unselectedItemColor:
-              Theme.of(context).brightness == Brightness.light
-                  ? unselectedItemColor
-                  : darkModeUnselectedItemColor,
+          selectedItemColor: Theme.of(context).colorScheme.primary,
+          unselectedItemColor: Theme.of(
+            context,
+          ).colorScheme.onSurface.withAlpha(150),
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.location_on),

@@ -110,10 +110,7 @@ Widget customSearchBar({
         contentPadding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
         prefixIcon: Icon(
           Icons.search,
-          color:
-              Theme.of(context).brightness == Brightness.light
-                  ? unselectedItemColor
-                  : darkModeUnselectedItemColor,
+          color: Theme.of(context).colorScheme.outlineVariant,
         ),
       ),
       onChanged: onChanged,

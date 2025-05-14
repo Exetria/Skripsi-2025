@@ -80,7 +80,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
                   ),
                   prefixIcon: Icon(
                     Icons.email,
-                    color: textColor.withAlpha(178),
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
               ),
@@ -99,7 +99,10 @@ class _LoginPage extends ConsumerState<LoginPage> {
                     vertical: 14.h,
                     horizontal: 16.w,
                   ),
-                  prefixIcon: Icon(Icons.lock, color: textColor.withAlpha(178)),
+                  prefixIcon: Icon(
+                    Icons.lock,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
                   suffixIcon: IconButton(
                     onPressed: () {
                       setState(() {
@@ -110,7 +113,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
                       _obscurePassword
                           ? Icons.visibility_off
                           : Icons.visibility,
-                      color: textColor.withAlpha(178),
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                 ),

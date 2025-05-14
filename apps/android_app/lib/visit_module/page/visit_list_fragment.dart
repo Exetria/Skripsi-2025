@@ -253,10 +253,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
             icon: Icon(
               Icons.chevron_left,
               size: 28.sp,
-              color:
-                  Theme.of(context).brightness == Brightness.light
-                      ? textColor
-                      : darkModeTextColor,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),
@@ -274,10 +271,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
             icon: Icon(
               Icons.chevron_right,
               size: 28.sp,
-              color:
-                  Theme.of(context).brightness == Brightness.light
-                      ? textColor
-                      : darkModeTextColor,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),

@@ -169,15 +169,9 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
                                     message:
                                         'Are you sure to add visit to\n${customerList[index].fields?.companyName?.stringValue ?? "-"}',
                                     leftButtonBackgroundColor:
-                                        Theme.of(context).brightness ==
-                                                Brightness.light
-                                            ? successColor
-                                            : darkModeSuccessColor,
+                                        Theme.of(context).colorScheme.tertiary,
                                     rightButtonBackgroundColor:
-                                        Theme.of(context).brightness ==
-                                                Brightness.light
-                                            ? errorColor
-                                            : errorColor,
+                                        Theme.of(context).colorScheme.error,
                                     onLeftButtonTap: () async {
                                       // Add new data to visit data list array
                                       widget.visitDataList.add({

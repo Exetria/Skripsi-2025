@@ -162,35 +162,6 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
 
               ExpansionTile(
                 title: Text('Company Data', style: bodyStyle),
-                childrenPadding: EdgeInsets.symmetric(horizontal: 8.w),
-                backgroundColor:
-                    Theme.of(context).brightness == Brightness.light
-                        ? fillColor
-                        : darkModeFillColor,
-                collapsedBackgroundColor:
-                    Theme.of(context).brightness == Brightness.light
-                        ? fillColor
-                        : darkModeFillColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                  side: BorderSide(
-                    color:
-                        Theme.of(context).brightness == Brightness.light
-                            ? primaryColor
-                            : darkModePrimaryColor,
-                    width: 2,
-                  ),
-                ),
-                collapsedShape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                  side: BorderSide(
-                    color:
-                        Theme.of(context).brightness == Brightness.light
-                            ? dividerColor
-                            : darkModeDividerColor,
-                    width: 2,
-                  ),
-                ),
                 children: [
                   // Profile Image Picker
                   Center(child: Text('Store Picture', style: captionStyle)),
@@ -287,34 +258,6 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
               ExpansionTile(
                 title: Text('Owner Data', style: bodyStyle),
                 childrenPadding: EdgeInsets.symmetric(horizontal: 8.w),
-                backgroundColor:
-                    Theme.of(context).brightness == Brightness.light
-                        ? fillColor
-                        : darkModeFillColor,
-                collapsedBackgroundColor:
-                    Theme.of(context).brightness == Brightness.light
-                        ? fillColor
-                        : darkModeFillColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                  side: BorderSide(
-                    color:
-                        Theme.of(context).brightness == Brightness.light
-                            ? primaryColor
-                            : darkModePrimaryColor,
-                    width: 2,
-                  ),
-                ),
-                collapsedShape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                  side: BorderSide(
-                    color:
-                        Theme.of(context).brightness == Brightness.light
-                            ? dividerColor
-                            : darkModeDividerColor,
-                    width: 2,
-                  ),
-                ),
                 children: [
                   // KTP Photo
                   Center(child: Text('Owner ID Picture', style: captionStyle)),

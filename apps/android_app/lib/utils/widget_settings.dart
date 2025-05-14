@@ -4,15 +4,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // Box decorations
 BoxDecoration regularBoxDecoration(BuildContext context) {
-  final bool lightMode = Theme.of(context).brightness == Brightness.light;
-
   return BoxDecoration(
-    color: lightMode ? fillColor : darkModeFillColor,
+    color: Theme.of(context).colorScheme.surface,
     borderRadius: BorderRadius.circular(12.r),
-    border: Border.all(color: lightMode ? dividerColor : darkModeDividerColor),
+    border: Border.all(color: Theme.of(context).colorScheme.outline),
     boxShadow: [
       BoxShadow(
-        color: lightMode ? dividerColor : Colors.black,
+        color:
+            Theme.of(context).brightness == Brightness.light
+                ? dividerColor
+                : Colors.black,
         blurRadius: 8,
         offset: Offset(0, 6.h),
       ),
@@ -22,12 +23,10 @@ BoxDecoration regularBoxDecoration(BuildContext context) {
 
 // Photo box decorations
 BoxDecoration photoBoxDecoration(BuildContext context) {
-  final bool lightMode = Theme.of(context).brightness == Brightness.light;
-
   return BoxDecoration(
     shape: BoxShape.rectangle,
-    color: lightMode ? fillColor : darkModeFillColor,
+    color: Theme.of(context).colorScheme.surface,
     borderRadius: BorderRadius.circular(16.r),
-    border: Border.all(color: lightMode ? dividerColor : darkModeDividerColor),
+    border: Border.all(color: Theme.of(context).colorScheme.outline),
   );
 }

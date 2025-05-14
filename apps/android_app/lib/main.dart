@@ -58,6 +58,21 @@ class _MainApp extends ConsumerState<Main> {
             surface: fillColor,
             onSurface: textColor,
 
+            // Success Color
+            tertiary: successColor,
+            onTertiary: invertedTextColor,
+
+            // Warning Color
+            tertiaryContainer: warningColor,
+            onTertiaryContainer: invertedTextColor,
+
+            // Error Color
+            error: errorColor,
+            onError: invertedTextColor,
+
+            // Unselected Color
+            outlineVariant: unselectedItemColor,
+
             outline: dividerColor,
           ),
 
@@ -127,6 +142,20 @@ class _MainApp extends ConsumerState<Main> {
             ),
           ),
 
+          expansionTileTheme: ExpansionTileThemeData(
+            childrenPadding: EdgeInsets.symmetric(horizontal: 8.w),
+            backgroundColor: fillColor,
+            collapsedBackgroundColor: fillColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              side: BorderSide(color: primaryColor, width: 2),
+            ),
+            collapsedShape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              side: BorderSide(color: dividerColor, width: 2),
+            ),
+          ),
+
           textTheme: GoogleFonts.montserratTextTheme().apply(
             bodyColor: textColor,
             displayColor: textColor,
@@ -148,6 +177,21 @@ class _MainApp extends ConsumerState<Main> {
 
             surface: darkModeFillColor,
             onSurface: darkModeTextColor,
+
+            // Success Color
+            tertiary: darkModeSuccessColor,
+            onTertiary: darkModeInvertedTextColor,
+
+            // Warning Color
+            tertiaryContainer: darkModeWarningColor,
+            onTertiaryContainer: darkModeInvertedTextColor,
+
+            // Error Color
+            error: darkModeErrorColor,
+            onError: darkModeInvertedTextColor,
+
+            // Unselected Color
+            outlineVariant: darkModeUnselectedItemColor,
 
             outline: darkModeDividerColor,
           ),
@@ -215,6 +259,20 @@ class _MainApp extends ConsumerState<Main> {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
               borderSide: BorderSide(color: darkModeDividerColor, width: 2),
+            ),
+          ),
+
+          expansionTileTheme: ExpansionTileThemeData(
+            childrenPadding: EdgeInsets.symmetric(horizontal: 8.w),
+            backgroundColor: darkModeFillColor,
+            collapsedBackgroundColor: darkModeFillColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              side: BorderSide(color: darkModePrimaryColor, width: 2),
+            ),
+            collapsedShape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              side: BorderSide(color: darkModeDividerColor, width: 2),
             ),
           ),
 
@@ -320,4 +378,9 @@ class _MainApp extends ConsumerState<Main> {
   //     ),
   //   );
   // }
+}
+
+extension CustomColorScheme on ColorScheme {
+  Color get warning => secondaryContainer;
+  Color get onWarning => onSecondaryContainer;
 }
