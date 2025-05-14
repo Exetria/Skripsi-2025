@@ -92,6 +92,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
 
               // Payment method
               DropdownButtonFormField<String>(
+                value: paymentMethod,
                 dropdownColor: Theme.of(context).colorScheme.surface,
                 icon: Icon(
                   Icons.keyboard_arrow_down_rounded,
@@ -155,7 +156,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                             const SnackBar(
                               content: Text('Product already added'),
                               behavior: SnackBarBehavior.floating,
-                              duration: Duration(seconds: 1),
+                              duration: Duration(seconds: 2),
                             ),
                           );
                           return;
@@ -763,9 +764,9 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
       if (result.hasError) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Error Adding Order'),
+            content: Text('Error adding order'),
             behavior: SnackBarBehavior.floating,
-            duration: Duration(seconds: 1),
+            duration: Duration(seconds: 2),
           ),
         );
       } else {
@@ -780,7 +781,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
         const SnackBar(
           content: Text('Please add at least 1 product'),
           behavior: SnackBarBehavior.floating,
-          duration: Duration(seconds: 1),
+          duration: Duration(seconds: 2),
         ),
       );
     }
