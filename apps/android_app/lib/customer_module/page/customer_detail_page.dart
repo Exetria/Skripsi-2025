@@ -22,7 +22,6 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
       appBar: customAppBar(
         context: context,
         title: 'Customer Details',
-        // title: widget.data.fields?.companyName?.stringValue ?? '-',
         showLeftButton: true,
       ),
       body: SingleChildScrollView(
