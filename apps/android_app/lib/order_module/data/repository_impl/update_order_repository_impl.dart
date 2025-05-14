@@ -32,8 +32,20 @@ class UpdateOrderRepositoryImpl implements OrderRepository {
   }
 
   @override
-  Future<Either<ApiException, OrderDomain>> updateOrder() async {
-    final resp = await remoteProcess(remoteDataSource.updateOrder());
+  Future<Either<ApiException, OrderDomain>> updateOrder({
+    required OrderDomain oldData,
+    required String notes,
+    required String paymentMethod,
+    required List<Map<String, dynamic>> productDataList,
+  }) async {
+    final resp = await remoteProcess(
+      remoteDataSource.updateOrder(
+        oldData: oldData,
+        notes: notes,
+        paymentMethod: paymentMethod,
+        productDataList: productDataList,
+      ),
+    );
 
     return resp.fold((l) => Left(l), (r) => Right(r));
   }

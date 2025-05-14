@@ -25,7 +25,12 @@ class OrderListRepositoryImpl implements OrderRepository {
   }
 
   @override
-  Future<Either<ApiException, OrderDomain>> updateOrder() {
+  Future<Either<ApiException, OrderDomain>> updateOrder({
+    required OrderDomain oldData,
+    required String notes,
+    required String paymentMethod,
+    required List<Map<String, dynamic>> productDataList,
+  }) {
     throw UnimplementedError();
   }
 }

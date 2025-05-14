@@ -15,7 +15,6 @@ class UpdateOrderController extends _$UpdateOrderController {
     required String customerId,
     required String paymentMethod,
     required String notes,
-
     required List<Map<String, dynamic>> productDataList,
   }) async {
     final repository = ref.watch(UpdateOrderRepositoryProvider);
@@ -26,6 +25,31 @@ class UpdateOrderController extends _$UpdateOrderController {
       customerId: customerId,
       paymentMethod: paymentMethod,
       notes: notes,
+      productDataList: productDataList,
+    );
+
+    state = await result.fold(
+      (l) => AsyncError(l, StackTrace.empty),
+      (r) => AsyncData(r),
+    );
+
+    return state;
+  }
+
+  Future<AsyncValue<OrderDomain?>> updateOrder({
+    required OrderDomain oldData,
+    required String notes,
+    required String paymentMethod,
+    required List<Map<String, dynamic>> productDataList,
+  }) async {
+    final repository = ref.watch(UpdateOrderRepositoryProvider);
+
+    state = const AsyncLoading();
+
+    final result = await repository.updateOrder(
+      oldData: oldData,
+      notes: notes,
+      paymentMethod: paymentMethod,
       productDataList: productDataList,
     );
 
