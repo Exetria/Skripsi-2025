@@ -6,6 +6,8 @@ part 'product_list_controller.g.dart';
 
 @Riverpod(keepAlive: true)
 class ProductListController extends _$ProductListController {
+  List<ProductDomain>? _productList;
+
   @override
   FutureOr<List<ProductDomain>?> build() async {
     final repository = ref.watch(ProductListRepositoryProvider);
@@ -16,7 +18,25 @@ class ProductListController extends _$ProductListController {
       (r) => AsyncData(r),
     );
 
+    _productList = state.value;
     return state.value;
+  }
+
+  void searchProduct(String query) {
+    if (_productList == null) {
+      return;
+    }
+
+    print('asds $query');
+
+    final filteredList =
+        _productList?.where((customer) {
+          final productName = customer.fields?.productName?.stringValue ?? '';
+          return productName.toLowerCase().contains(query.toLowerCase());
+        }).toList() ??
+        [];
+
+    state = AsyncData(filteredList);
   }
 
   String getProductName({required String id}) {

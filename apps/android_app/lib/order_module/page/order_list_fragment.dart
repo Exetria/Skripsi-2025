@@ -27,7 +27,15 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
       child: Column(
         children: [
           // Search Bar
-          customSearchBar(context: context, hint: 'Search Orders...'),
+          customSearchBar(
+            context: context,
+            hint: 'Search Orders...',
+            onChanged: (query) {
+              ref
+                  .read(orderListControllerProvider.notifier)
+                  .searchOrderByCustomer(query);
+            },
+          ),
 
           SizedBox(height: 12.h),
 

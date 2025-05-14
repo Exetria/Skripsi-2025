@@ -23,7 +23,15 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
       child: Column(
         children: [
           // Search Bar
-          customSearchBar(context: context, hint: 'Search Customers...'),
+          customSearchBar(
+            context: context,
+            hint: 'Search Customers...',
+            onChanged: (query) {
+              ref
+                  .read(customerListControllerProvider.notifier)
+                  .searchCustomer(query);
+            },
+          ),
 
           SizedBox(height: 12.h),
 

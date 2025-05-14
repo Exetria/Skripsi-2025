@@ -23,7 +23,15 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
       child: Column(
         children: [
           // Search Bar
-          customSearchBar(context: context, hint: 'Search Products...'),
+          customSearchBar(
+            context: context,
+            hint: 'Search Products...',
+            onChanged: (query) {
+              ref
+                  .read(productListControllerProvider.notifier)
+                  .searchProduct(query);
+            },
+          ),
 
           SizedBox(height: 12.h),
 

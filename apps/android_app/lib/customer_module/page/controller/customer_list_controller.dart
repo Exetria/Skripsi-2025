@@ -6,6 +6,8 @@ part 'customer_list_controller.g.dart';
 
 @Riverpod(keepAlive: true)
 class CustomerListController extends _$CustomerListController {
+  List<CustomerDomain>? _customerList;
+
   @override
   FutureOr<List<CustomerDomain>?> build() async {
     final repository = ref.watch(CustomerListRepositoryProvider);
@@ -15,7 +17,23 @@ class CustomerListController extends _$CustomerListController {
       (l) => AsyncError(l, StackTrace.empty),
       (r) => AsyncData(r),
     );
+    _customerList = state.value;
     return state.value;
+  }
+
+  void searchCustomer(String query) {
+    if (_customerList == null) {
+      return;
+    }
+
+    final filteredList =
+        _customerList?.where((customer) {
+          final customerName = customer.fields?.companyName?.stringValue ?? '';
+          return customerName.toLowerCase().contains(query.toLowerCase());
+        }).toList() ??
+        [];
+
+    state = AsyncData(filteredList);
   }
 
   String getCustomerName({required String id}) {

@@ -97,7 +97,11 @@ PreferredSizeWidget customAppBar({
 }
 
 // SEARCH BAR
-Widget customSearchBar({required BuildContext context, String? hint}) {
+Widget customSearchBar({
+  required BuildContext context,
+  String? hint,
+  void Function(String)? onChanged,
+}) {
   return SizedBox(
     height: 50.h,
     child: TextField(
@@ -112,6 +116,7 @@ Widget customSearchBar({required BuildContext context, String? hint}) {
                   : darkModeUnselectedItemColor,
         ),
       ),
+      onChanged: onChanged,
     ),
   );
 }
