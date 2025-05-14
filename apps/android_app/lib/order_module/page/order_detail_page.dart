@@ -39,8 +39,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
   @override
   void initState() {
     super.initState();
-    // editable = widget.orderData.fields?.orderStatus?.stringValue == 'Pending';
-    editable = false;
+    editable = widget.orderData.fields?.orderStatus?.stringValue == 'Pending';
     productDataList = List.from(widget.productDataList);
     paymentMethod = widget.orderData.fields?.paymentMethod?.stringValue;
     notesController.text = widget.orderData.fields?.notes?.stringValue ?? '';
