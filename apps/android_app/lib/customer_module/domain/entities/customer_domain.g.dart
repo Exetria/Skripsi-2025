@@ -214,7 +214,7 @@ Map<String, dynamic> _$$MapValueFieldsImplToJson(
 };
 
 _$AccuracyImpl _$$AccuracyImplFromJson(Map<String, dynamic> json) =>
-    _$AccuracyImpl(doubleValue: (json['doubleValue'] as num?)?.toInt());
+    _$AccuracyImpl(doubleValue: (json['doubleValue'] as num?)?.toDouble());
 
 Map<String, dynamic> _$$AccuracyImplToJson(_$AccuracyImpl instance) =>
     <String, dynamic>{'doubleValue': instance.doubleValue};

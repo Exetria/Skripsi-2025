@@ -2266,7 +2266,7 @@ Accuracy _$AccuracyFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Accuracy {
   @JsonKey(name: 'doubleValue')
-  int? get doubleValue => throw _privateConstructorUsedError;
+  double? get doubleValue => throw _privateConstructorUsedError;
 
   /// Serializes this Accuracy to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -2283,7 +2283,7 @@ abstract class $AccuracyCopyWith<$Res> {
   factory $AccuracyCopyWith(Accuracy value, $Res Function(Accuracy) then) =
       _$AccuracyCopyWithImpl<$Res, Accuracy>;
   @useResult
-  $Res call({@JsonKey(name: 'doubleValue') int? doubleValue});
+  $Res call({@JsonKey(name: 'doubleValue') double? doubleValue});
 }
 
 /// @nodoc
@@ -2307,7 +2307,7 @@ class _$AccuracyCopyWithImpl<$Res, $Val extends Accuracy>
                 freezed == doubleValue
                     ? _value.doubleValue
                     : doubleValue // ignore: cast_nullable_to_non_nullable
-                        as int?,
+                        as double?,
           )
           as $Val,
     );
@@ -2323,7 +2323,7 @@ abstract class _$$AccuracyImplCopyWith<$Res>
   ) = __$$AccuracyImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@JsonKey(name: 'doubleValue') int? doubleValue});
+  $Res call({@JsonKey(name: 'doubleValue') double? doubleValue});
 }
 
 /// @nodoc
@@ -2346,7 +2346,7 @@ class __$$AccuracyImplCopyWithImpl<$Res>
             freezed == doubleValue
                 ? _value.doubleValue
                 : doubleValue // ignore: cast_nullable_to_non_nullable
-                    as int?,
+                    as double?,
       ),
     );
   }
@@ -2362,7 +2362,7 @@ class _$AccuracyImpl implements _Accuracy {
 
   @override
   @JsonKey(name: 'doubleValue')
-  final int? doubleValue;
+  final double? doubleValue;
 
   @override
   String toString() {
@@ -2398,7 +2398,7 @@ class _$AccuracyImpl implements _Accuracy {
 
 abstract class _Accuracy implements Accuracy {
   const factory _Accuracy({
-    @JsonKey(name: 'doubleValue') final int? doubleValue,
+    @JsonKey(name: 'doubleValue') final double? doubleValue,
   }) = _$AccuracyImpl;
 
   factory _Accuracy.fromJson(Map<String, dynamic> json) =
@@ -2406,7 +2406,7 @@ abstract class _Accuracy implements Accuracy {
 
   @override
   @JsonKey(name: 'doubleValue')
-  int? get doubleValue;
+  double? get doubleValue;
 
   /// Create a copy of Accuracy
   /// with the given fields replaced by the non-null parameter values.

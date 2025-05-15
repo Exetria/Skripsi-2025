@@ -97,7 +97,7 @@ class MapValueFields with _$MapValueFields {
 
 @freezed
 class Accuracy with _$Accuracy {
-  const factory Accuracy({@JsonKey(name: 'doubleValue') int? doubleValue}) =
+  const factory Accuracy({@JsonKey(name: 'doubleValue') double? doubleValue}) =
       _Accuracy;
 
   factory Accuracy.fromJson(Map<String, dynamic> json) =>
