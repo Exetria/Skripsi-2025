@@ -1,5 +1,6 @@
 import 'package:android_app/customer_module/domain/entities/customer_domain.dart';
 import 'package:android_app/customer_module/domain/repository/customer_repository.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'customer_list_controller.g.dart';
@@ -52,5 +53,65 @@ class CustomerListController extends _$CustomerListController {
     }
 
     return 'Name Not Found';
+  }
+
+  Future<Position?> getCustomerLocation({required String id}) async {
+    while (state is! AsyncData) {
+      await Future.delayed(const Duration(milliseconds: 100));
+    }
+
+    final customerList = state.value ?? [];
+
+    for (var customer in customerList) {
+      final customerId = customer.name?.substring(61) ?? '';
+
+      if (customerId == id) {
+        double? latitude =
+            customer
+                .fields
+                ?.companyLocation
+                ?.mapValue
+                ?.fields
+                ?.latitude
+                ?.doubleValue;
+
+        double? longitude =
+            customer
+                .fields
+                ?.companyLocation
+                ?.mapValue
+                ?.fields
+                ?.longitude
+                ?.doubleValue;
+
+        double? accuracy =
+            customer
+                .fields
+                ?.companyLocation
+                ?.mapValue
+                ?.fields
+                ?.accuracy
+                ?.doubleValue;
+
+        if (longitude != null && latitude != null && accuracy != null) {
+          return Position(
+            latitude: latitude,
+            longitude: longitude,
+            accuracy: accuracy,
+            altitudeAccuracy: 0,
+            headingAccuracy: 0,
+            speedAccuracy: 0,
+            altitude: 0.0,
+            speed: 0.0,
+            heading: 0.0,
+            timestamp: DateTime.now(),
+          );
+        } else {
+          return null;
+        }
+      }
+    }
+
+    return null;
   }
 }

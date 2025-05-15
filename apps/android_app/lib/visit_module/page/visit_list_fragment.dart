@@ -36,7 +36,8 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
     // Initialize customer list
     final customerListState = ref.watch(customerListControllerProvider);
     final visitListState = ref.watch(visitListControllerProvider);
-    void Function()? floatingButtonFunction;
+    void Function()? _addButtonFunction;
+    void Function()? _navigateButtonFunction;
 
     return Padding(
       padding: EdgeInsets.all(8.r),
@@ -52,7 +53,8 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
               Expanded(
                 child: visitListState.when(
                   loading: () {
-                    floatingButtonFunction = null;
+                    _addButtonFunction = null;
+                    _navigateButtonFunction = null;
                     return const Center(child: CircularProgressIndicator());
                   },
                   data: (visitDayData) {
@@ -70,7 +72,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
 
                       if (error?.statusCode == 404) {
                         setState(() {
-                          floatingButtonFunction = () {
+                          _addButtonFunction = () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -82,6 +84,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                               ),
                             );
                           };
+                          _navigateButtonFunction = null;
                         });
                       }
 
@@ -102,7 +105,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                     );
                     if (data == null) {
                       setState(() {
-                        floatingButtonFunction = () {
+                        _addButtonFunction = () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -114,6 +117,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                             ),
                           );
                         };
+                        _navigateButtonFunction = null;
                       });
                       return refreshableInfoWidget(
                         refreshFunction: _refreshVisitList,
@@ -128,10 +132,10 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
 
                     // Convert into List<Map<String, dynamic>>
                     List<Map<String, dynamic>> visitDataList =
-                        createVisitDataList(visits: visits);
+                        _createVisitDataList(visits: visits);
 
                     setState(() {
-                      floatingButtonFunction = () {
+                      _addButtonFunction = () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -151,6 +155,66 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                         content: const Text('No Visit Data Found'),
                       );
                     }
+
+                    _navigateButtonFunction = () async {
+                      if (visitDataList.length == 1) {
+                        final position = await ref
+                            .read(customerListControllerProvider.notifier)
+                            .getCustomerLocation(
+                              id:
+                                  visitDataList[0]['mapValue']?['fields']?['customer_id']?['stringValue'],
+                            );
+                        if (position != null) {
+                          launchGoogleMapNavigation(
+                            context: context,
+                            latitude: position.latitude,
+                            longitude: position.longitude,
+                          );
+                        }
+                      }
+
+                      // Get location data
+                      List<(double, double)> waypoints = [];
+                      (double, double) destination = (0, 0);
+
+                      for (
+                        int index = 0;
+                        index < visitDataList.length;
+                        index++
+                      ) {
+                        String _customerId =
+                            visitDataList[index]['mapValue']?['fields']?['customer_id']?['stringValue'] ??
+                            '';
+
+                        final position = await ref
+                            .read(customerListControllerProvider.notifier)
+                            .getCustomerLocation(id: _customerId);
+
+                        // If location null, skip
+                        if (position == null) continue;
+
+                        final currentPoint = (
+                          position.latitude,
+                          position.longitude,
+                        );
+
+                        // Check for duplicate
+                        if (waypoints.contains(currentPoint)) continue;
+
+                        // Navigate to 1 point if only 1 visit
+                        if (index == visitDataList.length - 1) {
+                          destination = currentPoint;
+                        } else {
+                          waypoints.add(currentPoint);
+                        }
+                      }
+
+                      launchGoogleMapsRouteNavigation(
+                        context: context,
+                        waypoints: waypoints,
+                        destination: destination,
+                      );
+                    };
 
                     return RefreshIndicator(
                       onRefresh: _refreshVisitList,
@@ -213,7 +277,10 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                   },
                   error: (error, _) {
                     // Exception, not casted to ApiException bcs ApiException is collected in data
-                    floatingButtonFunction = null;
+                    setState(() {
+                      _addButtonFunction = null;
+                      _navigateButtonFunction = null;
+                    });
                     return refreshableInfoWidget(
                       refreshFunction: _refreshVisitList,
                       content: Text(
@@ -231,10 +298,20 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
           Align(
             alignment: Alignment.bottomRight,
             child: FloatingActionButton(
-              onPressed: floatingButtonFunction,
+              onPressed: _addButtonFunction,
               child: const Icon(Icons.add),
             ),
           ),
+
+          _navigateButtonFunction != null
+              ? Align(
+                alignment: Alignment.bottomLeft,
+                child: FloatingActionButton(
+                  onPressed: _navigateButtonFunction,
+                  child: const Icon(Icons.navigation),
+                ),
+              )
+              : const SizedBox.shrink(),
         ],
       ),
     );
@@ -281,28 +358,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
     );
   }
 
-  String _generateVisitIdFromDate(DateTime date) {
-    final formattedDate =
-        '${date.day.toString().padLeft(2, '0')}${date.month.toString().padLeft(2, '0')}${date.year}';
-    return formattedDate;
-  }
-
-  Future<void> _refreshVisitList() async {
-    ref
-        .read(visitListControllerProvider.notifier)
-        .fetchVisitsForDate(date: selectedDate, forceFetch: true);
-  }
-
-  void _changeDate(int offset) {
-    setState(() {
-      selectedDate = selectedDate.add(Duration(days: offset));
-    });
-    ref
-        .read(visitListControllerProvider.notifier)
-        .fetchVisitsForDate(date: selectedDate);
-  }
-
-  List<Map<String, dynamic>> createVisitDataList({
+  List<Map<String, dynamic>> _createVisitDataList({
     required List<Value> visits,
   }) {
     List<Map<String, dynamic>> result = [];
@@ -357,5 +413,26 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
       result.add(newMap);
     }
     return result;
+  }
+
+  String _generateVisitIdFromDate(DateTime date) {
+    final formattedDate =
+        '${date.day.toString().padLeft(2, '0')}${date.month.toString().padLeft(2, '0')}${date.year}';
+    return formattedDate;
+  }
+
+  Future<void> _refreshVisitList() async {
+    ref
+        .read(visitListControllerProvider.notifier)
+        .fetchVisitsForDate(date: selectedDate, forceFetch: true);
+  }
+
+  void _changeDate(int offset) {
+    setState(() {
+      selectedDate = selectedDate.add(Duration(days: offset));
+    });
+    ref
+        .read(visitListControllerProvider.notifier)
+        .fetchVisitsForDate(date: selectedDate);
   }
 }
