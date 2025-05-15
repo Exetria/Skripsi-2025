@@ -27,8 +27,6 @@ class ProductListController extends _$ProductListController {
       return;
     }
 
-    print('asds $query');
-
     final filteredList =
         _productList?.where((customer) {
           final productName = customer.fields?.productName?.stringValue ?? '';
