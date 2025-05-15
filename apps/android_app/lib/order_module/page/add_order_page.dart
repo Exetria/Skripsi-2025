@@ -6,11 +6,9 @@ import 'package:android_app/order_module/page/controller/update_order_controller
 import 'package:android_app/product_module/domain/entities/product_domain.dart';
 import 'package:android_app/product_module/page/controller/product_list_controller.dart';
 import 'package:android_app/utils/functions.dart';
-import 'package:android_app/utils/widget_settings.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -23,19 +21,28 @@ class AddOrderPage extends StatefulHookConsumerWidget {
 
 class _AddOrderPageState extends ConsumerState<AddOrderPage> {
   final _formKey = GlobalKey<FormState>();
-  List<Map<String, dynamic>> productDataList = [];
-  bool _submitButtonEnabled = true;
-  String? paymentMethod;
-  String? selectedCustomerId;
 
-  final notesController = TextEditingController();
+  final List<Map<String, dynamic>> _productDataList = [];
+
+  String? _paymentMethod;
+  String? _selectedCustomerId;
+  bool _submitButtonEnabled = true;
+
+  final _notesController = TextEditingController();
+  final _customerIdController = TextEditingController();
+
+  @override
+  void dispose() {
+    _notesController.dispose();
+    _customerIdController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final productListState = ref.watch(productListControllerProvider);
     final customerListState = ref.watch(customerListControllerProvider);
-
-    final customerIdController = useTextEditingController();
 
     return Scaffold(
       appBar: customAppBar(
@@ -43,7 +50,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
         title: 'Add Order',
         showLeftButton: true,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: EdgeInsets.all(16.r),
         child: Form(
           key: _formKey,
@@ -53,13 +60,13 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
               // Order data
               TextFormField(
                 readOnly: true,
-                controller: customerIdController,
+                controller: _customerIdController,
                 decoration: InputDecoration(
                   labelText: 'Select Customer',
                   fillColor: Theme.of(context).colorScheme.surface,
                 ),
                 validator: (_) {
-                  return selectedCustomerId == null ? 'Required Field' : null;
+                  return _selectedCustomerId == null ? 'Required Field' : null;
                 },
                 onTap: () async {
                   // get selected customer Id
@@ -70,14 +77,14 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                   // if selected id exist, update
                   if (newSelectedId != null && mounted) {
                     setState(() {
-                      selectedCustomerId = newSelectedId;
+                      _selectedCustomerId = newSelectedId;
 
-                      customerIdController.text = customerListState.when(
+                      _customerIdController.text = customerListState.when(
                         loading: () => 'Loading...',
                         data: (data) {
                           return ref
                               .read(customerListControllerProvider.notifier)
-                              .getCustomerName(id: selectedCustomerId ?? '');
+                              .getCustomerName(id: _selectedCustomerId ?? '');
                         },
                         error: (error, stackTrace) {
                           ref.invalidate(customerListControllerProvider);
@@ -92,7 +99,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
 
               // Payment method
               DropdownButtonFormField<String>(
-                value: paymentMethod,
+                value: _paymentMethod,
                 dropdownColor: Theme.of(context).colorScheme.surface,
                 icon: Icon(
                   Icons.keyboard_arrow_down_rounded,
@@ -114,7 +121,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                     }).toList(),
                 onChanged: (val) {
                   setState(() {
-                    paymentMethod = val;
+                    _paymentMethod = val;
                   });
                 },
                 validator: (value) {
@@ -125,7 +132,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
 
               // Notes
               TextFormField(
-                controller: notesController,
+                controller: _notesController,
                 decoration: const InputDecoration(labelText: 'Notes'),
               ),
               SizedBox(height: 16.h),
@@ -147,7 +154,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                           .read(productListControllerProvider.notifier)
                           .getProductPrice(id: newProductId ?? '');
 
-                      for (var productData in productDataList) {
+                      for (var productData in _productDataList) {
                         String? productId =
                             productData['mapValue']['fields']['product_id']['stringValue'];
 
@@ -167,7 +174,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                         setState(() {
                           // discount_amount added later
                           // discount_percentage added later
-                          productDataList.add({
+                          _productDataList.add({
                             'mapValue': {
                               'fields': {
                                 'product_id': {'stringValue': newProductId},
@@ -200,53 +207,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                 ],
               ),
               SizedBox(height: 12.h),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: productDataList.length,
-                  itemBuilder: (context, index) {
-                    final productData = productDataList[index];
-
-                    String? productId =
-                        productData['mapValue']['fields']['product_id']['stringValue'];
-                    String? quantity =
-                        productData['mapValue']['fields']['quantity']['integerValue'];
-                    String? productTotalPrice =
-                        productData['mapValue']['fields']['total_price']['integerValue'];
-
-                    return productCard(
-                      productName: productListState.when(
-                        loading: () => 'Loading...',
-                        data: (data) {
-                          return ref
-                              .read(productListControllerProvider.notifier)
-                              .getProductName(id: productId ?? '');
-                        },
-                        error: (error, stackTrace) {
-                          ref.invalidate(customerListControllerProvider);
-                          return 'Error Loading Name';
-                        },
-                      ),
-                      quantity: quantity ?? '-',
-                      price: int.tryParse(productTotalPrice ?? '') ?? 0,
-                      onTap: () async {
-                        await showProductDataPopup(
-                          context: context,
-                          productListState: productListState,
-                          productData: productData,
-                        );
-
-                        if (mounted) {
-                          setState(() {});
-                        }
-                      },
-                      onDelete:
-                          () => setState(() {
-                            productDataList.removeAt(index);
-                          }),
-                    );
-                  },
-                ),
-              ),
+              ...generateProductList(productListState: productListState),
             ],
           ),
         ),
@@ -272,55 +233,74 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
     );
   }
 
-  Widget productCard({
-    required String productName,
-    required String quantity,
-    required num price,
-    required VoidCallback onTap,
-    required VoidCallback onDelete,
+  List<Widget> generateProductList({
+    required AsyncValue<List<ProductDomain>?> productListState,
   }) {
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        margin: EdgeInsets.only(bottom: 12.h),
-        padding: EdgeInsets.all(12.r),
-        decoration: regularBoxDecoration(context),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // Item name and quantity
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(productName, style: bodyStyle),
-                SizedBox(height: 4.h),
-                Text(rupiahFormat(price), style: bodyStyle),
-              ],
-            ),
+    List<Widget> cards = [];
 
-            // Item total price & delete button
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text('Qty: $quantity', style: captionStyle),
-                SizedBox(height: 8.h),
-                GestureDetector(
-                  onTap: onDelete,
-                  behavior: HitTestBehavior.translucent,
-                  child: Icon(
-                    Icons.delete,
-                    size: 24.sp,
-                    color: Theme.of(context).colorScheme.error,
-                  ),
+    for (int index = 0; index < _productDataList.length; index++) {
+      final productData = _productDataList[index];
+
+      String? productId =
+          productData['mapValue']['fields']['product_id']['stringValue'];
+      String? quantity =
+          productData['mapValue']['fields']['quantity']['integerValue'];
+      String? productTotalPrice =
+          productData['mapValue']['fields']['total_price']['integerValue'];
+
+      cards.add(
+        productCard(
+          context: context,
+          productName: productListState.when(
+            loading: () => 'Loading...',
+            data: (data) {
+              return ref
+                  .read(productListControllerProvider.notifier)
+                  .getProductName(id: productId ?? '');
+            },
+            error: (error, stackTrace) {
+              ref.invalidate(customerListControllerProvider);
+              return 'Error Loading Name';
+            },
+          ),
+          quantity: quantity ?? '-',
+          price: int.tryParse(productTotalPrice ?? '') ?? 0,
+          onTap: () async {
+            await showProductDataPopup(
+              context: context,
+              productListState: productListState,
+              productData: productData,
+            );
+
+            if (mounted) {
+              setState(() {});
+            }
+          },
+          onDelete: () {
+            // Check if the product list length is 1
+            if (_productDataList.length == 1) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Cannot delete the last product'),
+                  behavior: SnackBarBehavior.floating,
+                  duration: Duration(seconds: 2),
                 ),
-              ],
-            ),
-          ],
+              );
+            }
+            // Remove product
+            else if (_productDataList.length > 1) {
+              setState(() {
+                _productDataList.removeAt(index);
+              });
+            }
+          },
         ),
-      ),
-    );
+      );
+
+      cards.add(SizedBox(height: 4.h));
+    }
+
+    return cards;
   }
 
   Future<String?> showCustomerSelectorPopup({
@@ -744,21 +724,20 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
     ref.invalidate(customerListControllerProvider);
   }
 
-  // SUBMIT PAKE DATE SAAT INI
   void _submit() async {
     setState(() {
       _submitButtonEnabled = false;
     });
     if ((_formKey.currentState?.validate() ?? false) &&
-        productDataList.isNotEmpty) {
+        _productDataList.isNotEmpty) {
       // Submit new visit data
       AsyncValue<OrderDomain?> result = await ref
           .read(updateOrderControllerProvider.notifier)
           .createOrder(
-            customerId: selectedCustomerId ?? '',
-            paymentMethod: paymentMethod ?? '',
-            notes: notesController.text,
-            productDataList: productDataList,
+            customerId: _selectedCustomerId ?? '',
+            paymentMethod: _paymentMethod ?? '',
+            notes: _notesController.text,
+            productDataList: _productDataList,
           );
 
       if (result.hasError) {
@@ -776,7 +755,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
         Navigator.pop(context);
       }
     } else if ((_formKey.currentState?.validate() ?? false) &&
-        productDataList.isEmpty) {
+        _productDataList.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Please add at least 1 product'),

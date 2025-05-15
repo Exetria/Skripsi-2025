@@ -121,10 +121,6 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
     );
   }
 
-  Future<void> _refreshCustomerList() async {
-    ref.invalidate(orderListControllerProvider);
-  }
-
   List<Map<String, dynamic>> createVisitDataList({
     required List<Value> products,
   }) {
@@ -173,5 +169,9 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
       result.add(newMap);
     }
     return result;
+  }
+
+  Future<void> _refreshCustomerList() async {
+    ref.invalidate(orderListControllerProvider);
   }
 }

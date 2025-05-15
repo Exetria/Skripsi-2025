@@ -5,7 +5,6 @@ import 'package:android_app/order_module/page/controller/update_order_controller
 import 'package:android_app/product_module/domain/entities/product_domain.dart';
 import 'package:android_app/product_module/page/controller/product_list_controller.dart';
 import 'package:android_app/utils/functions.dart';
-import 'package:android_app/utils/widget_settings.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,20 +28,29 @@ class OrderDetailPage extends StatefulHookConsumerWidget {
 }
 
 class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
+  late List<Map<String, dynamic>> _productDataList;
+
+  String? _paymentMethod;
   bool _submitButtonEnabled = true;
-  late List<Map<String, dynamic>> productDataList;
-  String? paymentMethod;
-  final notesController = TextEditingController();
+
+  final _notesController = TextEditingController();
 
   late bool editable;
+
+  @override
+  void dispose() {
+    _notesController.dispose();
+
+    super.dispose();
+  }
 
   @override
   void initState() {
     super.initState();
     editable = widget.orderData.fields?.orderStatus?.stringValue == 'Pending';
-    productDataList = List.from(widget.productDataList);
-    paymentMethod = widget.orderData.fields?.paymentMethod?.stringValue;
-    notesController.text = widget.orderData.fields?.notes?.stringValue ?? '';
+    _productDataList = List.from(widget.productDataList);
+    _paymentMethod = widget.orderData.fields?.paymentMethod?.stringValue;
+    _notesController.text = widget.orderData.fields?.notes?.stringValue ?? '';
   }
 
   @override
@@ -89,21 +97,15 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
               values: [
                 'Order ID:\n${widget.orderData.name?.substring(58) ?? "-"}',
                 "Order Status:\n${widget.orderData.fields?.orderStatus?.stringValue ?? ''}",
-                "Payment Method:\n${widget.orderData.fields?.paymentMethod?.stringValue ?? ''}",
                 "Total Amount:\n${rupiahFormat(int.tryParse(widget.orderData.fields?.totalPrice?.integerValue ?? '') ?? 0)}",
               ],
-              icons: [
-                Icons.donut_small,
-                Icons.donut_small,
-                Icons.donut_small,
-                Icons.donut_small,
-              ],
+              icons: [Icons.donut_small, Icons.donut_small, Icons.donut_small],
             ),
             SizedBox(height: 16.h),
 
             // Payment method
             DropdownButtonFormField<String>(
-              value: paymentMethod,
+              value: _paymentMethod,
               dropdownColor: Theme.of(context).colorScheme.surface,
               icon: Icon(
                 Icons.keyboard_arrow_down_rounded,
@@ -123,11 +125,14 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
                       child: Text(item, style: captionStyle),
                     );
                   }).toList(),
-              onChanged: (val) {
-                setState(() {
-                  paymentMethod = val;
-                });
-              },
+              onChanged:
+                  editable
+                      ? (val) {
+                        setState(() {
+                          _paymentMethod = val;
+                        });
+                      }
+                      : null,
               validator: (value) {
                 return value == null ? 'Required Field' : null;
               },
@@ -136,7 +141,8 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
 
             // Notes
             TextFormField(
-              controller: notesController,
+              enabled: editable,
+              controller: _notesController,
               decoration: const InputDecoration(labelText: 'Notes'),
             ),
             SizedBox(height: 16.h),
@@ -157,7 +163,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
                             .read(productListControllerProvider.notifier)
                             .getProductPrice(id: newProductId ?? '');
 
-                        for (var productData in productDataList) {
+                        for (var productData in _productDataList) {
                           String? productId =
                               productData['mapValue']['fields']['product_id']['stringValue'];
 
@@ -177,7 +183,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
                           setState(() {
                             // discount_amount added later
                             // discount_percentage added later
-                            productDataList.add({
+                            _productDataList.add({
                               'mapValue': {
                                 'fields': {
                                   'product_id': {'stringValue': newProductId},
@@ -242,8 +248,8 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
   }) {
     List<Widget> cards = [];
 
-    for (int index = 0; index < productDataList.length; index++) {
-      final productData = productDataList[index];
+    for (int index = 0; index < _productDataList.length; index++) {
+      final productData = _productDataList[index];
 
       String? productId =
           productData['mapValue']['fields']['product_id']['stringValue'];
@@ -254,6 +260,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
 
       cards.add(
         productCard(
+          context: context,
           productName: productListState.when(
             loading: () => 'Loading...',
             data: (data) {
@@ -268,6 +275,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
           ),
           quantity: quantity ?? '-',
           price: int.tryParse(productTotalPrice ?? '') ?? 0,
+          editable: editable,
           onTap: () async {
             await showProductDataPopup(
               context: context,
@@ -281,7 +289,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
           },
           onDelete: () {
             // Check if the product list length is 1
-            if (productDataList.length == 1) {
+            if (_productDataList.length == 1) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text('Cannot delete the last product'),
@@ -291,9 +299,9 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
               );
             }
             // Remove product
-            else if (productDataList.length > 1) {
+            else if (_productDataList.length > 1) {
               setState(() {
-                productDataList.removeAt(index);
+                _productDataList.removeAt(index);
               });
             }
           },
@@ -304,59 +312,6 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
     }
 
     return cards;
-  }
-
-  Widget productCard({
-    required String productName,
-    required String quantity,
-    required num price,
-    required VoidCallback onTap,
-    required VoidCallback onDelete,
-  }) {
-    return GestureDetector(
-      onTap: editable ? onTap : null,
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        margin: EdgeInsets.only(bottom: 12.h),
-        padding: EdgeInsets.all(12.r),
-        decoration: regularBoxDecoration(context),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // Item name and quantity
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(productName, style: bodyStyle),
-                SizedBox(height: 4.h),
-                Text(rupiahFormat(price), style: bodyStyle),
-              ],
-            ),
-
-            // Item total price & delete button
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text('Qty: $quantity', style: captionStyle),
-                SizedBox(height: 8.h),
-                editable
-                    ? GestureDetector(
-                      onTap: editable ? onDelete : null,
-                      behavior: HitTestBehavior.translucent,
-                      child: Icon(
-                        Icons.delete,
-                        size: 24.sp,
-                        color: Theme.of(context).colorScheme.error,
-                      ),
-                    )
-                    : const SizedBox.shrink(),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
   }
 
   Future<String?> showProductSelectorPopup({
@@ -717,16 +672,16 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
       _submitButtonEnabled = false;
     });
     if (editable &&
-        paymentMethod?.isNotEmpty == true &&
-        productDataList.isNotEmpty) {
+        _paymentMethod?.isNotEmpty == true &&
+        _productDataList.isNotEmpty) {
       // Submit new visit data
       AsyncValue<OrderDomain?> result = await ref
           .read(updateOrderControllerProvider.notifier)
           .updateOrder(
             oldData: widget.orderData,
-            paymentMethod: paymentMethod ?? '',
-            notes: notesController.text,
-            productDataList: productDataList,
+            paymentMethod: _paymentMethod ?? '',
+            notes: _notesController.text,
+            productDataList: _productDataList,
           );
 
       if (result.hasError) {
@@ -743,7 +698,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
 
         Navigator.pop(context);
       }
-    } else if (editable && productDataList.isEmpty) {
+    } else if (editable && _productDataList.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Please add at least 1 product'),

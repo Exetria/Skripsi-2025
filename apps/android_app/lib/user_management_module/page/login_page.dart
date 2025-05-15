@@ -6,7 +6,6 @@ import 'package:android_app/user_management_module/page/controller/refresh_token
 import 'package:android_app/user_management_module/page/controller/sign_in_controller.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -23,8 +22,12 @@ class LoginPage extends StatefulHookConsumerWidget {
 class _LoginPage extends ConsumerState<LoginPage> {
   bool _obscurePassword = true;
   bool _signInButtonEnabled = true;
+
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _passwordFocusNode = FocusNode();
+
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   void initState() {
@@ -40,18 +43,19 @@ class _LoginPage extends ConsumerState<LoginPage> {
 
   @override
   void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
     _emailFocusNode.dispose();
     _passwordFocusNode.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final emailController = useTextEditingController();
-    final passwordController = useTextEditingController();
     autoFillCredentials(
-      emailController: emailController,
-      passwordController: passwordController,
+      emailController: _emailController,
+      passwordController: _passwordController,
     );
 
     return Scaffold(
@@ -70,7 +74,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
               TextField(
                 autofocus: false,
                 focusNode: _emailFocusNode,
-                controller: emailController,
+                controller: _emailController,
                 style: bodyStyle,
                 decoration: InputDecoration(
                   labelText: 'Email',
@@ -90,7 +94,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
               TextField(
                 autofocus: false,
                 focusNode: _passwordFocusNode,
-                controller: passwordController,
+                controller: _passwordController,
                 obscureText: _obscurePassword,
                 style: bodyStyle,
                 decoration: InputDecoration(
@@ -149,8 +153,8 @@ class _LoginPage extends ConsumerState<LoginPage> {
                               _signInButtonEnabled = false;
                             });
                             doSignIn(
-                              email: emailController.text,
-                              password: passwordController.text,
+                              email: _emailController.text,
+                              password: _passwordController.text,
                             );
                           },
                           style: ElevatedButton.styleFrom(
