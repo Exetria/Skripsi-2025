@@ -1,6 +1,6 @@
 name: android_app
 description: "Salesku App Android untuk Sales Lapangan"
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-    
+
   common_components:
     path: ../../packages/common_components
 
@@ -27,22 +27,29 @@ dependencies:
   flutter_map: ^8.1.1
   latlong2: ^0.9.1
 
+  # IMAGE PICKER & WATERMARK
+  image: ^4.5.4
+  image_picker: ^1.1.2
+  path_provider: ^2.1.5
+
+  # FONT
+  google_fonts: ^6.2.1
+
   # OTHERS
   intl: ^0.20.2
   http: ^1.3.0
   encrypt: ^5.0.3
-  image_picker: ^1.1.2
-  google_fonts: ^6.2.1
+  url_launcher: ^6.3.1
   flutter_dotenv: ^5.2.1
   flutter_screenutil: ^5.9.3
   shared_preferences: ^2.5.3
-  
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
   custom_lint: ^0.7.3
-  
+
   # RIVERPOD
   riverpod_generator: ^2.6.1
   riverpod_lint: ^2.6.1
