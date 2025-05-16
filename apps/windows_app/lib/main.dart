@@ -9,108 +9,6 @@ import 'package:windows_app/utils/theme_controller.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-final lightTheme = ThemeData(
-  // light/dark mode
-  brightness: Brightness.light,
-
-  // default scaffold bg color
-  scaffoldBackgroundColor: backgroundColor,
-
-  // main color (buttons, sliders, switches, etc.)
-  primaryColor: primaryColor,
-
-  // main app color scheme
-  colorScheme: ColorScheme.light(
-    primary: primaryColor,
-    secondary: secondaryColor,
-    surface: backgroundColor,
-    onPrimary: backgroundColor,
-    onSurface: textColor,
-  ),
-
-  // main app icon scheme
-  iconTheme: IconThemeData(color: textColor),
-
-  // navrail theme
-  navigationRailTheme: NavigationRailThemeData(
-    backgroundColor: backgroundColor,
-    selectedIconTheme: IconThemeData(color: selectedItemColor),
-    unselectedIconTheme: IconThemeData(color: unselectedItemColor),
-    selectedLabelTextStyle: subtitleStyle.copyWith(color: selectedItemColor),
-    unselectedLabelTextStyle: subtitleStyle.copyWith(
-      color: unselectedItemColor,
-    ),
-    indicatorColor: tertiaryColor,
-  ),
-
-  // card color & theme
-  cardColor: backgroundColor,
-  cardTheme: CardTheme(
-    color: backgroundColor,
-    elevation: 4,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
-  ),
-  textTheme: GoogleFonts.montserratTextTheme(),
-);
-
-final darkTheme = ThemeData(
-  brightness: Brightness.dark,
-  primaryColor: darkModePrimaryColor,
-  scaffoldBackgroundColor: darkModeBackgroundColor,
-  cardColor: darkModeFillColor,
-  colorScheme: ColorScheme.dark(
-    primary: darkModePrimaryColor,
-    secondary: darkModeAccentColor,
-    surface: darkModeFillColor,
-    onPrimary: Colors.white,
-    onSecondary: Colors.white,
-    onSurface: darkModeTextColor,
-  ),
-  appBarTheme: AppBarTheme(
-    backgroundColor: darkModePrimaryColor,
-    foregroundColor: Colors.white,
-    elevation: 2,
-  ),
-  iconTheme: IconThemeData(color: darkModeTextColor),
-  floatingActionButtonTheme: FloatingActionButtonThemeData(
-    backgroundColor: darkModePrimaryColor,
-    foregroundColor: Colors.white,
-  ),
-  cardTheme: CardTheme(
-    color: darkModeFillColor,
-    elevation: 4,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-  ),
-  navigationBarTheme: NavigationBarThemeData(
-    backgroundColor: darkModeBackgroundColor,
-    indicatorColor: darkModePrimaryColor.withAlpha(30),
-    labelTextStyle: WidgetStateProperty.all(
-      TextStyle(color: darkModePrimaryColor),
-    ),
-    iconTheme: WidgetStateProperty.resolveWith((states) {
-      if (states.contains(WidgetState.selected)) {
-        return IconThemeData(color: darkModePrimaryColor);
-      }
-      return IconThemeData(color: darkModeUnselectedItemColor);
-    }),
-  ),
-  inputDecorationTheme: InputDecorationTheme(
-    focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: darkModePrimaryColor),
-    ),
-    enabledBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: darkModeDividerColor),
-    ),
-    border: OutlineInputBorder(
-      borderSide: BorderSide(color: darkModeDividerColor),
-    ),
-  ),
-  textTheme: GoogleFonts.montserratTextTheme().apply(
-    bodyColor: darkModeTextColor,
-    displayColor: darkModeTextColor,
-  ),
-);
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: '.env');
@@ -134,6 +32,284 @@ class _MainApp extends ConsumerState<Main> {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
+        final lightTheme = ThemeData(
+          useMaterial3: true,
+          brightness: Brightness.light,
+
+          scaffoldBackgroundColor: backgroundColor,
+
+          colorScheme: ColorScheme.light(
+            primary: primaryColor,
+            onPrimary: invertedTextColor,
+
+            secondary: secondaryColor,
+            onSecondary: invertedTextColor,
+
+            surface: fillColor,
+            onSurface: textColor,
+
+            // Success Color
+            tertiary: successColor,
+            onTertiary: invertedTextColor,
+
+            // Warning Color
+            tertiaryContainer: warningColor,
+            onTertiaryContainer: invertedTextColor,
+
+            // Error Color
+            error: errorColor,
+            onError: invertedTextColor,
+
+            // Unselected Color
+            outlineVariant: unselectedItemColor,
+
+            outline: dividerColor,
+          ),
+
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+              // Content alignment
+              alignment: Alignment.center,
+
+              // Background color
+              backgroundColor: WidgetStateProperty.resolveWith<Color?>((
+                states,
+              ) {
+                if (states.contains(WidgetState.disabled)) {
+                  return unselectedItemColor;
+                }
+                return primaryColor;
+              }),
+
+              // Text & icon color
+              foregroundColor: WidgetStateProperty.resolveWith<Color?>((
+                states,
+              ) {
+                if (states.contains(WidgetState.disabled)) {
+                  return textColor;
+                }
+                return invertedTextColor;
+              }),
+
+              // Overlay color
+              overlayColor: WidgetStateProperty.resolveWith<Color?>((states) {
+                if (states.contains(WidgetState.pressed)) {
+                  return accentColor.withAlpha(60);
+                }
+                if (states.contains(WidgetState.hovered)) {
+                  return accentColor.withAlpha(30);
+                }
+                return null;
+              }),
+
+              // Padding
+              padding: WidgetStateProperty.all(
+                const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+              ),
+
+              // Button shape
+              shape: WidgetStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+              ),
+            ),
+          ),
+
+          inputDecorationTheme: InputDecorationTheme(
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: dividerColor, width: 2),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: dividerColor, width: 2),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: dividerColor, width: 2),
+            ),
+          ),
+
+          expansionTileTheme: ExpansionTileThemeData(
+            childrenPadding: EdgeInsets.symmetric(horizontal: 8.w),
+            backgroundColor: fillColor,
+            collapsedBackgroundColor: fillColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              side: BorderSide(color: primaryColor, width: 2),
+            ),
+            collapsedShape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              side: BorderSide(color: dividerColor, width: 2),
+            ),
+          ),
+
+          navigationRailTheme: NavigationRailThemeData(
+            selectedIconTheme: IconThemeData(color: selectedItemColor),
+            unselectedIconTheme: IconThemeData(color: unselectedItemColor),
+            selectedLabelTextStyle: subtitleStyle.copyWith(
+              color: selectedItemColor,
+            ),
+            unselectedLabelTextStyle: subtitleStyle.copyWith(
+              color: unselectedItemColor,
+            ),
+            indicatorColor: tertiaryColor,
+          ),
+
+          cardTheme: CardTheme(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.r),
+            ),
+          ),
+
+          textTheme: GoogleFonts.montserratTextTheme().apply(
+            bodyColor: textColor,
+            displayColor: textColor,
+          ),
+        );
+
+        final darkTheme = ThemeData(
+          useMaterial3: true,
+          brightness: Brightness.dark,
+
+          scaffoldBackgroundColor: darkModeBackgroundColor,
+
+          colorScheme: ColorScheme.dark(
+            primary: darkModePrimaryColor,
+            onPrimary: darkModeInvertedTextColor,
+
+            secondary: darkModeSecondaryColor,
+            onSecondary: darkModeInvertedTextColor,
+
+            surface: darkModeFillColor,
+            onSurface: darkModeTextColor,
+
+            // Success Color
+            tertiary: darkModeSuccessColor,
+            onTertiary: darkModeInvertedTextColor,
+
+            // Warning Color
+            tertiaryContainer: darkModeWarningColor,
+            onTertiaryContainer: darkModeInvertedTextColor,
+
+            // Error Color
+            error: darkModeErrorColor,
+            onError: darkModeInvertedTextColor,
+
+            // Unselected Color
+            outlineVariant: darkModeUnselectedItemColor,
+
+            outline: darkModeDividerColor,
+          ),
+
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+              // Content alignment
+              alignment: Alignment.center,
+
+              // Background color
+              backgroundColor: WidgetStateProperty.resolveWith<Color?>((
+                states,
+              ) {
+                if (states.contains(WidgetState.disabled)) {
+                  return darkModeUnselectedItemColor;
+                }
+                return darkModePrimaryColor;
+              }),
+
+              // Text & icon color
+              foregroundColor: WidgetStateProperty.resolveWith<Color?>((
+                states,
+              ) {
+                if (states.contains(WidgetState.disabled)) {
+                  return darkModeTextColor;
+                }
+                return darkModeInvertedTextColor;
+              }),
+
+              // Overlay color
+              overlayColor: WidgetStateProperty.resolveWith<Color?>((states) {
+                if (states.contains(WidgetState.pressed)) {
+                  return darkModeAccentColor.withAlpha(60);
+                }
+                if (states.contains(WidgetState.hovered)) {
+                  return darkModeAccentColor.withAlpha(30);
+                }
+                return null;
+              }),
+
+              // Padding
+              padding: WidgetStateProperty.all(
+                const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+              ),
+
+              // Button shape
+              shape: WidgetStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+              ),
+            ),
+          ),
+
+          inputDecorationTheme: InputDecorationTheme(
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: darkModeDividerColor, width: 2),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: darkModeDividerColor, width: 2),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: darkModeDividerColor, width: 2),
+            ),
+          ),
+
+          expansionTileTheme: ExpansionTileThemeData(
+            childrenPadding: EdgeInsets.symmetric(horizontal: 8.w),
+            backgroundColor: darkModeFillColor,
+            collapsedBackgroundColor: darkModeFillColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              side: BorderSide(color: darkModePrimaryColor, width: 2),
+            ),
+            collapsedShape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              side: BorderSide(color: darkModeDividerColor, width: 2),
+            ),
+          ),
+
+          navigationRailTheme: NavigationRailThemeData(
+            selectedIconTheme: IconThemeData(color: darkModeSelectedItemColor),
+            unselectedIconTheme: IconThemeData(
+              color: darkModeUnselectedItemColor,
+            ),
+            selectedLabelTextStyle: subtitleStyle.copyWith(
+              color: darkModeSelectedItemColor,
+            ),
+            unselectedLabelTextStyle: subtitleStyle.copyWith(
+              color: darkModeUnselectedItemColor,
+            ),
+            indicatorColor: darkModeTertiaryColor,
+          ),
+
+          cardTheme: CardTheme(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.r),
+            ),
+          ),
+
+          textTheme: GoogleFonts.montserratTextTheme().apply(
+            bodyColor: darkModeTextColor,
+            displayColor: darkModeTextColor,
+          ),
+        );
+
         return MaterialApp(
           navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
