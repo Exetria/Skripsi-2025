@@ -1,5 +1,6 @@
 import 'package:android_app/product_module/domain/entities/product_domain.dart';
 import 'package:android_app/product_module/domain/repository/product_repository.dart';
+import 'package:common_components/common_components.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'product_list_controller.g.dart';
@@ -45,7 +46,7 @@ class ProductListController extends _$ProductListController {
     final productList = state.value ?? [];
 
     for (var product in productList) {
-      final productId = product.name?.substring(60) ?? '';
+      final productId = getIdFromName(name: product.name);
 
       if (productId == id) {
         return product.fields?.productName?.stringValue ?? '-';
@@ -63,7 +64,7 @@ class ProductListController extends _$ProductListController {
     final productList = state.value ?? [];
 
     for (var product in productList) {
-      final productId = product.name?.substring(60) ?? '';
+      final productId = getIdFromName(name: product.name);
 
       if (productId == id) {
         return product.fields?.price?.integerValue ?? '-';

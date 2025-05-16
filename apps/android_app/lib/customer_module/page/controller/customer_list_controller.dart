@@ -1,5 +1,6 @@
 import 'package:android_app/customer_module/domain/entities/customer_domain.dart';
 import 'package:android_app/customer_module/domain/repository/customer_repository.dart';
+import 'package:common_components/common_components.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -45,7 +46,7 @@ class CustomerListController extends _$CustomerListController {
     final customerList = state.value ?? [];
 
     for (var customer in customerList) {
-      final customerId = customer.name?.substring(61) ?? '';
+      final customerId = getIdFromName(name: customer.name);
 
       if (customerId == id) {
         return customer.fields?.companyName?.stringValue ?? '-';
@@ -63,7 +64,7 @@ class CustomerListController extends _$CustomerListController {
     final customerList = state.value ?? [];
 
     for (var customer in customerList) {
-      final customerId = customer.name?.substring(61) ?? '';
+      final customerId = getIdFromName(name: customer.name);
 
       if (customerId == id) {
         double? latitude =

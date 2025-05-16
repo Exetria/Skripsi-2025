@@ -95,7 +95,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
               context: context,
               title: 'Order Informations',
               values: [
-                'Order ID:\n${widget.orderData.name?.substring(58) ?? "-"}',
+                'Order ID:\n${getIdFromName(name: widget.orderData.name)}',
                 "Order Status:\n${widget.orderData.fields?.orderStatus?.stringValue ?? ''}",
                 "Total Amount:\n${rupiahFormat(int.tryParse(widget.orderData.fields?.totalPrice?.integerValue ?? '') ?? 0)}",
               ],
@@ -352,7 +352,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
                         onTap:
                             () => Navigator.pop(
                               context,
-                              data.name?.substring(60) ?? '',
+                              getIdFromName(name: data.name),
                             ),
                       );
                     },

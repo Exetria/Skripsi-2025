@@ -118,7 +118,7 @@ class UpdateOrderRemoteDatasourceImpl implements UpdateOrderRemoteDatasource {
     required String paymentMethod,
     required List<Map<String, dynamic>> productDataList,
   }) async {
-    String orderId = oldData.name?.substring(58) ?? '';
+    String orderId = getIdFromName(name: oldData.name);
     String customerId = oldData.fields?.customerId?.stringValue ?? '';
 
     int totalPrice = 0;

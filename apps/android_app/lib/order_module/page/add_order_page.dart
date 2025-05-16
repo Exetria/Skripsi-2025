@@ -342,7 +342,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                         onTap:
                             () => Navigator.pop(
                               context,
-                              data.name?.substring(61) ?? '',
+                              getIdFromName(name: data.name),
                             ),
                       );
                     },
@@ -405,7 +405,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                         onTap:
                             () => Navigator.pop(
                               context,
-                              data.name?.substring(60) ?? '',
+                              getIdFromName(name: data.name),
                             ),
                       );
                     },

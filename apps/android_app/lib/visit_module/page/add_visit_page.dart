@@ -178,13 +178,9 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
                                         'mapValue': {
                                           'fields': {
                                             'customer_id': {
-                                              'stringValue':
-                                                  customerList[index].name !=
-                                                          null
-                                                      ? customerList[index]
-                                                          .name!
-                                                          .substring(61)
-                                                      : '',
+                                              'stringValue': getIdFromName(
+                                                name: customerList[index].name,
+                                              ),
                                             },
                                             'visit_status': {
                                               'integerValue': '1',
