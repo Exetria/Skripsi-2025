@@ -174,6 +174,21 @@ class _LoginPage extends ConsumerState<LoginPage> {
     );
   }
 
+  List<String> convertAssignedItemsToArray(List<Email> emailList) {
+    if (emailList.isEmpty) {
+      return [];
+    }
+
+    List<String> result = [];
+
+    for (Email value in emailList) {
+      String content = value.stringValue ?? '';
+      if (content != '') result.add(content);
+    }
+
+    return result;
+  }
+
   void doSignIn({required String email, required String password}) async {
     _emailFocusNode.unfocus();
     _passwordFocusNode.unfocus();
@@ -335,21 +350,6 @@ class _LoginPage extends ConsumerState<LoginPage> {
         },
       );
     }
-  }
-
-  List<String> convertAssignedItemsToArray(List<Email> emailList) {
-    if (emailList.isEmpty) {
-      return [];
-    }
-
-    List<String> result = [];
-
-    for (Email value in emailList) {
-      String content = value.stringValue ?? '';
-      if (content != '') result.add(content);
-    }
-
-    return result;
   }
 
   void autoFillCredentials({
