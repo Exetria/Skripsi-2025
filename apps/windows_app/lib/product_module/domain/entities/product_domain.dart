@@ -19,17 +19,15 @@ class ProductDomain with _$ProductDomain {
 @freezed
 class Fields with _$Fields {
   const factory Fields({
-    @JsonKey(name: 'product_images') ProductImages? productImages,
-    @JsonKey(name: 'product_name') AddedBy? productName,
-    @JsonKey(name: 'category') AddedBy? category,
+    @JsonKey(name: 'units_per_package') Price? unitsPerPackage,
+    @JsonKey(name: 'added_by') AddedBy? addedBy,
+    @JsonKey(name: 'company_code') AddedBy? companyCode,
+    @JsonKey(name: 'product_image') ProductImage? productImage,
+    @JsonKey(name: 'price') Price? price,
     @JsonKey(name: 'available') Available? available,
     @JsonKey(name: 'description') AddedBy? description,
-    @JsonKey(name: 'sizes') Sizes? sizes,
-    @JsonKey(name: 'price') MinimumOrder? price,
-    @JsonKey(name: 'minimum_order') MinimumOrder? minimumOrder,
-    @JsonKey(name: 'unit') AddedBy? unit,
-    @JsonKey(name: 'quantity_per_box') MinimumOrder? quantityPerBox,
-    @JsonKey(name: 'added_by') AddedBy? addedBy,
+    @JsonKey(name: 'attributes') Attributes? attributes,
+    @JsonKey(name: 'product_name') AddedBy? productName,
     @JsonKey(name: 'brand') AddedBy? brand,
   }) = _Fields;
 
@@ -46,6 +44,36 @@ class AddedBy with _$AddedBy {
 }
 
 @freezed
+class Attributes with _$Attributes {
+  const factory Attributes({@JsonKey(name: 'mapValue') MapValue? mapValue}) =
+      _Attributes;
+
+  factory Attributes.fromJson(Map<String, dynamic> json) =>
+      _$AttributesFromJson(json);
+}
+
+@freezed
+class MapValue with _$MapValue {
+  const factory MapValue({
+    @JsonKey(name: 'fields') Map<String, dynamic>? fields,
+  }) = _MapValue;
+
+  factory MapValue.fromJson(Map<String, dynamic> json) =>
+      _$MapValueFromJson(json);
+}
+
+@freezed
+class MapValueFields with _$MapValueFields {
+  const factory MapValueFields({
+    @JsonKey(name: 'Color') AddedBy? color,
+    @JsonKey(name: 'Material') AddedBy? material,
+  }) = _MapValueFields;
+
+  factory MapValueFields.fromJson(Map<String, dynamic> json) =>
+      _$MapValueFieldsFromJson(json);
+}
+
+@freezed
 class Available with _$Available {
   const factory Available({@JsonKey(name: 'booleanValue') bool? booleanValue}) =
       _Available;
@@ -55,58 +83,19 @@ class Available with _$Available {
 }
 
 @freezed
-class MinimumOrder with _$MinimumOrder {
-  const factory MinimumOrder({
-    @JsonKey(name: 'integerValue') String? integerValue,
-  }) = _MinimumOrder;
+class Price with _$Price {
+  const factory Price({@JsonKey(name: 'integerValue') String? integerValue}) =
+      _Price;
 
-  factory MinimumOrder.fromJson(Map<String, dynamic> json) =>
-      _$MinimumOrderFromJson(json);
+  factory Price.fromJson(Map<String, dynamic> json) => _$PriceFromJson(json);
 }
 
 @freezed
-class ProductImages with _$ProductImages {
-  const factory ProductImages({
-    @JsonKey(name: 'arrayValue') ProductImagesArrayValue? arrayValue,
-  }) = _ProductImages;
+class ProductImage with _$ProductImage {
+  const factory ProductImage({
+    @JsonKey(name: 'stringValue') String? stringValue,
+  }) = _ProductImage;
 
-  factory ProductImages.fromJson(Map<String, dynamic> json) =>
-      _$ProductImagesFromJson(json);
-}
-
-@freezed
-class ProductImagesArrayValue with _$ProductImagesArrayValue {
-  const factory ProductImagesArrayValue({
-    @JsonKey(name: 'values') List<Value>? values,
-  }) = _ProductImagesArrayValue;
-
-  factory ProductImagesArrayValue.fromJson(Map<String, dynamic> json) =>
-      _$ProductImagesArrayValueFromJson(json);
-}
-
-@freezed
-class Value with _$Value {
-  const factory Value({@JsonKey(name: 'stringValue') String? stringValue}) =
-      _Value;
-
-  factory Value.fromJson(Map<String, dynamic> json) => _$ValueFromJson(json);
-}
-
-@freezed
-class Sizes with _$Sizes {
-  const factory Sizes({
-    @JsonKey(name: 'arrayValue') SizesArrayValue? arrayValue,
-  }) = _Sizes;
-
-  factory Sizes.fromJson(Map<String, dynamic> json) => _$SizesFromJson(json);
-}
-
-@freezed
-class SizesArrayValue with _$SizesArrayValue {
-  const factory SizesArrayValue({
-    @JsonKey(name: 'values') List<AddedBy>? values,
-  }) = _SizesArrayValue;
-
-  factory SizesArrayValue.fromJson(Map<String, dynamic> json) =>
-      _$SizesArrayValueFromJson(json);
+  factory ProductImage.fromJson(Map<String, dynamic> json) =>
+      _$ProductImageFromJson(json);
 }

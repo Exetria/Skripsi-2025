@@ -7,7 +7,7 @@ part of 'refresh_token_controller.dart';
 // **************************************************************************
 
 String _$refreshTokenControllerHash() =>
-    r'd5c39db84280eb019bc71a950161c2eedb894d12';
+    r'c9565368e2d7e9017e31ff40d86c7057f4ff0658';
 
 /// See also [RefreshTokenController].
 @ProviderFor(RefreshTokenController)

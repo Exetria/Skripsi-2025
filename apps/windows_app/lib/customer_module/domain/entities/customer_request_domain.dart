@@ -7,7 +7,7 @@ part 'customer_request_domain.g.dart';
 class CustomerRequestDomain with _$CustomerRequestDomain {
   const factory CustomerRequestDomain({
     @JsonKey(name: 'name') String? name,
-    @JsonKey(name: 'fields') CustomerRequestDomainFields? fields,
+    @JsonKey(name: 'fields') Fields? fields,
     @JsonKey(name: 'createTime') String? createTime,
     @JsonKey(name: 'updateTime') String? updateTime,
   }) = _CustomerRequestDomain;
@@ -17,38 +17,37 @@ class CustomerRequestDomain with _$CustomerRequestDomain {
 }
 
 @freezed
-class CustomerRequestDomainFields with _$CustomerRequestDomainFields {
-  const factory CustomerRequestDomainFields({
-    @JsonKey(name: 'owner_national_id_photo')
-    ApprovalReason? ownerNationalIdPhoto,
-    @JsonKey(name: 'company_store_condition')
-    ApprovalReason? companyStoreCondition,
+class Fields with _$Fields {
+  const factory Fields({
     @JsonKey(name: 'requested_by') ApprovalReason? requestedBy,
-    @JsonKey(name: 'company_email') ApprovalReason? companyEmail,
-    @JsonKey(name: 'approved_by') ApprovalReason? approvedBy,
-    @JsonKey(name: 'ownership_status') ApprovalReason? ownershipStatus,
-    @JsonKey(name: 'company_store_photo') ApprovalReason? companyStorePhoto,
-    @JsonKey(name: 'company_address') ApprovalReason? companyAddress,
-    @JsonKey(name: 'company_name') ApprovalReason? companyName,
-    @JsonKey(name: 'owner_phone_number') ApprovalReason? ownerPhoneNumber,
-    @JsonKey(name: 'request_destination') ApprovalReason? requestDestination,
     @JsonKey(name: 'approval_status') ApprovalReason? approvalStatus,
-    @JsonKey(name: 'owner_address') ApprovalReason? ownerAddress,
-    @JsonKey(name: 'owner_tax_id') ApprovalReason? ownerTaxId,
-    @JsonKey(name: 'carbon_copy') ApprovalReason? carbonCopy,
-    @JsonKey(name: 'company_phone_number') ApprovalReason? companyPhoneNumber,
-    @JsonKey(name: 'approval_date') ApprovalDate? approvalDate,
+    @JsonKey(name: 'approved_by') ApprovalReason? approvedBy,
+    @JsonKey(name: 'company_store_photo') Photo? companyStorePhoto,
+    @JsonKey(name: 'customer_type') ApprovalReason? customerType,
+    @JsonKey(name: 'company_email') ApprovalReason? companyEmail,
     @JsonKey(name: 'note') ApprovalReason? note,
+    @JsonKey(name: 'company_location') CompanyLocation? companyLocation,
+    @JsonKey(name: 'subscription_type') ApprovalReason? subscriptionType,
+    @JsonKey(name: 'owner_address') ApprovalReason? ownerAddress,
     @JsonKey(name: 'owner_name') ApprovalReason? ownerName,
     @JsonKey(name: 'owner_national_id') ApprovalReason? ownerNationalId,
+    @JsonKey(name: 'owner_national_id_photo') Photo? ownerNationalIdPhoto,
+    @JsonKey(name: 'company_store_condition')
+    ApprovalReason? companyStoreCondition,
+    @JsonKey(name: 'approval_date') ApprovalDate? approvalDate,
+    @JsonKey(name: 'carbon_copy') ApprovalReason? carbonCopy,
+    @JsonKey(name: 'company_phone_number') ApprovalReason? companyPhoneNumber,
+    @JsonKey(name: 'company_name') ApprovalReason? companyName,
+    @JsonKey(name: 'owner_phone_number') ApprovalReason? ownerPhoneNumber,
+    @JsonKey(name: 'company_tax_id') ApprovalReason? companyTaxId,
     @JsonKey(name: 'approval_reason') ApprovalReason? approvalReason,
-    @JsonKey(name: 'subscription_type') ApprovalReason? subscriptionType,
-    @JsonKey(name: 'company_location') CompanyLocation? companyLocation,
-    @JsonKey(name: 'customer_type') ApprovalReason? customerType,
-  }) = _CustomerRequestDomainFields;
+    @JsonKey(name: 'owner_tax_id') ApprovalReason? ownerTaxId,
+    @JsonKey(name: 'company_address') ApprovalReason? companyAddress,
+    @JsonKey(name: 'ownership_status') ApprovalReason? ownershipStatus,
+    @JsonKey(name: 'request_destination') ApprovalReason? requestDestination,
+  }) = _Fields;
 
-  factory CustomerRequestDomainFields.fromJson(Map<String, dynamic> json) =>
-      _$CustomerRequestDomainFieldsFromJson(json);
+  factory Fields.fromJson(Map<String, dynamic> json) => _$FieldsFromJson(json);
 }
 
 @freezed
@@ -93,9 +92,9 @@ class MapValue with _$MapValue {
 @freezed
 class MapValueFields with _$MapValueFields {
   const factory MapValueFields({
-    @JsonKey(name: 'latitude') Itude? latitude,
-    @JsonKey(name: 'longitude') Itude? longitude,
+    @JsonKey(name: 'longitude') Accuracy? longitude,
     @JsonKey(name: 'accuracy') Accuracy? accuracy,
+    @JsonKey(name: 'latitude') Accuracy? latitude,
   }) = _MapValueFields;
 
   factory MapValueFields.fromJson(Map<String, dynamic> json) =>
@@ -104,7 +103,7 @@ class MapValueFields with _$MapValueFields {
 
 @freezed
 class Accuracy with _$Accuracy {
-  const factory Accuracy({@JsonKey(name: 'doubleValue') int? doubleValue}) =
+  const factory Accuracy({@JsonKey(name: 'doubleValue') double? doubleValue}) =
       _Accuracy;
 
   factory Accuracy.fromJson(Map<String, dynamic> json) =>
@@ -112,9 +111,9 @@ class Accuracy with _$Accuracy {
 }
 
 @freezed
-class Itude with _$Itude {
-  const factory Itude({@JsonKey(name: 'doubleValue') double? doubleValue}) =
-      _Itude;
+class Photo with _$Photo {
+  const factory Photo({@JsonKey(name: 'stringValue') String? stringValue}) =
+      _Photo;
 
-  factory Itude.fromJson(Map<String, dynamic> json) => _$ItudeFromJson(json);
+  factory Photo.fromJson(Map<String, dynamic> json) => _$PhotoFromJson(json);
 }

@@ -286,28 +286,24 @@ Fields _$FieldsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Fields {
-  @JsonKey(name: 'product_images')
-  ProductImages? get productImages => throw _privateConstructorUsedError;
-  @JsonKey(name: 'product_name')
-  AddedBy? get productName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'category')
-  AddedBy? get category => throw _privateConstructorUsedError;
+  @JsonKey(name: 'units_per_package')
+  Price? get unitsPerPackage => throw _privateConstructorUsedError;
+  @JsonKey(name: 'added_by')
+  AddedBy? get addedBy => throw _privateConstructorUsedError;
+  @JsonKey(name: 'company_code')
+  AddedBy? get companyCode => throw _privateConstructorUsedError;
+  @JsonKey(name: 'product_image')
+  ProductImage? get productImage => throw _privateConstructorUsedError;
+  @JsonKey(name: 'price')
+  Price? get price => throw _privateConstructorUsedError;
   @JsonKey(name: 'available')
   Available? get available => throw _privateConstructorUsedError;
   @JsonKey(name: 'description')
   AddedBy? get description => throw _privateConstructorUsedError;
-  @JsonKey(name: 'sizes')
-  Sizes? get sizes => throw _privateConstructorUsedError;
-  @JsonKey(name: 'price')
-  MinimumOrder? get price => throw _privateConstructorUsedError;
-  @JsonKey(name: 'minimum_order')
-  MinimumOrder? get minimumOrder => throw _privateConstructorUsedError;
-  @JsonKey(name: 'unit')
-  AddedBy? get unit => throw _privateConstructorUsedError;
-  @JsonKey(name: 'quantity_per_box')
-  MinimumOrder? get quantityPerBox => throw _privateConstructorUsedError;
-  @JsonKey(name: 'added_by')
-  AddedBy? get addedBy => throw _privateConstructorUsedError;
+  @JsonKey(name: 'attributes')
+  Attributes? get attributes => throw _privateConstructorUsedError;
+  @JsonKey(name: 'product_name')
+  AddedBy? get productName => throw _privateConstructorUsedError;
   @JsonKey(name: 'brand')
   AddedBy? get brand => throw _privateConstructorUsedError;
 
@@ -326,31 +322,27 @@ abstract class $FieldsCopyWith<$Res> {
       _$FieldsCopyWithImpl<$Res, Fields>;
   @useResult
   $Res call({
-    @JsonKey(name: 'product_images') ProductImages? productImages,
-    @JsonKey(name: 'product_name') AddedBy? productName,
-    @JsonKey(name: 'category') AddedBy? category,
+    @JsonKey(name: 'units_per_package') Price? unitsPerPackage,
+    @JsonKey(name: 'added_by') AddedBy? addedBy,
+    @JsonKey(name: 'company_code') AddedBy? companyCode,
+    @JsonKey(name: 'product_image') ProductImage? productImage,
+    @JsonKey(name: 'price') Price? price,
     @JsonKey(name: 'available') Available? available,
     @JsonKey(name: 'description') AddedBy? description,
-    @JsonKey(name: 'sizes') Sizes? sizes,
-    @JsonKey(name: 'price') MinimumOrder? price,
-    @JsonKey(name: 'minimum_order') MinimumOrder? minimumOrder,
-    @JsonKey(name: 'unit') AddedBy? unit,
-    @JsonKey(name: 'quantity_per_box') MinimumOrder? quantityPerBox,
-    @JsonKey(name: 'added_by') AddedBy? addedBy,
+    @JsonKey(name: 'attributes') Attributes? attributes,
+    @JsonKey(name: 'product_name') AddedBy? productName,
     @JsonKey(name: 'brand') AddedBy? brand,
   });
 
-  $ProductImagesCopyWith<$Res>? get productImages;
-  $AddedByCopyWith<$Res>? get productName;
-  $AddedByCopyWith<$Res>? get category;
+  $PriceCopyWith<$Res>? get unitsPerPackage;
+  $AddedByCopyWith<$Res>? get addedBy;
+  $AddedByCopyWith<$Res>? get companyCode;
+  $ProductImageCopyWith<$Res>? get productImage;
+  $PriceCopyWith<$Res>? get price;
   $AvailableCopyWith<$Res>? get available;
   $AddedByCopyWith<$Res>? get description;
-  $SizesCopyWith<$Res>? get sizes;
-  $MinimumOrderCopyWith<$Res>? get price;
-  $MinimumOrderCopyWith<$Res>? get minimumOrder;
-  $AddedByCopyWith<$Res>? get unit;
-  $MinimumOrderCopyWith<$Res>? get quantityPerBox;
-  $AddedByCopyWith<$Res>? get addedBy;
+  $AttributesCopyWith<$Res>? get attributes;
+  $AddedByCopyWith<$Res>? get productName;
   $AddedByCopyWith<$Res>? get brand;
 }
 
@@ -369,36 +361,44 @@ class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? productImages = freezed,
-    Object? productName = freezed,
-    Object? category = freezed,
+    Object? unitsPerPackage = freezed,
+    Object? addedBy = freezed,
+    Object? companyCode = freezed,
+    Object? productImage = freezed,
+    Object? price = freezed,
     Object? available = freezed,
     Object? description = freezed,
-    Object? sizes = freezed,
-    Object? price = freezed,
-    Object? minimumOrder = freezed,
-    Object? unit = freezed,
-    Object? quantityPerBox = freezed,
-    Object? addedBy = freezed,
+    Object? attributes = freezed,
+    Object? productName = freezed,
     Object? brand = freezed,
   }) {
     return _then(
       _value.copyWith(
-            productImages:
-                freezed == productImages
-                    ? _value.productImages
-                    : productImages // ignore: cast_nullable_to_non_nullable
-                        as ProductImages?,
-            productName:
-                freezed == productName
-                    ? _value.productName
-                    : productName // ignore: cast_nullable_to_non_nullable
+            unitsPerPackage:
+                freezed == unitsPerPackage
+                    ? _value.unitsPerPackage
+                    : unitsPerPackage // ignore: cast_nullable_to_non_nullable
+                        as Price?,
+            addedBy:
+                freezed == addedBy
+                    ? _value.addedBy
+                    : addedBy // ignore: cast_nullable_to_non_nullable
                         as AddedBy?,
-            category:
-                freezed == category
-                    ? _value.category
-                    : category // ignore: cast_nullable_to_non_nullable
+            companyCode:
+                freezed == companyCode
+                    ? _value.companyCode
+                    : companyCode // ignore: cast_nullable_to_non_nullable
                         as AddedBy?,
+            productImage:
+                freezed == productImage
+                    ? _value.productImage
+                    : productImage // ignore: cast_nullable_to_non_nullable
+                        as ProductImage?,
+            price:
+                freezed == price
+                    ? _value.price
+                    : price // ignore: cast_nullable_to_non_nullable
+                        as Price?,
             available:
                 freezed == available
                     ? _value.available
@@ -409,35 +409,15 @@ class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
                     ? _value.description
                     : description // ignore: cast_nullable_to_non_nullable
                         as AddedBy?,
-            sizes:
-                freezed == sizes
-                    ? _value.sizes
-                    : sizes // ignore: cast_nullable_to_non_nullable
-                        as Sizes?,
-            price:
-                freezed == price
-                    ? _value.price
-                    : price // ignore: cast_nullable_to_non_nullable
-                        as MinimumOrder?,
-            minimumOrder:
-                freezed == minimumOrder
-                    ? _value.minimumOrder
-                    : minimumOrder // ignore: cast_nullable_to_non_nullable
-                        as MinimumOrder?,
-            unit:
-                freezed == unit
-                    ? _value.unit
-                    : unit // ignore: cast_nullable_to_non_nullable
-                        as AddedBy?,
-            quantityPerBox:
-                freezed == quantityPerBox
-                    ? _value.quantityPerBox
-                    : quantityPerBox // ignore: cast_nullable_to_non_nullable
-                        as MinimumOrder?,
-            addedBy:
-                freezed == addedBy
-                    ? _value.addedBy
-                    : addedBy // ignore: cast_nullable_to_non_nullable
+            attributes:
+                freezed == attributes
+                    ? _value.attributes
+                    : attributes // ignore: cast_nullable_to_non_nullable
+                        as Attributes?,
+            productName:
+                freezed == productName
+                    ? _value.productName
+                    : productName // ignore: cast_nullable_to_non_nullable
                         as AddedBy?,
             brand:
                 freezed == brand
@@ -453,13 +433,13 @@ class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ProductImagesCopyWith<$Res>? get productImages {
-    if (_value.productImages == null) {
+  $PriceCopyWith<$Res>? get unitsPerPackage {
+    if (_value.unitsPerPackage == null) {
       return null;
     }
 
-    return $ProductImagesCopyWith<$Res>(_value.productImages!, (value) {
-      return _then(_value.copyWith(productImages: value) as $Val);
+    return $PriceCopyWith<$Res>(_value.unitsPerPackage!, (value) {
+      return _then(_value.copyWith(unitsPerPackage: value) as $Val);
     });
   }
 
@@ -467,13 +447,13 @@ class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $AddedByCopyWith<$Res>? get productName {
-    if (_value.productName == null) {
+  $AddedByCopyWith<$Res>? get addedBy {
+    if (_value.addedBy == null) {
       return null;
     }
 
-    return $AddedByCopyWith<$Res>(_value.productName!, (value) {
-      return _then(_value.copyWith(productName: value) as $Val);
+    return $AddedByCopyWith<$Res>(_value.addedBy!, (value) {
+      return _then(_value.copyWith(addedBy: value) as $Val);
     });
   }
 
@@ -481,13 +461,41 @@ class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $AddedByCopyWith<$Res>? get category {
-    if (_value.category == null) {
+  $AddedByCopyWith<$Res>? get companyCode {
+    if (_value.companyCode == null) {
       return null;
     }
 
-    return $AddedByCopyWith<$Res>(_value.category!, (value) {
-      return _then(_value.copyWith(category: value) as $Val);
+    return $AddedByCopyWith<$Res>(_value.companyCode!, (value) {
+      return _then(_value.copyWith(companyCode: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ProductImageCopyWith<$Res>? get productImage {
+    if (_value.productImage == null) {
+      return null;
+    }
+
+    return $ProductImageCopyWith<$Res>(_value.productImage!, (value) {
+      return _then(_value.copyWith(productImage: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PriceCopyWith<$Res>? get price {
+    if (_value.price == null) {
+      return null;
+    }
+
+    return $PriceCopyWith<$Res>(_value.price!, (value) {
+      return _then(_value.copyWith(price: value) as $Val);
     });
   }
 
@@ -523,13 +531,13 @@ class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $SizesCopyWith<$Res>? get sizes {
-    if (_value.sizes == null) {
+  $AttributesCopyWith<$Res>? get attributes {
+    if (_value.attributes == null) {
       return null;
     }
 
-    return $SizesCopyWith<$Res>(_value.sizes!, (value) {
-      return _then(_value.copyWith(sizes: value) as $Val);
+    return $AttributesCopyWith<$Res>(_value.attributes!, (value) {
+      return _then(_value.copyWith(attributes: value) as $Val);
     });
   }
 
@@ -537,69 +545,13 @@ class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $MinimumOrderCopyWith<$Res>? get price {
-    if (_value.price == null) {
+  $AddedByCopyWith<$Res>? get productName {
+    if (_value.productName == null) {
       return null;
     }
 
-    return $MinimumOrderCopyWith<$Res>(_value.price!, (value) {
-      return _then(_value.copyWith(price: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $MinimumOrderCopyWith<$Res>? get minimumOrder {
-    if (_value.minimumOrder == null) {
-      return null;
-    }
-
-    return $MinimumOrderCopyWith<$Res>(_value.minimumOrder!, (value) {
-      return _then(_value.copyWith(minimumOrder: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $AddedByCopyWith<$Res>? get unit {
-    if (_value.unit == null) {
-      return null;
-    }
-
-    return $AddedByCopyWith<$Res>(_value.unit!, (value) {
-      return _then(_value.copyWith(unit: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $MinimumOrderCopyWith<$Res>? get quantityPerBox {
-    if (_value.quantityPerBox == null) {
-      return null;
-    }
-
-    return $MinimumOrderCopyWith<$Res>(_value.quantityPerBox!, (value) {
-      return _then(_value.copyWith(quantityPerBox: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $AddedByCopyWith<$Res>? get addedBy {
-    if (_value.addedBy == null) {
-      return null;
-    }
-
-    return $AddedByCopyWith<$Res>(_value.addedBy!, (value) {
-      return _then(_value.copyWith(addedBy: value) as $Val);
+    return $AddedByCopyWith<$Res>(_value.productName!, (value) {
+      return _then(_value.copyWith(productName: value) as $Val);
     });
   }
 
@@ -627,42 +579,36 @@ abstract class _$$FieldsImplCopyWith<$Res> implements $FieldsCopyWith<$Res> {
   @override
   @useResult
   $Res call({
-    @JsonKey(name: 'product_images') ProductImages? productImages,
-    @JsonKey(name: 'product_name') AddedBy? productName,
-    @JsonKey(name: 'category') AddedBy? category,
+    @JsonKey(name: 'units_per_package') Price? unitsPerPackage,
+    @JsonKey(name: 'added_by') AddedBy? addedBy,
+    @JsonKey(name: 'company_code') AddedBy? companyCode,
+    @JsonKey(name: 'product_image') ProductImage? productImage,
+    @JsonKey(name: 'price') Price? price,
     @JsonKey(name: 'available') Available? available,
     @JsonKey(name: 'description') AddedBy? description,
-    @JsonKey(name: 'sizes') Sizes? sizes,
-    @JsonKey(name: 'price') MinimumOrder? price,
-    @JsonKey(name: 'minimum_order') MinimumOrder? minimumOrder,
-    @JsonKey(name: 'unit') AddedBy? unit,
-    @JsonKey(name: 'quantity_per_box') MinimumOrder? quantityPerBox,
-    @JsonKey(name: 'added_by') AddedBy? addedBy,
+    @JsonKey(name: 'attributes') Attributes? attributes,
+    @JsonKey(name: 'product_name') AddedBy? productName,
     @JsonKey(name: 'brand') AddedBy? brand,
   });
 
   @override
-  $ProductImagesCopyWith<$Res>? get productImages;
+  $PriceCopyWith<$Res>? get unitsPerPackage;
   @override
-  $AddedByCopyWith<$Res>? get productName;
+  $AddedByCopyWith<$Res>? get addedBy;
   @override
-  $AddedByCopyWith<$Res>? get category;
+  $AddedByCopyWith<$Res>? get companyCode;
+  @override
+  $ProductImageCopyWith<$Res>? get productImage;
+  @override
+  $PriceCopyWith<$Res>? get price;
   @override
   $AvailableCopyWith<$Res>? get available;
   @override
   $AddedByCopyWith<$Res>? get description;
   @override
-  $SizesCopyWith<$Res>? get sizes;
+  $AttributesCopyWith<$Res>? get attributes;
   @override
-  $MinimumOrderCopyWith<$Res>? get price;
-  @override
-  $MinimumOrderCopyWith<$Res>? get minimumOrder;
-  @override
-  $AddedByCopyWith<$Res>? get unit;
-  @override
-  $MinimumOrderCopyWith<$Res>? get quantityPerBox;
-  @override
-  $AddedByCopyWith<$Res>? get addedBy;
+  $AddedByCopyWith<$Res>? get productName;
   @override
   $AddedByCopyWith<$Res>? get brand;
 }
@@ -681,36 +627,44 @@ class __$$FieldsImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? productImages = freezed,
-    Object? productName = freezed,
-    Object? category = freezed,
+    Object? unitsPerPackage = freezed,
+    Object? addedBy = freezed,
+    Object? companyCode = freezed,
+    Object? productImage = freezed,
+    Object? price = freezed,
     Object? available = freezed,
     Object? description = freezed,
-    Object? sizes = freezed,
-    Object? price = freezed,
-    Object? minimumOrder = freezed,
-    Object? unit = freezed,
-    Object? quantityPerBox = freezed,
-    Object? addedBy = freezed,
+    Object? attributes = freezed,
+    Object? productName = freezed,
     Object? brand = freezed,
   }) {
     return _then(
       _$FieldsImpl(
-        productImages:
-            freezed == productImages
-                ? _value.productImages
-                : productImages // ignore: cast_nullable_to_non_nullable
-                    as ProductImages?,
-        productName:
-            freezed == productName
-                ? _value.productName
-                : productName // ignore: cast_nullable_to_non_nullable
+        unitsPerPackage:
+            freezed == unitsPerPackage
+                ? _value.unitsPerPackage
+                : unitsPerPackage // ignore: cast_nullable_to_non_nullable
+                    as Price?,
+        addedBy:
+            freezed == addedBy
+                ? _value.addedBy
+                : addedBy // ignore: cast_nullable_to_non_nullable
                     as AddedBy?,
-        category:
-            freezed == category
-                ? _value.category
-                : category // ignore: cast_nullable_to_non_nullable
+        companyCode:
+            freezed == companyCode
+                ? _value.companyCode
+                : companyCode // ignore: cast_nullable_to_non_nullable
                     as AddedBy?,
+        productImage:
+            freezed == productImage
+                ? _value.productImage
+                : productImage // ignore: cast_nullable_to_non_nullable
+                    as ProductImage?,
+        price:
+            freezed == price
+                ? _value.price
+                : price // ignore: cast_nullable_to_non_nullable
+                    as Price?,
         available:
             freezed == available
                 ? _value.available
@@ -721,35 +675,15 @@ class __$$FieldsImplCopyWithImpl<$Res>
                 ? _value.description
                 : description // ignore: cast_nullable_to_non_nullable
                     as AddedBy?,
-        sizes:
-            freezed == sizes
-                ? _value.sizes
-                : sizes // ignore: cast_nullable_to_non_nullable
-                    as Sizes?,
-        price:
-            freezed == price
-                ? _value.price
-                : price // ignore: cast_nullable_to_non_nullable
-                    as MinimumOrder?,
-        minimumOrder:
-            freezed == minimumOrder
-                ? _value.minimumOrder
-                : minimumOrder // ignore: cast_nullable_to_non_nullable
-                    as MinimumOrder?,
-        unit:
-            freezed == unit
-                ? _value.unit
-                : unit // ignore: cast_nullable_to_non_nullable
-                    as AddedBy?,
-        quantityPerBox:
-            freezed == quantityPerBox
-                ? _value.quantityPerBox
-                : quantityPerBox // ignore: cast_nullable_to_non_nullable
-                    as MinimumOrder?,
-        addedBy:
-            freezed == addedBy
-                ? _value.addedBy
-                : addedBy // ignore: cast_nullable_to_non_nullable
+        attributes:
+            freezed == attributes
+                ? _value.attributes
+                : attributes // ignore: cast_nullable_to_non_nullable
+                    as Attributes?,
+        productName:
+            freezed == productName
+                ? _value.productName
+                : productName // ignore: cast_nullable_to_non_nullable
                     as AddedBy?,
         brand:
             freezed == brand
@@ -765,17 +699,15 @@ class __$$FieldsImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$FieldsImpl implements _Fields {
   const _$FieldsImpl({
-    @JsonKey(name: 'product_images') this.productImages,
-    @JsonKey(name: 'product_name') this.productName,
-    @JsonKey(name: 'category') this.category,
+    @JsonKey(name: 'units_per_package') this.unitsPerPackage,
+    @JsonKey(name: 'added_by') this.addedBy,
+    @JsonKey(name: 'company_code') this.companyCode,
+    @JsonKey(name: 'product_image') this.productImage,
+    @JsonKey(name: 'price') this.price,
     @JsonKey(name: 'available') this.available,
     @JsonKey(name: 'description') this.description,
-    @JsonKey(name: 'sizes') this.sizes,
-    @JsonKey(name: 'price') this.price,
-    @JsonKey(name: 'minimum_order') this.minimumOrder,
-    @JsonKey(name: 'unit') this.unit,
-    @JsonKey(name: 'quantity_per_box') this.quantityPerBox,
-    @JsonKey(name: 'added_by') this.addedBy,
+    @JsonKey(name: 'attributes') this.attributes,
+    @JsonKey(name: 'product_name') this.productName,
     @JsonKey(name: 'brand') this.brand,
   });
 
@@ -783,14 +715,20 @@ class _$FieldsImpl implements _Fields {
       _$$FieldsImplFromJson(json);
 
   @override
-  @JsonKey(name: 'product_images')
-  final ProductImages? productImages;
+  @JsonKey(name: 'units_per_package')
+  final Price? unitsPerPackage;
   @override
-  @JsonKey(name: 'product_name')
-  final AddedBy? productName;
+  @JsonKey(name: 'added_by')
+  final AddedBy? addedBy;
   @override
-  @JsonKey(name: 'category')
-  final AddedBy? category;
+  @JsonKey(name: 'company_code')
+  final AddedBy? companyCode;
+  @override
+  @JsonKey(name: 'product_image')
+  final ProductImage? productImage;
+  @override
+  @JsonKey(name: 'price')
+  final Price? price;
   @override
   @JsonKey(name: 'available')
   final Available? available;
@@ -798,30 +736,18 @@ class _$FieldsImpl implements _Fields {
   @JsonKey(name: 'description')
   final AddedBy? description;
   @override
-  @JsonKey(name: 'sizes')
-  final Sizes? sizes;
+  @JsonKey(name: 'attributes')
+  final Attributes? attributes;
   @override
-  @JsonKey(name: 'price')
-  final MinimumOrder? price;
-  @override
-  @JsonKey(name: 'minimum_order')
-  final MinimumOrder? minimumOrder;
-  @override
-  @JsonKey(name: 'unit')
-  final AddedBy? unit;
-  @override
-  @JsonKey(name: 'quantity_per_box')
-  final MinimumOrder? quantityPerBox;
-  @override
-  @JsonKey(name: 'added_by')
-  final AddedBy? addedBy;
+  @JsonKey(name: 'product_name')
+  final AddedBy? productName;
   @override
   @JsonKey(name: 'brand')
   final AddedBy? brand;
 
   @override
   String toString() {
-    return 'Fields(productImages: $productImages, productName: $productName, category: $category, available: $available, description: $description, sizes: $sizes, price: $price, minimumOrder: $minimumOrder, unit: $unit, quantityPerBox: $quantityPerBox, addedBy: $addedBy, brand: $brand)';
+    return 'Fields(unitsPerPackage: $unitsPerPackage, addedBy: $addedBy, companyCode: $companyCode, productImage: $productImage, price: $price, available: $available, description: $description, attributes: $attributes, productName: $productName, brand: $brand)';
   }
 
   @override
@@ -829,24 +755,22 @@ class _$FieldsImpl implements _Fields {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FieldsImpl &&
-            (identical(other.productImages, productImages) ||
-                other.productImages == productImages) &&
-            (identical(other.productName, productName) ||
-                other.productName == productName) &&
-            (identical(other.category, category) ||
-                other.category == category) &&
+            (identical(other.unitsPerPackage, unitsPerPackage) ||
+                other.unitsPerPackage == unitsPerPackage) &&
+            (identical(other.addedBy, addedBy) || other.addedBy == addedBy) &&
+            (identical(other.companyCode, companyCode) ||
+                other.companyCode == companyCode) &&
+            (identical(other.productImage, productImage) ||
+                other.productImage == productImage) &&
+            (identical(other.price, price) || other.price == price) &&
             (identical(other.available, available) ||
                 other.available == available) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            (identical(other.sizes, sizes) || other.sizes == sizes) &&
-            (identical(other.price, price) || other.price == price) &&
-            (identical(other.minimumOrder, minimumOrder) ||
-                other.minimumOrder == minimumOrder) &&
-            (identical(other.unit, unit) || other.unit == unit) &&
-            (identical(other.quantityPerBox, quantityPerBox) ||
-                other.quantityPerBox == quantityPerBox) &&
-            (identical(other.addedBy, addedBy) || other.addedBy == addedBy) &&
+            (identical(other.attributes, attributes) ||
+                other.attributes == attributes) &&
+            (identical(other.productName, productName) ||
+                other.productName == productName) &&
             (identical(other.brand, brand) || other.brand == brand));
   }
 
@@ -854,17 +778,15 @@ class _$FieldsImpl implements _Fields {
   @override
   int get hashCode => Object.hash(
     runtimeType,
-    productImages,
-    productName,
-    category,
+    unitsPerPackage,
+    addedBy,
+    companyCode,
+    productImage,
+    price,
     available,
     description,
-    sizes,
-    price,
-    minimumOrder,
-    unit,
-    quantityPerBox,
-    addedBy,
+    attributes,
+    productName,
     brand,
   );
 
@@ -884,31 +806,35 @@ class _$FieldsImpl implements _Fields {
 
 abstract class _Fields implements Fields {
   const factory _Fields({
-    @JsonKey(name: 'product_images') final ProductImages? productImages,
-    @JsonKey(name: 'product_name') final AddedBy? productName,
-    @JsonKey(name: 'category') final AddedBy? category,
+    @JsonKey(name: 'units_per_package') final Price? unitsPerPackage,
+    @JsonKey(name: 'added_by') final AddedBy? addedBy,
+    @JsonKey(name: 'company_code') final AddedBy? companyCode,
+    @JsonKey(name: 'product_image') final ProductImage? productImage,
+    @JsonKey(name: 'price') final Price? price,
     @JsonKey(name: 'available') final Available? available,
     @JsonKey(name: 'description') final AddedBy? description,
-    @JsonKey(name: 'sizes') final Sizes? sizes,
-    @JsonKey(name: 'price') final MinimumOrder? price,
-    @JsonKey(name: 'minimum_order') final MinimumOrder? minimumOrder,
-    @JsonKey(name: 'unit') final AddedBy? unit,
-    @JsonKey(name: 'quantity_per_box') final MinimumOrder? quantityPerBox,
-    @JsonKey(name: 'added_by') final AddedBy? addedBy,
+    @JsonKey(name: 'attributes') final Attributes? attributes,
+    @JsonKey(name: 'product_name') final AddedBy? productName,
     @JsonKey(name: 'brand') final AddedBy? brand,
   }) = _$FieldsImpl;
 
   factory _Fields.fromJson(Map<String, dynamic> json) = _$FieldsImpl.fromJson;
 
   @override
-  @JsonKey(name: 'product_images')
-  ProductImages? get productImages;
+  @JsonKey(name: 'units_per_package')
+  Price? get unitsPerPackage;
   @override
-  @JsonKey(name: 'product_name')
-  AddedBy? get productName;
+  @JsonKey(name: 'added_by')
+  AddedBy? get addedBy;
   @override
-  @JsonKey(name: 'category')
-  AddedBy? get category;
+  @JsonKey(name: 'company_code')
+  AddedBy? get companyCode;
+  @override
+  @JsonKey(name: 'product_image')
+  ProductImage? get productImage;
+  @override
+  @JsonKey(name: 'price')
+  Price? get price;
   @override
   @JsonKey(name: 'available')
   Available? get available;
@@ -916,23 +842,11 @@ abstract class _Fields implements Fields {
   @JsonKey(name: 'description')
   AddedBy? get description;
   @override
-  @JsonKey(name: 'sizes')
-  Sizes? get sizes;
+  @JsonKey(name: 'attributes')
+  Attributes? get attributes;
   @override
-  @JsonKey(name: 'price')
-  MinimumOrder? get price;
-  @override
-  @JsonKey(name: 'minimum_order')
-  MinimumOrder? get minimumOrder;
-  @override
-  @JsonKey(name: 'unit')
-  AddedBy? get unit;
-  @override
-  @JsonKey(name: 'quantity_per_box')
-  MinimumOrder? get quantityPerBox;
-  @override
-  @JsonKey(name: 'added_by')
-  AddedBy? get addedBy;
+  @JsonKey(name: 'product_name')
+  AddedBy? get productName;
   @override
   @JsonKey(name: 'brand')
   AddedBy? get brand;
@@ -1099,6 +1013,577 @@ abstract class _AddedBy implements AddedBy {
       throw _privateConstructorUsedError;
 }
 
+Attributes _$AttributesFromJson(Map<String, dynamic> json) {
+  return _Attributes.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Attributes {
+  @JsonKey(name: 'mapValue')
+  MapValue? get mapValue => throw _privateConstructorUsedError;
+
+  /// Serializes this Attributes to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of Attributes
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $AttributesCopyWith<Attributes> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AttributesCopyWith<$Res> {
+  factory $AttributesCopyWith(
+    Attributes value,
+    $Res Function(Attributes) then,
+  ) = _$AttributesCopyWithImpl<$Res, Attributes>;
+  @useResult
+  $Res call({@JsonKey(name: 'mapValue') MapValue? mapValue});
+
+  $MapValueCopyWith<$Res>? get mapValue;
+}
+
+/// @nodoc
+class _$AttributesCopyWithImpl<$Res, $Val extends Attributes>
+    implements $AttributesCopyWith<$Res> {
+  _$AttributesCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of Attributes
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? mapValue = freezed}) {
+    return _then(
+      _value.copyWith(
+            mapValue:
+                freezed == mapValue
+                    ? _value.mapValue
+                    : mapValue // ignore: cast_nullable_to_non_nullable
+                        as MapValue?,
+          )
+          as $Val,
+    );
+  }
+
+  /// Create a copy of Attributes
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $MapValueCopyWith<$Res>? get mapValue {
+    if (_value.mapValue == null) {
+      return null;
+    }
+
+    return $MapValueCopyWith<$Res>(_value.mapValue!, (value) {
+      return _then(_value.copyWith(mapValue: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$AttributesImplCopyWith<$Res>
+    implements $AttributesCopyWith<$Res> {
+  factory _$$AttributesImplCopyWith(
+    _$AttributesImpl value,
+    $Res Function(_$AttributesImpl) then,
+  ) = __$$AttributesImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: 'mapValue') MapValue? mapValue});
+
+  @override
+  $MapValueCopyWith<$Res>? get mapValue;
+}
+
+/// @nodoc
+class __$$AttributesImplCopyWithImpl<$Res>
+    extends _$AttributesCopyWithImpl<$Res, _$AttributesImpl>
+    implements _$$AttributesImplCopyWith<$Res> {
+  __$$AttributesImplCopyWithImpl(
+    _$AttributesImpl _value,
+    $Res Function(_$AttributesImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of Attributes
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? mapValue = freezed}) {
+    return _then(
+      _$AttributesImpl(
+        mapValue:
+            freezed == mapValue
+                ? _value.mapValue
+                : mapValue // ignore: cast_nullable_to_non_nullable
+                    as MapValue?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$AttributesImpl implements _Attributes {
+  const _$AttributesImpl({@JsonKey(name: 'mapValue') this.mapValue});
+
+  factory _$AttributesImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AttributesImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'mapValue')
+  final MapValue? mapValue;
+
+  @override
+  String toString() {
+    return 'Attributes(mapValue: $mapValue)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AttributesImpl &&
+            (identical(other.mapValue, mapValue) ||
+                other.mapValue == mapValue));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, mapValue);
+
+  /// Create a copy of Attributes
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AttributesImplCopyWith<_$AttributesImpl> get copyWith =>
+      __$$AttributesImplCopyWithImpl<_$AttributesImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$AttributesImplToJson(this);
+  }
+}
+
+abstract class _Attributes implements Attributes {
+  const factory _Attributes({
+    @JsonKey(name: 'mapValue') final MapValue? mapValue,
+  }) = _$AttributesImpl;
+
+  factory _Attributes.fromJson(Map<String, dynamic> json) =
+      _$AttributesImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'mapValue')
+  MapValue? get mapValue;
+
+  /// Create a copy of Attributes
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$AttributesImplCopyWith<_$AttributesImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+MapValue _$MapValueFromJson(Map<String, dynamic> json) {
+  return _MapValue.fromJson(json);
+}
+
+/// @nodoc
+mixin _$MapValue {
+  @JsonKey(name: 'fields')
+  Map<String, dynamic>? get fields => throw _privateConstructorUsedError;
+
+  /// Serializes this MapValue to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of MapValue
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $MapValueCopyWith<MapValue> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $MapValueCopyWith<$Res> {
+  factory $MapValueCopyWith(MapValue value, $Res Function(MapValue) then) =
+      _$MapValueCopyWithImpl<$Res, MapValue>;
+  @useResult
+  $Res call({@JsonKey(name: 'fields') Map<String, dynamic>? fields});
+}
+
+/// @nodoc
+class _$MapValueCopyWithImpl<$Res, $Val extends MapValue>
+    implements $MapValueCopyWith<$Res> {
+  _$MapValueCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of MapValue
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? fields = freezed}) {
+    return _then(
+      _value.copyWith(
+            fields:
+                freezed == fields
+                    ? _value.fields
+                    : fields // ignore: cast_nullable_to_non_nullable
+                        as Map<String, dynamic>?,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$MapValueImplCopyWith<$Res>
+    implements $MapValueCopyWith<$Res> {
+  factory _$$MapValueImplCopyWith(
+    _$MapValueImpl value,
+    $Res Function(_$MapValueImpl) then,
+  ) = __$$MapValueImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: 'fields') Map<String, dynamic>? fields});
+}
+
+/// @nodoc
+class __$$MapValueImplCopyWithImpl<$Res>
+    extends _$MapValueCopyWithImpl<$Res, _$MapValueImpl>
+    implements _$$MapValueImplCopyWith<$Res> {
+  __$$MapValueImplCopyWithImpl(
+    _$MapValueImpl _value,
+    $Res Function(_$MapValueImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of MapValue
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? fields = freezed}) {
+    return _then(
+      _$MapValueImpl(
+        fields:
+            freezed == fields
+                ? _value._fields
+                : fields // ignore: cast_nullable_to_non_nullable
+                    as Map<String, dynamic>?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$MapValueImpl implements _MapValue {
+  const _$MapValueImpl({
+    @JsonKey(name: 'fields') final Map<String, dynamic>? fields,
+  }) : _fields = fields;
+
+  factory _$MapValueImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MapValueImplFromJson(json);
+
+  final Map<String, dynamic>? _fields;
+  @override
+  @JsonKey(name: 'fields')
+  Map<String, dynamic>? get fields {
+    final value = _fields;
+    if (value == null) return null;
+    if (_fields is EqualUnmodifiableMapView) return _fields;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
+
+  @override
+  String toString() {
+    return 'MapValue(fields: $fields)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$MapValueImpl &&
+            const DeepCollectionEquality().equals(other._fields, _fields));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_fields));
+
+  /// Create a copy of MapValue
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$MapValueImplCopyWith<_$MapValueImpl> get copyWith =>
+      __$$MapValueImplCopyWithImpl<_$MapValueImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$MapValueImplToJson(this);
+  }
+}
+
+abstract class _MapValue implements MapValue {
+  const factory _MapValue({
+    @JsonKey(name: 'fields') final Map<String, dynamic>? fields,
+  }) = _$MapValueImpl;
+
+  factory _MapValue.fromJson(Map<String, dynamic> json) =
+      _$MapValueImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'fields')
+  Map<String, dynamic>? get fields;
+
+  /// Create a copy of MapValue
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$MapValueImplCopyWith<_$MapValueImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+MapValueFields _$MapValueFieldsFromJson(Map<String, dynamic> json) {
+  return _MapValueFields.fromJson(json);
+}
+
+/// @nodoc
+mixin _$MapValueFields {
+  @JsonKey(name: 'Color')
+  AddedBy? get color => throw _privateConstructorUsedError;
+  @JsonKey(name: 'Material')
+  AddedBy? get material => throw _privateConstructorUsedError;
+
+  /// Serializes this MapValueFields to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of MapValueFields
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $MapValueFieldsCopyWith<MapValueFields> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $MapValueFieldsCopyWith<$Res> {
+  factory $MapValueFieldsCopyWith(
+    MapValueFields value,
+    $Res Function(MapValueFields) then,
+  ) = _$MapValueFieldsCopyWithImpl<$Res, MapValueFields>;
+  @useResult
+  $Res call({
+    @JsonKey(name: 'Color') AddedBy? color,
+    @JsonKey(name: 'Material') AddedBy? material,
+  });
+
+  $AddedByCopyWith<$Res>? get color;
+  $AddedByCopyWith<$Res>? get material;
+}
+
+/// @nodoc
+class _$MapValueFieldsCopyWithImpl<$Res, $Val extends MapValueFields>
+    implements $MapValueFieldsCopyWith<$Res> {
+  _$MapValueFieldsCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of MapValueFields
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? color = freezed, Object? material = freezed}) {
+    return _then(
+      _value.copyWith(
+            color:
+                freezed == color
+                    ? _value.color
+                    : color // ignore: cast_nullable_to_non_nullable
+                        as AddedBy?,
+            material:
+                freezed == material
+                    ? _value.material
+                    : material // ignore: cast_nullable_to_non_nullable
+                        as AddedBy?,
+          )
+          as $Val,
+    );
+  }
+
+  /// Create a copy of MapValueFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AddedByCopyWith<$Res>? get color {
+    if (_value.color == null) {
+      return null;
+    }
+
+    return $AddedByCopyWith<$Res>(_value.color!, (value) {
+      return _then(_value.copyWith(color: value) as $Val);
+    });
+  }
+
+  /// Create a copy of MapValueFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AddedByCopyWith<$Res>? get material {
+    if (_value.material == null) {
+      return null;
+    }
+
+    return $AddedByCopyWith<$Res>(_value.material!, (value) {
+      return _then(_value.copyWith(material: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$MapValueFieldsImplCopyWith<$Res>
+    implements $MapValueFieldsCopyWith<$Res> {
+  factory _$$MapValueFieldsImplCopyWith(
+    _$MapValueFieldsImpl value,
+    $Res Function(_$MapValueFieldsImpl) then,
+  ) = __$$MapValueFieldsImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({
+    @JsonKey(name: 'Color') AddedBy? color,
+    @JsonKey(name: 'Material') AddedBy? material,
+  });
+
+  @override
+  $AddedByCopyWith<$Res>? get color;
+  @override
+  $AddedByCopyWith<$Res>? get material;
+}
+
+/// @nodoc
+class __$$MapValueFieldsImplCopyWithImpl<$Res>
+    extends _$MapValueFieldsCopyWithImpl<$Res, _$MapValueFieldsImpl>
+    implements _$$MapValueFieldsImplCopyWith<$Res> {
+  __$$MapValueFieldsImplCopyWithImpl(
+    _$MapValueFieldsImpl _value,
+    $Res Function(_$MapValueFieldsImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of MapValueFields
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? color = freezed, Object? material = freezed}) {
+    return _then(
+      _$MapValueFieldsImpl(
+        color:
+            freezed == color
+                ? _value.color
+                : color // ignore: cast_nullable_to_non_nullable
+                    as AddedBy?,
+        material:
+            freezed == material
+                ? _value.material
+                : material // ignore: cast_nullable_to_non_nullable
+                    as AddedBy?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$MapValueFieldsImpl implements _MapValueFields {
+  const _$MapValueFieldsImpl({
+    @JsonKey(name: 'Color') this.color,
+    @JsonKey(name: 'Material') this.material,
+  });
+
+  factory _$MapValueFieldsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MapValueFieldsImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'Color')
+  final AddedBy? color;
+  @override
+  @JsonKey(name: 'Material')
+  final AddedBy? material;
+
+  @override
+  String toString() {
+    return 'MapValueFields(color: $color, material: $material)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$MapValueFieldsImpl &&
+            (identical(other.color, color) || other.color == color) &&
+            (identical(other.material, material) ||
+                other.material == material));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, color, material);
+
+  /// Create a copy of MapValueFields
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$MapValueFieldsImplCopyWith<_$MapValueFieldsImpl> get copyWith =>
+      __$$MapValueFieldsImplCopyWithImpl<_$MapValueFieldsImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$MapValueFieldsImplToJson(this);
+  }
+}
+
+abstract class _MapValueFields implements MapValueFields {
+  const factory _MapValueFields({
+    @JsonKey(name: 'Color') final AddedBy? color,
+    @JsonKey(name: 'Material') final AddedBy? material,
+  }) = _$MapValueFieldsImpl;
+
+  factory _MapValueFields.fromJson(Map<String, dynamic> json) =
+      _$MapValueFieldsImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'Color')
+  AddedBy? get color;
+  @override
+  @JsonKey(name: 'Material')
+  AddedBy? get material;
+
+  /// Create a copy of MapValueFields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$MapValueFieldsImplCopyWith<_$MapValueFieldsImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 Available _$AvailableFromJson(Map<String, dynamic> json) {
   return _Available.fromJson(json);
 }
@@ -1256,46 +1741,43 @@ abstract class _Available implements Available {
       throw _privateConstructorUsedError;
 }
 
-MinimumOrder _$MinimumOrderFromJson(Map<String, dynamic> json) {
-  return _MinimumOrder.fromJson(json);
+Price _$PriceFromJson(Map<String, dynamic> json) {
+  return _Price.fromJson(json);
 }
 
 /// @nodoc
-mixin _$MinimumOrder {
+mixin _$Price {
   @JsonKey(name: 'integerValue')
   String? get integerValue => throw _privateConstructorUsedError;
 
-  /// Serializes this MinimumOrder to a JSON map.
+  /// Serializes this Price to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of MinimumOrder
+  /// Create a copy of Price
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $MinimumOrderCopyWith<MinimumOrder> get copyWith =>
-      throw _privateConstructorUsedError;
+  $PriceCopyWith<Price> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MinimumOrderCopyWith<$Res> {
-  factory $MinimumOrderCopyWith(
-    MinimumOrder value,
-    $Res Function(MinimumOrder) then,
-  ) = _$MinimumOrderCopyWithImpl<$Res, MinimumOrder>;
+abstract class $PriceCopyWith<$Res> {
+  factory $PriceCopyWith(Price value, $Res Function(Price) then) =
+      _$PriceCopyWithImpl<$Res, Price>;
   @useResult
   $Res call({@JsonKey(name: 'integerValue') String? integerValue});
 }
 
 /// @nodoc
-class _$MinimumOrderCopyWithImpl<$Res, $Val extends MinimumOrder>
-    implements $MinimumOrderCopyWith<$Res> {
-  _$MinimumOrderCopyWithImpl(this._value, this._then);
+class _$PriceCopyWithImpl<$Res, $Val extends Price>
+    implements $PriceCopyWith<$Res> {
+  _$PriceCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of MinimumOrder
+  /// Create a copy of Price
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -1314,33 +1796,32 @@ class _$MinimumOrderCopyWithImpl<$Res, $Val extends MinimumOrder>
 }
 
 /// @nodoc
-abstract class _$$MinimumOrderImplCopyWith<$Res>
-    implements $MinimumOrderCopyWith<$Res> {
-  factory _$$MinimumOrderImplCopyWith(
-    _$MinimumOrderImpl value,
-    $Res Function(_$MinimumOrderImpl) then,
-  ) = __$$MinimumOrderImplCopyWithImpl<$Res>;
+abstract class _$$PriceImplCopyWith<$Res> implements $PriceCopyWith<$Res> {
+  factory _$$PriceImplCopyWith(
+    _$PriceImpl value,
+    $Res Function(_$PriceImpl) then,
+  ) = __$$PriceImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({@JsonKey(name: 'integerValue') String? integerValue});
 }
 
 /// @nodoc
-class __$$MinimumOrderImplCopyWithImpl<$Res>
-    extends _$MinimumOrderCopyWithImpl<$Res, _$MinimumOrderImpl>
-    implements _$$MinimumOrderImplCopyWith<$Res> {
-  __$$MinimumOrderImplCopyWithImpl(
-    _$MinimumOrderImpl _value,
-    $Res Function(_$MinimumOrderImpl) _then,
+class __$$PriceImplCopyWithImpl<$Res>
+    extends _$PriceCopyWithImpl<$Res, _$PriceImpl>
+    implements _$$PriceImplCopyWith<$Res> {
+  __$$PriceImplCopyWithImpl(
+    _$PriceImpl _value,
+    $Res Function(_$PriceImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of MinimumOrder
+  /// Create a copy of Price
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({Object? integerValue = freezed}) {
     return _then(
-      _$MinimumOrderImpl(
+      _$PriceImpl(
         integerValue:
             freezed == integerValue
                 ? _value.integerValue
@@ -1353,11 +1834,11 @@ class __$$MinimumOrderImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$MinimumOrderImpl implements _MinimumOrder {
-  const _$MinimumOrderImpl({@JsonKey(name: 'integerValue') this.integerValue});
+class _$PriceImpl implements _Price {
+  const _$PriceImpl({@JsonKey(name: 'integerValue') this.integerValue});
 
-  factory _$MinimumOrderImpl.fromJson(Map<String, dynamic> json) =>
-      _$$MinimumOrderImplFromJson(json);
+  factory _$PriceImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PriceImplFromJson(json);
 
   @override
   @JsonKey(name: 'integerValue')
@@ -1365,14 +1846,14 @@ class _$MinimumOrderImpl implements _MinimumOrder {
 
   @override
   String toString() {
-    return 'MinimumOrder(integerValue: $integerValue)';
+    return 'Price(integerValue: $integerValue)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$MinimumOrderImpl &&
+            other is _$PriceImpl &&
             (identical(other.integerValue, integerValue) ||
                 other.integerValue == integerValue));
   }
@@ -1381,434 +1862,79 @@ class _$MinimumOrderImpl implements _MinimumOrder {
   @override
   int get hashCode => Object.hash(runtimeType, integerValue);
 
-  /// Create a copy of MinimumOrder
+  /// Create a copy of Price
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$MinimumOrderImplCopyWith<_$MinimumOrderImpl> get copyWith =>
-      __$$MinimumOrderImplCopyWithImpl<_$MinimumOrderImpl>(this, _$identity);
+  _$$PriceImplCopyWith<_$PriceImpl> get copyWith =>
+      __$$PriceImplCopyWithImpl<_$PriceImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$MinimumOrderImplToJson(this);
+    return _$$PriceImplToJson(this);
   }
 }
 
-abstract class _MinimumOrder implements MinimumOrder {
-  const factory _MinimumOrder({
+abstract class _Price implements Price {
+  const factory _Price({
     @JsonKey(name: 'integerValue') final String? integerValue,
-  }) = _$MinimumOrderImpl;
+  }) = _$PriceImpl;
 
-  factory _MinimumOrder.fromJson(Map<String, dynamic> json) =
-      _$MinimumOrderImpl.fromJson;
+  factory _Price.fromJson(Map<String, dynamic> json) = _$PriceImpl.fromJson;
 
   @override
   @JsonKey(name: 'integerValue')
   String? get integerValue;
 
-  /// Create a copy of MinimumOrder
+  /// Create a copy of Price
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$MinimumOrderImplCopyWith<_$MinimumOrderImpl> get copyWith =>
+  _$$PriceImplCopyWith<_$PriceImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-ProductImages _$ProductImagesFromJson(Map<String, dynamic> json) {
-  return _ProductImages.fromJson(json);
+ProductImage _$ProductImageFromJson(Map<String, dynamic> json) {
+  return _ProductImage.fromJson(json);
 }
 
 /// @nodoc
-mixin _$ProductImages {
-  @JsonKey(name: 'arrayValue')
-  ProductImagesArrayValue? get arrayValue => throw _privateConstructorUsedError;
-
-  /// Serializes this ProductImages to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of ProductImages
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ProductImagesCopyWith<ProductImages> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ProductImagesCopyWith<$Res> {
-  factory $ProductImagesCopyWith(
-    ProductImages value,
-    $Res Function(ProductImages) then,
-  ) = _$ProductImagesCopyWithImpl<$Res, ProductImages>;
-  @useResult
-  $Res call({@JsonKey(name: 'arrayValue') ProductImagesArrayValue? arrayValue});
-
-  $ProductImagesArrayValueCopyWith<$Res>? get arrayValue;
-}
-
-/// @nodoc
-class _$ProductImagesCopyWithImpl<$Res, $Val extends ProductImages>
-    implements $ProductImagesCopyWith<$Res> {
-  _$ProductImagesCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of ProductImages
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? arrayValue = freezed}) {
-    return _then(
-      _value.copyWith(
-            arrayValue:
-                freezed == arrayValue
-                    ? _value.arrayValue
-                    : arrayValue // ignore: cast_nullable_to_non_nullable
-                        as ProductImagesArrayValue?,
-          )
-          as $Val,
-    );
-  }
-
-  /// Create a copy of ProductImages
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ProductImagesArrayValueCopyWith<$Res>? get arrayValue {
-    if (_value.arrayValue == null) {
-      return null;
-    }
-
-    return $ProductImagesArrayValueCopyWith<$Res>(_value.arrayValue!, (value) {
-      return _then(_value.copyWith(arrayValue: value) as $Val);
-    });
-  }
-}
-
-/// @nodoc
-abstract class _$$ProductImagesImplCopyWith<$Res>
-    implements $ProductImagesCopyWith<$Res> {
-  factory _$$ProductImagesImplCopyWith(
-    _$ProductImagesImpl value,
-    $Res Function(_$ProductImagesImpl) then,
-  ) = __$$ProductImagesImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({@JsonKey(name: 'arrayValue') ProductImagesArrayValue? arrayValue});
-
-  @override
-  $ProductImagesArrayValueCopyWith<$Res>? get arrayValue;
-}
-
-/// @nodoc
-class __$$ProductImagesImplCopyWithImpl<$Res>
-    extends _$ProductImagesCopyWithImpl<$Res, _$ProductImagesImpl>
-    implements _$$ProductImagesImplCopyWith<$Res> {
-  __$$ProductImagesImplCopyWithImpl(
-    _$ProductImagesImpl _value,
-    $Res Function(_$ProductImagesImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of ProductImages
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? arrayValue = freezed}) {
-    return _then(
-      _$ProductImagesImpl(
-        arrayValue:
-            freezed == arrayValue
-                ? _value.arrayValue
-                : arrayValue // ignore: cast_nullable_to_non_nullable
-                    as ProductImagesArrayValue?,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$ProductImagesImpl implements _ProductImages {
-  const _$ProductImagesImpl({@JsonKey(name: 'arrayValue') this.arrayValue});
-
-  factory _$ProductImagesImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ProductImagesImplFromJson(json);
-
-  @override
-  @JsonKey(name: 'arrayValue')
-  final ProductImagesArrayValue? arrayValue;
-
-  @override
-  String toString() {
-    return 'ProductImages(arrayValue: $arrayValue)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ProductImagesImpl &&
-            (identical(other.arrayValue, arrayValue) ||
-                other.arrayValue == arrayValue));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, arrayValue);
-
-  /// Create a copy of ProductImages
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ProductImagesImplCopyWith<_$ProductImagesImpl> get copyWith =>
-      __$$ProductImagesImplCopyWithImpl<_$ProductImagesImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ProductImagesImplToJson(this);
-  }
-}
-
-abstract class _ProductImages implements ProductImages {
-  const factory _ProductImages({
-    @JsonKey(name: 'arrayValue') final ProductImagesArrayValue? arrayValue,
-  }) = _$ProductImagesImpl;
-
-  factory _ProductImages.fromJson(Map<String, dynamic> json) =
-      _$ProductImagesImpl.fromJson;
-
-  @override
-  @JsonKey(name: 'arrayValue')
-  ProductImagesArrayValue? get arrayValue;
-
-  /// Create a copy of ProductImages
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ProductImagesImplCopyWith<_$ProductImagesImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-ProductImagesArrayValue _$ProductImagesArrayValueFromJson(
-  Map<String, dynamic> json,
-) {
-  return _ProductImagesArrayValue.fromJson(json);
-}
-
-/// @nodoc
-mixin _$ProductImagesArrayValue {
-  @JsonKey(name: 'values')
-  List<Value>? get values => throw _privateConstructorUsedError;
-
-  /// Serializes this ProductImagesArrayValue to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of ProductImagesArrayValue
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $ProductImagesArrayValueCopyWith<ProductImagesArrayValue> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ProductImagesArrayValueCopyWith<$Res> {
-  factory $ProductImagesArrayValueCopyWith(
-    ProductImagesArrayValue value,
-    $Res Function(ProductImagesArrayValue) then,
-  ) = _$ProductImagesArrayValueCopyWithImpl<$Res, ProductImagesArrayValue>;
-  @useResult
-  $Res call({@JsonKey(name: 'values') List<Value>? values});
-}
-
-/// @nodoc
-class _$ProductImagesArrayValueCopyWithImpl<
-  $Res,
-  $Val extends ProductImagesArrayValue
->
-    implements $ProductImagesArrayValueCopyWith<$Res> {
-  _$ProductImagesArrayValueCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of ProductImagesArrayValue
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? values = freezed}) {
-    return _then(
-      _value.copyWith(
-            values:
-                freezed == values
-                    ? _value.values
-                    : values // ignore: cast_nullable_to_non_nullable
-                        as List<Value>?,
-          )
-          as $Val,
-    );
-  }
-}
-
-/// @nodoc
-abstract class _$$ProductImagesArrayValueImplCopyWith<$Res>
-    implements $ProductImagesArrayValueCopyWith<$Res> {
-  factory _$$ProductImagesArrayValueImplCopyWith(
-    _$ProductImagesArrayValueImpl value,
-    $Res Function(_$ProductImagesArrayValueImpl) then,
-  ) = __$$ProductImagesArrayValueImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({@JsonKey(name: 'values') List<Value>? values});
-}
-
-/// @nodoc
-class __$$ProductImagesArrayValueImplCopyWithImpl<$Res>
-    extends
-        _$ProductImagesArrayValueCopyWithImpl<
-          $Res,
-          _$ProductImagesArrayValueImpl
-        >
-    implements _$$ProductImagesArrayValueImplCopyWith<$Res> {
-  __$$ProductImagesArrayValueImplCopyWithImpl(
-    _$ProductImagesArrayValueImpl _value,
-    $Res Function(_$ProductImagesArrayValueImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of ProductImagesArrayValue
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? values = freezed}) {
-    return _then(
-      _$ProductImagesArrayValueImpl(
-        values:
-            freezed == values
-                ? _value._values
-                : values // ignore: cast_nullable_to_non_nullable
-                    as List<Value>?,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$ProductImagesArrayValueImpl implements _ProductImagesArrayValue {
-  const _$ProductImagesArrayValueImpl({
-    @JsonKey(name: 'values') final List<Value>? values,
-  }) : _values = values;
-
-  factory _$ProductImagesArrayValueImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ProductImagesArrayValueImplFromJson(json);
-
-  final List<Value>? _values;
-  @override
-  @JsonKey(name: 'values')
-  List<Value>? get values {
-    final value = _values;
-    if (value == null) return null;
-    if (_values is EqualUnmodifiableListView) return _values;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  @override
-  String toString() {
-    return 'ProductImagesArrayValue(values: $values)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ProductImagesArrayValueImpl &&
-            const DeepCollectionEquality().equals(other._values, _values));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_values));
-
-  /// Create a copy of ProductImagesArrayValue
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ProductImagesArrayValueImplCopyWith<_$ProductImagesArrayValueImpl>
-  get copyWith => __$$ProductImagesArrayValueImplCopyWithImpl<
-    _$ProductImagesArrayValueImpl
-  >(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ProductImagesArrayValueImplToJson(this);
-  }
-}
-
-abstract class _ProductImagesArrayValue implements ProductImagesArrayValue {
-  const factory _ProductImagesArrayValue({
-    @JsonKey(name: 'values') final List<Value>? values,
-  }) = _$ProductImagesArrayValueImpl;
-
-  factory _ProductImagesArrayValue.fromJson(Map<String, dynamic> json) =
-      _$ProductImagesArrayValueImpl.fromJson;
-
-  @override
-  @JsonKey(name: 'values')
-  List<Value>? get values;
-
-  /// Create a copy of ProductImagesArrayValue
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ProductImagesArrayValueImplCopyWith<_$ProductImagesArrayValueImpl>
-  get copyWith => throw _privateConstructorUsedError;
-}
-
-Value _$ValueFromJson(Map<String, dynamic> json) {
-  return _Value.fromJson(json);
-}
-
-/// @nodoc
-mixin _$Value {
+mixin _$ProductImage {
   @JsonKey(name: 'stringValue')
   String? get stringValue => throw _privateConstructorUsedError;
 
-  /// Serializes this Value to a JSON map.
+  /// Serializes this ProductImage to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of Value
+  /// Create a copy of ProductImage
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $ValueCopyWith<Value> get copyWith => throw _privateConstructorUsedError;
+  $ProductImageCopyWith<ProductImage> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ValueCopyWith<$Res> {
-  factory $ValueCopyWith(Value value, $Res Function(Value) then) =
-      _$ValueCopyWithImpl<$Res, Value>;
+abstract class $ProductImageCopyWith<$Res> {
+  factory $ProductImageCopyWith(
+    ProductImage value,
+    $Res Function(ProductImage) then,
+  ) = _$ProductImageCopyWithImpl<$Res, ProductImage>;
   @useResult
   $Res call({@JsonKey(name: 'stringValue') String? stringValue});
 }
 
 /// @nodoc
-class _$ValueCopyWithImpl<$Res, $Val extends Value>
-    implements $ValueCopyWith<$Res> {
-  _$ValueCopyWithImpl(this._value, this._then);
+class _$ProductImageCopyWithImpl<$Res, $Val extends ProductImage>
+    implements $ProductImageCopyWith<$Res> {
+  _$ProductImageCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Value
+  /// Create a copy of ProductImage
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -1827,32 +1953,33 @@ class _$ValueCopyWithImpl<$Res, $Val extends Value>
 }
 
 /// @nodoc
-abstract class _$$ValueImplCopyWith<$Res> implements $ValueCopyWith<$Res> {
-  factory _$$ValueImplCopyWith(
-    _$ValueImpl value,
-    $Res Function(_$ValueImpl) then,
-  ) = __$$ValueImplCopyWithImpl<$Res>;
+abstract class _$$ProductImageImplCopyWith<$Res>
+    implements $ProductImageCopyWith<$Res> {
+  factory _$$ProductImageImplCopyWith(
+    _$ProductImageImpl value,
+    $Res Function(_$ProductImageImpl) then,
+  ) = __$$ProductImageImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({@JsonKey(name: 'stringValue') String? stringValue});
 }
 
 /// @nodoc
-class __$$ValueImplCopyWithImpl<$Res>
-    extends _$ValueCopyWithImpl<$Res, _$ValueImpl>
-    implements _$$ValueImplCopyWith<$Res> {
-  __$$ValueImplCopyWithImpl(
-    _$ValueImpl _value,
-    $Res Function(_$ValueImpl) _then,
+class __$$ProductImageImplCopyWithImpl<$Res>
+    extends _$ProductImageCopyWithImpl<$Res, _$ProductImageImpl>
+    implements _$$ProductImageImplCopyWith<$Res> {
+  __$$ProductImageImplCopyWithImpl(
+    _$ProductImageImpl _value,
+    $Res Function(_$ProductImageImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of Value
+  /// Create a copy of ProductImage
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({Object? stringValue = freezed}) {
     return _then(
-      _$ValueImpl(
+      _$ProductImageImpl(
         stringValue:
             freezed == stringValue
                 ? _value.stringValue
@@ -1865,11 +1992,11 @@ class __$$ValueImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ValueImpl implements _Value {
-  const _$ValueImpl({@JsonKey(name: 'stringValue') this.stringValue});
+class _$ProductImageImpl implements _ProductImage {
+  const _$ProductImageImpl({@JsonKey(name: 'stringValue') this.stringValue});
 
-  factory _$ValueImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ValueImplFromJson(json);
+  factory _$ProductImageImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ProductImageImplFromJson(json);
 
   @override
   @JsonKey(name: 'stringValue')
@@ -1877,14 +2004,14 @@ class _$ValueImpl implements _Value {
 
   @override
   String toString() {
-    return 'Value(stringValue: $stringValue)';
+    return 'ProductImage(stringValue: $stringValue)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ValueImpl &&
+            other is _$ProductImageImpl &&
             (identical(other.stringValue, stringValue) ||
                 other.stringValue == stringValue));
   }
@@ -1893,379 +2020,36 @@ class _$ValueImpl implements _Value {
   @override
   int get hashCode => Object.hash(runtimeType, stringValue);
 
-  /// Create a copy of Value
+  /// Create a copy of ProductImage
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ValueImplCopyWith<_$ValueImpl> get copyWith =>
-      __$$ValueImplCopyWithImpl<_$ValueImpl>(this, _$identity);
+  _$$ProductImageImplCopyWith<_$ProductImageImpl> get copyWith =>
+      __$$ProductImageImplCopyWithImpl<_$ProductImageImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ValueImplToJson(this);
+    return _$$ProductImageImplToJson(this);
   }
 }
 
-abstract class _Value implements Value {
-  const factory _Value({
+abstract class _ProductImage implements ProductImage {
+  const factory _ProductImage({
     @JsonKey(name: 'stringValue') final String? stringValue,
-  }) = _$ValueImpl;
+  }) = _$ProductImageImpl;
 
-  factory _Value.fromJson(Map<String, dynamic> json) = _$ValueImpl.fromJson;
+  factory _ProductImage.fromJson(Map<String, dynamic> json) =
+      _$ProductImageImpl.fromJson;
 
   @override
   @JsonKey(name: 'stringValue')
   String? get stringValue;
 
-  /// Create a copy of Value
+  /// Create a copy of ProductImage
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ValueImplCopyWith<_$ValueImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-Sizes _$SizesFromJson(Map<String, dynamic> json) {
-  return _Sizes.fromJson(json);
-}
-
-/// @nodoc
-mixin _$Sizes {
-  @JsonKey(name: 'arrayValue')
-  SizesArrayValue? get arrayValue => throw _privateConstructorUsedError;
-
-  /// Serializes this Sizes to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of Sizes
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $SizesCopyWith<Sizes> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $SizesCopyWith<$Res> {
-  factory $SizesCopyWith(Sizes value, $Res Function(Sizes) then) =
-      _$SizesCopyWithImpl<$Res, Sizes>;
-  @useResult
-  $Res call({@JsonKey(name: 'arrayValue') SizesArrayValue? arrayValue});
-
-  $SizesArrayValueCopyWith<$Res>? get arrayValue;
-}
-
-/// @nodoc
-class _$SizesCopyWithImpl<$Res, $Val extends Sizes>
-    implements $SizesCopyWith<$Res> {
-  _$SizesCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Sizes
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? arrayValue = freezed}) {
-    return _then(
-      _value.copyWith(
-            arrayValue:
-                freezed == arrayValue
-                    ? _value.arrayValue
-                    : arrayValue // ignore: cast_nullable_to_non_nullable
-                        as SizesArrayValue?,
-          )
-          as $Val,
-    );
-  }
-
-  /// Create a copy of Sizes
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $SizesArrayValueCopyWith<$Res>? get arrayValue {
-    if (_value.arrayValue == null) {
-      return null;
-    }
-
-    return $SizesArrayValueCopyWith<$Res>(_value.arrayValue!, (value) {
-      return _then(_value.copyWith(arrayValue: value) as $Val);
-    });
-  }
-}
-
-/// @nodoc
-abstract class _$$SizesImplCopyWith<$Res> implements $SizesCopyWith<$Res> {
-  factory _$$SizesImplCopyWith(
-    _$SizesImpl value,
-    $Res Function(_$SizesImpl) then,
-  ) = __$$SizesImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({@JsonKey(name: 'arrayValue') SizesArrayValue? arrayValue});
-
-  @override
-  $SizesArrayValueCopyWith<$Res>? get arrayValue;
-}
-
-/// @nodoc
-class __$$SizesImplCopyWithImpl<$Res>
-    extends _$SizesCopyWithImpl<$Res, _$SizesImpl>
-    implements _$$SizesImplCopyWith<$Res> {
-  __$$SizesImplCopyWithImpl(
-    _$SizesImpl _value,
-    $Res Function(_$SizesImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of Sizes
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? arrayValue = freezed}) {
-    return _then(
-      _$SizesImpl(
-        arrayValue:
-            freezed == arrayValue
-                ? _value.arrayValue
-                : arrayValue // ignore: cast_nullable_to_non_nullable
-                    as SizesArrayValue?,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$SizesImpl implements _Sizes {
-  const _$SizesImpl({@JsonKey(name: 'arrayValue') this.arrayValue});
-
-  factory _$SizesImpl.fromJson(Map<String, dynamic> json) =>
-      _$$SizesImplFromJson(json);
-
-  @override
-  @JsonKey(name: 'arrayValue')
-  final SizesArrayValue? arrayValue;
-
-  @override
-  String toString() {
-    return 'Sizes(arrayValue: $arrayValue)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SizesImpl &&
-            (identical(other.arrayValue, arrayValue) ||
-                other.arrayValue == arrayValue));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, arrayValue);
-
-  /// Create a copy of Sizes
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SizesImplCopyWith<_$SizesImpl> get copyWith =>
-      __$$SizesImplCopyWithImpl<_$SizesImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$SizesImplToJson(this);
-  }
-}
-
-abstract class _Sizes implements Sizes {
-  const factory _Sizes({
-    @JsonKey(name: 'arrayValue') final SizesArrayValue? arrayValue,
-  }) = _$SizesImpl;
-
-  factory _Sizes.fromJson(Map<String, dynamic> json) = _$SizesImpl.fromJson;
-
-  @override
-  @JsonKey(name: 'arrayValue')
-  SizesArrayValue? get arrayValue;
-
-  /// Create a copy of Sizes
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SizesImplCopyWith<_$SizesImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-SizesArrayValue _$SizesArrayValueFromJson(Map<String, dynamic> json) {
-  return _SizesArrayValue.fromJson(json);
-}
-
-/// @nodoc
-mixin _$SizesArrayValue {
-  @JsonKey(name: 'values')
-  List<AddedBy>? get values => throw _privateConstructorUsedError;
-
-  /// Serializes this SizesArrayValue to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of SizesArrayValue
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $SizesArrayValueCopyWith<SizesArrayValue> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $SizesArrayValueCopyWith<$Res> {
-  factory $SizesArrayValueCopyWith(
-    SizesArrayValue value,
-    $Res Function(SizesArrayValue) then,
-  ) = _$SizesArrayValueCopyWithImpl<$Res, SizesArrayValue>;
-  @useResult
-  $Res call({@JsonKey(name: 'values') List<AddedBy>? values});
-}
-
-/// @nodoc
-class _$SizesArrayValueCopyWithImpl<$Res, $Val extends SizesArrayValue>
-    implements $SizesArrayValueCopyWith<$Res> {
-  _$SizesArrayValueCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of SizesArrayValue
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? values = freezed}) {
-    return _then(
-      _value.copyWith(
-            values:
-                freezed == values
-                    ? _value.values
-                    : values // ignore: cast_nullable_to_non_nullable
-                        as List<AddedBy>?,
-          )
-          as $Val,
-    );
-  }
-}
-
-/// @nodoc
-abstract class _$$SizesArrayValueImplCopyWith<$Res>
-    implements $SizesArrayValueCopyWith<$Res> {
-  factory _$$SizesArrayValueImplCopyWith(
-    _$SizesArrayValueImpl value,
-    $Res Function(_$SizesArrayValueImpl) then,
-  ) = __$$SizesArrayValueImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({@JsonKey(name: 'values') List<AddedBy>? values});
-}
-
-/// @nodoc
-class __$$SizesArrayValueImplCopyWithImpl<$Res>
-    extends _$SizesArrayValueCopyWithImpl<$Res, _$SizesArrayValueImpl>
-    implements _$$SizesArrayValueImplCopyWith<$Res> {
-  __$$SizesArrayValueImplCopyWithImpl(
-    _$SizesArrayValueImpl _value,
-    $Res Function(_$SizesArrayValueImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of SizesArrayValue
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? values = freezed}) {
-    return _then(
-      _$SizesArrayValueImpl(
-        values:
-            freezed == values
-                ? _value._values
-                : values // ignore: cast_nullable_to_non_nullable
-                    as List<AddedBy>?,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$SizesArrayValueImpl implements _SizesArrayValue {
-  const _$SizesArrayValueImpl({
-    @JsonKey(name: 'values') final List<AddedBy>? values,
-  }) : _values = values;
-
-  factory _$SizesArrayValueImpl.fromJson(Map<String, dynamic> json) =>
-      _$$SizesArrayValueImplFromJson(json);
-
-  final List<AddedBy>? _values;
-  @override
-  @JsonKey(name: 'values')
-  List<AddedBy>? get values {
-    final value = _values;
-    if (value == null) return null;
-    if (_values is EqualUnmodifiableListView) return _values;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  @override
-  String toString() {
-    return 'SizesArrayValue(values: $values)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SizesArrayValueImpl &&
-            const DeepCollectionEquality().equals(other._values, _values));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_values));
-
-  /// Create a copy of SizesArrayValue
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SizesArrayValueImplCopyWith<_$SizesArrayValueImpl> get copyWith =>
-      __$$SizesArrayValueImplCopyWithImpl<_$SizesArrayValueImpl>(
-        this,
-        _$identity,
-      );
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$SizesArrayValueImplToJson(this);
-  }
-}
-
-abstract class _SizesArrayValue implements SizesArrayValue {
-  const factory _SizesArrayValue({
-    @JsonKey(name: 'values') final List<AddedBy>? values,
-  }) = _$SizesArrayValueImpl;
-
-  factory _SizesArrayValue.fromJson(Map<String, dynamic> json) =
-      _$SizesArrayValueImpl.fromJson;
-
-  @override
-  @JsonKey(name: 'values')
-  List<AddedBy>? get values;
-
-  /// Create a copy of SizesArrayValue
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SizesArrayValueImplCopyWith<_$SizesArrayValueImpl> get copyWith =>
+  _$$ProductImageImplCopyWith<_$ProductImageImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
