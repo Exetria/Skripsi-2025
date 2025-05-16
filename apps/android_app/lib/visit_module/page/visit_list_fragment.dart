@@ -295,18 +295,22 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
           ),
 
           // Floating action button
-          Align(
-            alignment: Alignment.bottomRight,
-            child: FloatingActionButton(
-              onPressed: _addButtonFunction,
-              child: const Icon(Icons.add),
-            ),
-          ),
+          _addButtonFunction != null
+              ? Align(
+                alignment: Alignment.bottomRight,
+                child: FloatingActionButton(
+                  heroTag: 'add_button',
+                  onPressed: _addButtonFunction,
+                  child: const Icon(Icons.add),
+                ),
+              )
+              : const SizedBox.shrink(),
 
           _navigateButtonFunction != null
               ? Align(
                 alignment: Alignment.bottomLeft,
                 child: FloatingActionButton(
+                  heroTag: 'navigate_button',
                   onPressed: _navigateButtonFunction,
                   child: const Icon(Icons.navigation),
                 ),
