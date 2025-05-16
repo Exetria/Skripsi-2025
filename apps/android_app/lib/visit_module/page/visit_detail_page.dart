@@ -41,6 +41,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
   String? _visitPhotoLink; // Input
   int? _selectedStatus; // Input
   bool _submitButtonEnabled = true;
+  bool _pickVisitPhoto = true;
   bool _isOldPhotoFound = true;
 
   final _notesController = TextEditingController();
@@ -166,79 +167,95 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
               SizedBox(height: 16.h),
 
               // Image Upload (optional if status == 1)
-              GestureDetector(
-                onTap: _selectedStatus != 1 ? pickImage : null,
-                child: AbsorbPointer(
-                  absorbing: _selectedStatus == 1,
-                  child: Container(
-                    height: 140.h,
-                    width: double.infinity,
-                    decoration: photoBoxDecoration(context).copyWith(
-                      color:
-                          _selectedStatus == 1
-                              ? dividerColor.withAlpha(40)
-                              : null,
+              Center(
+                child: GestureDetector(
+                  onTap:
+                      _selectedStatus != 1 && _pickVisitPhoto
+                          ? () async {
+                            _pickVisitPhoto = false;
+                            final pickedImage = await pickImage(
+                              context: context,
+                            );
+                            setState(() {
+                              _visitPhoto = pickedImage;
+                            });
+                            _pickVisitPhoto = true;
+                          }
+                          : null,
+                  child: AbsorbPointer(
+                    absorbing: _selectedStatus == 1,
+                    child: Container(
+                      width: ScreenUtil().screenWidth * 0.8,
+                      decoration: photoBoxDecoration(context).copyWith(
+                        color:
+                            _selectedStatus == 1
+                                ? dividerColor.withAlpha(40)
+                                : null,
+                      ),
+                      child: AspectRatio(
+                        aspectRatio: 3 / 4,
+                        child:
+                            _visitPhoto != null
+                                ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(16.r),
+                                  child: Image.file(
+                                    _visitPhoto!,
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                  ),
+                                )
+                                : _visitPhotoLink != null
+                                ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(16.r),
+                                  child: Image.network(
+                                    _visitPhotoLink ?? '',
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      _isOldPhotoFound = false;
+                                      return Center(
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(
+                                              Icons.broken_image_outlined,
+                                              size: 32.sp,
+                                              color: errorColor,
+                                            ),
+                                            SizedBox(height: 8.h),
+                                            Text(
+                                              'Image not found',
+                                              style: errorStyle,
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                )
+                                : Center(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.camera_alt_outlined,
+                                        size: 32.sp,
+                                        color: dividerColor,
+                                      ),
+                                      SizedBox(height: 8.h),
+                                      Text(
+                                        _selectedStatus == 1
+                                            ? 'Photo not required for Planned'
+                                            : 'Tap to upload photo',
+                                        style: captionStyle,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                      ),
                     ),
-                    child:
-                        _visitPhoto != null
-                            ? ClipRRect(
-                              borderRadius: BorderRadius.circular(16.r),
-                              child: Image.file(
-                                _visitPhoto!,
-                                fit: BoxFit.cover,
-                                width: double.infinity,
-                                height: double.infinity,
-                              ),
-                            )
-                            : _visitPhotoLink != null
-                            ? ClipRRect(
-                              borderRadius: BorderRadius.circular(16.r),
-                              child: Image.network(
-                                _visitPhotoLink ?? '',
-                                fit: BoxFit.cover,
-                                width: double.infinity,
-                                height: double.infinity,
-                                errorBuilder: (context, error, stackTrace) {
-                                  _isOldPhotoFound = false;
-                                  return Center(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Icon(
-                                          Icons.broken_image_outlined,
-                                          size: 32.sp,
-                                          color: errorColor,
-                                        ),
-                                        SizedBox(height: 8.h),
-                                        Text(
-                                          'Image not found',
-                                          style: errorStyle,
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
-                            )
-                            : Center(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(
-                                    Icons.camera_alt_outlined,
-                                    size: 32.sp,
-                                    color: dividerColor,
-                                  ),
-                                  SizedBox(height: 8.h),
-                                  Text(
-                                    _selectedStatus == 1
-                                        ? 'Photo not required for Planned'
-                                        : 'Tap to upload photo',
-                                    style: captionStyle,
-                                  ),
-                                ],
-                              ),
-                            ),
                   ),
                 ),
               ),
@@ -304,7 +321,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
               date: widget.date,
               visitDataList: widget.visitDataList,
               updateLocationIndex: widget.index,
-              visitPhoto: _visitPhoto,
+              visitPhoto: _selectedStatus != 1 ? _visitPhoto : null,
             );
 
         // Refresh visit list

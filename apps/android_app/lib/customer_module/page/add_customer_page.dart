@@ -23,6 +23,8 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
   String? _customerType;
   String? _subscriptionType;
   bool _submitButtonEnabled = true;
+  bool _pickStorePhotoEnabled = true;
+  bool _pickOwnerIdPhotoEnabled = true;
 
   final _requestDestinationController = TextEditingController();
   final _carbonCopyController = TextEditingController();
@@ -186,14 +188,21 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                   // Store Image Picker
                   Center(child: Text('Store Picture', style: captionStyle)),
                   GestureDetector(
-                    onTap: () async {
-                      File? pickedImage = await pickImage();
-                      if (pickedImage != null) {
-                        setState(() {
-                          _storePhoto = pickedImage;
-                        });
-                      }
-                    },
+                    onTap:
+                        _pickStorePhotoEnabled
+                            ? () async {
+                              _pickStorePhotoEnabled = false;
+                              File? pickedImage = await pickImage(
+                                context: context,
+                              );
+                              if (pickedImage != null) {
+                                setState(() {
+                                  _storePhoto = pickedImage;
+                                });
+                              }
+                              _pickStorePhotoEnabled = true;
+                            }
+                            : null,
                     child: Container(
                       width: 120.w,
                       height: 120.w,
@@ -289,15 +298,22 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                   // KTP Photo
                   Center(child: Text('Owner ID Picture', style: captionStyle)),
                   GestureDetector(
-                    onTap: () async {
-                      File? pickedImage = await pickImage();
+                    onTap:
+                        _pickOwnerIdPhotoEnabled
+                            ? () async {
+                              _pickOwnerIdPhotoEnabled = false;
+                              File? pickedImage = await pickImage(
+                                context: context,
+                              );
 
-                      if (pickedImage != null) {
-                        setState(() {
-                          _ktpPhoto = pickedImage;
-                        });
-                      }
-                    },
+                              if (pickedImage != null) {
+                                setState(() {
+                                  _ktpPhoto = pickedImage;
+                                });
+                              }
+                              _pickOwnerIdPhotoEnabled = true;
+                            }
+                            : null,
                     child: Container(
                       width: 120.w,
                       height: 120.w,
