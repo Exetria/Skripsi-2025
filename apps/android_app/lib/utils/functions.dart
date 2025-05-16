@@ -385,20 +385,6 @@ Widget productCard({
   );
 }
 
-// PICK IMAGE
-Future<File?> pickImage({bool fromGallery = false}) async {
-  final imagePicker = ImagePicker();
-  final currentLocation = await getCurrentPosition();
-
-  final image = await imagePicker.pickImage(
-    source: fromGallery ? ImageSource.gallery : ImageSource.camera,
-  );
-
-  if (image == null) return null;
-
-  return drawWatermark(imageFile: File(image.path), location: currentLocation);
-}
-
 // INPUT ROW
 Widget buildInputRow({
   required TextEditingController controller,
@@ -427,6 +413,43 @@ String getIdFromName({required String name}) {
   return parts.isNotEmpty ? parts.last : '';
 }
 
+// PICK IMAGE
+Future<File?> pickImage({
+  required BuildContext context,
+  bool fromGallery = false,
+}) async {
+  try {
+    final imagePicker = ImagePicker();
+    final currentLocation = await getCurrentPosition();
+
+    final image = await imagePicker.pickImage(
+      source: fromGallery ? ImageSource.gallery : ImageSource.camera,
+    );
+
+    if (image == null) {
+      return null;
+    }
+
+    final result = await drawWatermark(
+      imageFile: File(image.path),
+      location: currentLocation,
+    );
+
+    return result;
+  } on ApiException catch (apiException) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(apiException.message),
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 2),
+      ),
+    );
+    return null;
+  } catch (e) {
+    return null;
+  }
+}
+
 // DRAW WATERMARK
 Future<File?> drawWatermark({
   required File imageFile,
@@ -446,7 +469,7 @@ Future<File?> drawWatermark({
   final imaglib.BitmapFont font = imaglib.arial48;
   final lineHeight = font.lineHeight;
   final int centerX = (originalImage.width / 2).round();
-  final int startY = (originalImage.height * 0.8).round();
+  final int startY = (originalImage.height * 0.9).round();
 
   // Estimate character width (arial48 is roughly 24px per char)
   int charWidth = 24;
@@ -475,7 +498,9 @@ Future<File?> drawWatermark({
   final output = File(
     '${tempDir.path}/watermarked_${DateTime.now().millisecondsSinceEpoch}.jpg',
   );
+
   await output.writeAsBytes(imaglib.encodeJpg(originalImage));
+
   return output;
 }
 
