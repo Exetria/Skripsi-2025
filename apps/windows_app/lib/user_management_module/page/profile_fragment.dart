@@ -126,7 +126,9 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                         ),
                       ),
                       Expanded(
-                        child: Text(userDataHelper?.name ?? 'Not Available'),
+                        child: Text(
+                          userDataHelper?.fullName ?? 'Not Available',
+                        ),
                       ),
                     ],
                   ),

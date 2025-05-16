@@ -75,7 +75,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         labelText: 'Email',
                         labelStyle: bodyStyle,
                         hintText: 'Enter your email',
-                        hintStyle: hintStyle,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide(color: dividerColor),
@@ -99,7 +98,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         labelText: 'Password',
                         labelStyle: bodyStyle,
                         hintText: 'Enter your password',
-                        hintStyle: hintStyle,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide(color: dividerColor),
