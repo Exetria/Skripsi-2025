@@ -161,3 +161,11 @@ void showConfirmationDialog({
     },
   );
 }
+
+// GET DOCUMENT ID FROM NAME
+String getIdFromName({required String? name}) {
+  if (name == null) return '';
+
+  final parts = name.split('/');
+  return parts.isNotEmpty ? parts.last : '';
+}

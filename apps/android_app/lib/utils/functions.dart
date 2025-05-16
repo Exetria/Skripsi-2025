@@ -272,63 +272,6 @@ Widget infoCard({
   );
 }
 
-// SCROLLABLE INFO TEXT
-Widget refreshableInfoWidget({
-  required Future<void> Function() refreshFunction,
-  required Widget content,
-}) {
-  return RefreshIndicator(
-    onRefresh: refreshFunction,
-    child: LayoutBuilder(
-      builder: (context, constraints) {
-        return SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: constraints.maxHeight),
-            child: Center(child: content),
-          ),
-        );
-      },
-    ),
-  );
-}
-
-// GET CURRENT POSITION
-Future<Position> getCurrentPosition() async {
-  bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-  if (!serviceEnabled) {
-    throw ApiException(
-      statusCode: -1,
-      message: 'Location services are disabled.',
-    );
-  }
-
-  LocationPermission permission = await Geolocator.checkPermission();
-  if (permission == LocationPermission.denied) {
-    permission = await Geolocator.requestPermission();
-    if (permission == LocationPermission.denied) {
-      throw ApiException(
-        statusCode: -1,
-        message: 'Location Permission Denied.',
-      );
-    }
-  }
-
-  if (permission == LocationPermission.deniedForever) {
-    throw ApiException(
-      statusCode: -1,
-      message: 'Please Enable Location Permission in Settings ',
-    );
-  }
-
-  return await Geolocator.getCurrentPosition(
-    locationSettings: const LocationSettings(
-      accuracy: LocationAccuracy.bestForNavigation,
-      distanceFilter: 0,
-    ),
-  );
-}
-
 // PRODUCT CARD
 Widget productCard({
   required BuildContext context,
@@ -407,10 +350,25 @@ Widget buildInputRow({
   );
 }
 
-// GET DOCUMNET ID FROM NAME
-String getIdFromName({required String name}) {
-  final parts = name.split('/');
-  return parts.isNotEmpty ? parts.last : '';
+// SCROLLABLE INFO TEXT
+Widget refreshableInfoWidget({
+  required Future<void> Function() refreshFunction,
+  required Widget content,
+}) {
+  return RefreshIndicator(
+    onRefresh: refreshFunction,
+    child: LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: Center(child: content),
+          ),
+        );
+      },
+    ),
+  );
 }
 
 // PICK IMAGE
@@ -502,6 +460,42 @@ Future<File?> drawWatermark({
   await output.writeAsBytes(imaglib.encodeJpg(originalImage));
 
   return output;
+}
+
+// GET CURRENT POSITION
+Future<Position> getCurrentPosition() async {
+  bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  if (!serviceEnabled) {
+    throw ApiException(
+      statusCode: -1,
+      message: 'Location services are disabled.',
+    );
+  }
+
+  LocationPermission permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied) {
+      throw ApiException(
+        statusCode: -1,
+        message: 'Location Permission Denied.',
+      );
+    }
+  }
+
+  if (permission == LocationPermission.deniedForever) {
+    throw ApiException(
+      statusCode: -1,
+      message: 'Please Enable Location Permission in Settings ',
+    );
+  }
+
+  return await Geolocator.getCurrentPosition(
+    locationSettings: const LocationSettings(
+      accuracy: LocationAccuracy.bestForNavigation,
+      distanceFilter: 0,
+    ),
+  );
 }
 
 // NAVIGATE TO GOOGLE MAPS
