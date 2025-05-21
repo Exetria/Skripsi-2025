@@ -64,6 +64,7 @@ class _MainApp extends ConsumerState<Main> {
             outlineVariant: unselectedItemColor,
 
             outline: dividerColor,
+            shadow: dividerColor,
           ),
 
           elevatedButtonTheme: ElevatedButtonThemeData(
@@ -202,6 +203,7 @@ class _MainApp extends ConsumerState<Main> {
             outlineVariant: darkModeUnselectedItemColor,
 
             outline: darkModeDividerColor,
+            shadow: Colors.black,
           ),
 
           elevatedButtonTheme: ElevatedButtonThemeData(

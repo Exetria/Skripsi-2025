@@ -66,7 +66,9 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                   fillColor: Theme.of(context).colorScheme.surface,
                 ),
                 validator: (_) {
-                  return _selectedCustomerId == null ? 'Required Field' : null;
+                  return _selectedCustomerId == null
+                      ? 'Tidak Boleh Kosong'
+                      : null;
                 },
                 onTap: () async {
                   // get selected customer Id
@@ -80,7 +82,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                       _selectedCustomerId = newSelectedId;
 
                       _customerIdController.text = customerListState.when(
-                        loading: () => 'Loading...',
+                        loading: () => 'Memuat...',
                         data: (data) {
                           return ref
                               .read(customerListControllerProvider.notifier)
@@ -88,7 +90,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                         },
                         error: (error, stackTrace) {
                           ref.invalidate(customerListControllerProvider);
-                          return 'Error Loading Name';
+                          return 'Gagal Memuat Nama';
                         },
                       );
                     });
@@ -106,7 +108,8 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
                 decoration: InputDecoration(
-                  labelText: 'Payment Method',
+                  labelText: 'Metode Pembayaran',
+                  fillColor: Theme.of(context).colorScheme.surface,
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: 12.w,
                     vertical: 14.h,
@@ -125,7 +128,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                   });
                 },
                 validator: (value) {
-                  return value == null ? 'Required Field' : null;
+                  return value == null ? 'Tidak Boleh Kosong' : null;
                 },
               ),
               SizedBox(height: 16.h),
@@ -133,7 +136,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
               // Notes
               TextFormField(
                 controller: _notesController,
-                decoration: const InputDecoration(labelText: 'Notes'),
+                decoration: const InputDecoration(labelText: 'Catatan'),
               ),
               SizedBox(height: 16.h),
 
@@ -143,7 +146,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Products', style: sectionTitleStyle),
+                  Text('Produk', style: sectionTitleStyle),
                   GestureDetector(
                     onTap: () async {
                       // Add product
@@ -220,7 +223,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                 ? ElevatedButton(
                   onPressed: _submitButtonEnabled ? _submit : null,
                   child: Text(
-                    'Confirm',
+                    'Konfirmasi',
                     style: buttonStyle.copyWith(
                       color: Theme.of(context).colorScheme.onPrimary,
                     ),
@@ -252,7 +255,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
         productCard(
           context: context,
           productName: productListState.when(
-            loading: () => 'Loading...',
+            loading: () => 'Memuat...',
             data: (data) {
               return ref
                   .read(productListControllerProvider.notifier)
@@ -260,7 +263,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
             },
             error: (error, stackTrace) {
               ref.invalidate(customerListControllerProvider);
-              return 'Error Loading Name';
+              return 'Gagal Memuat Nama';
             },
           ),
           quantity: quantity ?? '-',
@@ -310,7 +313,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: customSearchBar(context: context, hint: 'Search Customers...'),
+          title: customSearchBar(context: context, hint: 'Cari Pelanggan...'),
           content: SizedBox(
             width: ScreenUtil().screenWidth,
             height: ScreenUtil().screenHeight / 2,
@@ -320,7 +323,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                 if (productList == null || productList.isEmpty) {
                   return refreshableInfoWidget(
                     refreshFunction: _refreshCustomerList,
-                    content: const Text('No Customer Data Found'),
+                    content: const Text('Data Pelanggan Tidak Ditemukan'),
                   );
                 }
 
@@ -355,7 +358,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                 return refreshableInfoWidget(
                   refreshFunction: _refreshCustomerList,
                   content: Text(
-                    'Error Loading Customer List: ${exception.message}',
+                    'Gagal Memuat Data Pelanggan: ${exception.message}',
                     style: errorStyle,
                   ),
                 );
@@ -374,7 +377,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: customSearchBar(context: context, hint: 'Search Products...'),
+          title: customSearchBar(context: context, hint: 'Cari Produk...'),
           content: SizedBox(
             width: ScreenUtil().screenWidth,
             height: ScreenUtil().screenHeight / 2,
@@ -384,7 +387,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                 if (productList == null || productList.isEmpty) {
                   return refreshableInfoWidget(
                     refreshFunction: _refreshProductList,
-                    content: const Text('No Product Data Found'),
+                    content: const Text('Data Produk Tidak Ditemukan'),
                   );
                 }
 
@@ -418,7 +421,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                 return refreshableInfoWidget(
                   refreshFunction: _refreshProductList,
                   content: Text(
-                    'Error Loading Product List: ${exception.message}',
+                    'Gagal Menambah Pesanan: ${exception.message}',
                     style: errorStyle,
                   ),
                 );
@@ -475,7 +478,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
               actionsAlignment: MainAxisAlignment.spaceBetween,
               title: Text(
                 productListState.when(
-                  loading: () => 'Loading...',
+                  loading: () => 'Memuat...',
                   data: (data) {
                     return ref
                         .read(productListControllerProvider.notifier)
@@ -483,7 +486,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                   },
                   error: (error, stackTrace) {
                     ref.invalidate(customerListControllerProvider);
-                    return 'Error Loading Name';
+                    return 'Gagal Memuat Nama';
                   },
                 ),
                 style: subtitleStyle,
@@ -743,7 +746,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
       if (result.hasError) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Error adding order'),
+            content: Text('Gagal Membuat Pesanan'),
             behavior: SnackBarBehavior.floating,
             duration: Duration(seconds: 2),
           ),

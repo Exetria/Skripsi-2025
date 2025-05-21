@@ -24,7 +24,7 @@ class _ProductDetailPage extends ConsumerState<ProductDetailPage> {
     return Scaffold(
       appBar: customAppBar(
         context: context,
-        title: 'Product Details',
+        title: 'Detail Produk',
         // title: widget.data.fields?.productName?.stringValue ?? '-',
         showLeftButton: true,
       ),
@@ -75,10 +75,11 @@ class _ProductDetailPage extends ConsumerState<ProductDetailPage> {
 
             infoCard(
               context: context,
-              title: 'Brand Info',
+              title: 'Informasi Merek',
               values: [
-                'Brand : ${widget.data.fields?.brand?.stringValue ?? "-"}',
-                'Company : ${widget.data.fields?.companyCode?.stringValue ?? "-"}',
+                'Merk : ${widget.data.fields?.brand?.stringValue ?? "-"}',
+                // TODO: Check if need to delete
+                'Perusahaan : ${widget.data.fields?.companyCode?.stringValue ?? "-"}',
               ],
               icons: [Icons.donut_small, Icons.donut_small],
             ),
@@ -95,7 +96,7 @@ class _ProductDetailPage extends ConsumerState<ProductDetailPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Description
-                  Text('Description', style: subtitleStyle),
+                  Text('Deskripsi', style: subtitleStyle),
                   SizedBox(height: 8.h),
 
                   Text(
@@ -127,7 +128,7 @@ class _ProductDetailPage extends ConsumerState<ProductDetailPage> {
 
     return infoCard(
       context: context,
-      title: 'Attributes',
+      title: 'Atribut Produk',
       values: cardValues,
       icons: cardIcons,
     );

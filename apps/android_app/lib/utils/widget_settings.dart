@@ -1,4 +1,3 @@
-import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -10,10 +9,7 @@ BoxDecoration regularBoxDecoration(BuildContext context) {
     border: Border.all(color: Theme.of(context).colorScheme.outline),
     boxShadow: [
       BoxShadow(
-        color:
-            Theme.of(context).brightness == Brightness.light
-                ? dividerColor
-                : Colors.black,
+        color: Theme.of(context).colorScheme.shadow,
         blurRadius: 8,
         offset: Offset(0, 6.h),
       ),

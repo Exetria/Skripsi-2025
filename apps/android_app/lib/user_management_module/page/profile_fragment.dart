@@ -80,7 +80,7 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
           const Spacer(),
 
           SwitchListTile(
-            title: const Text('Dark Mode'),
+            title: const Text('Mode Gelap'),
             value: ref.watch(themeModeProvider) == ThemeMode.dark,
             onChanged: (val) async {
               await saveDataToSp(key: 'themeMode', data: val ? '1' : '0');
@@ -138,7 +138,7 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                             padding: EdgeInsets.symmetric(vertical: 12.h),
                           ),
                           icon: Icon(Icons.exit_to_app, size: 20.sp),
-                          label: Text('Logout', style: buttonStyle),
+                          label: Text('Log Out', style: buttonStyle),
                         )
                         : SizedBox(
                           height: 40.h,
@@ -247,7 +247,7 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
         padding: EdgeInsets.symmetric(vertical: 14.h),
       ),
       icon: Icon(Icons.check_circle_outline, size: 20.sp),
-      label: Text('Checked', style: buttonStyle),
+      label: Text('Selesai', style: buttonStyle),
     );
   }
 
@@ -312,10 +312,10 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
   void doCheckIn() async {
     showConfirmationDialog(
       context: context,
-      message: 'Are you sure you want to check in?',
-      leftButtonBackgroundColor: Theme.of(context).colorScheme.tertiary,
-      rightButtonBackgroundColor: Theme.of(context).colorScheme.error,
-      onLeftButtonTap: () async {
+      message: 'Apakah Anda yakin ingin check in?',
+      rightButtonBackgroundColor: Theme.of(context).colorScheme.tertiary,
+      leftButtonBackgroundColor: Theme.of(context).colorScheme.error,
+      onRightButtonTap: () async {
         // Post doc
         final result =
             await ref
@@ -327,7 +327,7 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
           showFeedbackDialog(
             context: context,
             type: 1,
-            message: 'Check In Success',
+            message: 'Check In Sukses',
           );
           // Invalidate provider
           ref.invalidate(getAttendanceDataControllerProvider);
@@ -342,11 +342,11 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
           showFeedbackDialog(
             context: context,
             type: 3,
-            message: 'Check In Failed',
+            message: 'Terjadi Kesalahan\nCheck In Gagal',
           );
         }
       },
-      onRightButtonTap: () {},
+      onLeftButtonTap: () {},
     );
   }
 
@@ -358,10 +358,10 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
   }) async {
     showConfirmationDialog(
       context: context,
-      message: 'Are you sure you want to check out?',
-      leftButtonBackgroundColor: Theme.of(context).colorScheme.tertiary,
-      rightButtonBackgroundColor: Theme.of(context).colorScheme.error,
-      onLeftButtonTap: () async {
+      message: 'Apakah Anda yakin ingin check out?',
+      rightButtonBackgroundColor: Theme.of(context).colorScheme.tertiary,
+      leftButtonBackgroundColor: Theme.of(context).colorScheme.error,
+      onRightButtonTap: () async {
         // Post doc
         final result = await ref
             .read(updateAttendanceControllerProvider.notifier)
@@ -392,21 +392,21 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
           showFeedbackDialog(
             context: context,
             type: 3,
-            message: 'Check Out Failed',
+            message: 'Terjadi Kesalahan\nCheck Out Gagal',
           );
         }
       },
-      onRightButtonTap: () {},
+      onLeftButtonTap: () {},
     );
   }
 
   void doSignOut() async {
     showConfirmationDialog(
       context: context,
-      message: 'Are you sure you want to log out?',
-      leftButtonBackgroundColor: Theme.of(context).colorScheme.tertiary,
-      rightButtonBackgroundColor: Theme.of(context).colorScheme.error,
-      onLeftButtonTap: () async {
+      message: 'Apakah Anda yakin ingin log out?',
+      rightButtonBackgroundColor: Theme.of(context).colorScheme.tertiary,
+      leftButtonBackgroundColor: Theme.of(context).colorScheme.error,
+      onRightButtonTap: () async {
         // Delay to close popup
         await Future.delayed(const Duration(milliseconds: 250));
 
@@ -422,7 +422,7 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
         showFeedbackDialog(
           context: context,
           type: 2,
-          message: 'Log Out Success',
+          message: 'Log Out Sukses',
           onClose: () {
             Future.delayed(const Duration(milliseconds: 250), () {
               setState(() {
@@ -436,7 +436,7 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
           },
         );
       },
-      onRightButtonTap: () {},
+      onLeftButtonTap: () {},
     );
   }
 }

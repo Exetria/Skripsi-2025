@@ -40,7 +40,7 @@ class CustomerListController extends _$CustomerListController {
 
   String getCustomerName({required String id}) {
     if (state is! AsyncData) {
-      return 'Loading...';
+      return 'Memuat...';
     }
 
     final customerList = state.value ?? [];

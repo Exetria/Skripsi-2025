@@ -25,7 +25,7 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
           // Search Bar
           customSearchBar(
             context: context,
-            hint: 'Search Customers...',
+            hint: 'Cari Pelanggan...',
             onChanged: (query) {
               ref
                   .read(customerListControllerProvider.notifier)
@@ -44,7 +44,7 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                 if (customerList == null || customerList.isEmpty) {
                   return refreshableInfoWidget(
                     refreshFunction: _refreshCustomerList,
-                    content: const Text('No Customer Data Found'),
+                    content: const Text('Data Pelanggan Tidak Ditemukan'),
                   );
                 }
 
@@ -85,7 +85,7 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                 return refreshableInfoWidget(
                   refreshFunction: _refreshCustomerList,
                   content: Text(
-                    'Error Loading Customer List: ${exception.message}',
+                    'Gagal Memuat Data Pelanggan: ${exception.message}',
                     style: errorStyle,
                   ),
                 );

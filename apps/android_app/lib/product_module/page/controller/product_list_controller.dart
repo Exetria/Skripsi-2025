@@ -40,7 +40,7 @@ class ProductListController extends _$ProductListController {
 
   String getProductName({required String id}) {
     if (state is! AsyncData) {
-      return 'Loading...';
+      return 'Memuat...';
     }
 
     final productList = state.value ?? [];

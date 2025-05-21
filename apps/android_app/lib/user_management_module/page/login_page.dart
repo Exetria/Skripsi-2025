@@ -124,24 +124,24 @@ class _LoginPage extends ConsumerState<LoginPage> {
               ),
               SizedBox(height: 8.h),
 
-              // Forgot Password
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {
-                    showFeedbackDialog(
-                      context: context,
-                      type: 2,
-                      message: 'Please Contact Your Admin',
-                    );
-                  },
-                  child: Text(
-                    'Forgot Password?',
-                    style: captionStyle.copyWith(fontSize: 14.sp),
-                  ),
-                ),
-              ),
-              SizedBox(height: 8.h),
+              // No forgot Password
+              // Align(
+              //   alignment: Alignment.centerRight,
+              //   child: TextButton(
+              //     onPressed: () {
+              //       showFeedbackDialog(
+              //         context: context,
+              //         type: 2,
+              //         message: 'Please Contact Your Admin',
+              //       );
+              //     },
+              //     child: Text(
+              //       'Forgot Password?',
+              //       style: captionStyle.copyWith(fontSize: 14.sp),
+              //     ),
+              //   ),
+              // ),
+              SizedBox(height: 32.h),
 
               // Login Button or Loader
               Center(
@@ -212,10 +212,10 @@ class _LoginPage extends ConsumerState<LoginPage> {
             message:
                 apiException.responseBody?['error']['message'] ==
                         'INVALID_LOGIN_CREDENTIALS'
-                    ? 'Wrong Email or Password'
+                    ? 'Email atau Password Salah'
                     : apiException.responseBody?['error']['message'] ==
                         'INVALID_EMAIL'
-                    ? 'Invalid Email'
+                    ? 'Email Tidak Valid'
                     : 'Unknown Error',
             onClose: () {
               setState(() {
@@ -242,7 +242,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
       showFeedbackDialog(
         context: context,
         type: 2,
-        message: 'Email is Empty',
+        message: 'Email Kosong',
         onClose: () {
           setState(() {
             _signInButtonEnabled = true;
@@ -255,7 +255,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
       showFeedbackDialog(
         context: context,
         type: 2,
-        message: 'Password is Empty',
+        message: 'Password Kosong',
         onClose: () {
           setState(() {
             _signInButtonEnabled = true;
@@ -268,7 +268,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
       showFeedbackDialog(
         context: context,
         type: 2,
-        message: 'An Unknown Error Occured',
+        message: 'Terjadi Kesalahan',
         onClose: () {
           setState(() {
             _signInButtonEnabled = true;
@@ -328,7 +328,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
       showFeedbackDialog(
         context: context,
         type: 1,
-        message: 'Login Successful',
+        message: 'Login Sukses',
         onClose: () {
           Future.delayed(const Duration(milliseconds: 250), () {
             Navigator.pushReplacement(
@@ -342,7 +342,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
       showFeedbackDialog(
         context: context,
         type: 3,
-        message: 'Sorry, You\'re Not a Sales',
+        message: 'Maaf, Anda Tidak Memiliki Akses',
         onClose: () {
           setState(() {
             _signInButtonEnabled = true;

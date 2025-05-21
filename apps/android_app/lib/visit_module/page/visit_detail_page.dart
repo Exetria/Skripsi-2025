@@ -32,9 +32,9 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
   final _formKey = GlobalKey<FormState>();
 
   final Map<int, String> _statusOptions = {
-    1: 'Planned',
-    2: 'Finished',
-    3: 'Cancelled',
+    1: 'Direncanakan',
+    2: 'Selesai',
+    3: 'Dibatalkan',
   };
 
   File? _visitPhoto; // Input
@@ -91,7 +91,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
       appBar: customAppBar(
         context: context,
         title: customerListState.when(
-          loading: () => 'Loading...',
+          loading: () => 'Memuat...',
           data: (data) {
             return ref
                 .read(customerListControllerProvider.notifier)
@@ -99,7 +99,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
           },
           error: (error, stackTrace) {
             ref.invalidate(customerListControllerProvider);
-            return 'Error Loading Name';
+            return 'Gagal Memuat Nama';
           },
         ),
         subtitle: DateFormat.yMMMMd().format(widget.date),
@@ -153,7 +153,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
               TextFormField(
                 controller: _notesController,
                 decoration: const InputDecoration(
-                  labelText: 'Notes',
+                  labelText: 'Catatan',
                   alignLabelWithHint: true,
                 ),
                 style: bodyStyle,
@@ -161,7 +161,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
                 validator:
                     (value) =>
                         value == null || value.trim().isEmpty
-                            ? 'Notes are required'
+                            ? 'Catatan tidak boleh kosong'
                             : null,
               ),
               SizedBox(height: 16.h),
@@ -247,8 +247,8 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
                                       SizedBox(height: 8.h),
                                       Text(
                                         _selectedStatus == 1
-                                            ? 'Photo not required for Planned'
-                                            : 'Tap to upload photo',
+                                            ? 'Foto Tidak Diperlukan'
+                                            : 'Ketuk untuk Mengambil Foto',
                                         style: captionStyle,
                                       ),
                                     ],
@@ -271,7 +271,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
                 ? ElevatedButton(
                   onPressed: _submitButtonEnabled ? _submit : null,
                   child: Text(
-                    'Confirm',
+                    'Konfirmasi',
                     style: buttonStyle.copyWith(
                       color: Theme.of(context).colorScheme.onPrimary,
                     ),

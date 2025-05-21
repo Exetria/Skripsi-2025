@@ -68,7 +68,7 @@ class _HomePage extends ConsumerState<HomePage> {
           lastPressed = now;
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Press back again to exit'),
+              content: Text('Tekan dua kali untuk keluar'),
               behavior: SnackBarBehavior.floating,
               duration: duration,
             ),
@@ -123,29 +123,43 @@ class _HomePage extends ConsumerState<HomePage> {
               ref.read(selectedIndexProvider.notifier).state = index;
             });
           },
-          type: BottomNavigationBarType.fixed,
           selectedItemColor: Theme.of(context).colorScheme.primary,
           unselectedItemColor: Theme.of(
             context,
           ).colorScheme.onSurface.withAlpha(150),
+
+          type: BottomNavigationBarType.shifting,
+
+          selectedIconTheme: IconThemeData(size: 32.sp),
+          unselectedIconTheme: IconThemeData(size: 28.sp),
+
+          selectedLabelStyle: TextStyle(
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w600,
+          ),
+          unselectedLabelStyle: TextStyle(
+            fontSize: 12.sp,
+            fontWeight: FontWeight.normal,
+          ),
+
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.location_on),
-              label: 'Visits',
+              label: 'Visit',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.receipt_long),
-              label: 'Orders',
+              label: 'Order',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.business),
-              label: 'Customers',
+              label: 'Pelanggan',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.inventory_2),
-              label: 'Products',
+              label: 'Produk',
             ),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
           ],
         ),
       ),
