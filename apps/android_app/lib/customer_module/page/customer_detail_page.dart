@@ -21,7 +21,7 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
     return Scaffold(
       appBar: customAppBar(
         context: context,
-        title: 'Customer Details',
+        title: 'Detail Pelanggan',
         showLeftButton: true,
       ),
       body: SingleChildScrollView(
@@ -72,7 +72,7 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
             // Info Card with name inside
             infoCard(
               context: context,
-              title: 'Company Data',
+              title: 'Data Toko/Perusahaan',
               values: [
                 widget.data.fields?.companyName?.stringValue ?? '-',
                 widget.data.fields?.companyAddress?.stringValue ?? '-',
@@ -90,7 +90,7 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
 
             infoCard(
               context: context,
-              title: 'Owner Data',
+              title: 'Data Pemilik',
               values: [
                 widget.data.fields?.ownerName?.stringValue ?? '-',
                 phoneNumberFormat(
@@ -103,7 +103,7 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
 
             infoCard(
               context: context,
-              title: 'Other Data',
+              title: 'Data Lainnya',
               values: [
                 widget.data.fields?.customerType?.stringValue ?? '-',
                 widget.data.fields?.ownershipStatus?.stringValue ?? '-',
@@ -124,11 +124,12 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Note', style: sectionTitleStyle),
+                  Text('Catatan', style: sectionTitleStyle),
                   SizedBox(height: 8.h),
 
                   Text(
-                    widget.data.fields?.note?.stringValue ?? 'No Note',
+                    widget.data.fields?.note?.stringValue ??
+                        'Tidak ada catatan',
                     style: bodyStyle,
                   ),
                 ],

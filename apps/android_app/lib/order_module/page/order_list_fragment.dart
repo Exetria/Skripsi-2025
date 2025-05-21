@@ -29,7 +29,7 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
           // Search Bar
           customSearchBar(
             context: context,
-            hint: 'Search Orders...',
+            hint: 'Cari Order...',
             onChanged: (query) {
               ref
                   .read(orderListControllerProvider.notifier)
@@ -48,7 +48,7 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
                 if (orderList == null || orderList.isEmpty) {
                   return refreshableInfoWidget(
                     refreshFunction: _refreshCustomerList,
-                    content: const Text('No Order Data Found'),
+                    content: const Text('Data Order Tidak Ditemukan'),
                   );
                 }
                 return RefreshIndicator(
@@ -73,17 +73,17 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
                         context: context,
                         leadIcon: Icons.receipt_long,
                         title: customerListState.when(
-                          loading: () => 'Loading...',
+                          loading: () => 'Memuat...',
                           data: (customerList) {
                             return "Order ${ref.read(customerListControllerProvider.notifier).getCustomerName(id: data.fields?.customerId?.stringValue ?? '')}";
                           },
                           error: (error, stackTrace) {
                             ref.invalidate(customerListControllerProvider);
-                            return 'Error Loading Name';
+                            return 'Gagal Memuat Nama';
                           },
                         ),
                         subtitle:
-                            '${(data.createTime != null && data.createTime != '') ? DateFormat.yMMMMd().format(DateTime.parse(data.createTime!)) : "Error Loading Date"}\nStatus: ${data.fields?.orderStatus?.stringValue ?? "-"}',
+                            '${(data.createTime != null && data.createTime != '') ? DateFormat.yMMMMd().format(DateTime.parse(data.createTime!)) : "Gagal Memuat Tanggal"}\nStatus: ${data.fields?.orderStatus?.stringValue ?? "-"}',
                         trailIcon: Icons.arrow_forward_ios,
                         onTap: () {
                           Navigator.push(
@@ -109,7 +109,7 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
                 return refreshableInfoWidget(
                   refreshFunction: _refreshCustomerList,
                   content: Text(
-                    'Error Loading Order List: ${exception.message}',
+                    'Gagal Memuat Data Pesanan: ${exception.message}',
                     style: errorStyle,
                   ),
                 );

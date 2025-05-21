@@ -62,7 +62,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
       appBar: customAppBar(
         context: context,
         title: customerListState.when(
-          loading: () => 'Loading...',
+          loading: () => 'Memuat...',
           data: (data) {
             return ref
                 .read(customerListControllerProvider.notifier)
@@ -72,7 +72,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
           },
           error: (error, stackTrace) {
             ref.invalidate(customerListControllerProvider);
-            return 'Error Loading Name';
+            return 'Gagal Memuat Nama';
           },
         ),
         subtitle:
@@ -81,7 +81,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
                 ? DateFormat.yMMMMd().format(
                   DateTime.parse(widget.orderData.createTime!),
                 )
-                : 'Error Loading Date',
+                : 'Gagal Memuat Tanggal',
         showLeftButton: true,
       ),
 
@@ -93,11 +93,11 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
             // Order Data
             infoCard(
               context: context,
-              title: 'Order Informations',
+              title: 'Informasi Order',
               values: [
-                'Order ID:\n${getIdFromName(name: widget.orderData.name)}',
-                "Order Status:\n${widget.orderData.fields?.orderStatus?.stringValue ?? ''}",
-                "Total Amount:\n${rupiahFormat(int.tryParse(widget.orderData.fields?.totalPrice?.integerValue ?? '') ?? 0)}",
+                'ID Order:\n${getIdFromName(name: widget.orderData.name)}',
+                "Status Order:\n${widget.orderData.fields?.orderStatus?.stringValue ?? ''}",
+                "Total:\n${rupiahFormat(int.tryParse(widget.orderData.fields?.totalPrice?.integerValue ?? '') ?? 0)}",
               ],
               icons: [Icons.donut_small, Icons.donut_small, Icons.donut_small],
             ),
@@ -134,7 +134,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
                       }
                       : null,
               validator: (value) {
-                return value == null ? 'Required Field' : null;
+                return value == null ? 'Tidak Boleh Kosong' : null;
               },
             ),
             SizedBox(height: 16.h),
@@ -143,7 +143,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
             TextFormField(
               enabled: editable,
               controller: _notesController,
-              decoration: const InputDecoration(labelText: 'Notes'),
+              decoration: const InputDecoration(labelText: 'Catatan'),
             ),
             SizedBox(height: 16.h),
 
@@ -230,7 +230,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
                 ? ElevatedButton(
                   onPressed: editable && _submitButtonEnabled ? _submit : null,
                   child: Text(
-                    editable ? 'Confirm' : 'Not Editable',
+                    editable ? 'Konfirmasi' : 'Tidak Dapat Diubah',
                     style: buttonStyle.copyWith(
                       color: Theme.of(context).colorScheme.onPrimary,
                     ),
@@ -262,7 +262,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
         productCard(
           context: context,
           productName: productListState.when(
-            loading: () => 'Loading...',
+            loading: () => 'Memuat...',
             data: (data) {
               return ref
                   .read(productListControllerProvider.notifier)
@@ -270,7 +270,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
             },
             error: (error, stackTrace) {
               ref.invalidate(customerListControllerProvider);
-              return 'Error Loading Name';
+              return 'Gagal Memuat Nama';
             },
           ),
           quantity: quantity ?? '-',
@@ -321,7 +321,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: customSearchBar(context: context, hint: 'Search Products...'),
+          title: customSearchBar(context: context, hint: 'Cari Produk...'),
           content: SizedBox(
             width: ScreenUtil().screenWidth,
             height: ScreenUtil().screenHeight / 2,
@@ -331,7 +331,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
                 if (productList == null || productList.isEmpty) {
                   return refreshableInfoWidget(
                     refreshFunction: _refreshProductList,
-                    content: const Text('No Product Data Found'),
+                    content: const Text('Data Produk Tidak Ditemukan'),
                   );
                 }
 
@@ -365,7 +365,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
                 return refreshableInfoWidget(
                   refreshFunction: _refreshProductList,
                   content: Text(
-                    'Error Loading Product List: ${exception.message}',
+                    'Gagal Memuat Data Produk: ${exception.message}',
                     style: errorStyle,
                   ),
                 );
@@ -422,7 +422,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
               actionsAlignment: MainAxisAlignment.spaceBetween,
               title: Text(
                 productListState.when(
-                  loading: () => 'Loading...',
+                  loading: () => 'Memuat...',
                   data: (data) {
                     return ref
                         .read(productListControllerProvider.notifier)
@@ -430,7 +430,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
                   },
                   error: (error, stackTrace) {
                     ref.invalidate(customerListControllerProvider);
-                    return 'Error Loading Name';
+                    return 'Gagal Memuat Nama';
                   },
                 ),
                 style: subtitleStyle,
@@ -687,7 +687,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
       if (result.hasError) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Error updating order'),
+            content: Text('Gagal Memperbarui Pesanan'),
             behavior: SnackBarBehavior.floating,
             duration: Duration(seconds: 2),
           ),

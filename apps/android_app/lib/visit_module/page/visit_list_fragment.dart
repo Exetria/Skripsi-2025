@@ -93,9 +93,9 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                         content:
                             error != null
                                 ? (error).statusCode == 404
-                                    ? const Text('No Visit Data Found')
-                                    : const Text('Error Loading Visit List')
-                                : const Text('Error Loading Visit List'),
+                                    ? const Text('Data Visit Tidak Ditemukan')
+                                    : const Text('Gagal Memuat Data Kunjungan')
+                                : const Text('Gagal Memuat Data Kunjungan'),
                       );
                     }
 
@@ -121,7 +121,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                       });
                       return refreshableInfoWidget(
                         refreshFunction: _refreshVisitList,
-                        content: const Text('No Visit Data Found'),
+                        content: const Text('Data Visit Tidak Ditemukan'),
                       );
                     }
 
@@ -152,7 +152,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                     if (visitDataList.isEmpty) {
                       return refreshableInfoWidget(
                         refreshFunction: _refreshVisitList,
-                        content: const Text('No Visit Data Found'),
+                        content: const Text('Data Visit Tidak Ditemukan'),
                       );
                     }
 
@@ -231,7 +231,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                             context: context,
                             leadIcon: Icons.location_on,
                             title: customerListState.when(
-                              loading: () => 'Loading...',
+                              loading: () => 'Memuat...',
                               data: (customerList) {
                                 return ref
                                     .read(
@@ -245,17 +245,17 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                               },
                               error: (error, stackTrace) {
                                 ref.invalidate(customerListControllerProvider);
-                                return 'Error Loading Name';
+                                return 'Gagal Memuat Nama';
                               },
                             ),
                             subtitle:
                                 visitStatus == '1'
-                                    ? 'Planned'
+                                    ? 'Direncanakan'
                                     : visitStatus == '2'
-                                    ? 'Finished'
+                                    ? 'Selesai'
                                     : visitStatus == '3'
-                                    ? 'Cancelled'
-                                    : 'Unknown',
+                                    ? 'Dibatalkan'
+                                    : 'Tidak Diketahui',
                             trailIcon: Icons.arrow_forward_ios,
                             onTap: () {
                               Navigator.push(
@@ -284,7 +284,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                     return refreshableInfoWidget(
                       refreshFunction: _refreshVisitList,
                       content: Text(
-                        'Error Loading Customer List: $error',
+                        'Gagal Memuat Data Pelanggan: $error',
                         style: errorStyle,
                       ),
                     );

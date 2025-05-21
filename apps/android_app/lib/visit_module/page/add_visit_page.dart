@@ -126,7 +126,7 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
               ],
             ),
           ),
-          customSearchBar(context: context, hint: 'Search Customers...'),
+          customSearchBar(context: context, hint: 'Cari Pelanggan...'),
           SizedBox(
             height: ScreenUtil().screenHeight / 4,
             child: customerListState.when(
@@ -137,7 +137,7 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
                 if (customerList == null || customerList.isEmpty) {
                   return refreshableInfoWidget(
                     refreshFunction: _refreshCustomerList,
-                    content: const Text('No Customer Data Found'),
+                    content: const Text('Data Pelanggan Tidak Ditemukan'),
                   );
                 }
 
@@ -167,12 +167,12 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
                                   showConfirmationDialog(
                                     context: context,
                                     message:
-                                        'Are you sure to add visit to\n${customerList[index].fields?.companyName?.stringValue ?? "-"}',
-                                    leftButtonBackgroundColor:
-                                        Theme.of(context).colorScheme.tertiary,
+                                        'Apakah Anda yakin ingin menambahkan visit ke \n${customerList[index].fields?.companyName?.stringValue ?? "-"}',
                                     rightButtonBackgroundColor:
+                                        Theme.of(context).colorScheme.tertiary,
+                                    leftButtonBackgroundColor:
                                         Theme.of(context).colorScheme.error,
-                                    onLeftButtonTap: () async {
+                                    onRightButtonTap: () async {
                                       // Add new data to visit data list array
                                       widget.visitDataList.add({
                                         'mapValue': {
@@ -213,7 +213,7 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
                                           );
                                       Navigator.pop(context);
                                     },
-                                    onRightButtonTap: () {},
+                                    onLeftButtonTap: () {},
                                   );
                                 },
                                 child: Container(
@@ -284,7 +284,7 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
                 return refreshableInfoWidget(
                   refreshFunction: _refreshCustomerList,
                   content: Text(
-                    'Error Loading Customer List: ${exception.message}',
+                    'Gagal Memuat Data Pelanggan: ${exception.message}',
                     style: errorStyle,
                   ),
                 );

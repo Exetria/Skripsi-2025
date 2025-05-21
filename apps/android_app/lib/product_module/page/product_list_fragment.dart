@@ -25,7 +25,7 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
           // Search Bar
           customSearchBar(
             context: context,
-            hint: 'Search Products...',
+            hint: 'Cari Produk...',
             onChanged: (query) {
               ref
                   .read(productListControllerProvider.notifier)
@@ -43,7 +43,7 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                 if (productList == null || productList.isEmpty) {
                   return refreshableInfoWidget(
                     refreshFunction: _refreshProductList,
-                    content: const Text('No Product Data Found'),
+                    content: const Text('Data Produk Tidak Ditemukan'),
                   );
                 }
 
@@ -82,7 +82,7 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                 return refreshableInfoWidget(
                   refreshFunction: _refreshProductList,
                   content: Text(
-                    'Error Loading Product List: ${exception.message}',
+                    'Gagal Memuat Data Produk: ${exception.message}',
                     style: errorStyle,
                   ),
                 );

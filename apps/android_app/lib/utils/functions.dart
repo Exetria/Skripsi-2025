@@ -184,7 +184,7 @@ Widget infoCard({
   required List<IconData> icons,
 }) {
   if (values.length != icons.length) {
-    return const Center(child: Text('Uneven List Length'));
+    return const Center(child: Text('Daftar Atribut Tidak Sesuai'));
   }
 
   List<Widget> cardAttribute = [];
@@ -378,11 +378,16 @@ Future<File?> pickImage({
 }) async {
   try {
     final imagePicker = ImagePicker();
-    final currentLocation = await getCurrentPosition();
 
-    final image = await imagePicker.pickImage(
-      source: fromGallery ? ImageSource.gallery : ImageSource.camera,
-    );
+    final results = await Future.wait([
+      getCurrentPosition(),
+      imagePicker.pickImage(
+        source: fromGallery ? ImageSource.gallery : ImageSource.camera,
+      ),
+    ]);
+
+    final currentLocation = results[0] as Position;
+    final image = results[1] as XFile?;
 
     if (image == null) {
       return null;

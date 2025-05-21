@@ -113,7 +113,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                           });
                         },
                         validator: (value) {
-                          return value == null ? 'Required Field' : null;
+                          return value == null ? 'Tidak Boleh Kosong' : null;
                         },
                       ),
                     ),
@@ -155,7 +155,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                           });
                         },
                         validator: (value) {
-                          return value == null ? 'Required Field' : null;
+                          return value == null ? 'Tidak Boleh Kosong' : null;
                         },
                       ),
                     ),
@@ -169,7 +169,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                 validator: (value) {
                   return (value != null && value != '')
                       ? null
-                      : 'Required Field';
+                      : 'Tidak Boleh Kosong';
                 },
               ),
               buildInputRow(
@@ -178,7 +178,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                 validator: (value) {
                   return (value != null && value != '')
                       ? null
-                      : 'Required Field';
+                      : 'Tidak Boleh Kosong';
                 },
               ),
 
@@ -233,7 +233,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                     validator: (value) {
                       return (value != null && value != '')
                           ? null
-                          : 'Required Field';
+                          : 'Tidak Boleh Kosong';
                     },
                   ),
                   buildInputRow(
@@ -242,7 +242,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                     validator: (value) {
                       return (value != null && value != '')
                           ? null
-                          : 'Required Field';
+                          : 'Tidak Boleh Kosong';
                     },
                   ),
                   buildInputRow(
@@ -251,7 +251,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                     validator: (value) {
                       return (value != null && value != '')
                           ? null
-                          : 'Required Field';
+                          : 'Tidak Boleh Kosong';
                     },
                   ),
                   _customerType != 'PKP'
@@ -264,7 +264,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                           if (_customerType == 'PKP') return null;
                           return (value != null && value != '')
                               ? null
-                              : 'Required Field';
+                              : 'Tidak Boleh Kosong';
                         },
                       )
                       : const SizedBox.shrink(),
@@ -274,7 +274,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                     validator: (value) {
                       return (value != null && value != '')
                           ? null
-                          : 'Required Field';
+                          : 'Tidak Boleh Kosong';
                     },
                   ),
                   buildInputRow(
@@ -283,7 +283,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                     validator: (value) {
                       return (value != null && value != '')
                           ? null
-                          : 'Required Field';
+                          : 'Tidak Boleh Kosong';
                     },
                   ),
                 ],
@@ -344,7 +344,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                     validator: (value) {
                       return (value != null && value != '')
                           ? null
-                          : 'Required Field';
+                          : 'Tidak Boleh Kosong';
                     },
                   ),
                   buildInputRow(
@@ -353,7 +353,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                     validator: (value) {
                       return (value != null && value != '')
                           ? null
-                          : 'Required Field';
+                          : 'Tidak Boleh Kosong';
                     },
                   ),
                   buildInputRow(
@@ -362,7 +362,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                     validator: (value) {
                       return (value != null && value != '')
                           ? null
-                          : 'Required Field';
+                          : 'Tidak Boleh Kosong';
                     },
                   ),
                   buildInputRow(
@@ -371,7 +371,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                     validator: (value) {
                       return (value != null && value != '')
                           ? null
-                          : 'Required Field';
+                          : 'Tidak Boleh Kosong';
                     },
                   ),
                   _customerType != 'Non PKP'
@@ -383,7 +383,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                           if (_customerType == 'Non PKP') return null;
                           return (value != null && value != '')
                               ? null
-                              : 'Required Field';
+                              : 'Tidak Boleh Kosong';
                         },
                       )
                       : const SizedBox.shrink(),
@@ -394,7 +394,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                     validator: (value) {
                       return (value != null && value != '')
                           ? null
-                          : 'Required Field';
+                          : 'Tidak Boleh Kosong';
                     },
                   ),
                 ],
@@ -404,7 +404,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
 
               buildInputRow(
                 controller: _notesController,
-                label: 'Note',
+                label: 'Catatan',
                 maxLines: 3,
                 validator: (value) {
                   return null;
@@ -543,7 +543,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
         showFeedbackDialog(
           context: context,
           type: 1,
-          message: 'Customer Form Submitted',
+          message: 'Form Pelanggan Berhasil Dikirim',
           onClose: () {
             setState(() {
               _submitButtonEnabled = true;
@@ -572,7 +572,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
         showFeedbackDialog(
           context: context,
           type: 3,
-          message: 'Unknown Error',
+          message: 'Gagal Mengirim Form',
           onClose: () {
             setState(() {
               _submitButtonEnabled = true;

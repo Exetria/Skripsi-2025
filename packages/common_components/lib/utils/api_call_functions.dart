@@ -12,14 +12,16 @@ Future<Either<ApiException, T>> remoteProcess<T>(Future<T> process) async {
     var processResult = await process;
     return Right(processResult);
   } on SocketException {
-    return Left(ApiException(statusCode: 0, message: "Connection Error"));
+    return Left(ApiException(statusCode: 0, message: "Masalah Internet"));
   } catch (e) {
     if (e is ApiException) {
       return Left(e);
     } else if (e is Exception) {
       return Left(ApiException(statusCode: -1, message: e.toString()));
     } else {
-      return Left(ApiException(statusCode: -1, message: 'Unknown error'));
+      return Left(
+        ApiException(statusCode: -1, message: 'Kesalahan tidak diketahui'),
+      );
     }
   }
 }

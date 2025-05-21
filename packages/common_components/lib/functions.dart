@@ -61,8 +61,8 @@ void showFeedbackDialog({
 void showConfirmationDialog({
   required BuildContext context,
   required String message,
-  String leftButtonText = 'Yes',
-  String rightButtonText = 'No',
+  String leftButtonText = 'Tidak',
+  String rightButtonText = 'Ya',
   Color? leftButtonBackgroundColor,
   Color? leftButtonForegroundColor,
   Color? rightButtonBackgroundColor,
