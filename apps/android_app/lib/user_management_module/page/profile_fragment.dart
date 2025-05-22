@@ -407,9 +407,6 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
       rightButtonBackgroundColor: Theme.of(context).colorScheme.tertiary,
       leftButtonBackgroundColor: Theme.of(context).colorScheme.error,
       onRightButtonTap: () async {
-        // Delay to close popup
-        await Future.delayed(const Duration(milliseconds: 250));
-
         // Deactivate button
         setState(() {
           logOutButtonEnable = false;
@@ -424,15 +421,13 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
           type: 2,
           message: 'Log Out Sukses',
           onClose: () {
-            Future.delayed(const Duration(milliseconds: 250), () {
-              setState(() {
-                logOutButtonEnable = true;
-              });
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => LoginPage()),
-              );
+            setState(() {
+              logOutButtonEnable = true;
             });
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => LoginPage()),
+            );
           },
         );
       },

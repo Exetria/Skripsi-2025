@@ -330,12 +330,10 @@ class _LoginPage extends ConsumerState<LoginPage> {
         type: 1,
         message: 'Login Sukses',
         onClose: () {
-          Future.delayed(const Duration(milliseconds: 250), () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const HomePage()),
-            );
-          });
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+          );
         },
       );
     } else {

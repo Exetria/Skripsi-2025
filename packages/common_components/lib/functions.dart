@@ -13,6 +13,8 @@ void showFeedbackDialog({
   Duration duration = const Duration(seconds: 2),
   VoidCallback? onClose,
 }) {
+  final rootNav = Navigator.of(context, rootNavigator: true);
+
   showDialog(
     context: context,
     barrierDismissible: false,
@@ -20,8 +22,8 @@ void showFeedbackDialog({
       // Start a delayed pop when the dialog builds
       Future.delayed(duration, () {
         SchedulerBinding.instance.addPostFrameCallback((_) {});
-        if (Navigator.of(context).canPop()) {
-          Navigator.of(context).pop();
+        if (rootNav.canPop()) {
+          rootNav.pop();
 
           if (onClose != null) {
             onClose();
@@ -70,6 +72,8 @@ void showConfirmationDialog({
   required VoidCallback onLeftButtonTap,
   required VoidCallback onRightButtonTap,
 }) {
+  final rootNav = Navigator.of(context, rootNavigator: true);
+
   showDialog(
     context: context,
     barrierDismissible: true,
@@ -98,8 +102,8 @@ void showConfirmationDialog({
                     width: Platform.isWindows ? 100 : 100.w,
                     child: ElevatedButton(
                       onPressed: () {
-                        if (Navigator.of(context).canPop()) {
-                          Navigator.of(context).pop();
+                        if (rootNav.canPop()) {
+                          rootNav.pop();
                         }
                         onLeftButtonTap();
                       },
@@ -128,8 +132,8 @@ void showConfirmationDialog({
                     width: Platform.isWindows ? 100 : 100.w,
                     child: ElevatedButton(
                       onPressed: () {
-                        if (Navigator.of(context).canPop()) {
-                          Navigator.of(context).pop();
+                        if (rootNav.canPop()) {
+                          rootNav.pop();
                         }
                         onRightButtonTap();
                       },

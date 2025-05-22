@@ -2,265 +2,184 @@ import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:windows_app/user_management_module/page/login_page.dart';
+import 'package:windows_app/utils/theme_controller.dart';
 
 class ProfileFragment extends StatefulHookConsumerWidget {
   const ProfileFragment({super.key});
 
   @override
-  ConsumerState<ProfileFragment> createState() => _ProfileFragment();
+  ConsumerState<ProfileFragment> createState() => _ProfileFragmentState();
 }
 
-class _ProfileFragment extends ConsumerState<ProfileFragment> {
+class _ProfileFragmentState extends ConsumerState<ProfileFragment> {
+  bool logOutButtonEnable = true;
+
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final user = userDataHelper;
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Left panel: Profile summary
-          Container(
-            width: 300,
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                const BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 12,
-                  offset: Offset(0, 4),
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                // const CircleAvatar(
-                //   radius: 50,
-                //   backgroundImage: AssetImage(''), // Change as needed
-                // ),
-                // TODO: Display profile picture
-                const SizedBox(
-                  width: 100,
-                  height: 100,
-                  child: ClipOval(
-                    child: AspectRatio(
-                      aspectRatio: 1,
-                      child: Placeholder(
-                        color: Colors.blueAccent,
-                        strokeWidth: 10,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Text('John Doe', style: titleStyle),
-                const SizedBox(height: 16),
-                const Divider(),
-                const SizedBox(height: 16),
-                Row(
+          // ── Left: Profile Card ───────────────────────────
+          Expanded(
+            child: Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.email, size: 20, color: Colors.grey[700]),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Text(userDataHelper?.email ?? 'Not Available'),
+                    CircleAvatar(
+                      radius: 60,
+                      backgroundColor: cs.surface,
+                      child: const Icon(Icons.person, size: 60),
                     ),
+                    const SizedBox(height: 24),
+                    Text(
+                      user?.fullName ?? 'Nama Tidak Tersedia',
+                      style: titleStyle,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      user?.email ?? 'Email Tidak Tersedia',
+                      style: bodyStyle,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      user?.phone ?? 'Telepon Tidak Tersedia',
+                      style: bodyStyle,
+                    ),
+                    const SizedBox(height: 8),
+                    Text('Role: ${user?.role ?? '-'}', style: bodyStyle),
                   ],
                 ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Icon(Icons.security, size: 20, color: Colors.grey[700]),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Text(userDataHelper?.role ?? 'Not Available'),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  children: [
-                    Icon(Icons.badge, size: 20, color: Colors.grey[700]),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Text(userDataHelper?.uid ?? 'Not Available'),
-                    ),
-                  ],
-                ),
-              ],
+              ),
             ),
           ),
 
-          const SizedBox(width: 40),
+          const SizedBox(width: 16),
 
-          // Right panel: Detail view
+          // ── Right: Settings & Actions ────────────────────
           Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Account Details',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                const SizedBox(height: 12),
-
-                // Detail Row 1
-                Container(
-                  margin: const EdgeInsets.only(bottom: 16),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 12,
-                    horizontal: 16,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[50],
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.grey[200]!),
-                  ),
-                  child: Row(
-                    children: [
-                      const SizedBox(
-                        width: 150,
-                        child: Text(
-                          'Username',
-                          style: TextStyle(fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          userDataHelper?.fullName ?? 'Not Available',
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                // Detail Row 2
-                Container(
-                  margin: const EdgeInsets.only(bottom: 16),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 12,
-                    horizontal: 16,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[50],
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.grey[200]!),
-                  ),
-                  child: Row(
-                    children: [
-                      const SizedBox(
-                        width: 150,
-                        child: Text(
-                          'Email Address',
-                          style: TextStyle(fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(userDataHelper?.email ?? 'Not Available'),
-                      ),
-                    ],
-                  ),
-                ),
-
-                // Detail Row 3
-                Container(
-                  margin: const EdgeInsets.only(bottom: 16),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 12,
-                    horizontal: 16,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[50],
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.grey[200]!),
-                  ),
-                  child: Row(
-                    children: [
-                      const SizedBox(
-                        width: 150,
-                        child: Text(
-                          'Phone Number',
-                          style: TextStyle(fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                      // TODO: Display phone number
-                      Expanded(
-                        child: Text(userDataHelper?.phone ?? 'Not Available'),
-                      ),
-                    ],
-                  ),
-                ),
-
-                // Detail Row 4
-                Container(
-                  margin: const EdgeInsets.only(bottom: 16),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 12,
-                    horizontal: 16,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[50],
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.grey[200]!),
-                  ),
-                  child: Row(
-                    children: [
-                      const SizedBox(
-                        width: 150,
-                        child: Text(
-                          'Role',
-                          style: TextStyle(fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(userDataHelper?.role ?? 'Not Available'),
-                      ),
-                    ],
-                  ),
-                ),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        // TODO: Implement sign-out confirmation before navigating
-                        clearUserDataInSp();
-
-                        showFeedbackDialog(
-                          context: context,
-                          type: 2,
-                          message: 'Log Out Success',
-                          onClose: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LoginPage(),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: errorColor,
-                        foregroundColor: backgroundColor,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 4,
-                        ),
-                      ),
-                      child: Text(
-                        'Logout',
-                        style: buttonStyle.copyWith(fontSize: 16),
+                // Settings card (upper half)
+                Expanded(
+                  child: Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Settings', style: sectionTitleStyle),
+                          const Divider(),
+                          SwitchListTile(
+                            contentPadding: EdgeInsets.zero,
+                            title: const Text('Mode Gelap'),
+                            value:
+                                ref.watch(themeModeProvider) == ThemeMode.dark,
+                            onChanged: (val) async {
+                              await saveDataToSp(
+                                key: 'themeMode',
+                                data: val ? '1' : '0',
+                              );
+                              ref.read(themeModeProvider.notifier).state =
+                                  val ? ThemeMode.dark : ThemeMode.light;
+                            },
+                          ),
+                          // TODO: add more setting toggles here
+                        ],
                       ),
                     ),
-                  ],
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+
+                // Other actions card (lower half)
+                Expanded(
+                  child: Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text('Other Actions', style: sectionTitleStyle),
+                          const Divider(),
+                          ElevatedButton.icon(
+                            icon: const Icon(Icons.exit_to_app),
+                            label: Text('Log Out', style: buttonStyle),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: cs.error,
+                              foregroundColor: cs.onError,
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                            ),
+                            onPressed: logOutButtonEnable ? doSignOut : null,
+                          ),
+                          const SizedBox(height: 12),
+                          // TODO: add more action buttons here
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  void doSignOut() {
+    showConfirmationDialog(
+      context: context,
+      message: 'Apakah Anda yakin ingin log out?',
+      rightButtonBackgroundColor: Theme.of(context).colorScheme.tertiary,
+      leftButtonBackgroundColor: Theme.of(context).colorScheme.error,
+      onRightButtonTap: () async {
+        // Delay to close popup
+        await Future.delayed(const Duration(milliseconds: 250));
+
+        // Deactivate button
+        setState(() {
+          logOutButtonEnable = false;
+        });
+
+        // Clear user data
+        clearUserDataInSp();
+
+        // Show feedback
+        showFeedbackDialog(
+          context: context,
+          type: 2,
+          message: 'Log Out Sukses',
+          onClose: () {
+            setState(() {
+              logOutButtonEnable = true;
+            });
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => LoginPage()),
+            );
+          },
+        );
+      },
+      onLeftButtonTap: () {},
     );
   }
 }

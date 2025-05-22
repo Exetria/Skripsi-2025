@@ -44,7 +44,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     );
 
     return Scaffold(
-      backgroundColor: backgroundColor,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(24), // Fixed padding
@@ -52,7 +51,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             borderRadius: BorderRadius.circular(16), // Fixed border radius
             child: Card(
               elevation: 12,
-              shadowColor: Colors.black.withAlpha(50),
+              shadowColor: Theme.of(context).shadowColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),
@@ -120,7 +119,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             _obscurePassword
                                 ? Icons.visibility_off
                                 : Icons.visibility,
-                            color: textColor.withAlpha(178),
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
                       ),
@@ -164,6 +163,81 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         ),
       ),
     );
+  }
+
+  void autoFillCredentials({
+    required TextEditingController emailController,
+    required TextEditingController passwordController,
+  }) async {
+    String email = await getDataFromSp(key: 'email') ?? '';
+    String password = await getDataFromSp(key: 'password') ?? '';
+
+    if (emailController.text == '') emailController.text = email;
+    if (passwordController.text == '') passwordController.text = password;
+  }
+
+  void checkUserData({
+    required SignInDomain? result,
+    required String password,
+  }) async {
+    final userValue = await ref
+        .read(checkUserDataControllerProvider.notifier)
+        .checkUserData(
+          idToken: result?.idToken ?? '',
+          uid: result?.localId ?? '',
+        );
+
+    if (userValue?.fields?.role?.stringValue == 'admin') {
+      userDataHelper = UserDataHelper(
+        uid: result?.localId ?? '',
+        userName: userValue?.fields?.userName?.stringValue ?? '',
+        fullName: userValue?.fields?.fullName?.stringValue ?? '',
+        email: result?.email ?? '',
+        phone: userValue?.fields?.phoneNumber?.stringValue ?? '',
+        photoUrl: userValue?.fields?.photoUrl?.stringValue ?? '',
+        role: userValue?.fields?.role?.stringValue ?? '',
+        idToken: result?.idToken ?? '',
+        refreshToken: result?.refreshToken ?? '',
+        assignedProducts: [],
+        assignedCustomers: [],
+      );
+
+      saveUserDataToSp(
+        localId: result?.localId ?? '',
+        displayName: result?.displayName ?? '',
+        email: result?.email ?? '',
+        password: password,
+        phoneNumber: userValue?.fields?.phoneNumber?.stringValue ?? '',
+        role: userValue?.fields?.role?.stringValue ?? '',
+        idToken: result?.idToken ?? '',
+        refreshToken: result?.refreshToken ?? '',
+      );
+
+      ref.read(refreshTokenControllerProvider.notifier).startAutoRefreshToken();
+
+      showFeedbackDialog(
+        context: context,
+        type: 1,
+        message: 'Login Successful',
+        onClose: () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+          );
+        },
+      );
+    } else {
+      showFeedbackDialog(
+        context: context,
+        type: 3,
+        message: 'Sorry, You\'re Not an Admin',
+        onClose: () {
+          setState(() {
+            _buttonEnabled = true;
+          });
+        },
+      );
+    }
   }
 
   void doSignIn({required String email, required String password}) async {
@@ -251,83 +325,5 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         },
       );
     }
-  }
-
-  void checkUserData({
-    required SignInDomain? result,
-    required String password,
-  }) async {
-    final userValue = await ref
-        .read(checkUserDataControllerProvider.notifier)
-        .checkUserData(
-          idToken: result?.idToken ?? '',
-          uid: result?.localId ?? '',
-        );
-
-    if (userValue?.fields?.role?.stringValue == 'admin') {
-      userDataHelper = UserDataHelper(
-        uid: result?.localId ?? '',
-        userName: userValue?.fields?.userName?.stringValue ?? '',
-        fullName: userValue?.fields?.fullName?.stringValue ?? '',
-        email: result?.email ?? '',
-        phone: userValue?.fields?.phoneNumber?.stringValue ?? '',
-        photoUrl: userValue?.fields?.photoUrl?.stringValue ?? '',
-        role: userValue?.fields?.role?.stringValue ?? '',
-        idToken: result?.idToken ?? '',
-        refreshToken: result?.refreshToken ?? '',
-        assignedProducts: [],
-        assignedCustomers: [],
-      );
-
-      saveUserDataToSp(
-        localId: result?.localId ?? '',
-        displayName: result?.displayName ?? '',
-        email: result?.email ?? '',
-        password: password,
-        phoneNumber: userValue?.fields?.phoneNumber?.stringValue ?? '',
-        role: userValue?.fields?.role?.stringValue ?? '',
-        idToken: result?.idToken ?? '',
-        refreshToken: result?.refreshToken ?? '',
-      );
-
-      ref.read(refreshTokenControllerProvider.notifier).startAutoRefreshToken();
-
-      showFeedbackDialog(
-        context: context,
-        type: 1,
-        message: 'Login Successful',
-        onClose: () {
-          setState(() {
-            _buttonEnabled = true;
-          });
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const HomePage()),
-          );
-        },
-      );
-    } else {
-      showFeedbackDialog(
-        context: context,
-        type: 3,
-        message: 'Sorry, You\'re Not an Admin',
-        onClose: () {
-          setState(() {
-            _buttonEnabled = true;
-          });
-        },
-      );
-    }
-  }
-
-  void autoFillCredentials({
-    required TextEditingController emailController,
-    required TextEditingController passwordController,
-  }) async {
-    String email = await getDataFromSp(key: 'email') ?? '';
-    String password = await getDataFromSp(key: 'password') ?? '';
-
-    if (emailController.text == '') emailController.text = email;
-    if (passwordController.text == '') passwordController.text = password;
   }
 }
