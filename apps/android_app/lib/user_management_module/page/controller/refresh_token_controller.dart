@@ -81,7 +81,7 @@ class RefreshTokenController extends _$RefreshTokenController {
             builder:
                 (_) => LoginPage(
                   kicked: true,
-                  reason: 'Session Expired\nPlease Sign In Again',
+                  reason: 'Sesi Anda Berakhir\nSilahkan Login Kembali',
                 ),
           ),
         );
@@ -93,7 +93,7 @@ class RefreshTokenController extends _$RefreshTokenController {
           builder:
               (_) => LoginPage(
                 kicked: true,
-                reason: 'Session Expired\nPlease Sign In Again',
+                reason: 'Sesi Anda Berakhir\nSilahkan Login Kembali',
               ),
         ),
       );
