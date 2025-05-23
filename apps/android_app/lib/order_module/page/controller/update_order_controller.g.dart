@@ -7,7 +7,7 @@ part of 'update_order_controller.dart';
 // **************************************************************************
 
 String _$updateOrderControllerHash() =>
-    r'9f093cdc1ecc66fd941f00c2eb72efadee7d71aa';
+    r'37274715d794bc08759473482b541bd7eaaa49e8';
 
 /// See also [UpdateOrderController].
 @ProviderFor(UpdateOrderController)

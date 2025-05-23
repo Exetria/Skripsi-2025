@@ -14,8 +14,8 @@ abstract class CustomerRepository {
   Future<Either<ApiException, List<CustomerRequestDomain>?>>
   getCustomerRequestList();
   Future<Either<ApiException, CustomerRequestDomain?>> createCustomerRequest({
-    required File storePhoto,
-    required File ktpPhoto,
+    required File? storePhoto,
+    required File? ktpPhoto,
     required String customer_type,
     required String subscription_type,
 
@@ -29,12 +29,16 @@ abstract class CustomerRepository {
     required String company_email,
     required String company_store_condition,
 
-    required String owner_name,
-    required String owner_address,
-    required String owner_phone_number,
-    required String owner_tax_id,
-    required String owner_national_id,
+    required String pic_name,
+    required String pic_address,
+    required String pic_phone_number,
+    required String pic_tax_id,
+    required String pic_national_id,
+    required String pic_position,
     required String ownership_status,
+
+    required String credit_period,
+    required String credit_limit,
 
     required String note,
   });
