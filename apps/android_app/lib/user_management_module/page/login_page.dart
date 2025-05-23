@@ -216,7 +216,7 @@ class _LoginPage extends ConsumerState<LoginPage> {
                     : apiException.responseBody?['error']['message'] ==
                         'INVALID_EMAIL'
                     ? 'Email Tidak Valid'
-                    : 'Unknown Error',
+                    : 'Terjadi Kesalahan',
             onClose: () {
               setState(() {
                 _signInButtonEnabled = true;

@@ -53,7 +53,7 @@ class ProductListController extends _$ProductListController {
       }
     }
 
-    return 'Name Not Found';
+    return 'Nama Tidak Ditemukan';
   }
 
   Future<String> getProductPrice({required String id}) async {

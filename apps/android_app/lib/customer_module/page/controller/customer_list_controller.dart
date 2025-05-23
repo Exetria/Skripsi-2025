@@ -53,7 +53,7 @@ class CustomerListController extends _$CustomerListController {
       }
     }
 
-    return 'Name Not Found';
+    return 'Nama Tidak Ditemukan';
   }
 
   Future<Position?> getCustomerLocation({required String id}) async {
