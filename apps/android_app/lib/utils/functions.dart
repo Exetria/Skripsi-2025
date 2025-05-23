@@ -3,12 +3,13 @@ import 'dart:io';
 
 import 'package:android_app/utils/widget_settings.dart';
 import 'package:common_components/common_components.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image/image.dart' as imaglib;
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -332,8 +333,10 @@ Widget productCard({
 Widget buildInputRow({
   required TextEditingController controller,
   required String label,
+  List<TextInputFormatter>? inputFormatters,
   String? Function(String?)? validator,
-  TextInputType keyboardType = TextInputType.text,
+  String? prefix,
+  String? suffix,
   int? maxLines = 1,
   bool enabled = true,
 }) {
@@ -342,10 +345,15 @@ Widget buildInputRow({
     child: TextFormField(
       enabled: enabled,
       controller: controller,
+      inputFormatters: inputFormatters,
       validator: validator,
-      keyboardType: keyboardType,
       maxLines: maxLines,
-      decoration: InputDecoration(labelText: label),
+      decoration: InputDecoration(
+        labelText: label,
+        prefixText: prefix,
+        suffixText: suffix,
+        alignLabelWithHint: true,
+      ),
     ),
   );
 }
@@ -379,15 +387,13 @@ Future<File?> pickImage({
   try {
     final imagePicker = ImagePicker();
 
-    final results = await Future.wait([
-      getCurrentPosition(),
-      imagePicker.pickImage(
-        source: fromGallery ? ImageSource.gallery : ImageSource.camera,
-      ),
-    ]);
+    Future<Position> futureLocation = getCurrentPosition();
 
-    final currentLocation = results[0] as Position;
-    final image = results[1] as XFile?;
+    final image = await imagePicker.pickImage(
+      source: fromGallery ? ImageSource.gallery : ImageSource.camera,
+    );
+
+    final currentLocation = await futureLocation;
 
     if (image == null) {
       return null;
@@ -418,15 +424,14 @@ Future<File?> drawWatermark({
   required File imageFile,
   required Position location,
 }) async {
-  String appNameWatermark = '© Salesku App';
-  String dateWatermark = DateFormat('dd/MM/yyyy').format(DateTime.now());
+  String appNameWatermark = 'Salesku App';
+  String dateWatermark = DateTime.now().toString().split('.').first;
   String locationWatermark =
       '${location.latitude.toStringAsFixed(6)}, ${location.longitude.toStringAsFixed(6)}';
 
   if (!await imageFile.exists()) return null;
 
-  final bytes = await imageFile.readAsBytes();
-  final originalImage = imaglib.decodeImage(bytes);
+  final originalImage = await compute(_decodeImageFromFile, imageFile.path);
   if (originalImage == null) return null;
 
   final imaglib.BitmapFont font = imaglib.arial48;
@@ -467,31 +472,32 @@ Future<File?> drawWatermark({
   return output;
 }
 
+imaglib.Image? _decodeImageFromFile(String path) {
+  final file = File(path);
+  if (!file.existsSync()) return null;
+  final bytes = file.readAsBytesSync();
+  return imaglib.decodeImage(bytes);
+}
+
 // GET CURRENT POSITION
 Future<Position> getCurrentPosition() async {
   bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
   if (!serviceEnabled) {
-    throw ApiException(
-      statusCode: -1,
-      message: 'Location services are disabled.',
-    );
+    throw ApiException(statusCode: -1, message: 'Lokasi Perangkat Tidak Aktif');
   }
 
   LocationPermission permission = await Geolocator.checkPermission();
   if (permission == LocationPermission.denied) {
     permission = await Geolocator.requestPermission();
     if (permission == LocationPermission.denied) {
-      throw ApiException(
-        statusCode: -1,
-        message: 'Location Permission Denied.',
-      );
+      throw ApiException(statusCode: -1, message: 'Izin Lokasi Ditolak');
     }
   }
 
   if (permission == LocationPermission.deniedForever) {
     throw ApiException(
       statusCode: -1,
-      message: 'Please Enable Location Permission in Settings ',
+      message: 'Nyalakan Izin Lokasi Terlebih Dahulu',
     );
   }
 
