@@ -78,10 +78,10 @@ class _ProductDetailPage extends ConsumerState<ProductDetailPage> {
               title: 'Informasi Merek',
               values: [
                 'Merk : ${widget.data.fields?.brand?.stringValue ?? "-"}',
-                // TODO: Check if need to delete
-                'Perusahaan : ${widget.data.fields?.companyCode?.stringValue ?? "-"}',
+                // Deleted for now
+                // 'Perusahaan : ${widget.data.fields?.companyCode?.stringValue ?? "-"}',
               ],
-              icons: [Icons.donut_small, Icons.donut_small],
+              icons: [Icons.donut_small],
             ),
             SizedBox(height: 12.h),
 

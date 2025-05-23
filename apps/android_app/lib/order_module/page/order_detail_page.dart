@@ -35,22 +35,22 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
 
   final _notesController = TextEditingController();
 
-  late bool editable;
+  late bool _editable;
+
+  @override
+  void initState() {
+    super.initState();
+    _editable = widget.orderData.fields?.orderStatus?.stringValue == 'Pending';
+    _productDataList = List.from(widget.productDataList);
+    _paymentMethod = widget.orderData.fields?.paymentMethod?.stringValue;
+    _notesController.text = widget.orderData.fields?.notes?.stringValue ?? '';
+  }
 
   @override
   void dispose() {
     _notesController.dispose();
 
     super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    editable = widget.orderData.fields?.orderStatus?.stringValue == 'Pending';
-    _productDataList = List.from(widget.productDataList);
-    _paymentMethod = widget.orderData.fields?.paymentMethod?.stringValue;
-    _notesController.text = widget.orderData.fields?.notes?.stringValue ?? '';
   }
 
   @override
@@ -112,7 +112,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
                 color: Theme.of(context).colorScheme.onSurface,
               ),
               decoration: InputDecoration(
-                labelText: 'Payment Method',
+                labelText: 'Metode Pembayaran',
                 contentPadding: EdgeInsets.symmetric(
                   horizontal: 12.w,
                   vertical: 14.h,
@@ -126,7 +126,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
                     );
                   }).toList(),
               onChanged:
-                  editable
+                  _editable
                       ? (val) {
                         setState(() {
                           _paymentMethod = val;
@@ -141,7 +141,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
 
             // Notes
             TextFormField(
-              enabled: editable,
+              enabled: _editable,
               controller: _notesController,
               decoration: const InputDecoration(labelText: 'Catatan'),
             ),
@@ -151,8 +151,8 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Products', style: sectionTitleStyle),
-                editable
+                Text('Daftar Produk', style: sectionTitleStyle),
+                _editable
                     ? GestureDetector(
                       onTap: () async {
                         // Add product
@@ -228,9 +228,9 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
           children: [
             _submitButtonEnabled
                 ? ElevatedButton(
-                  onPressed: editable && _submitButtonEnabled ? _submit : null,
+                  onPressed: _editable && _submitButtonEnabled ? _submit : null,
                   child: Text(
-                    editable ? 'Konfirmasi' : 'Tidak Dapat Diubah',
+                    _editable ? 'Konfirmasi' : 'Tidak Dapat Diubah',
                     style: buttonStyle.copyWith(
                       color: Theme.of(context).colorScheme.onPrimary,
                     ),
@@ -275,7 +275,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
           ),
           quantity: quantity ?? '-',
           price: int.tryParse(productTotalPrice ?? '') ?? 0,
-          editable: editable,
+          editable: _editable,
           onTap: () async {
             await showProductDataPopup(
               context: context,
@@ -671,7 +671,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
     setState(() {
       _submitButtonEnabled = false;
     });
-    if (editable &&
+    if (_editable &&
         _paymentMethod?.isNotEmpty == true &&
         _productDataList.isNotEmpty) {
       // Submit new visit data
@@ -698,7 +698,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
 
         Navigator.pop(context);
       }
-    } else if (editable && _productDataList.isEmpty) {
+    } else if (_editable && _productDataList.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Please add at least 1 product'),
