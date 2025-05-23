@@ -12,7 +12,7 @@ Future<Either<ApiException, T>> remoteProcess<T>(Future<T> process) async {
     var processResult = await process;
     return Right(processResult);
   } on SocketException {
-    return Left(ApiException(statusCode: 0, message: "Masalah Internet"));
+    return Left(ApiException(statusCode: 0, message: "Tidak ada internet"));
   } catch (e) {
     if (e is ApiException) {
       return Left(e);
