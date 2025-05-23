@@ -43,19 +43,22 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
   bool _submitButtonEnabled = true;
   bool _pickVisitPhoto = true;
   bool _isOldPhotoFound = true;
+  late bool _editable;
 
   final _notesController = TextEditingController();
 
   @override
-  void dispose() {
-    _notesController.dispose();
-
-    super.dispose();
-  }
-
-  @override
   void initState() {
     super.initState();
+
+    // Init editable
+    _editable =
+        widget.visitDataList[widget
+                .index]['mapValue']?['fields']?['visit_status']?['integerValue'] ==
+            '1' ||
+        widget.visitDataList[widget
+                .index]['mapValue']?['fields']?['visit_status']?['integerValue'] ==
+            null;
 
     // Init status
     final statusString =
@@ -76,6 +79,13 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
     _visitPhotoLink =
         widget.visitDataList[widget
             .index]['mapValue']?['fields']?['visit_photo_url']?['stringValue'];
+  }
+
+  @override
+  void dispose() {
+    _notesController.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -136,27 +146,27 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
                         child: Text(entry.value, style: bodyStyle),
                       );
                     }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _selectedStatus = value;
-                    if (_selectedStatus == 1) {
-                      _visitPhoto = null;
-                    }
-                  });
-                },
+                onChanged:
+                    _editable
+                        ? (value) {
+                          setState(() {
+                            _selectedStatus = value;
+                            if (_selectedStatus == 1) {
+                              _visitPhoto = null;
+                            }
+                          });
+                        }
+                        : null,
                 validator:
                     (value) => value == null ? 'Please select a status' : null,
               ),
               SizedBox(height: 16.h),
 
               // Notes
-              TextFormField(
+              buildInputRow(
+                enabled: _editable,
                 controller: _notesController,
-                decoration: const InputDecoration(
-                  labelText: 'Catatan',
-                  alignLabelWithHint: true,
-                ),
-                style: bodyStyle,
+                label: 'Catatan',
                 maxLines: 4,
                 validator:
                     (value) =>
@@ -170,7 +180,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
               Center(
                 child: GestureDetector(
                   onTap:
-                      _selectedStatus != 1 && _pickVisitPhoto
+                      _editable && _selectedStatus != 1 && _pickVisitPhoto
                           ? () async {
                             _pickVisitPhoto = false;
                             final pickedImage = await pickImage(
@@ -182,79 +192,76 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
                             _pickVisitPhoto = true;
                           }
                           : null,
-                  child: AbsorbPointer(
-                    absorbing: _selectedStatus == 1,
-                    child: Container(
-                      width: ScreenUtil().screenWidth * 0.8,
-                      decoration: photoBoxDecoration(context).copyWith(
-                        color:
-                            _selectedStatus == 1
-                                ? dividerColor.withAlpha(40)
-                                : null,
-                      ),
-                      child: AspectRatio(
-                        aspectRatio: 3 / 4,
-                        child:
-                            _visitPhoto != null
-                                ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(16.r),
-                                  child: Image.file(
-                                    _visitPhoto!,
-                                    fit: BoxFit.cover,
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                  ),
-                                )
-                                : _visitPhotoLink != null
-                                ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(16.r),
-                                  child: Image.network(
-                                    _visitPhotoLink ?? '',
-                                    fit: BoxFit.cover,
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      _isOldPhotoFound = false;
-                                      return Center(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Icon(
-                                              Icons.broken_image_outlined,
-                                              size: 32.sp,
-                                              color: errorColor,
-                                            ),
-                                            SizedBox(height: 8.h),
-                                            Text(
-                                              'Image not found',
-                                              style: errorStyle,
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                )
-                                : Center(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        Icons.camera_alt_outlined,
-                                        size: 32.sp,
-                                        color: dividerColor,
-                                      ),
-                                      SizedBox(height: 8.h),
-                                      Text(
-                                        _selectedStatus == 1
-                                            ? 'Foto Tidak Diperlukan'
-                                            : 'Ketuk untuk Mengambil Foto',
-                                        style: captionStyle,
-                                      ),
-                                    ],
-                                  ),
+                  child: Container(
+                    width: ScreenUtil().screenWidth * 0.8,
+                    decoration: photoBoxDecoration(context).copyWith(
+                      color:
+                          _selectedStatus == 1
+                              ? dividerColor.withAlpha(40)
+                              : null,
+                    ),
+                    child: AspectRatio(
+                      aspectRatio: 3 / 4,
+                      child:
+                          _visitPhoto != null
+                              ? ClipRRect(
+                                borderRadius: BorderRadius.circular(16.r),
+                                child: Image.file(
+                                  _visitPhoto!,
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                  height: double.infinity,
                                 ),
-                      ),
+                              )
+                              : _visitPhotoLink != null
+                              ? ClipRRect(
+                                borderRadius: BorderRadius.circular(16.r),
+                                child: Image.network(
+                                  _visitPhotoLink ?? '',
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    _isOldPhotoFound = false;
+                                    return Center(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(
+                                            Icons.broken_image_outlined,
+                                            size: 32.sp,
+                                            color: errorColor,
+                                          ),
+                                          SizedBox(height: 8.h),
+                                          Text(
+                                            'Image not found',
+                                            style: errorStyle,
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              )
+                              : Center(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.camera_alt_outlined,
+                                      size: 32.sp,
+                                      color: dividerColor,
+                                    ),
+                                    SizedBox(height: 8.h),
+                                    Text(
+                                      _selectedStatus == 1
+                                          ? 'Foto Tidak Diperlukan'
+                                          : 'Ketuk untuk Mengambil Foto',
+                                      style: captionStyle,
+                                    ),
+                                  ],
+                                ),
+                              ),
                     ),
                   ),
                 ),
@@ -269,9 +276,9 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
           children: [
             _submitButtonEnabled
                 ? ElevatedButton(
-                  onPressed: _submitButtonEnabled ? _submit : null,
+                  onPressed: _editable ? _submit : null,
                   child: Text(
-                    'Konfirmasi',
+                    _editable ? 'Konfirmasi' : 'Tidak Dapat Diubah',
                     style: buttonStyle.copyWith(
                       color: Theme.of(context).colorScheme.onPrimary,
                     ),
