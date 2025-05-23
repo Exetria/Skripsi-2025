@@ -6,6 +6,8 @@ part 'user_list_controller.g.dart';
 
 @Riverpod(keepAlive: true)
 class UserListController extends _$UserListController {
+  List<UserDomain>? _userList;
+
   @override
   FutureOr<List<UserDomain>?> build() async {
     final repository = ref.watch(UserListRepositoryProvider);
@@ -15,6 +17,22 @@ class UserListController extends _$UserListController {
       (l) => AsyncError(l, StackTrace.empty),
       (r) => AsyncData(r),
     );
+    _userList = state.value;
     return state.value;
+  }
+
+  void searchUser(String query) {
+    if (_userList == null) {
+      return;
+    }
+
+    final filteredList =
+        _userList?.where((user) {
+          final userName = user.fields?.fullName?.stringValue ?? '';
+          return userName.toLowerCase().contains(query.toLowerCase());
+        }).toList() ??
+        [];
+
+    state = AsyncData(filteredList);
   }
 }
