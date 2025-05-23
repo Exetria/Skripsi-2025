@@ -47,14 +47,12 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
               data: (orderList) {
                 if (orderList == null || orderList.isEmpty) {
                   return refreshableInfoWidget(
-                    refreshFunction: _refreshCustomerList,
+                    refreshFunction: _refreshOrderList,
                     content: const Text('Data Order Tidak Ditemukan'),
                   );
                 }
                 return RefreshIndicator(
-                  onRefresh: () async {
-                    ref.invalidate(orderListControllerProvider);
-                  },
+                  onRefresh: _refreshOrderList,
                   child: ListView.separated(
                     itemCount: orderList.length,
                     separatorBuilder:
@@ -78,7 +76,7 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
                             return "Order ${ref.read(customerListControllerProvider.notifier).getCustomerName(id: data.fields?.customerId?.stringValue ?? '')}";
                           },
                           error: (error, stackTrace) {
-                            ref.invalidate(customerListControllerProvider);
+                            _refreshCustomerList();
                             return 'Gagal Memuat Nama';
                           },
                         ),
@@ -107,7 +105,7 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
                 final exception = error as ApiException;
 
                 return refreshableInfoWidget(
-                  refreshFunction: _refreshCustomerList,
+                  refreshFunction: _refreshOrderList,
                   content: Text(
                     'Gagal Memuat Data Pesanan: ${exception.message}',
                     style: errorStyle,
@@ -172,6 +170,10 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
   }
 
   Future<void> _refreshCustomerList() async {
+    ref.invalidate(customerListControllerProvider);
+  }
+
+  Future<void> _refreshOrderList() async {
     ref.invalidate(orderListControllerProvider);
   }
 }
