@@ -29,21 +29,20 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
       end: 1.0,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(milliseconds: 1500), () {
       if (!mounted || navigated) return;
-
-      Future.delayed(const Duration(seconds: 3), () {
-        if (!mounted || navigated) return;
-
-        if (!navigated) {
-          navigated = true;
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
-          );
-        }
-      });
+      navigated = true;
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => LoginPage()),
+      );
     });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
