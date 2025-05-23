@@ -7,14 +7,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:windows_app/user_module/page/controller/user_list_controller.dart';
 import 'package:windows_app/utils/functions.dart';
 
-class SalesListFragment extends StatefulHookConsumerWidget {
-  const SalesListFragment({super.key});
+class UserListFragment extends StatefulHookConsumerWidget {
+  const UserListFragment({super.key});
 
   @override
-  ConsumerState<SalesListFragment> createState() => _SalesListFragmentState();
+  ConsumerState<UserListFragment> createState() => _UserListFragment();
 }
 
-class _SalesListFragmentState extends ConsumerState<SalesListFragment> {
+class _UserListFragment extends ConsumerState<UserListFragment> {
   @override
   Widget build(BuildContext context) {
     final userListState = ref.watch(userListControllerProvider);
@@ -24,80 +24,96 @@ class _SalesListFragmentState extends ConsumerState<SalesListFragment> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: 10),
+          Text('Daftar Pengguna', style: titleStyle),
+          const SizedBox(height: 10),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Sales List', style: titleStyle),
               SizedBox(
-                width: ScreenUtil().screenWidth / 4,
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search...',
-                    prefixIcon: const Icon(Icons.search),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: fillColor,
-                  ),
+                width: ScreenUtil().screenWidth * 0.25,
+                child: customSearchBar(
+                  context: context,
+                  hint: 'Cari Pengguna...',
+                  onChanged: (query) {
+                    ref
+                        .read(userListControllerProvider.notifier)
+                        .searchUser(query);
+                  },
                 ),
+              ),
+
+              IconButton(
+                onPressed: _refreshUserList,
+                icon: const Icon(Icons.refresh),
+                tooltip: 'Segarkan',
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
+
+          // Content area
           Expanded(
             child: userListState.when(
               loading: () => const Center(child: CircularProgressIndicator()),
-
               data: (salesList) {
                 if (salesList == null || salesList.isEmpty) {
-                  return const Center(child: Text('No sales data found.'));
+                  return Center(
+                    child: Text(
+                      'Data Pengguna Tidak Ditemukan',
+                      style: bodyStyle,
+                    ),
+                  );
                 }
 
-                return ListView.builder(
-                  itemCount: salesList.length,
-                  itemBuilder: (context, index) {
-                    final data = salesList[index]; // Skip null entries
-
-                    return Card(
-                      margin: const EdgeInsets.symmetric(vertical: 8),
-                      child: ListTile(
-                        leading: const Icon(Icons.person_2),
-                        title: Text(
-                          data.fields?.fullName?.stringValue ?? '-',
-                          style: const TextStyle(fontSize: 14),
-                        ),
-                        subtitle: Text(
-                          'Last Login: Apr ${index + 1}, 2025',
-                        ), // Replace with actual login date
-                        trailing: Text(
-                          'This Month: ${rupiahFormat((index * 10000) + 100000)}', // Replace with real amount
-                          style: const TextStyle(fontSize: 13),
-                        ),
-                        onTap: () {
-                          showSalesDetailDialog(
-                            context: context,
-                            name: data.fields?.fullName?.stringValue ?? '-',
-                            email: data.fields?.email?.stringValue ?? '-',
-                            onEditPressed: () {
-                              print('Edit sales');
-                            },
-                            phone: data.fields?.phoneNumber?.stringValue ?? '-',
-                          );
-                        },
+                return LayoutBuilder(
+                  builder: (context, constraints) {
+                    final crossCount = getCrossAxisCount(constraints);
+                    return GridView.builder(
+                      padding: const EdgeInsets.only(top: 8),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: crossCount,
+                        crossAxisSpacing: 16,
+                        mainAxisSpacing: 16,
+                        childAspectRatio: getChildAspectRatio(constraints),
                       ),
+                      itemCount: salesList.length,
+                      itemBuilder: (context, index) {
+                        final data = salesList[index];
+
+                        return itemCard(
+                          context: context,
+                          icon: Icons.person,
+                          title: data.fields?.fullName?.stringValue ?? '-',
+                          subtitle: data.fields?.email?.stringValue ?? '-',
+                          secondarySubtitle:
+                              data.fields?.phoneNumber?.stringValue != null
+                                  ? phoneNumberFormat(
+                                    data.fields?.phoneNumber?.stringValue ?? '',
+                                  )
+                                  : null,
+                          bottomText: 'Hasil Bulan ini: xxx',
+                          onTap: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  '${data.fields?.fullName?.stringValue ?? '-'} clicked',
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
                     );
                   },
                 );
               },
-
               error: (error, _) {
                 final exception = error as ApiException;
-
                 return Center(
                   child: Text(
-                    'Error Loading Customer List: ${exception.message}',
+                    'Gagal Memuat Daftar Pengguna: ${exception.message}',
                     style: errorStyle,
                   ),
                 );
@@ -107,5 +123,9 @@ class _SalesListFragmentState extends ConsumerState<SalesListFragment> {
         ],
       ),
     );
+  }
+
+  Future<void> _refreshUserList() async {
+    ref.invalidate(userListControllerProvider);
   }
 }

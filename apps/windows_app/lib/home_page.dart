@@ -21,10 +21,10 @@ class HomePage extends StatefulHookConsumerWidget {
 class _HomePage extends ConsumerState<HomePage> {
   final List<Widget> pages = [
     const MainReportFragment(),
-    const SalesListFragment(),
+    const UserListFragment(),
+    const OrderListFragment(),
     const CustomerListFragment(),
     const ProductListFragment(),
-    const OrderListFragment(),
     const ProfileFragment(),
   ];
 
@@ -55,10 +55,10 @@ class _HomePage extends ConsumerState<HomePage> {
         children: [
           // SIDE NAVBAR
           Container(
-            constraints: const BoxConstraints(maxWidth: 100),
+            constraints: const BoxConstraints(maxWidth: 105),
             decoration: BoxDecoration(
               border: Border(
-                right: BorderSide(color: dividerColor, width: 0.7),
+                right: BorderSide(color: dividerColor, width: 0.5),
               ),
             ),
             child: NavigationRail(
@@ -73,30 +73,31 @@ class _HomePage extends ConsumerState<HomePage> {
                   child: Image.asset('assets/logo.png', height: 40),
                 ),
               ),
+
               destinations: [
                 const NavigationRailDestination(
                   icon: Icon(Icons.dashboard),
-                  label: Text('Home'),
+                  label: Text('Beranda'),
                 ),
                 const NavigationRailDestination(
                   icon: Icon(Icons.people),
-                  label: Text('Sales'),
-                ),
-                const NavigationRailDestination(
-                  icon: Icon(Icons.business),
-                  label: Text('Customer'),
-                ),
-                const NavigationRailDestination(
-                  icon: Icon(Icons.inventory_2),
-                  label: Text('Product'),
+                  label: Text('Pengguna'),
                 ),
                 const NavigationRailDestination(
                   icon: Icon(Icons.receipt_long),
-                  label: Text('Order'),
+                  label: Text('Pesanan'),
+                ),
+                const NavigationRailDestination(
+                  icon: Icon(Icons.business),
+                  label: Text('Pelanggan'),
+                ),
+                const NavigationRailDestination(
+                  icon: Icon(Icons.inventory_2),
+                  label: Text('Produk'),
                 ),
                 const NavigationRailDestination(
                   icon: Icon(Icons.person),
-                  label: Text('Profile'),
+                  label: Text('Profil'),
                 ),
               ],
             ),

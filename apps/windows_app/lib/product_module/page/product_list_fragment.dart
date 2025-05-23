@@ -1,76 +1,102 @@
-import 'package:common_components/variables.dart';
+import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:windows_app/product_module/page/controller/product_list_controller.dart';
 import 'package:windows_app/utils/functions.dart';
 
 class ProductListFragment extends StatefulHookConsumerWidget {
   const ProductListFragment({super.key});
 
   @override
-  ConsumerState<ProductListFragment> createState() =>
-      _ProductListFragmentState();
+  ConsumerState<ProductListFragment> createState() => _ProductListFragment();
 }
 
-class _ProductListFragmentState extends ConsumerState<ProductListFragment> {
+class _ProductListFragment extends ConsumerState<ProductListFragment> {
   @override
   Widget build(BuildContext context) {
+    final productListState = ref.watch(productListControllerProvider);
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: 10),
+          Text('Daftar Produk', style: titleStyle),
+          const SizedBox(height: 10),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Product List', style: titleStyle),
               SizedBox(
-                width: ScreenUtil().screenWidth / 4,
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search...',
-                    prefixIcon: const Icon(Icons.search),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: fillColor,
-                  ),
+                width: ScreenUtil().screenWidth * 0.25,
+                child: customSearchBar(
+                  context: context,
+                  hint: 'Search...',
+                  onChanged: (query) {
+                    ref
+                        .read(productListControllerProvider.notifier)
+                        .searchProduct(query);
+                  },
                 ),
+              ),
+              IconButton(
+                onPressed: _refreshProductList,
+                icon: const Icon(Icons.refresh),
+                tooltip: 'Segarkan',
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
+
           Expanded(
-            child: ListView.builder(
-              itemCount: 8, // replace with actual product count
-              itemBuilder: (context, index) {
-                return Card(
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  child: ListTile(
-                    leading: const Icon(Icons.inventory_2),
-                    title: Text(
-                      'Product ${index + 1}',
-                      style: const TextStyle(fontSize: 14),
+            child: productListState.when(
+              loading: () => const Center(child: CircularProgressIndicator()),
+              data: (customerList) {
+                if (customerList == null || customerList.isEmpty) {
+                  return Center(
+                    child: Text(
+                      'Data Produk Tidak Ditemukan',
+                      style: bodyStyle,
                     ),
-                    subtitle: Text('SKU00${index + 1}'),
-                    trailing: Text(
-                      '₱ ${(index + 1) * 100}',
-                      style: const TextStyle(fontSize: 13),
-                    ),
-                    onTap: () {
-                      // TODO: Product on tap function
-                      showProductDetailDialog(
-                        context: context,
-                        productName: 'pensil',
-                        productCode: 'abc',
-                        category: 'atk',
-                        price: '1000',
-                        availability: true,
-                        onEditPressed: () {},
-                      );
-                    },
+                  );
+                }
+                return LayoutBuilder(
+                  builder: (context, constraints) {
+                    final crossCount = getCrossAxisCount(constraints);
+                    final aspectRatio = getChildAspectRatio(constraints);
+                    return GridView.builder(
+                      padding: const EdgeInsets.only(top: 8),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: crossCount,
+                        crossAxisSpacing: 16,
+                        mainAxisSpacing: 16,
+                        childAspectRatio: aspectRatio,
+                      ),
+                      itemCount: customerList.length,
+                      itemBuilder: (context, index) {
+                        final data = customerList[index];
+                        return itemCard(
+                          context: context,
+                          icon: Icons.business_sharp,
+                          title: data.fields?.productName?.stringValue ?? '-',
+                          subtitle: getIdFromName(name: data.name),
+                          bottomText:
+                              "Price per pcs: \n${rupiahFormat(int.tryParse(data.fields?.price?.integerValue ?? '') ?? 0)}",
+                          onTap: () {},
+                        );
+                      },
+                    );
+                  },
+                );
+              },
+              error: (error, _) {
+                final exception = error as ApiException;
+                return Center(
+                  child: Text(
+                    'Gagal Memuat Daftar Produk: ${exception.message}',
+                    style: errorStyle,
                   ),
                 );
               },
@@ -79,5 +105,9 @@ class _ProductListFragmentState extends ConsumerState<ProductListFragment> {
         ],
       ),
     );
+  }
+
+  Future<void> _refreshProductList() async {
+    ref.invalidate(productListControllerProvider);
   }
 }

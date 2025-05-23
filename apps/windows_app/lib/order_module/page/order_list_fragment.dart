@@ -1,7 +1,9 @@
-import 'package:common_components/variables.dart';
+import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:windows_app/customer_module/page/controller/customer_list_controller.dart';
+import 'package:windows_app/order_module/page/controller/order_list_controller.dart';
 import 'package:windows_app/utils/functions.dart';
 
 class OrderListFragment extends StatefulHookConsumerWidget {
@@ -14,66 +16,99 @@ class OrderListFragment extends StatefulHookConsumerWidget {
 class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
   @override
   Widget build(BuildContext context) {
+    final orderListState = ref.watch(orderListControllerProvider);
+    final customerListState = ref.watch(customerListControllerProvider);
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: 10),
+          Text('Daftar Pesanan', style: titleStyle),
+          const SizedBox(height: 10),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Order List', style: titleStyle),
               SizedBox(
-                width: ScreenUtil().screenWidth / 4,
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search...',
-                    prefixIcon: const Icon(Icons.search),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: fillColor,
-                  ),
+                width: ScreenUtil().screenWidth * 0.25,
+                child: customSearchBar(
+                  context: context,
+                  hint: 'Cari Pesanan...',
+                  onChanged: (query) {
+                    ref
+                        .read(orderListControllerProvider.notifier)
+                        .searchOrderByCustomer(query);
+                  },
                 ),
+              ),
+              IconButton(
+                onPressed: _refreshOrderList,
+                icon: const Icon(Icons.refresh),
+                tooltip: 'Segarkan',
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
+
           Expanded(
-            child: ListView.builder(
-              itemCount: 10, // Replace with actual order count
-              itemBuilder: (context, index) {
-                return Card(
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  elevation: 2,
-                  child: ListTile(
-                    leading: const Icon(Icons.receipt_long, size: 24),
-                    title: Text(
-                      'Order #ORD-${1000 + index}',
-                      style: const TextStyle(fontSize: 14),
+            child: orderListState.when(
+              loading: () => const Center(child: CircularProgressIndicator()),
+              data: (orderList) {
+                if (orderList == null || orderList.isEmpty) {
+                  return Center(
+                    child: Text(
+                      'Data Pesanan Tidak Ditemukan',
+                      style: bodyStyle,
                     ),
-                    subtitle: Text('Customer ${index + 1} • Status: Shipped'),
-                    trailing: Text(
-                      '₱ ${(index + 1) * 250}',
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
+                  );
+                }
+                return LayoutBuilder(
+                  builder: (context, constraints) {
+                    final crossCount = getCrossAxisCount(constraints);
+                    final aspectRatio = getChildAspectRatio(constraints);
+                    return GridView.builder(
+                      padding: const EdgeInsets.only(top: 8),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: crossCount,
+                        crossAxisSpacing: 16,
+                        mainAxisSpacing: 16,
+                        childAspectRatio: aspectRatio,
                       ),
-                    ),
-                    onTap: () {
-                      // TODO: Order on tap function
-                      showOrderDetailDialog(
-                        context: context,
-                        orderId: 'abc',
-                        customerName: 'customer 1',
-                        date: 'sabtu gatau kapan',
-                        status: 'pending',
-                        total: '1000000',
-                        onEditPressed: () {},
-                      );
-                    },
+                      itemCount: orderList.length,
+                      itemBuilder: (context, index) {
+                        final data = orderList[index];
+
+                        return itemCard(
+                          context: context,
+                          icon: Icons.receipt_long,
+                          title: customerListState.when(
+                            loading: () => 'Memuat...',
+                            data: (customerList) {
+                              return "Order ${ref.read(customerListControllerProvider.notifier).getCustomerName(id: data.fields?.customerId?.stringValue ?? '')}";
+                            },
+                            error: (error, stackTrace) {
+                              _refreshCustomerList();
+                              return 'Gagal Memuat Nama';
+                            },
+                          ),
+                          subtitle: getIdFromName(name: data.name),
+                          bottomText:
+                              "Total: \n${rupiahFormat(int.tryParse(data.fields?.totalPrice?.integerValue ?? '') ?? 0)}",
+                          onTap: () {},
+                        );
+                      },
+                    );
+                  },
+                );
+              },
+              error: (error, _) {
+                final exception = error as ApiException;
+                return Center(
+                  child: Text(
+                    'Gagal Memuat Daftar Pesanan: ${exception.message}',
+                    style: errorStyle,
                   ),
                 );
               },
@@ -82,5 +117,13 @@ class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
         ],
       ),
     );
+  }
+
+  Future<void> _refreshOrderList() async {
+    ref.invalidate(orderListControllerProvider);
+  }
+
+  Future<void> _refreshCustomerList() async {
+    ref.invalidate(customerListControllerProvider);
   }
 }

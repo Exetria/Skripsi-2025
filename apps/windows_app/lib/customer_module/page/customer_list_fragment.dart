@@ -1,5 +1,4 @@
-import 'package:common_components/utils/api_exception.dart';
-import 'package:common_components/variables.dart';
+import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -10,11 +9,10 @@ class CustomerListFragment extends StatefulHookConsumerWidget {
   const CustomerListFragment({super.key});
 
   @override
-  ConsumerState<CustomerListFragment> createState() =>
-      _CustomerListFragmentState();
+  ConsumerState<CustomerListFragment> createState() => _CustomerListFragment();
 }
 
-class _CustomerListFragmentState extends ConsumerState<CustomerListFragment> {
+class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
   @override
   Widget build(BuildContext context) {
     final customerListState = ref.watch(customerListControllerProvider);
@@ -24,80 +22,92 @@ class _CustomerListFragmentState extends ConsumerState<CustomerListFragment> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: 10),
+          Text('Daftar Pelanggan', style: titleStyle),
+          const SizedBox(height: 10),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Customer List', style: titleStyle),
               SizedBox(
-                width: ScreenUtil().screenWidth / 4,
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search...',
-                    prefixIcon: const Icon(Icons.search),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: fillColor,
-                  ),
+                width: ScreenUtil().screenWidth * 0.25,
+                child: customSearchBar(
+                  context: context,
+                  hint: 'Cari Pelanggan...',
+                  onChanged: (query) {
+                    ref
+                        .read(customerListControllerProvider.notifier)
+                        .searchCustomer(query);
+                  },
                 ),
+              ),
+              IconButton(
+                onPressed: _refreshCustomerList,
+                icon: const Icon(Icons.refresh),
+                tooltip: 'Segarkan',
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
+
           Expanded(
             child: customerListState.when(
               loading: () => const Center(child: CircularProgressIndicator()),
-
               data: (customerList) {
                 if (customerList == null || customerList.isEmpty) {
-                  return const Center(child: Text('No sales data found.'));
+                  return Center(
+                    child: Text(
+                      'Data Pelanggan Tidak Ditemukan',
+                      style: bodyStyle,
+                    ),
+                  );
                 }
-
-                return ListView.builder(
-                  itemCount: customerList.length,
-                  itemBuilder: (context, index) {
-                    final data = customerList[index]; // Skip null entries
-
-                    return Card(
-                      margin: const EdgeInsets.symmetric(vertical: 8),
-                      child: ListTile(
-                        leading: const Icon(Icons.business_sharp),
-                        title: Text(
-                          data.fields?.companyName?.stringValue ?? '-',
-                          style: const TextStyle(fontSize: 14),
-                        ),
-                        subtitle: Text(
-                          data.fields?.companyAddress?.stringValue ?? '-',
-                        ),
-                        onTap: () {
-                          // TODO: customer on tap function
-                          showCustomerDetailDialog(
-                            context: context,
-                            name: data.fields?.companyName?.stringValue ?? '-',
-                            email:
-                                data.fields?.companyEmail?.stringValue ?? '-',
-                            phone:
-                                data.fields?.companyPhoneNumber?.stringValue ??
-                                '-',
-                            address:
-                                data.fields?.companyAddress?.stringValue ?? '-',
-                            onEditPressed: () {},
-                          );
-                        },
+                return LayoutBuilder(
+                  builder: (context, constraints) {
+                    final crossCount = getCrossAxisCount(constraints);
+                    final aspectRatio = getChildAspectRatio(constraints);
+                    return GridView.builder(
+                      padding: const EdgeInsets.only(top: 8),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: crossCount,
+                        crossAxisSpacing: 16,
+                        mainAxisSpacing: 16,
+                        childAspectRatio: aspectRatio,
                       ),
+                      itemCount: customerList.length,
+                      itemBuilder: (context, index) {
+                        final data = customerList[index];
+                        return itemCard(
+                          context: context,
+                          icon: Icons.business_sharp,
+                          title: data.fields?.companyName?.stringValue ?? '-',
+                          subtitle:
+                              data.fields?.companyEmail?.stringValue ?? '-',
+                          secondarySubtitle:
+                              data.fields?.companyPhoneNumber?.stringValue !=
+                                      null
+                                  ? phoneNumberFormat(
+                                    data
+                                            .fields
+                                            ?.companyPhoneNumber
+                                            ?.stringValue ??
+                                        '',
+                                  )
+                                  : null,
+                          bottomText:
+                              "Alamat:\n${data.fields?.companyAddress?.stringValue ?? '-'}",
+                          onTap: () {},
+                        );
+                      },
                     );
                   },
                 );
               },
-
               error: (error, _) {
                 final exception = error as ApiException;
-
                 return Center(
                   child: Text(
-                    'Error Loading Customer List: ${exception.message}',
+                    'Gagal Memuat Daftar Pelanggan: ${exception.message}',
                     style: errorStyle,
                   ),
                 );
@@ -107,5 +117,9 @@ class _CustomerListFragmentState extends ConsumerState<CustomerListFragment> {
         ],
       ),
     );
+  }
+
+  Future<void> _refreshCustomerList() async {
+    ref.invalidate(customerListControllerProvider);
   }
 }

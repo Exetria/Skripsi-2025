@@ -1,6 +1,6 @@
 name: windows_app
 description: "Salesku App Windows untuk Admin Sales"
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
@@ -20,10 +20,21 @@ dependencies:
   # FREEZED
   freezed_annotation: ^2.4.4
   json_annotation: ^4.9.0
-  fpdart: ^1.1.1
+
+  # MAP & LOCATION
+  geolocator: ^14.0.0
+  flutter_map: ^8.1.1
+  latlong2: ^0.9.1
+
+  # EXPORT EXCEL
+  excel: ^2.0.1
+  file_selector: ^0.9.0
+  path_provider: ^2.0.14
 
   # OTHERS
+  intl: ^0.20.2
   http: ^1.3.0
+  fl_chart: ^1.0.0
   google_fonts: ^6.2.1
   flutter_dotenv: ^5.2.1
   flutter_screenutil: ^5.9.3

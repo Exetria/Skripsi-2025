@@ -218,7 +218,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       showFeedbackDialog(
         context: context,
         type: 1,
-        message: 'Login Successful',
+        message: 'Login Sukses',
         onClose: () {
           Navigator.pushReplacement(
             context,
@@ -230,7 +230,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       showFeedbackDialog(
         context: context,
         type: 3,
-        message: 'Sorry, You\'re Not an Admin',
+        message: 'Maaf, Anda Tidak Memiliki Akses',
         onClose: () {
           setState(() {
             _buttonEnabled = true;
@@ -261,11 +261,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             message:
                 apiException.responseBody?['error']['message'] ==
                         'INVALID_LOGIN_CREDENTIALS'
-                    ? 'Wrong Email or Password'
+                    ? 'Email atau Password Salah'
                     : apiException.responseBody?['error']['message'] ==
                         'INVALID_EMAIL'
-                    ? 'Invalid Email'
-                    : 'Unknown Error',
+                    ? 'Email Tidak Valid'
+                    : 'Terjadi Kesalahan',
             onClose: () {
               setState(() {
                 _buttonEnabled = true;
@@ -291,7 +291,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       showFeedbackDialog(
         context: context,
         type: 2,
-        message: 'Email is Empty',
+        message: 'Email Kosong',
         onClose: () {
           setState(() {
             _buttonEnabled = true;
@@ -304,7 +304,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       showFeedbackDialog(
         context: context,
         type: 2,
-        message: 'Password is Empty',
+        message: 'Password Kosong',
         onClose: () {
           setState(() {
             _buttonEnabled = true;
@@ -317,7 +317,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       showFeedbackDialog(
         context: context,
         type: 2,
-        message: 'An Unknown Error Occured',
+        message: 'Terjadi Kesalahan',
         onClose: () {
           setState(() {
             _buttonEnabled = true;
