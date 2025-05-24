@@ -295,6 +295,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                   ? () async {
                     _pickStorePhotoEnabled = false;
                     File? pickedImage = await pickImage(context: context);
+
                     if (pickedImage != null) {
                       setState(() {
                         _storePhoto = pickedImage;

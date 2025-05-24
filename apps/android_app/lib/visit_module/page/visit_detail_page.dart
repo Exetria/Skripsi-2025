@@ -192,9 +192,13 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
                             final pickedImage = await pickImage(
                               context: context,
                             );
-                            setState(() {
-                              _visitPhoto = pickedImage;
-                            });
+
+                            // If new image exist, refresh
+                            if (pickedImage != null) {
+                              setState(() {
+                                _visitPhoto = pickedImage;
+                              });
+                            }
                             _pickVisitPhoto = true;
                           }
                           : null,
