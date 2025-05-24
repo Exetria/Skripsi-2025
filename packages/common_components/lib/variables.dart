@@ -58,6 +58,10 @@ final TextStyle captionStyle = TextStyle(
   fontSize: Platform.isWindows ? 14 : 14.sp,
   fontWeight: FontWeight.w400,
 );
+final TextStyle footnoteStyle = TextStyle(
+  fontSize: Platform.isWindows ? 12 : 12.sp,
+  fontWeight: FontWeight.w400,
+);
 
 // MISC. TEXT STYLES
 final TextStyle buttonStyle = TextStyle(
