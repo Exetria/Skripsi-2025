@@ -31,6 +31,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
   late List<Map<String, dynamic>> _productDataList;
 
   String? _paymentMethod;
+  int total = 0;
   bool _submitButtonEnabled = true;
 
   final _notesController = TextEditingController();
@@ -40,6 +41,12 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
   @override
   void initState() {
     super.initState();
+    addCallBackAfterBuild(
+      callback: () {
+        ref.read(productListControllerProvider.notifier).resetSearch();
+        ref.read(customerListControllerProvider.notifier).resetSearch();
+      },
+    );
     _editable = widget.orderData.fields?.orderStatus?.stringValue == 'Pending';
     _productDataList = List.from(widget.productDataList);
     _paymentMethod = widget.orderData.fields?.paymentMethod?.stringValue;
@@ -55,7 +62,6 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final productListState = ref.watch(productListControllerProvider);
     final customerListState = ref.watch(customerListControllerProvider);
 
     return Scaffold(
@@ -97,9 +103,9 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
               values: [
                 'ID Order:\n${getIdFromName(name: widget.orderData.name)}',
                 "Status Order:\n${widget.orderData.fields?.orderStatus?.stringValue ?? ''}",
-                "Total:\n${rupiahFormat(int.tryParse(widget.orderData.fields?.totalPrice?.integerValue ?? '') ?? 0)}",
+                // "Total:\n${rupiahFormat(int.tryParse(widget.orderData.fields?.totalPrice?.integerValue ?? '') ?? 0)}",
               ],
-              icons: [Icons.donut_small, Icons.donut_small, Icons.donut_small],
+              icons: [Icons.donut_small, Icons.donut_small],
             ),
             SizedBox(height: 16.h),
 
@@ -145,79 +151,19 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
               controller: _notesController,
               decoration: const InputDecoration(labelText: 'Catatan'),
             ),
-            SizedBox(height: 16.h),
+            SizedBox(height: 24.h),
 
-            // Ordered products
+            // Product list
+            ...generateProductList(),
+            SizedBox(height: 12.h),
+
+            // Total
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text('Daftar Produk', style: sectionTitleStyle),
-                _editable
-                    ? GestureDetector(
-                      onTap: () async {
-                        // Add product
-                        String? newProductId = await showProductSelectorPopup(
-                          productListState: productListState,
-                        );
-                        String? productPrice = await ref
-                            .read(productListControllerProvider.notifier)
-                            .getProductPrice(id: newProductId ?? '');
-
-                        for (var productData in _productDataList) {
-                          String? productId =
-                              productData['mapValue']['fields']['product_id']['stringValue'];
-
-                          if (productId == newProductId) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Product already added'),
-                                behavior: SnackBarBehavior.floating,
-                                duration: Duration(seconds: 2),
-                              ),
-                            );
-                            return;
-                          }
-                        }
-
-                        if (newProductId != null && mounted) {
-                          setState(() {
-                            // discount_amount added later
-                            // discount_percentage added later
-                            _productDataList.add({
-                              'mapValue': {
-                                'fields': {
-                                  'product_id': {'stringValue': newProductId},
-                                  'quantity': {'integerValue': '1'},
-                                  'unit_price': {'integerValue': productPrice},
-                                  'total_price': {'integerValue': productPrice},
-                                },
-                              },
-                            });
-                          });
-                        }
-
-                        ref
-                            .read(productListControllerProvider.notifier)
-                            .getProductPrice(id: newProductId ?? '');
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(8.r),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primary,
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                        child: Icon(
-                          Icons.add,
-                          color: Theme.of(context).colorScheme.onPrimary,
-                        ),
-                      ),
-                    )
-                    : const SizedBox.shrink(),
+                Text('Total: ${rupiahFormat(total)}', style: bodyStyle),
               ],
             ),
-            SizedBox(height: 12.h),
-            ...generateProductList(productListState: productListState),
           ],
         ),
       ),
@@ -243,10 +189,10 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
     );
   }
 
-  List<Widget> generateProductList({
-    required AsyncValue<List<ProductDomain>?> productListState,
-  }) {
+  List<Widget> generateProductList() {
+    final productListState = ref.watch(productListControllerProvider);
     List<Widget> cards = [];
+    int newTotal = 0;
 
     for (int index = 0; index < _productDataList.length; index++) {
       final productData = _productDataList[index];
@@ -257,6 +203,8 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
           productData['mapValue']['fields']['quantity']['integerValue'];
       String? productTotalPrice =
           productData['mapValue']['fields']['total_price']['integerValue'];
+
+      newTotal += int.tryParse(productTotalPrice ?? '') ?? 0;
 
       cards.add(
         productCard(
@@ -292,7 +240,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
             if (_productDataList.length == 1) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('Cannot delete the last product'),
+                  content: Text('Tidak bisa menghapus produk terakhir'),
                   behavior: SnackBarBehavior.floating,
                   duration: Duration(seconds: 2),
                 ),
@@ -311,67 +259,89 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
       cards.add(SizedBox(height: 4.h));
     }
 
+    setState(() {
+      total = newTotal;
+    });
+
     return cards;
   }
 
-  Future<String?> showProductSelectorPopup({
-    required AsyncValue<List<ProductDomain>?> productListState,
-  }) async {
+  Future<String?> showProductSelectorPopup() async {
+    ref.read(productListControllerProvider.notifier).resetSearch();
     return showDialog<String>(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: customSearchBar(context: context, hint: 'Cari Produk...'),
-          content: SizedBox(
-            width: ScreenUtil().screenWidth,
-            height: ScreenUtil().screenHeight / 2,
-            child: productListState.when(
-              loading: () => const Center(child: CircularProgressIndicator()),
-              data: (productList) {
-                if (productList == null || productList.isEmpty) {
-                  return refreshableInfoWidget(
-                    refreshFunction: _refreshProductList,
-                    content: const Text('Data Produk Tidak Ditemukan'),
-                  );
-                }
+        return Consumer(
+          builder: (context, ref, _) {
+            return AlertDialog(
+              title: customSearchBar(
+                context: context,
+                hint: 'Cari Produk...',
+                onChanged: (query) {
+                  ref
+                      .read(productListControllerProvider.notifier)
+                      .searchProduct(query);
+                },
+              ),
+              content: SizedBox(
+                width: ScreenUtil().screenWidth,
+                height: ScreenUtil().screenHeight / 2,
+                child: ref
+                    .watch(productListControllerProvider)
+                    .when(
+                      loading:
+                          () =>
+                              const Center(child: CircularProgressIndicator()),
+                      data: (productList) {
+                        if (productList == null || productList.isEmpty) {
+                          return refreshableInfoWidget(
+                            refreshFunction: _refreshProductList,
+                            content: const Text('Data Produk Tidak Ditemukan'),
+                          );
+                        }
 
-                return RefreshIndicator(
-                  onRefresh: _refreshProductList,
-                  child: ListView.separated(
-                    itemCount: productList.length,
-                    separatorBuilder: (context, index) => SizedBox(height: 4.h),
-                    itemBuilder: (context, index) {
-                      final data = productList[index];
+                        return RefreshIndicator(
+                          onRefresh: _refreshProductList,
+                          child: ListView.separated(
+                            itemCount: productList.length,
+                            separatorBuilder:
+                                (context, index) => SizedBox(height: 4.h),
+                            itemBuilder: (context, index) {
+                              final data = productList[index];
 
-                      return customListItem(
-                        context: context,
-                        leadIcon: Icons.inventory_2,
-                        title: data.fields?.productName?.stringValue ?? '-',
-                        subtitle: data.fields?.brand?.stringValue ?? '-',
-                        trailIcon: Icons.arrow_forward_ios,
-                        onTap:
-                            () => Navigator.pop(
-                              context,
-                              getIdFromName(name: data.name),
-                            ),
-                      );
-                    },
-                  ),
-                );
-              },
-              error: (error, _) {
-                final exception = error as ApiException;
+                              return customSelectorListItem(
+                                context: context,
+                                title:
+                                    data.fields?.productName?.stringValue ??
+                                    '-',
+                                subtitle:
+                                    data.fields?.brand?.stringValue ?? '-',
+                                trailIcon: Icons.arrow_forward_ios,
+                                onTap:
+                                    () => Navigator.pop(
+                                      context,
+                                      getIdFromName(name: data.name),
+                                    ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      error: (error, _) {
+                        final exception = error as ApiException;
 
-                return refreshableInfoWidget(
-                  refreshFunction: _refreshProductList,
-                  content: Text(
-                    'Gagal Memuat Data Produk: ${exception.message}',
-                    style: errorStyle,
-                  ),
-                );
-              },
-            ),
-          ),
+                        return refreshableInfoWidget(
+                          refreshFunction: _refreshProductList,
+                          content: Text(
+                            'Gagal Memuat Data Produk: ${exception.message}',
+                            style: errorStyle,
+                          ),
+                        );
+                      },
+                    ),
+              ),
+            );
+          },
         );
       },
     );
@@ -611,7 +581,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: Text('Cancel', style: captionStyle),
+                  child: Text('Batal', style: captionStyle),
                 ),
                 ElevatedButton(
                   onPressed: () {

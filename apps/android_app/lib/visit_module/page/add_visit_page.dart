@@ -27,6 +27,16 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
   final _mapController = MapController();
 
   @override
+  void initState() {
+    super.initState();
+    addCallBackAfterBuild(
+      callback: () {
+        ref.read(customerListControllerProvider.notifier).resetSearch();
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     final customerListState = ref.watch(customerListControllerProvider);
     final markers = ref.watch(markerListProvider);
@@ -126,7 +136,15 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
               ],
             ),
           ),
-          customSearchBar(context: context, hint: 'Cari Pelanggan...'),
+          customSearchBar(
+            context: context,
+            hint: 'Cari Pelanggan...',
+            onChanged: (query) {
+              ref
+                  .read(customerListControllerProvider.notifier)
+                  .searchCustomer(query);
+            },
+          ),
           SizedBox(
             height: ScreenUtil().screenHeight / 4,
             child: customerListState.when(

@@ -1,4 +1,3 @@
-import 'package:android_app/customer_module/domain/entities/customer_domain.dart';
 import 'package:android_app/customer_module/page/controller/customer_list_controller.dart';
 import 'package:android_app/order_module/domain/entities/order_domain.dart';
 import 'package:android_app/order_module/page/controller/order_list_controller.dart';
@@ -26,10 +25,22 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
 
   String? _paymentMethod;
   String? _selectedCustomerId;
+  int total = 0;
   bool _submitButtonEnabled = true;
 
   final _notesController = TextEditingController();
   final _customerIdController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    addCallBackAfterBuild(
+      callback: () {
+        ref.read(productListControllerProvider.notifier).resetSearch();
+        ref.read(customerListControllerProvider.notifier).resetSearch();
+      },
+    );
+  }
 
   @override
   void dispose() {
@@ -41,7 +52,6 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
 
   @override
   Widget build(BuildContext context) {
-    final productListState = ref.watch(productListControllerProvider);
     final customerListState = ref.watch(customerListControllerProvider);
 
     return Scaffold(
@@ -62,7 +72,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                 readOnly: true,
                 controller: _customerIdController,
                 decoration: InputDecoration(
-                  labelText: 'Select Customer',
+                  labelText: 'Pilih Pelanggan',
                   fillColor: Theme.of(context).colorScheme.surface,
                 ),
                 validator: (_) {
@@ -72,9 +82,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                 },
                 onTap: () async {
                   // get selected customer Id
-                  final newSelectedId = await showCustomerSelectorPopup(
-                    customerListState: customerListState,
-                  );
+                  final newSelectedId = await showCustomerSelectorPopup();
 
                   // if selected id exist, update
                   if (newSelectedId != null && mounted) {
@@ -138,7 +146,6 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                 controller: _notesController,
                 decoration: const InputDecoration(labelText: 'Catatan'),
               ),
-              SizedBox(height: 16.h),
 
               SizedBox(height: 24.h),
 
@@ -150,9 +157,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                   GestureDetector(
                     onTap: () async {
                       // Add product
-                      String? newProductId = await showProductSelectorPopup(
-                        productListState: productListState,
-                      );
+                      String? newProductId = await showProductSelectorPopup();
                       String? productPrice = await ref
                           .read(productListControllerProvider.notifier)
                           .getProductPrice(id: newProductId ?? '');
@@ -164,7 +169,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                         if (productId == newProductId) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text('Product already added'),
+                              content: Text('Produk Sudah Ada'),
                               behavior: SnackBarBehavior.floating,
                               duration: Duration(seconds: 2),
                             ),
@@ -210,7 +215,18 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                 ],
               ),
               SizedBox(height: 12.h),
-              ...generateProductList(productListState: productListState),
+
+              // Product list
+              ...generateProductList(),
+              SizedBox(height: 12.h),
+
+              // Total
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text('Total: ${rupiahFormat(total)}', style: bodyStyle),
+                ],
+              ),
             ],
           ),
         ),
@@ -236,10 +252,10 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
     );
   }
 
-  List<Widget> generateProductList({
-    required AsyncValue<List<ProductDomain>?> productListState,
-  }) {
+  List<Widget> generateProductList() {
+    final productListState = ref.watch(productListControllerProvider);
     List<Widget> cards = [];
+    int newTotal = 0;
 
     for (int index = 0; index < _productDataList.length; index++) {
       final productData = _productDataList[index];
@@ -250,6 +266,8 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
           productData['mapValue']['fields']['quantity']['integerValue'];
       String? productTotalPrice =
           productData['mapValue']['fields']['total_price']['integerValue'];
+
+      newTotal += int.tryParse(productTotalPrice ?? '') ?? 0;
 
       cards.add(
         productCard(
@@ -280,22 +298,9 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
             }
           },
           onDelete: () {
-            // Check if the product list length is 1
-            if (_productDataList.length == 1) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Cannot delete the last product'),
-                  behavior: SnackBarBehavior.floating,
-                  duration: Duration(seconds: 2),
-                ),
-              );
-            }
-            // Remove product
-            else if (_productDataList.length > 1) {
-              setState(() {
-                _productDataList.removeAt(index);
-              });
-            }
+            setState(() {
+              _productDataList.removeAt(index);
+            });
           },
         ),
       );
@@ -303,131 +308,173 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
       cards.add(SizedBox(height: 4.h));
     }
 
+    setState(() {
+      total = newTotal;
+    });
+
     return cards;
   }
 
-  Future<String?> showCustomerSelectorPopup({
-    required AsyncValue<List<CustomerDomain>?> customerListState,
-  }) async {
+  Future<String?> showCustomerSelectorPopup() async {
+    ref.read(customerListControllerProvider.notifier).resetSearch();
     return showDialog<String>(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: customSearchBar(context: context, hint: 'Cari Pelanggan...'),
-          content: SizedBox(
-            width: ScreenUtil().screenWidth,
-            height: ScreenUtil().screenHeight / 2,
-            child: customerListState.when(
-              loading: () => const Center(child: CircularProgressIndicator()),
-              data: (productList) {
-                if (productList == null || productList.isEmpty) {
-                  return refreshableInfoWidget(
-                    refreshFunction: _refreshCustomerList,
-                    content: const Text('Data Pelanggan Tidak Ditemukan'),
-                  );
-                }
-
-                return RefreshIndicator(
-                  onRefresh: _refreshProductList,
-                  child: ListView.separated(
-                    itemCount: productList.length,
-                    separatorBuilder: (context, index) => SizedBox(height: 4.h),
-                    itemBuilder: (context, index) {
-                      final data = productList[index];
-
-                      return customListItem(
-                        context: context,
-                        leadIcon: Icons.business,
-                        title: data.fields?.companyName?.stringValue ?? '-',
-                        subtitle:
-                            data.fields?.companyAddress?.stringValue ?? '-',
-                        trailIcon: Icons.arrow_forward_ios,
-                        onTap:
-                            () => Navigator.pop(
-                              context,
-                              getIdFromName(name: data.name),
+        return Consumer(
+          builder: (context, ref, _) {
+            return AlertDialog(
+              title: customSearchBar(
+                context: context,
+                hint: 'Cari Pelanggan...',
+                onChanged: (query) {
+                  ref
+                      .read(customerListControllerProvider.notifier)
+                      .searchCustomer(query);
+                },
+              ),
+              content: SizedBox(
+                width: ScreenUtil().screenWidth,
+                height: ScreenUtil().screenHeight / 2,
+                child: ref
+                    .watch(customerListControllerProvider)
+                    .when(
+                      loading:
+                          () =>
+                              const Center(child: CircularProgressIndicator()),
+                      data: (productList) {
+                        if (productList == null || productList.isEmpty) {
+                          return refreshableInfoWidget(
+                            refreshFunction: _refreshCustomerList,
+                            content: const Text(
+                              'Data Pelanggan Tidak Ditemukan',
                             ),
-                      );
-                    },
-                  ),
-                );
-              },
-              error: (error, _) {
-                final exception = error as ApiException;
+                          );
+                        }
 
-                return refreshableInfoWidget(
-                  refreshFunction: _refreshCustomerList,
-                  content: Text(
-                    'Gagal Memuat Data Pelanggan: ${exception.message}',
-                    style: errorStyle,
-                  ),
-                );
-              },
-            ),
-          ),
+                        return RefreshIndicator(
+                          onRefresh: _refreshProductList,
+                          child: ListView.separated(
+                            itemCount: productList.length,
+                            separatorBuilder:
+                                (context, index) => SizedBox(height: 4.h),
+                            itemBuilder: (context, index) {
+                              final data = productList[index];
+
+                              return customSelectorListItem(
+                                context: context,
+                                title:
+                                    data.fields?.companyName?.stringValue ??
+                                    '-',
+                                subtitle:
+                                    data.fields?.companyAddress?.stringValue ??
+                                    '-',
+                                trailIcon: Icons.arrow_forward_ios,
+                                onTap:
+                                    () => Navigator.pop(
+                                      context,
+                                      getIdFromName(name: data.name),
+                                    ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      error: (error, _) {
+                        final exception = error as ApiException;
+
+                        return refreshableInfoWidget(
+                          refreshFunction: _refreshCustomerList,
+                          content: Text(
+                            'Gagal Memuat Data Pelanggan: ${exception.message}',
+                            style: errorStyle,
+                          ),
+                        );
+                      },
+                    ),
+              ),
+            );
+          },
         );
       },
     );
   }
 
-  Future<String?> showProductSelectorPopup({
-    required AsyncValue<List<ProductDomain>?> productListState,
-  }) async {
+  Future<String?> showProductSelectorPopup() async {
+    ref.read(productListControllerProvider.notifier).resetSearch();
     return showDialog<String>(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: customSearchBar(context: context, hint: 'Cari Produk...'),
-          content: SizedBox(
-            width: ScreenUtil().screenWidth,
-            height: ScreenUtil().screenHeight / 2,
-            child: productListState.when(
-              loading: () => const Center(child: CircularProgressIndicator()),
-              data: (productList) {
-                if (productList == null || productList.isEmpty) {
-                  return refreshableInfoWidget(
-                    refreshFunction: _refreshProductList,
-                    content: const Text('Data Produk Tidak Ditemukan'),
-                  );
-                }
+        return Consumer(
+          builder: (context, ref, _) {
+            return AlertDialog(
+              title: customSearchBar(
+                context: context,
+                hint: 'Cari Produk...',
+                onChanged: (query) {
+                  ref
+                      .read(productListControllerProvider.notifier)
+                      .searchProduct(query);
+                },
+              ),
+              content: SizedBox(
+                width: ScreenUtil().screenWidth,
+                height: ScreenUtil().screenHeight / 2,
+                child: ref
+                    .watch(productListControllerProvider)
+                    .when(
+                      loading:
+                          () =>
+                              const Center(child: CircularProgressIndicator()),
+                      data: (productList) {
+                        if (productList == null || productList.isEmpty) {
+                          return refreshableInfoWidget(
+                            refreshFunction: _refreshProductList,
+                            content: const Text('Data Produk Tidak Ditemukan'),
+                          );
+                        }
 
-                return RefreshIndicator(
-                  onRefresh: _refreshProductList,
-                  child: ListView.separated(
-                    itemCount: productList.length,
-                    separatorBuilder: (context, index) => SizedBox(height: 4.h),
-                    itemBuilder: (context, index) {
-                      final data = productList[index];
+                        return RefreshIndicator(
+                          onRefresh: _refreshProductList,
+                          child: ListView.separated(
+                            itemCount: productList.length,
+                            separatorBuilder:
+                                (context, index) => SizedBox(height: 4.h),
+                            itemBuilder: (context, index) {
+                              final data = productList[index];
 
-                      return customListItem(
-                        context: context,
-                        leadIcon: Icons.inventory_2,
-                        title: data.fields?.productName?.stringValue ?? '-',
-                        subtitle: data.fields?.brand?.stringValue ?? '-',
-                        trailIcon: Icons.arrow_forward_ios,
-                        onTap:
-                            () => Navigator.pop(
-                              context,
-                              getIdFromName(name: data.name),
-                            ),
-                      );
-                    },
-                  ),
-                );
-              },
-              error: (error, _) {
-                final exception = error as ApiException;
+                              return customSelectorListItem(
+                                context: context,
+                                title:
+                                    data.fields?.productName?.stringValue ??
+                                    '-',
+                                subtitle:
+                                    data.fields?.brand?.stringValue ?? '-',
+                                trailIcon: Icons.arrow_forward_ios,
+                                onTap:
+                                    () => Navigator.pop(
+                                      context,
+                                      getIdFromName(name: data.name),
+                                    ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      error: (error, _) {
+                        final exception = error as ApiException;
 
-                return refreshableInfoWidget(
-                  refreshFunction: _refreshProductList,
-                  content: Text(
-                    'Gagal Menambah Pesanan: ${exception.message}',
-                    style: errorStyle,
-                  ),
-                );
-              },
-            ),
-          ),
+                        return refreshableInfoWidget(
+                          refreshFunction: _refreshProductList,
+                          content: Text(
+                            'Gagal Memuat Data Produk: ${exception.message}',
+                            style: errorStyle,
+                          ),
+                        );
+                      },
+                    ),
+              ),
+            );
+          },
         );
       },
     );
@@ -667,7 +714,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: Text('Cancel', style: captionStyle),
+                  child: Text('Batal', style: captionStyle),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -761,7 +808,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
         _productDataList.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Please add at least 1 product'),
+          content: Text('Minimal ada 1 produk'),
           behavior: SnackBarBehavior.floating,
           duration: Duration(seconds: 2),
         ),

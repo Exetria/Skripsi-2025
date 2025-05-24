@@ -51,6 +51,12 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
   void initState() {
     super.initState();
 
+    addCallBackAfterBuild(
+      callback: () {
+        ref.read(customerListControllerProvider.notifier).resetSearch();
+      },
+    );
+
     // Init editable
     _editable =
         widget.visitDataList[widget

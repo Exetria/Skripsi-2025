@@ -29,11 +29,16 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
           .read(visitListControllerProvider.notifier)
           .fetchVisitsForDate(date: DateTime.now());
     });
+
+    addCallBackAfterBuild(
+      callback: () {
+        ref.read(customerListControllerProvider.notifier).resetSearch();
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    // Initialize customer list
     final customerListState = ref.watch(customerListControllerProvider);
     final visitListState = ref.watch(visitListControllerProvider);
     void Function()? _addButtonFunction;

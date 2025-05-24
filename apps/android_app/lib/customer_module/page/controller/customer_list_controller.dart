@@ -38,12 +38,20 @@ class CustomerListController extends _$CustomerListController {
     state = AsyncData(filteredList);
   }
 
+  void resetSearch() {
+    if (_customerList == null) {
+      return;
+    }
+
+    state = AsyncData(_customerList);
+  }
+
   String getCustomerName({required String id}) {
     if (state is! AsyncData) {
       return 'Memuat...';
     }
 
-    final customerList = state.value ?? [];
+    final customerList = _customerList ?? [];
 
     for (var customer in customerList) {
       final customerId = getIdFromName(name: customer.name);
@@ -61,7 +69,7 @@ class CustomerListController extends _$CustomerListController {
       await Future.delayed(const Duration(milliseconds: 100));
     }
 
-    final customerList = state.value ?? [];
+    final customerList = _customerList ?? [];
 
     for (var customer in customerList) {
       final customerId = getIdFromName(name: customer.name);

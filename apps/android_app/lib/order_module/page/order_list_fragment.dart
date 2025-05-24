@@ -2,6 +2,7 @@ import 'package:android_app/customer_module/page/controller/customer_list_contro
 import 'package:android_app/order_module/domain/entities/order_domain.dart';
 import 'package:android_app/order_module/page/controller/order_list_controller.dart';
 import 'package:android_app/order_module/page/order_detail_page.dart';
+import 'package:android_app/product_module/page/controller/product_list_controller.dart';
 import 'package:android_app/utils/functions.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,17 @@ class OrderListFragment extends StatefulHookConsumerWidget {
 }
 
 class _OrderListFragment extends ConsumerState<OrderListFragment> {
+  @override
+  void initState() {
+    super.initState();
+    addCallBackAfterBuild(
+      callback: () {
+        ref.read(productListControllerProvider.notifier).resetSearch();
+        ref.read(customerListControllerProvider.notifier).resetSearch();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final customerListState = ref.watch(customerListControllerProvider);
