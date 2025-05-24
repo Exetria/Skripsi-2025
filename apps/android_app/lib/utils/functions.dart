@@ -41,7 +41,7 @@ PreferredSizeWidget customAppBar({
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Back button
+          // Left icon / back button
           SizedBox(
             width: 56.w,
             child: Align(
@@ -52,11 +52,7 @@ PreferredSizeWidget customAppBar({
                           Builder(
                             builder:
                                 (context) => IconButton(
-                                  icon: Icon(
-                                    Icons.arrow_back,
-                                    color: textColor,
-                                    size: 24.sp,
-                                  ),
+                                  icon: Icon(Icons.arrow_back, size: 24.sp),
                                   onPressed:
                                       onLeftPressed ??
                                       () => Navigator.of(context).maybePop(),
@@ -64,10 +60,9 @@ PreferredSizeWidget customAppBar({
                           ))
                       : const SizedBox.shrink(),
             ),
-          ), // Keep space aligned
-          // Title + subtitle
+          ),
 
-          // Middle text
+          // Title + subtitle
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -87,11 +82,7 @@ PreferredSizeWidget customAppBar({
               child:
                   rightButtonIcon != null
                       ? IconButton(
-                        icon: Icon(
-                          rightButtonIcon,
-                          color: textColor,
-                          size: 24.sp,
-                        ),
+                        icon: Icon(rightButtonIcon, size: 24.sp),
                         onPressed: onRightPressed,
                       )
                       : const SizedBox.shrink(),
@@ -99,28 +90,6 @@ PreferredSizeWidget customAppBar({
           ),
         ],
       ),
-    ),
-  );
-}
-
-// SEARCH BAR
-Widget customSearchBar({
-  required BuildContext context,
-  String? hint,
-  void Function(String)? onChanged,
-}) {
-  return SizedBox(
-    height: 50.h,
-    child: TextField(
-      decoration: InputDecoration(
-        labelText: hint ?? '',
-        contentPadding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
-        prefixIcon: Icon(
-          Icons.search,
-          color: Theme.of(context).colorScheme.outlineVariant,
-        ),
-      ),
-      onChanged: onChanged,
     ),
   );
 }
@@ -168,6 +137,43 @@ InkWell customListItem({
           Icon(
             trailIcon,
             size: 16.sp,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+// CUSTOM SELECTOR LIST ITEM
+InkWell customSelectorListItem({
+  required BuildContext context,
+  required VoidCallback? onTap,
+  required String title,
+  required String subtitle,
+  required IconData trailIcon,
+}) {
+  return InkWell(
+    onTap: onTap,
+    child: Container(
+      padding: EdgeInsets.all(12.r),
+      decoration: regularBoxDecoration(context),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: captionStyle),
+                SizedBox(height: 4.h),
+                Text(subtitle, style: footnoteStyle),
+              ],
+            ),
+          ),
+          SizedBox(width: 4.w),
+          Icon(
+            trailIcon,
+            size: 12.sp,
             color: Theme.of(context).colorScheme.onSurface,
           ),
         ],
@@ -472,6 +478,7 @@ Future<File?> drawWatermark({
   return output;
 }
 
+// SEPARATE IMAGE DECODER (Different thread)
 imaglib.Image? _decodeImageFromFile(String path) {
   final file = File(path);
   if (!file.existsSync()) return null;
@@ -556,4 +563,10 @@ Future<void> launchGoogleMapsRouteNavigation({
       context,
     ).showSnackBar(const SnackBar(content: Text('Could not open map')));
   }
+}
+
+void addCallBackAfterBuild({required VoidCallback callback}) {
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    callback();
+  });
 }
