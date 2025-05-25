@@ -49,7 +49,9 @@ class UpdateProductController extends _$UpdateProductController {
   }
 
   Future<AsyncValue<ProductDomain?>> updateProduct({
+    required String productId,
     required File? productImage,
+    required String? previousProductImageLink,
     required String productName,
     required String brand,
     required String companyCode,
@@ -64,7 +66,9 @@ class UpdateProductController extends _$UpdateProductController {
     state = const AsyncLoading();
 
     final result = await repository.updateProduct(
+      productId: productId,
       productImage: productImage,
+      previousProductImageLink: previousProductImageLink,
       productName: productName,
       brand: brand,
       companyCode: companyCode,

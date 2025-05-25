@@ -17,7 +17,9 @@ abstract class UpdateProductRemoteDatasource {
     required Map<String, String>? attributes,
   });
   Future<ProductDomain> updateProduct({
+    required String productId,
     required File? productImage,
+    required String? previousProductImageLink,
     required String productName,
     required String brand,
     required String companyCode,
@@ -96,7 +98,9 @@ class UpdateProductRemoteDatasourceImpl
 
   @override
   Future<ProductDomain> updateProduct({
+    required String productId,
     required File? productImage,
+    required String? previousProductImageLink,
     required String productName,
     required String brand,
     required String companyCode,
@@ -106,13 +110,56 @@ class UpdateProductRemoteDatasourceImpl
     required bool available,
     required Map<String, String>? attributes,
   }) async {
-    // TODO: CHANGE API CALL TO UPDATE PRODUCT
-    Map<String, dynamic> result = await apiCallPost(
+    final attributeMap = _buildAttributesMap(attributes);
+
+    // Upload product image
+    String productImageLink = '';
+
+    if (productImage != null) {
+      final productPhotoResponse = await uploadFileToStorage(
+        url:
+            'https://firebasestorage.googleapis.com/v0/b/${dotenv.env['PROJECT_ID']}.appspot.com/o?uploadType=media&name=store/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg',
+        headers: {
+          'Authorization': 'Bearer ${userDataHelper?.idToken}',
+          'Content-Type': 'application/json',
+        },
+        file: productImage,
+      );
+      final String productFileName = productPhotoResponse['name'].replaceAll(
+        '/',
+        '%2F',
+      );
+      productImageLink =
+          'https://firebasestorage.googleapis.com/v0/b/${productPhotoResponse['bucket']}/o/$productFileName?alt=media&token=${productPhotoResponse['downloadTokens']}';
+    }
+
+    Map<String, dynamic> result = await apiCallPatch(
       url:
-          'https://firestore.googleapis.com/v1/projects/${dotenv.env['PROJECT_ID']}/databases/(default)/documents/products',
+          'https://firestore.googleapis.com/v1/projects/${dotenv.env['PROJECT_ID']}/databases/(default)/documents/products/$productId',
       headers: {
         'Authorization': 'Bearer ${userDataHelper?.idToken}',
         'Content-Type': 'application/json',
+      },
+      body: {
+        'fields': {
+          'added_by': {'stringValue': userDataHelper?.uid},
+          'product_name': {'stringValue': productName},
+          'available': {'booleanValue': available},
+          'units_per_package': {'integerValue': unitPerPackage.toString()},
+          'attributes': {
+            'mapValue': {'fields': attributeMap},
+          },
+          'description': {'stringValue': description},
+          'price': {'integerValue': productPrice.toString()},
+          'company_code': {'stringValue': companyCode},
+          'brand': {'stringValue': brand},
+          'product_image': {
+            'stringValue':
+                productImageLink.isNotEmpty
+                    ? productImageLink
+                    : previousProductImageLink ?? '',
+          },
+        },
       },
     );
 

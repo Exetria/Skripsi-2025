@@ -21,7 +21,9 @@ abstract class ProductRepository {
     required Map<String, String>? attributes,
   });
   Future<Either<ApiException, ProductDomain?>> updateProduct({
+    required String productId,
     required File? productImage,
+    required String? previousProductImageLink,
     required String productName,
     required String brand,
     required String companyCode,

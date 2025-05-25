@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:windows_app/product_module/domain/entities/product_domain.dart';
 import 'package:windows_app/product_module/page/controller/product_list_controller.dart';
 import 'package:windows_app/product_module/page/controller/update_product_controller.dart';
 import 'package:windows_app/utils/functions.dart';
@@ -78,7 +79,12 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                           subtitle: getIdFromName(name: data.name),
                           bottomText:
                               "Price per pcs: \n${rupiahFormat(int.tryParse(data.fields?.price?.integerValue ?? '') ?? 0)}",
-                          onTap: () {},
+                          onTap: () {
+                            showAddProductPopup(
+                              context: context,
+                              productData: data,
+                            );
+                          },
                         );
                       },
                     );
@@ -138,7 +144,10 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
     );
   }
 
-  Future<void> showAddProductPopup({required BuildContext context}) async {
+  Future<void> showAddProductPopup({
+    required BuildContext context,
+    ProductDomain? productData,
+  }) async {
     final addProductFormKey = GlobalKey<FormState>();
 
     final productNameController = TextEditingController();
@@ -146,16 +155,39 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
     final companyCodeController = TextEditingController();
     final descriptionController = TextEditingController();
     final priceController = TextEditingController();
-    final unitsController = TextEditingController();
+    final unitsPerPackageController = TextEditingController();
 
     final attributeNameController = TextEditingController();
     final attributeValueController = TextEditingController();
 
-    bool available = true;
-    bool dialogActionButtonEnabled = true;
+    Map<String, String> attributes = {};
     File? productImage;
     String? imageError;
-    Map<String, String> attributes = {};
+    String? previousImageLink;
+    bool available = true;
+
+    bool dialogActionButtonEnabled = true;
+
+    // If productData is provided, populate the fields
+    if (productData != null) {
+      previousImageLink = productData.fields?.productImage?.stringValue ?? '';
+      productNameController.text =
+          productData.fields?.productName?.stringValue ?? '';
+      brandController.text = productData.fields?.brand?.stringValue ?? '';
+      companyCodeController.text =
+          productData.fields?.companyCode?.stringValue ?? '';
+      descriptionController.text =
+          productData.fields?.description?.stringValue ?? '';
+      priceController.text = productData.fields?.price?.integerValue ?? '0';
+      unitsPerPackageController.text =
+          productData.fields?.unitsPerPackage?.integerValue ?? '0';
+      available = productData.fields?.available?.booleanValue ?? true;
+
+      // Populate attributes if available
+      attributes = generateMapFromFirebaseMap(
+        productData.fields?.attributes?.mapValue?.fields ?? {},
+      );
+    }
 
     await showDialog(
       context: context,
@@ -185,33 +217,60 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
               }
             }
 
-            void submitNewProductData() async {
+            void submitProductData() async {
               {
                 setDialogState(() {
                   dialogActionButtonEnabled = false;
                 });
                 if ((addProductFormKey.currentState?.validate() ?? false) &&
-                    productImage != null) {
-                  final submitState = await ref
-                      .read(updateProductControllerProvider.notifier)
-                      .addProduct(
-                        productImage: productImage,
-                        productName: productNameController.text,
-                        brand: brandController.text,
-                        companyCode: companyCodeController.text,
-                        productPrice: int.tryParse(priceController.text) ?? 0,
-                        unitPerPackage: int.tryParse(priceController.text) ?? 0,
-                        description: descriptionController.text,
-                        available: available,
-                        attributes: attributes,
-                      );
+                    (productImage != null || previousImageLink != null)) {
+                  final submitState =
+                      productData == null
+                          ? await ref
+                              .read(updateProductControllerProvider.notifier)
+                              .addProduct(
+                                productImage: productImage,
+                                productName: productNameController.text,
+                                brand: brandController.text,
+                                companyCode: companyCodeController.text,
+                                productPrice:
+                                    int.tryParse(priceController.text) ?? 0,
+                                unitPerPackage:
+                                    int.tryParse(priceController.text) ?? 0,
+                                description: descriptionController.text,
+                                available: available,
+                                attributes: attributes,
+                              )
+                          : await ref
+                              .read(updateProductControllerProvider.notifier)
+                              .updateProduct(
+                                productId: getIdFromName(
+                                  name: productData.name,
+                                ),
+                                productImage: productImage,
+                                previousProductImageLink: previousImageLink,
+                                productName: productNameController.text,
+                                brand: brandController.text,
+                                companyCode: companyCodeController.text,
+                                productPrice:
+                                    int.tryParse(priceController.text) ?? 0,
+                                unitPerPackage:
+                                    int.tryParse(priceController.text) ?? 0,
+                                description: descriptionController.text,
+                                available: available,
+                                attributes: attributes,
+                              );
 
                   if (submitState is AsyncData) {
                     showFeedbackDialog(
                       context: context,
                       type: 1,
-                      message: 'Produk Berhasi Ditambahkan',
+                      message:
+                          productData == null
+                              ? 'Produk berhasil ditambahkan'
+                              : 'Produk berhasil diperbarui',
                       onClose: () {
+                        ref.invalidate(productListControllerProvider);
                         Navigator.pop(statefulBuilderContext);
                       },
                     );
@@ -226,7 +285,10 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                     showFeedbackDialog(
                       context: context,
                       type: 0,
-                      message: 'Gagal Menambahkan Produk',
+                      message:
+                          productData == null
+                              ? 'Gagal menambahkan produk'
+                              : 'Gagal memperbarui produk',
                     );
                   }
                 } else if (productImage == null) {
@@ -241,7 +303,12 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
             }
 
             return AlertDialog(
-              title: Text('Tambah Produk Baru', style: subtitleStyle),
+              title: Text(
+                productData == null
+                    ? 'Tambah Produk Baru'
+                    : 'Perbarui Data Produk',
+                style: subtitleStyle,
+              ),
               content: SizedBox(
                 width: ScreenUtil().screenWidth * 0.4,
                 child: SingleChildScrollView(
@@ -271,6 +338,19 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                                           ),
                                           child: Image.file(
                                             productImage ?? File(''),
+                                            fit: BoxFit.cover,
+                                            width: double.infinity,
+                                            height: double.infinity,
+                                          ),
+                                        )
+                                        : productImage == null &&
+                                            previousImageLink != null
+                                        ? ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            16.r,
+                                          ),
+                                          child: Image.network(
+                                            previousImageLink,
                                             fit: BoxFit.cover,
                                             width: double.infinity,
                                             height: double.infinity,
@@ -391,7 +471,7 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
 
                         // Units per package
                         TextFormField(
-                          controller: unitsController,
+                          controller: unitsPerPackageController,
                           decoration: const InputDecoration(
                             labelText: 'Jumlah per pak',
                           ),
@@ -423,7 +503,6 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                         ),
                         const SizedBox(height: 12),
 
-                        // TODO: Improve UI
                         // Attributes
                         Container(
                           padding: const EdgeInsets.all(8),
@@ -516,7 +595,13 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                                                 ),
                                               ),
                                               trailing: IconButton(
-                                                icon: const Icon(Icons.delete),
+                                                icon: Icon(
+                                                  Icons.delete,
+                                                  color:
+                                                      Theme.of(
+                                                        context,
+                                                      ).colorScheme.error,
+                                                ),
                                                 onPressed: () {
                                                   setDialogState(() {
                                                     attributes.remove(
@@ -532,7 +617,7 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                                         )
                                         : Center(
                                           child: Text(
-                                            'Tidak ada atribut yang ditambahkan',
+                                            'Belum ada atribut',
                                             style: captionStyle,
                                           ),
                                         ),
@@ -575,8 +660,11 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                     textStyle: buttonStyle,
                   ),
                   onPressed:
-                      dialogActionButtonEnabled ? submitNewProductData : null,
-                  child: Text('OK', style: captionStyle),
+                      dialogActionButtonEnabled ? submitProductData : null,
+                  child: Text(
+                    productData == null ? 'Tambah' : 'Perbarui',
+                    style: captionStyle,
+                  ),
                 ),
               ],
             );
@@ -584,6 +672,25 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
         );
       },
     );
+  }
+
+  Map<String, String> generateMapFromFirebaseMap(
+    Map<String, dynamic> attributeData,
+  ) {
+    if (attributeData.isEmpty) {
+      return {};
+    }
+
+    final result = <String, String>{};
+    attributeData.forEach((key, value) {
+      if (value is Map<String, dynamic>) {
+        final sv = value['stringValue'];
+        if (sv is String) {
+          result[key] = sv;
+        }
+      }
+    });
+    return result;
   }
 
   Future<void> _refreshProductList() async {

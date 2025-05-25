@@ -45,7 +45,9 @@ class UpdateProductRepositoryImpl implements ProductRepository {
 
   @override
   Future<Either<ApiException, ProductDomain?>> updateProduct({
+    required String productId,
     required File? productImage,
+    required String? previousProductImageLink,
     required String productName,
     required String brand,
     required String companyCode,
@@ -57,7 +59,9 @@ class UpdateProductRepositoryImpl implements ProductRepository {
   }) async {
     final resp = await remoteProcess(
       remoteDataSource.updateProduct(
+        productId: productId,
         productImage: productImage,
+        previousProductImageLink: previousProductImageLink,
         productName: productName,
         brand: brand,
         companyCode: companyCode,

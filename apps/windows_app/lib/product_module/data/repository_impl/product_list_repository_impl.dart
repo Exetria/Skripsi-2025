@@ -33,7 +33,9 @@ class ProductListRepositoryImpl implements ProductRepository {
 
   @override
   Future<Either<ApiException, ProductDomain?>> updateProduct({
+    required String productId,
     required File? productImage,
+    required String? previousProductImageLink,
     required String productName,
     required String brand,
     required String companyCode,
