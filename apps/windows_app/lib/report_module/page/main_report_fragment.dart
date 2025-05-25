@@ -325,30 +325,28 @@ class _MainReportFragmentState extends ConsumerState<MainReportFragment> {
 
   Widget buildMapSection() {
     final cs = Theme.of(context).colorScheme;
-    return Expanded(
-      child: buildCard(
-        title: 'Peta Aktivitas',
-        child: FlutterMap(
-          options: const MapOptions(
-            initialCenter: LatLng(-6.200000, 106.816666),
-            initialZoom: 13,
-          ),
-          children: [
-            TileLayer(
-              urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-            ),
-            MarkerLayer(
-              markers: [
-                Marker(
-                  width: 40,
-                  height: 40,
-                  point: const LatLng(-6.200000, 106.816666),
-                  child: Icon(Icons.location_on, color: cs.primary, size: 32),
-                ),
-              ],
-            ),
-          ],
+    return buildCard(
+      title: 'Peta Aktivitas',
+      child: FlutterMap(
+        options: const MapOptions(
+          initialCenter: LatLng(-6.200000, 106.816666),
+          initialZoom: 13,
         ),
+        children: [
+          TileLayer(
+            urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+          ),
+          MarkerLayer(
+            markers: [
+              Marker(
+                width: 40,
+                height: 40,
+                point: const LatLng(-6.200000, 106.816666),
+                child: Icon(Icons.location_on, color: cs.primary, size: 32),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
