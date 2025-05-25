@@ -1,31 +1,6 @@
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 
-// SEARCH BAR
-Widget customSearchBar({
-  required BuildContext context,
-  String? hint,
-  void Function(String)? onChanged,
-}) {
-  return SizedBox(
-    height: 50,
-    child: TextField(
-      decoration: InputDecoration(
-        labelText: hint ?? '',
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 14,
-          horizontal: 16,
-        ),
-        prefixIcon: Icon(
-          Icons.search,
-          color: Theme.of(context).colorScheme.outlineVariant,
-        ),
-      ),
-      onChanged: onChanged,
-    ),
-  );
-}
-
 // COLUMN COUNT
 int getCrossAxisCount(BoxConstraints constraints) {
   final width = constraints.maxWidth;
