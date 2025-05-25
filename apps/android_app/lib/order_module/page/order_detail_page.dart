@@ -491,6 +491,8 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
                               ),
                               keyboardType: TextInputType.number,
                               inputFormatters:
+                                  // True = rp
+                                  // False = percentage
                                   discountType
                                       ? [FilteringTextInputFormatter.digitsOnly]
                                       : [
