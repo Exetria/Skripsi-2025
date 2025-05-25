@@ -1,30 +1,30 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'customer_list_controller.dart';
+part of 'update_product_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$customerListControllerHash() =>
-    r'a54f5d70f42976277ab46d5d5e0a13cec020d658';
+String _$updateProductControllerHash() =>
+    r'72af3bd9f34e6ff7b24075682519d1280245cf31';
 
-/// See also [CustomerListController].
-@ProviderFor(CustomerListController)
-final customerListControllerProvider = AsyncNotifierProvider<
-  CustomerListController,
-  List<CustomerDomain>?
+/// See also [UpdateProductController].
+@ProviderFor(UpdateProductController)
+final updateProductControllerProvider = NotifierProvider<
+  UpdateProductController,
+  AsyncValue<ProductDomain?>
 >.internal(
-  CustomerListController.new,
-  name: r'customerListControllerProvider',
+  UpdateProductController.new,
+  name: r'updateProductControllerProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$customerListControllerHash,
+          : _$updateProductControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$CustomerListController = AsyncNotifier<List<CustomerDomain>?>;
+typedef _$UpdateProductController = Notifier<AsyncValue<ProductDomain?>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

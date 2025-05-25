@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:common_components/common_components.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:windows_app/product_module/data/remote_datasource/product_list_remote_datasource.dart';
@@ -12,5 +14,35 @@ class ProductListRepositoryImpl implements ProductRepository {
     final resp = await remoteProcess(remoteDataSource.getProductList());
 
     return resp.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  @override
+  Future<Either<ApiException, ProductDomain?>> addProduct({
+    required File? productImage,
+    required String productName,
+    required String brand,
+    required String companyCode,
+    required int productPrice,
+    required int unitPerPackage,
+    required String description,
+    required bool available,
+    required Map<String, String>? attributes,
+  }) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<ApiException, ProductDomain?>> updateProduct({
+    required File? productImage,
+    required String productName,
+    required String brand,
+    required String companyCode,
+    required int productPrice,
+    required int unitPerPackage,
+    required String description,
+    required bool available,
+    required Map<String, String>? attributes,
+  }) {
+    throw UnimplementedError();
   }
 }
