@@ -564,9 +564,3 @@ Future<void> launchGoogleMapsRouteNavigation({
     ).showSnackBar(const SnackBar(content: Text('Could not open map')));
   }
 }
-
-void addCallBackAfterBuild({required VoidCallback callback}) {
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    callback();
-  });
-}

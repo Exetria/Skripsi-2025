@@ -173,3 +173,10 @@ String getIdFromName({required String? name}) {
   final parts = name.split('/');
   return parts.isNotEmpty ? parts.last : '';
 }
+
+// ADD CALLBACK AFTER BUILD
+void addCallBackAfterBuild({required VoidCallback callback}) {
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    callback();
+  });
+}
