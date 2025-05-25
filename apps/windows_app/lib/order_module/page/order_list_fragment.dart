@@ -39,28 +39,7 @@ class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
           Text('Daftar Pesanan', style: titleStyle),
           const SizedBox(height: 10),
 
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                width: ScreenUtil().screenWidth * 0.25,
-                child: customSearchBar(
-                  context: context,
-                  hint: 'Cari Pesanan...',
-                  onChanged: (query) {
-                    ref
-                        .read(orderListControllerProvider.notifier)
-                        .searchOrderByCustomer(query);
-                  },
-                ),
-              ),
-              IconButton(
-                onPressed: _refreshOrderList,
-                icon: const Icon(Icons.refresh),
-                tooltip: 'Segarkan',
-              ),
-            ],
-          ),
+          _buildHeader(),
           const SizedBox(height: 12),
 
           Expanded(
@@ -127,6 +106,31 @@ class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildHeader() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        SizedBox(
+          width: ScreenUtil().screenWidth * 0.25,
+          child: customSearchBar(
+            context: context,
+            hint: 'Cari Pesanan...',
+            onChanged: (query) {
+              ref
+                  .read(orderListControllerProvider.notifier)
+                  .searchOrderByCustomer(query);
+            },
+          ),
+        ),
+        IconButton(
+          onPressed: _refreshOrderList,
+          icon: const Icon(Icons.refresh),
+          tooltip: 'Segarkan',
+        ),
+      ],
     );
   }
 

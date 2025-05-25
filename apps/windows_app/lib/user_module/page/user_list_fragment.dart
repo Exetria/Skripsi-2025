@@ -38,87 +38,7 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
           Text('Daftar Pengguna', style: titleStyle),
           const SizedBox(height: 10),
 
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  SizedBox(
-                    width: ScreenUtil().screenWidth * 0.25,
-                    child: customSearchBar(
-                      context: context,
-                      hint: 'Cari Pengguna...',
-                      onChanged: (query) {
-                        ref
-                            .read(userListControllerProvider.notifier)
-                            .searchUser(query);
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-
-                  IconButton(
-                    onPressed: () {
-                      selectedRole = RoleFilter.all;
-                      ref
-                          .read(userListControllerProvider.notifier)
-                          .changeRoleFilter(selectedRole);
-                    },
-                    icon: Icon(
-                      Icons.group_work,
-                      color:
-                          selectedRole == RoleFilter.all
-                              ? Theme.of(context).colorScheme.primary
-                              : Theme.of(context).colorScheme.onSurface,
-                    ),
-                    tooltip: 'Tampilkan Semua',
-                  ),
-                  const SizedBox(width: 12),
-
-                  IconButton(
-                    onPressed: () {
-                      selectedRole = RoleFilter.admin;
-                      ref
-                          .read(userListControllerProvider.notifier)
-                          .changeRoleFilter(selectedRole);
-                    },
-                    icon: Icon(
-                      Icons.admin_panel_settings,
-                      color:
-                          selectedRole == RoleFilter.admin
-                              ? Theme.of(context).colorScheme.primary
-                              : Theme.of(context).colorScheme.onSurface,
-                    ),
-                    tooltip: 'Tampilkan Admin',
-                  ),
-                  const SizedBox(width: 12),
-
-                  IconButton(
-                    onPressed: () {
-                      selectedRole = RoleFilter.sales;
-                      ref
-                          .read(userListControllerProvider.notifier)
-                          .changeRoleFilter(selectedRole);
-                    },
-                    icon: Icon(
-                      Icons.people,
-                      color:
-                          selectedRole == RoleFilter.sales
-                              ? Theme.of(context).colorScheme.primary
-                              : Theme.of(context).colorScheme.onSurface,
-                    ),
-                    tooltip: 'Tampilkan Sales',
-                  ),
-                ],
-              ),
-
-              IconButton(
-                onPressed: _refreshUserList,
-                icon: const Icon(Icons.refresh),
-                tooltip: 'Segarkan',
-              ),
-            ],
-          ),
+          _buildHeader(),
           const SizedBox(height: 12),
 
           // Content area
@@ -194,6 +114,90 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildHeader() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            SizedBox(
+              width: ScreenUtil().screenWidth * 0.25,
+              child: customSearchBar(
+                context: context,
+                hint: 'Cari Pengguna...',
+                onChanged: (query) {
+                  ref
+                      .read(userListControllerProvider.notifier)
+                      .searchUser(query);
+                },
+              ),
+            ),
+            const SizedBox(width: 16),
+
+            IconButton(
+              onPressed: () {
+                selectedRole = RoleFilter.all;
+                ref
+                    .read(userListControllerProvider.notifier)
+                    .changeRoleFilter(selectedRole);
+              },
+              icon: Icon(
+                Icons.group_work,
+                color:
+                    selectedRole == RoleFilter.all
+                        ? Theme.of(context).colorScheme.primary
+                        : Theme.of(context).colorScheme.onSurface,
+              ),
+              tooltip: 'Tampilkan Semua',
+            ),
+            const SizedBox(width: 12),
+
+            IconButton(
+              onPressed: () {
+                selectedRole = RoleFilter.admin;
+                ref
+                    .read(userListControllerProvider.notifier)
+                    .changeRoleFilter(selectedRole);
+              },
+              icon: Icon(
+                Icons.admin_panel_settings,
+                color:
+                    selectedRole == RoleFilter.admin
+                        ? Theme.of(context).colorScheme.primary
+                        : Theme.of(context).colorScheme.onSurface,
+              ),
+              tooltip: 'Tampilkan Admin',
+            ),
+            const SizedBox(width: 12),
+
+            IconButton(
+              onPressed: () {
+                selectedRole = RoleFilter.sales;
+                ref
+                    .read(userListControllerProvider.notifier)
+                    .changeRoleFilter(selectedRole);
+              },
+              icon: Icon(
+                Icons.people,
+                color:
+                    selectedRole == RoleFilter.sales
+                        ? Theme.of(context).colorScheme.primary
+                        : Theme.of(context).colorScheme.onSurface,
+              ),
+              tooltip: 'Tampilkan Sales',
+            ),
+          ],
+        ),
+
+        IconButton(
+          onPressed: _refreshUserList,
+          icon: const Icon(Icons.refresh),
+          tooltip: 'Segarkan',
+        ),
+      ],
     );
   }
 

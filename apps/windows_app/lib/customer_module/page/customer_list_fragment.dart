@@ -16,6 +16,8 @@ class CustomerListFragment extends StatefulHookConsumerWidget {
 }
 
 class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
+  TextEditingController searchController = TextEditingController();
+
   bool seeCustomer = true;
 
   @override
@@ -45,80 +47,7 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
           Text('Daftar Pelanggan', style: titleStyle),
           const SizedBox(height: 10),
 
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  SizedBox(
-                    width: ScreenUtil().screenWidth * 0.25,
-                    child: customSearchBar(
-                      context: context,
-                      hint:
-                          seeCustomer
-                              ? 'Cari Pelanggan...'
-                              : 'Cari Permohonan Pelanggan...',
-                      onChanged: (query) {
-                        seeCustomer
-                            ? ref
-                                .read(customerListControllerProvider.notifier)
-                                .searchCustomer(query)
-                            : ref
-                                .read(
-                                  customerRequestListControllerProvider
-                                      .notifier,
-                                )
-                                .searchCustomerRequest(query);
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        seeCustomer = true;
-                      });
-                    },
-                    icon: Icon(
-                      Icons.business_sharp,
-                      color:
-                          seeCustomer
-                              ? Theme.of(context).colorScheme.primary
-                              : Theme.of(context).colorScheme.onSurface,
-                    ),
-                    tooltip: 'Tampilkan Pelanggan',
-                  ),
-                  const SizedBox(width: 12),
-
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        seeCustomer = false;
-                      });
-                    },
-                    icon: Icon(
-                      Icons.add_business,
-                      color:
-                          !seeCustomer
-                              ? Theme.of(context).colorScheme.primary
-                              : Theme.of(context).colorScheme.onSurface,
-                    ),
-                    tooltip: 'Tampilkan Permohonan Pelanggan',
-                  ),
-                  const SizedBox(width: 12),
-                ],
-              ),
-              IconButton(
-                onPressed:
-                    seeCustomer
-                        ? _refreshCustomerList
-                        : _refreshCustomerRequestList,
-                icon: const Icon(Icons.refresh),
-                tooltip: 'Segarkan',
-              ),
-            ],
-          ),
+          _buildHeader(),
           const SizedBox(height: 12),
 
           Expanded(
@@ -129,6 +58,93 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildHeader() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            SizedBox(
+              width: ScreenUtil().screenWidth * 0.25,
+              child: customSearchBar(
+                context: context,
+                controller: searchController,
+                hint:
+                    seeCustomer
+                        ? 'Cari Pelanggan...'
+                        : 'Cari Permohonan Pelanggan...',
+                onChanged: (query) {
+                  seeCustomer
+                      ? ref
+                          .read(customerListControllerProvider.notifier)
+                          .searchCustomer(query)
+                      : ref
+                          .read(customerRequestListControllerProvider.notifier)
+                          .searchCustomerRequest(query);
+                },
+              ),
+            ),
+            const SizedBox(width: 16),
+
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  seeCustomer = true;
+                  searchController.clear();
+                  ref
+                      .read(customerListControllerProvider.notifier)
+                      .resetSearch();
+                  ref
+                      .read(customerRequestListControllerProvider.notifier)
+                      .resetSearch();
+                });
+              },
+              icon: Icon(
+                Icons.business_sharp,
+                color:
+                    seeCustomer
+                        ? Theme.of(context).colorScheme.primary
+                        : Theme.of(context).colorScheme.onSurface,
+              ),
+              tooltip: 'Tampilkan Pelanggan',
+            ),
+            const SizedBox(width: 12),
+
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  seeCustomer = false;
+                  searchController.clear();
+                  ref
+                      .read(customerListControllerProvider.notifier)
+                      .resetSearch();
+                  ref
+                      .read(customerRequestListControllerProvider.notifier)
+                      .resetSearch();
+                });
+              },
+              icon: Icon(
+                Icons.add_business,
+                color:
+                    !seeCustomer
+                        ? Theme.of(context).colorScheme.primary
+                        : Theme.of(context).colorScheme.onSurface,
+              ),
+              tooltip: 'Tampilkan Permohonan Pelanggan',
+            ),
+            const SizedBox(width: 12),
+          ],
+        ),
+        IconButton(
+          onPressed:
+              seeCustomer ? _refreshCustomerList : _refreshCustomerRequestList,
+          icon: const Icon(Icons.refresh),
+          tooltip: 'Segarkan',
+        ),
+      ],
     );
   }
 
