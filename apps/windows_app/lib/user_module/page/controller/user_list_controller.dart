@@ -4,9 +4,13 @@ import 'package:windows_app/user_module/domain/repository/user_repository.dart';
 
 part 'user_list_controller.g.dart';
 
+enum RoleFilter { all, admin, sales }
+
 @Riverpod(keepAlive: true)
 class UserListController extends _$UserListController {
   List<UserDomain>? _userList;
+  RoleFilter _roleFilter = RoleFilter.all;
+  String _searchQuery = '';
 
   @override
   FutureOr<List<UserDomain>?> build() async {
@@ -21,18 +25,45 @@ class UserListController extends _$UserListController {
     return state.value;
   }
 
+  void changeRoleFilter(RoleFilter filter) {
+    _roleFilter = filter;
+    _applyFilters();
+  }
+
   void searchUser(String query) {
-    if (_userList == null) {
-      return;
+    _searchQuery = query;
+    _applyFilters();
+  }
+
+  void _applyFilters() {
+    if (_userList == null) return;
+
+    var filtered = _userList!;
+
+    // Filter by role
+    if (_roleFilter != RoleFilter.all) {
+      final roleKey = _roleFilter == RoleFilter.admin ? 'admin' : 'sales';
+      filtered =
+          filtered
+              .where((u) => u.fields?.role?.stringValue == roleKey)
+              .toList();
     }
 
-    final filteredList =
-        _userList?.where((user) {
-          final userName = user.fields?.fullName?.stringValue ?? '';
-          return userName.toLowerCase().contains(query.toLowerCase());
-        }).toList() ??
-        [];
+    // Filter by search query
+    if (_searchQuery.isNotEmpty) {
+      filtered =
+          filtered.where((u) {
+            final name = u.fields?.fullName?.stringValue ?? '';
+            return name.toLowerCase().contains(_searchQuery.toLowerCase());
+          }).toList();
+    }
 
-    state = AsyncData(filteredList);
+    state = AsyncData(filtered);
+  }
+
+  void resetSearch() {
+    _searchQuery = '';
+    _roleFilter = RoleFilter.all;
+    _applyFilters();
   }
 }

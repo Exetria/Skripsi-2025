@@ -7,7 +7,7 @@ part of 'user_list_controller.dart';
 // **************************************************************************
 
 String _$userListControllerHash() =>
-    r'e4511f136cde6c3a4d1a1df5362bb0c21a6a7ead';
+    r'c80d09d3d525e98ac92248d7f580e798a59ba76f';
 
 /// See also [UserListController].
 @ProviderFor(UserListController)

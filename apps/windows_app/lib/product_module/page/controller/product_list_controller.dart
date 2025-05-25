@@ -38,12 +38,20 @@ class ProductListController extends _$ProductListController {
     state = AsyncData(filteredList);
   }
 
+  void resetSearch() {
+    if (_productList == null) {
+      return;
+    }
+
+    state = AsyncData(_productList);
+  }
+
   String getProductName({required String id}) {
     if (state is! AsyncData) {
       return 'Memuat...';
     }
 
-    final productList = state.value ?? [];
+    final productList = _productList ?? [];
 
     for (var product in productList) {
       final productId = getIdFromName(name: product.name);
@@ -61,7 +69,7 @@ class ProductListController extends _$ProductListController {
       await Future.delayed(const Duration(milliseconds: 100));
     }
 
-    final productList = state.value ?? [];
+    final productList = _productList ?? [];
 
     for (var product in productList) {
       final productId = getIdFromName(name: product.name);

@@ -44,4 +44,12 @@ class OrderListController extends _$OrderListController {
 
     state = AsyncData(filteredList);
   }
+
+  void resetSearch() {
+    if (_orderList == null) {
+      return;
+    }
+
+    state = AsyncData(_orderList);
+  }
 }
