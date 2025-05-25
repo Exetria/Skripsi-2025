@@ -60,6 +60,16 @@ BoxDecoration itemCardDecoration(
   );
 }
 
+// BOX DECORATION FOR PHOTOS
+BoxDecoration photoBoxDecoration(BuildContext context) {
+  return BoxDecoration(
+    shape: BoxShape.rectangle,
+    color: Theme.of(context).colorScheme.surface,
+    borderRadius: BorderRadius.circular(16),
+    border: Border.all(color: Theme.of(context).colorScheme.outline),
+  );
+}
+
 // ITEM CARD
 Widget itemCard({
   required BuildContext context,
