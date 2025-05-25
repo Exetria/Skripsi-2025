@@ -1,6 +1,4 @@
-import 'package:common_components/utils/api_exception.dart';
-import 'package:common_components/utils/formatter_functions.dart';
-import 'package:common_components/variables.dart';
+import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -15,6 +13,18 @@ class UserListFragment extends StatefulHookConsumerWidget {
 }
 
 class _UserListFragment extends ConsumerState<UserListFragment> {
+  RoleFilter selectedRole = RoleFilter.all;
+
+  @override
+  void initState() {
+    super.initState();
+    addCallBackAfterBuild(
+      callback: () {
+        ref.read(userListControllerProvider.notifier).resetSearch();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final userListState = ref.watch(userListControllerProvider);
@@ -31,17 +41,75 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(
-                width: ScreenUtil().screenWidth * 0.25,
-                child: customSearchBar(
-                  context: context,
-                  hint: 'Cari Pengguna...',
-                  onChanged: (query) {
-                    ref
-                        .read(userListControllerProvider.notifier)
-                        .searchUser(query);
-                  },
-                ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: ScreenUtil().screenWidth * 0.25,
+                    child: customSearchBar(
+                      context: context,
+                      hint: 'Cari Pengguna...',
+                      onChanged: (query) {
+                        ref
+                            .read(userListControllerProvider.notifier)
+                            .searchUser(query);
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+
+                  IconButton(
+                    onPressed: () {
+                      selectedRole = RoleFilter.all;
+                      ref
+                          .read(userListControllerProvider.notifier)
+                          .changeRoleFilter(selectedRole);
+                    },
+                    icon: Icon(
+                      Icons.group_work,
+                      color:
+                          selectedRole == RoleFilter.all
+                              ? Theme.of(context).colorScheme.primary
+                              : Theme.of(context).colorScheme.onSurface,
+                    ),
+                    tooltip: 'Tampilkan Semua',
+                  ),
+                  const SizedBox(width: 12),
+
+                  IconButton(
+                    onPressed: () {
+                      selectedRole = RoleFilter.admin;
+                      ref
+                          .read(userListControllerProvider.notifier)
+                          .changeRoleFilter(selectedRole);
+                    },
+                    icon: Icon(
+                      Icons.admin_panel_settings,
+                      color:
+                          selectedRole == RoleFilter.admin
+                              ? Theme.of(context).colorScheme.primary
+                              : Theme.of(context).colorScheme.onSurface,
+                    ),
+                    tooltip: 'Tampilkan Admin',
+                  ),
+                  const SizedBox(width: 12),
+
+                  IconButton(
+                    onPressed: () {
+                      selectedRole = RoleFilter.sales;
+                      ref
+                          .read(userListControllerProvider.notifier)
+                          .changeRoleFilter(selectedRole);
+                    },
+                    icon: Icon(
+                      Icons.people,
+                      color:
+                          selectedRole == RoleFilter.sales
+                              ? Theme.of(context).colorScheme.primary
+                              : Theme.of(context).colorScheme.onSurface,
+                    ),
+                    tooltip: 'Tampilkan Sales',
+                  ),
+                ],
               ),
 
               IconButton(
@@ -82,18 +150,22 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                       itemBuilder: (context, index) {
                         final data = salesList[index];
 
+                        final name = data.fields?.fullName?.stringValue ?? '-';
+                        final email = data.fields?.email?.stringValue ?? '-';
+                        final role = data.fields?.role?.stringValue ?? '-';
+
                         return itemCard(
                           context: context,
                           icon: Icons.person,
-                          title: data.fields?.fullName?.stringValue ?? '-',
-                          subtitle: data.fields?.email?.stringValue ?? '-',
+                          title: name,
+                          subtitle: email,
                           secondarySubtitle:
                               data.fields?.phoneNumber?.stringValue != null
                                   ? phoneNumberFormat(
                                     data.fields?.phoneNumber?.stringValue ?? '',
                                   )
                                   : null,
-                          bottomText: 'Hasil Bulan ini: xxx',
+                          bottomText: role[0].toUpperCase() + role.substring(1),
                           onTap: () {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
