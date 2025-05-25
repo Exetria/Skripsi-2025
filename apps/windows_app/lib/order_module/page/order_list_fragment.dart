@@ -15,6 +15,17 @@ class OrderListFragment extends StatefulHookConsumerWidget {
 
 class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
   @override
+  void initState() {
+    super.initState();
+    addCallBackAfterBuild(
+      callback: () {
+        ref.read(orderListControllerProvider.notifier).resetSearch();
+        ref.read(customerListControllerProvider.notifier).resetSearch();
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     final orderListState = ref.watch(orderListControllerProvider);
     final customerListState = ref.watch(customerListControllerProvider);
