@@ -45,15 +45,14 @@ class UpdateProductRemoteDatasourceImpl
     required bool available,
     required Map<String, String>? attributes,
   }) async {
-    final attributeMap = _buildAttributesMap(attributes);
-
-    // Upload product image
+    final attributeMap = _createAttributesMap(attributes);
     String productImageLink = '';
 
+    // Upload product image
     if (productImage != null) {
       final productPhotoResponse = await uploadFileToStorage(
         url:
-            'https://firebasestorage.googleapis.com/v0/b/${dotenv.env['PROJECT_ID']}.appspot.com/o?uploadType=media&name=store/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg',
+            'https://firebasestorage.googleapis.com/v0/b/${dotenv.env['PROJECT_ID']}.appspot.com/o?uploadType=media&name=product/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg',
         headers: {
           'Authorization': 'Bearer ${userDataHelper?.idToken}',
           'Content-Type': 'application/json',
@@ -110,15 +109,14 @@ class UpdateProductRemoteDatasourceImpl
     required bool available,
     required Map<String, String>? attributes,
   }) async {
-    final attributeMap = _buildAttributesMap(attributes);
-
-    // Upload product image
+    final attributeMap = _createAttributesMap(attributes);
     String productImageLink = '';
 
+    // Upload product image
     if (productImage != null) {
       final productPhotoResponse = await uploadFileToStorage(
         url:
-            'https://firebasestorage.googleapis.com/v0/b/${dotenv.env['PROJECT_ID']}.appspot.com/o?uploadType=media&name=store/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg',
+            'https://firebasestorage.googleapis.com/v0/b/${dotenv.env['PROJECT_ID']}.appspot.com/o?uploadType=media&name=product/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg',
         headers: {
           'Authorization': 'Bearer ${userDataHelper?.idToken}',
           'Content-Type': 'application/json',
@@ -166,7 +164,7 @@ class UpdateProductRemoteDatasourceImpl
     return ProductDomain.fromJson(result);
   }
 
-  Map<String, dynamic> _buildAttributesMap(Map<String, String>? attributes) {
+  Map<String, dynamic> _createAttributesMap(Map<String, String>? attributes) {
     if (attributes == null || attributes.isEmpty) {
       return {};
     }
