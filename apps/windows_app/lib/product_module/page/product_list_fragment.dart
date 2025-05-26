@@ -80,7 +80,7 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                           bottomText:
                               "Price per pcs: \n${rupiahFormat(int.tryParse(data.fields?.price?.integerValue ?? '') ?? 0)}",
                           onTap: () {
-                            showAddProductPopup(
+                            showProductDataPopup(
                               context: context,
                               productData: data,
                             );
@@ -127,7 +127,7 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
           children: [
             IconButton(
               onPressed: () async {
-                showAddProductPopup(context: context);
+                showProductDataPopup(context: context);
               },
               icon: const Icon(Icons.add),
               tooltip: 'Tambah Produk Baru',
@@ -144,26 +144,30 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
     );
   }
 
-  Future<void> showAddProductPopup({
+  Future<void> showProductDataPopup({
     required BuildContext context,
     ProductDomain? productData,
   }) async {
-    final addProductFormKey = GlobalKey<FormState>();
+    final productDataFormKey = GlobalKey<FormState>();
+
+    File? productImage;
+    String? imageError;
+    String? previousImageLink;
 
     final productNameController = TextEditingController();
     final brandController = TextEditingController();
     final companyCodeController = TextEditingController();
-    final descriptionController = TextEditingController();
+
     final priceController = TextEditingController();
     final unitsPerPackageController = TextEditingController();
+
+    final descriptionController = TextEditingController();
 
     final attributeNameController = TextEditingController();
     final attributeValueController = TextEditingController();
 
     Map<String, String> attributes = {};
-    File? productImage;
-    String? imageError;
-    String? previousImageLink;
+
     bool available = true;
 
     bool dialogActionButtonEnabled = true;
@@ -222,7 +226,7 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                 setDialogState(() {
                   dialogActionButtonEnabled = false;
                 });
-                if ((addProductFormKey.currentState?.validate() ?? false) &&
+                if ((productDataFormKey.currentState?.validate() ?? false) &&
                     (productImage != null || previousImageLink != null)) {
                   final submitState =
                       productData == null
@@ -303,17 +307,19 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
             }
 
             return AlertDialog(
-              title: Text(
-                productData == null
-                    ? 'Tambah Produk Baru'
-                    : 'Perbarui Data Produk',
-                style: subtitleStyle,
+              title: Center(
+                child: Text(
+                  productData == null
+                      ? 'Tambah Produk Baru'
+                      : 'Perbarui Data Produk',
+                  style: subtitleStyle,
+                ),
               ),
               content: SizedBox(
                 width: ScreenUtil().screenWidth * 0.4,
                 child: SingleChildScrollView(
                   child: Form(
-                    key: addProductFormKey,
+                    key: productDataFormKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -356,57 +362,53 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                                             height: double.infinity,
                                           ),
                                         )
-                                        : Center(
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Icon(
-                                                Icons.camera_alt_outlined,
-                                                size: 32.sp,
-                                                color: dividerColor,
-                                              ),
-                                              SizedBox(height: 8.h),
-                                              Center(
-                                                child:
-                                                    imageError != null
-                                                        ? Text(
-                                                          imageError!,
-                                                          style: errorStyle,
-                                                        )
-                                                        : Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Text(
-                                                              'Klik untuk Memilih Gambar',
-                                                              style:
-                                                                  captionStyle,
-                                                            ),
-                                                            Text(
-                                                              '(gunakan aspek 16:9 jika memungkinkan)',
-                                                              style:
-                                                                  captionStyle,
-                                                            ),
-                                                          ],
-                                                        ),
-                                              ),
-                                            ],
-                                          ),
+                                        : Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(
+                                              Icons.camera_alt_outlined,
+                                              size: 64,
+                                              color:
+                                                  Theme.of(
+                                                    context,
+                                                  ).colorScheme.outline,
+                                            ),
+                                            const SizedBox(height: 8),
+                                            imageError != null
+                                                ? Text(
+                                                  imageError!,
+                                                  style: errorStyle,
+                                                )
+                                                : Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      'Klik untuk Memilih Gambar',
+                                                      style: captionStyle,
+                                                    ),
+                                                    Text(
+                                                      '(gunakan aspek 16:9 jika memungkinkan)',
+                                                      style: captionStyle,
+                                                    ),
+                                                  ],
+                                                ),
+                                          ],
                                         ),
                               ),
                             ),
                           ),
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 32),
 
                         // Product Name
-                        TextFormField(
+                        buildInputBox(
                           controller: productNameController,
-                          decoration: const InputDecoration(
-                            labelText: 'Nama Produk',
-                          ),
-                          style: bodyStyle,
+                          label: 'Nama Produk',
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Nama produk tidak boleh kosong';
@@ -417,10 +419,9 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                         const SizedBox(height: 12),
 
                         // Brand
-                        TextFormField(
+                        buildInputBox(
                           controller: brandController,
-                          decoration: const InputDecoration(labelText: 'Merk'),
-                          style: bodyStyle,
+                          label: 'Merk',
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Merk produk tidak boleh kosong';
@@ -433,12 +434,9 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                         // Company Code
 
                         // Company Code
-                        TextFormField(
+                        buildInputBox(
                           controller: companyCodeController,
-                          decoration: const InputDecoration(
-                            labelText: 'Perusahaan',
-                          ),
-                          style: bodyStyle,
+                          label: 'Perusahaan',
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Perusahaan tidak boleh kosong';
@@ -449,17 +447,14 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                         const SizedBox(height: 12),
 
                         // Price
-                        TextFormField(
+                        buildInputBox(
                           controller: priceController,
-                          decoration: const InputDecoration(
-                            labelText: 'Harga per pcs',
-                            prefixText: 'Rp. ',
-                          ),
+                          label: 'Harga per pcs',
+                          prefix: 'Rp. ',
                           keyboardType: TextInputType.number,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                           ],
-                          style: bodyStyle,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Harga produk tidak boleh kosong';
@@ -470,16 +465,13 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                         const SizedBox(height: 12),
 
                         // Units per package
-                        TextFormField(
+                        buildInputBox(
                           controller: unitsPerPackageController,
-                          decoration: const InputDecoration(
-                            labelText: 'Jumlah per pak',
-                          ),
+                          label: 'Jumlah per pak',
                           keyboardType: TextInputType.number,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                           ],
-                          style: bodyStyle,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Jumlah per pak tidak boleh kosong';
@@ -490,18 +482,25 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                         const SizedBox(height: 12),
 
                         // Description (optional)
-                        TextFormField(
+                        buildInputBox(
                           controller: descriptionController,
-                          decoration: const InputDecoration(
-                            labelText: 'Deskripsi',
-                          ),
-                          style: bodyStyle,
+                          label: 'Deskripsi',
                           maxLines: 3,
                           validator: (value) {
                             return null;
                           },
                         ),
                         const SizedBox(height: 12),
+
+                        // Available switch
+                        SwitchListTile(
+                          title: Text('Tersedia', style: bodyStyle),
+                          value: available,
+                          onChanged:
+                              (value) =>
+                                  setDialogState(() => available = value),
+                        ),
+                        const SizedBox(height: 32),
 
                         // Attributes
                         Container(
@@ -626,15 +625,6 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                             ],
                           ),
                         ),
-
-                        // Available switch
-                        SwitchListTile(
-                          title: Text('Tersedia', style: bodyStyle),
-                          value: available,
-                          onChanged:
-                              (value) =>
-                                  setDialogState(() => available = value),
-                        ),
                       ],
                     ),
                   ),
@@ -663,7 +653,7 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                       dialogActionButtonEnabled ? submitProductData : null,
                   child: Text(
                     productData == null ? 'Tambah' : 'Perbarui',
-                    style: captionStyle,
+                    style: bodyStyle,
                   ),
                 ),
               ],
