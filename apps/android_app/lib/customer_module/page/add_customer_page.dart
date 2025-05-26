@@ -191,7 +191,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                 ],
               ),
               SizedBox(height: 16.h),
-              buildInputRow(
+              buildInputBox(
                 controller: _requestDestinationController,
                 label: 'Tujuan Form',
                 validator: (value) {
@@ -200,7 +200,9 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                       : 'Tidak Boleh Kosong';
                 },
               ),
-              buildInputRow(
+              SizedBox(height: 16.h),
+
+              buildInputBox(
                 controller: _carbonCopyController,
                 label: 'Carbon Copy (CC)',
                 validator: (value) {
@@ -209,6 +211,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                       : 'Tidak Boleh Kosong';
                 },
               ),
+              SizedBox(height: 16.h),
 
               // Company Data
               buildCompanyDataExpansionTile(),
@@ -226,7 +229,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                 childrenPadding: EdgeInsets.symmetric(horizontal: 8.w),
                 children: [
                   SizedBox(height: 4.h),
-                  buildInputRow(
+                  buildInputBox(
                     controller: _creditPeriodController,
                     label: 'Jangka Waktu Kredit (dalam hari)',
                     suffix: 'hari',
@@ -236,7 +239,9 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                           : 'Tidak Boleh Kosong';
                     },
                   ),
-                  buildInputRow(
+                  SizedBox(height: 16.h),
+
+                  buildInputBox(
                     controller: _creditLimitController,
                     label: 'Batas Kredit (dalam Rp)',
                     prefix: 'Rp. ',
@@ -247,12 +252,12 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                           : 'Tidak Boleh Kosong';
                     },
                   ),
+                  SizedBox(height: 16.h),
                 ],
               ),
-
               SizedBox(height: 16.h),
 
-              buildInputRow(
+              buildInputBox(
                 controller: _notesController,
                 label: 'Catatan',
                 maxLines: 3,
@@ -260,6 +265,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                   return null;
                 },
               ),
+              SizedBox(height: 16.h),
             ],
           ),
         ),
@@ -343,44 +349,48 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
         SizedBox(height: 16.h),
 
         // Company Name
-        buildInputRow(
+        buildInputBox(
           controller: _companyNameController,
           label: 'Nama Perusahaan',
           validator: (value) {
             return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
           },
         ),
+        SizedBox(height: 16.h),
 
         // Company Email
-        buildInputRow(
+        buildInputBox(
           controller: _companyEmailController,
           label: 'Email Perusahaan',
           validator: (value) {
             return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
           },
         ),
+        SizedBox(height: 16.h),
 
         // Company Phone Number
-        buildInputRow(
+        buildInputBox(
           controller: _companyPhoneController,
           label: 'Nomor Telepon Perusahaan',
           validator: (value) {
             return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
           },
         ),
+        SizedBox(height: 16.h),
 
         // Company Address
-        buildInputRow(
+        buildInputBox(
           controller: _companyAddressController,
           label: 'Alamat Perusahaan',
           validator: (value) {
             return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
           },
         ),
+        SizedBox(height: 16.h),
 
         // Company Tax ID (PKP only)
         _customerType == 'PKP'
-            ? buildInputRow(
+            ? buildInputBox(
               controller: _companyTaxIdController,
               label: 'NPWP Perusahaan',
               validator: (value) {
@@ -391,15 +401,19 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
               },
             )
             : const SizedBox.shrink(),
+        _customerType == 'PKP'
+            ? SizedBox(height: 16.h)
+            : const SizedBox.shrink(),
 
         // Store Condition
-        buildInputRow(
+        buildInputBox(
           controller: _storeConditionController,
           label: 'Kondisi Gedung / Toko',
           validator: (value) {
             return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
           },
         ),
+        SizedBox(height: 16.h),
       ],
     );
   }
@@ -465,42 +479,48 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
         SizedBox(height: 16.h),
 
         // Owner Name
-        buildInputRow(
+        buildInputBox(
           controller: _ownerNameController,
           label: 'Nama Pemilik',
           validator: (value) {
             return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
           },
         ),
+        SizedBox(height: 16.h),
 
         // Owner Address
-        buildInputRow(
+        buildInputBox(
           controller: _ownerAddressController,
           label: 'Alamat Pemilik',
           validator: (value) {
             return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
           },
         ),
+        SizedBox(height: 16.h),
 
         // Owner Phone Number
-        buildInputRow(
+        buildInputBox(
           controller: _ownerPhoneController,
           label: 'Nomor Telepon Pemilik',
           validator: (value) {
             return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
           },
         ),
+        SizedBox(height: 16.h),
 
         // Owner National ID
-        buildInputRow(
+        buildInputBox(
           controller: _ownerNationalIdController,
           label: 'NIK Pemilik',
           validator: (value) {
             return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
           },
         ),
+        SizedBox(height: 16.h),
+
+        // PIC Tax ID (Non PKP only)
         _customerType == 'Non PKP'
-            ? buildInputRow(
+            ? buildInputBox(
               controller: _ownerTaxIdController,
               label: 'NPWP Pemilik',
               validator: (value) {
@@ -511,9 +531,12 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
               },
             )
             : const SizedBox.shrink(),
+        _customerType == 'Non PKP'
+            ? SizedBox(height: 16.h)
+            : const SizedBox.shrink(),
 
         // Owner Ownership Status
-        buildInputRow(
+        buildInputBox(
           controller: _ownershipStatusController,
           label: 'Status Kepemilikan',
           validator: (value) {
@@ -521,6 +544,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
             return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
           },
         ),
+        SizedBox(height: 16.h),
       ],
     );
   }
@@ -587,40 +611,44 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
         SizedBox(height: 16.h),
 
         // PIC Name
-        buildInputRow(
+        buildInputBox(
           controller: _ownerNameController,
           label: 'Nama PIC',
           validator: (value) {
             return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
           },
         ),
+        SizedBox(height: 16.h),
 
         // PIC Phone Number
-        buildInputRow(
+        buildInputBox(
           controller: _ownerPhoneController,
           label: 'Nomor Telepon PIC',
           validator: (value) {
             return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
           },
         ),
+        SizedBox(height: 16.h),
 
         // PIC National ID
-        buildInputRow(
+        buildInputBox(
           controller: _ownerNationalIdController,
           label: 'NIK PIC (jika ada)',
           validator: (value) {
             return null;
           },
         ),
+        SizedBox(height: 16.h),
 
         // PIC Position
-        buildInputRow(
+        buildInputBox(
           controller: _picPositionController,
           label: 'Posisi PIC dalam Perusahaan',
           validator: (value) {
             return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
           },
         ),
+        SizedBox(height: 16.h),
       ],
     );
   }

@@ -5,7 +5,6 @@ import 'package:android_app/utils/widget_settings.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image/image.dart' as imaglib;
@@ -330,35 +329,6 @@ Widget productCard({
             ],
           ),
         ],
-      ),
-    ),
-  );
-}
-
-// INPUT ROW
-Widget buildInputRow({
-  required TextEditingController controller,
-  required String label,
-  List<TextInputFormatter>? inputFormatters,
-  String? Function(String?)? validator,
-  String? prefix,
-  String? suffix,
-  int? maxLines = 1,
-  bool enabled = true,
-}) {
-  return Padding(
-    padding: EdgeInsets.only(bottom: 16.h),
-    child: TextFormField(
-      enabled: enabled,
-      controller: controller,
-      inputFormatters: inputFormatters,
-      validator: validator,
-      maxLines: maxLines,
-      decoration: InputDecoration(
-        labelText: label,
-        prefixText: prefix,
-        suffixText: suffix,
-        alignLabelWithHint: true,
       ),
     ),
   );

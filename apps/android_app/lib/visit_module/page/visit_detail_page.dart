@@ -169,7 +169,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
               SizedBox(height: 16.h),
 
               // Notes
-              buildInputRow(
+              buildInputBox(
                 enabled: _editable,
                 controller: _notesController,
                 label: 'Catatan',
@@ -180,7 +180,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
                             ? 'Catatan tidak boleh kosong'
                             : null,
               ),
-              SizedBox(height: 16.h),
+              SizedBox(height: 32.h),
 
               // Image Upload (optional if status == 1)
               Center(
