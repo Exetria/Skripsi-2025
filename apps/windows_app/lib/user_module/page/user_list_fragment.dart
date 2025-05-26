@@ -1,7 +1,14 @@
+import 'dart:io';
+
 import 'package:common_components/common_components.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:windows_app/customer_module/page/controller/customer_list_controller.dart';
+import 'package:windows_app/product_module/page/controller/product_list_controller.dart';
+import 'package:windows_app/user_module/domain/entities/user_domain.dart';
+import 'package:windows_app/user_module/page/controller/update_user_controller.dart';
 import 'package:windows_app/user_module/page/controller/user_list_controller.dart';
 import 'package:windows_app/utils/functions.dart';
 
@@ -87,13 +94,7 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                                   : null,
                           bottomText: role[0].toUpperCase() + role.substring(1),
                           onTap: () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  '${data.fields?.fullName?.stringValue ?? '-'} clicked',
-                                ),
-                              ),
-                            );
+                            showUserDataPopup(context: context, userData: data);
                           },
                         );
                       },
@@ -192,13 +193,962 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
           ],
         ),
 
-        IconButton(
-          onPressed: _refreshUserList,
-          icon: const Icon(Icons.refresh),
-          tooltip: 'Segarkan',
+        Row(
+          children: [
+            IconButton(
+              onPressed: () async {
+                showUserDataPopup(context: context);
+              },
+              icon: const Icon(Icons.add),
+              tooltip: 'Tambah Pengguna Baru',
+            ),
+            const SizedBox(width: 8),
+            IconButton(
+              onPressed: _refreshUserList,
+              icon: const Icon(Icons.refresh),
+              tooltip: 'Segarkan',
+            ),
+          ],
         ),
       ],
     );
+  }
+
+  // photo_url v
+  // full_name v
+  // user_name v
+  // phone_number v
+  // email v
+  // role -
+  // is_active -
+  // assigned_products v
+  // assigned_customers v
+
+  Future<void> showUserDataPopup({
+    required BuildContext context,
+    UserDomain? userData,
+  }) async {
+    final addProductFormKey = GlobalKey<FormState>();
+
+    File? userPhoto;
+    String? imageError;
+    String? previousImageLink;
+
+    final userNameController = TextEditingController();
+    final userFullNameController = TextEditingController();
+
+    final userPhoneController = TextEditingController();
+    final userEmailController = TextEditingController();
+    final userPasswordController = TextEditingController();
+
+    List<String> assignedCustomers = [];
+    List<String> assignedProducts = [];
+
+    bool isAdmin = false;
+    bool isActive = true;
+
+    bool dialogActionButtonEnabled = true;
+
+    // If productData is provided, populate the fields
+    if (userData != null) {
+      previousImageLink = userData.fields?.photoUrl?.stringValue ?? '';
+
+      userNameController.text = userData.fields?.userName?.stringValue ?? '';
+      userFullNameController.text =
+          userData.fields?.fullName?.stringValue ?? '';
+
+      userPhoneController.text =
+          userData.fields?.phoneNumber?.stringValue ?? '';
+      userEmailController.text = userData.fields?.email?.stringValue ?? '';
+
+      isAdmin = userData.fields?.role?.stringValue == 'admin';
+      isActive = userData.fields?.isActive?.booleanValue ?? true;
+
+      // Assigned customers and products
+      assignedCustomers = generateListFromFirebaseList(
+        userData.fields?.assignedCustomers?.arrayValue?.values ?? [],
+      );
+      assignedProducts = generateListFromFirebaseList(
+        userData.fields?.assignedProducts?.arrayValue?.values ?? [],
+      );
+    }
+
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (statefulBuilderContext, setDialogState) {
+            Future<void> pickImage() async {
+              // Safeguard if dialog closed
+              if (statefulBuilderContext.mounted == false) return;
+
+              // Pick image
+              final result = await FilePicker.platform.pickFiles(
+                type: FileType.image,
+                withData: true,
+              );
+              if (result == null) return;
+              if (result.files.single.path == null) {
+                setDialogState(() => imageError = 'Gagal membaca file');
+                return;
+              }
+              // If dialog still mounted, display image
+              if (statefulBuilderContext.mounted) {
+                setDialogState(() {
+                  userPhoto = File(result.files.single.path ?? '');
+                  imageError = null;
+                });
+              }
+            }
+
+            void submitUserData() async {
+              {
+                setDialogState(() {
+                  dialogActionButtonEnabled = false;
+                });
+                if (addProductFormKey.currentState?.validate() ?? false) {
+                  final submitState =
+                      userData == null
+                          ? await ref
+                              .read(updateUserControllerProvider.notifier)
+                              .addUser(
+                                userPhoto: userPhoto,
+                                userName: userNameController.text,
+                                fullName: userFullNameController.text,
+                                phoneNumber: userPhoneController.text,
+                                email: userEmailController.text,
+                                password: userPasswordController.text,
+                                isAdmin: isAdmin,
+                                isActive: isActive,
+                                assignedCustomers: assignedCustomers,
+                                assignedProducts: assignedProducts,
+                              )
+                          : await ref
+                              .read(updateUserControllerProvider.notifier)
+                              .updateUser(
+                                // productId: getIdFromName(
+                                //   name: productData.name,
+                                // ),
+                                // productImage: productImage,
+                                // previousProductImageLink: previousImageLink,
+                                // productName: userNameController.text,
+                                // brand: userFullNameController.text,
+                                // companyCode: userPhoneController.text,
+                                // productPrice:
+                                //     int.tryParse(priceController.text) ?? 0,
+                                // unitPerPackage:
+                                //     int.tryParse(priceController.text) ?? 0,
+                                // description: descriptionController.text,
+                                // available: available,
+                                // attributes: attributes,
+                              );
+
+                  if (submitState is AsyncData) {
+                    showFeedbackDialog(
+                      context: context,
+                      type: 1,
+                      message:
+                          userData == null
+                              ? 'Pengguna berhasil ditambahkan'
+                              : 'Pengguna berhasil diperbarui',
+                      onClose: () {
+                        ref.invalidate(userListControllerProvider);
+                        Navigator.pop(statefulBuilderContext);
+                      },
+                    );
+                  } else if (submitState is AsyncError) {
+                    final apiException = submitState.error as ApiException;
+                    showFeedbackDialog(
+                      context: context,
+                      type: 0,
+                      message: apiException.message,
+                    );
+                  } else {
+                    showFeedbackDialog(
+                      context: context,
+                      type: 0,
+                      message:
+                          userData == null
+                              ? 'Gagal menambahkan pengguna'
+                              : 'Gagal memperbarui pengguna',
+                    );
+                  }
+                } else if (userPhoto == null) {
+                  setDialogState(() {
+                    imageError = 'Foto pengguna harus dipilih';
+                  });
+                }
+                setDialogState(() {
+                  dialogActionButtonEnabled = true;
+                });
+              }
+            }
+
+            return AlertDialog(
+              title: Center(
+                child: Text(
+                  userData == null
+                      ? 'Tambah Pengguna Baru'
+                      : 'Perbarui Data Pengguna',
+                  style: subtitleStyle,
+                ),
+              ),
+              content: SizedBox(
+                width: ScreenUtil().screenWidth * 0.4,
+                child: SingleChildScrollView(
+                  child: Form(
+                    key: addProductFormKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // User photo
+                        Center(
+                          child: GestureDetector(
+                            onTap: () {
+                              pickImage();
+                            },
+                            child: Container(
+                              width: ScreenUtil().screenWidth * 0.1,
+                              decoration: photoCircleDecoration(context),
+                              child:
+                                  userPhoto != null
+                                      ? AspectRatio(
+                                        aspectRatio: 1 / 1,
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            360,
+                                          ),
+                                          child: Image.file(
+                                            userPhoto ?? File(''),
+                                            fit: BoxFit.cover,
+                                            errorBuilder: (
+                                              context,
+                                              error,
+                                              stackTrace,
+                                            ) {
+                                              return Center(
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Icon(
+                                                      Icons
+                                                          .broken_image_outlined,
+                                                      size: 32,
+                                                      color: errorColor,
+                                                    ),
+                                                    const SizedBox(height: 8),
+                                                    Text(
+                                                      'Image not found',
+                                                      style: errorStyle,
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      )
+                                      : userPhoto == null &&
+                                          previousImageLink != null &&
+                                          previousImageLink.isNotEmpty
+                                      ? AspectRatio(
+                                        aspectRatio: 1 / 1,
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            360,
+                                          ),
+                                          child: Image.network(
+                                            previousImageLink,
+                                            fit: BoxFit.cover,
+                                            errorBuilder: (
+                                              context,
+                                              error,
+                                              stackTrace,
+                                            ) {
+                                              return Center(
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Icon(
+                                                      Icons
+                                                          .broken_image_outlined,
+                                                      size: 32,
+                                                      color: errorColor,
+                                                    ),
+                                                    const SizedBox(height: 8),
+                                                    Text(
+                                                      'Image not found',
+                                                      style: errorStyle,
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      )
+                                      : userPhoto == null &&
+                                          previousImageLink != null &&
+                                          previousImageLink.isEmpty
+                                      ? AspectRatio(
+                                        aspectRatio: 1 / 1,
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            360,
+                                          ),
+                                          child: Center(
+                                            child: Icon(
+                                              Icons.person,
+                                              size: 64,
+                                              color:
+                                                  Theme.of(
+                                                    context,
+                                                  ).colorScheme.outline,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                      : AspectRatio(
+                                        aspectRatio: 1 / 1,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(
+                                              Icons.camera_alt_outlined,
+                                              size: 64,
+                                              color:
+                                                  Theme.of(
+                                                    context,
+                                                  ).colorScheme.outline,
+                                            ),
+                                            const SizedBox(height: 8),
+                                            imageError != null
+                                                ? Text(
+                                                  imageError!,
+                                                  style: errorStyle,
+                                                )
+                                                : const SizedBox.shrink(),
+                                          ],
+                                        ),
+                                      ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 32),
+                        // full_name v
+                        // user_name v
+                        // phone_number v
+                        // email v
+                        // role -
+                        // is_active -
+                        // assigned_products
+                        // assigned_customers
+
+                        // Username
+                        buildInputBox(
+                          controller: userNameController,
+                          label: 'User Name',
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'User name tidak boleh kosong';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 12),
+
+                        // Full name
+                        buildInputBox(
+                          controller: userFullNameController,
+                          label: 'Nama lengkap',
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Name lengkap tidak boleh kosong';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 12),
+
+                        // Phone number
+                        buildInputBox(
+                          controller: userPhoneController,
+                          label: 'Nomor telepon',
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Nomor telepon tidak boleh kosong';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 12),
+
+                        // Email
+                        buildInputBox(
+                          controller: userEmailController,
+                          label: 'Email',
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Email tidak boleh kosong';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 12),
+
+                        // Password
+                        userData == null
+                            ? buildInputBox(
+                              controller: userPasswordController,
+                              label: 'Password',
+                              validator: (value) {
+                                if (userData != null) return null;
+                                if (value == null || value.isEmpty) {
+                                  return 'Password tidak boleh kosong';
+                                }
+                                return null;
+                              },
+                            )
+                            : const SizedBox.shrink(),
+                        userData == null
+                            ? const SizedBox(height: 12)
+                            : const SizedBox.shrink(),
+
+                        // Role and active status
+                        Row(
+                          children: [
+                            Expanded(
+                              child: // Available switch
+                                  SwitchListTile(
+                                title: Text('Admin', style: bodyStyle),
+                                value: isAdmin,
+                                onChanged:
+                                    (value) =>
+                                        setDialogState(() => isAdmin = value),
+                              ),
+                            ),
+                            Expanded(
+                              child: // Available switch
+                                  SwitchListTile(
+                                title: Text('Aktif', style: bodyStyle),
+                                value: isActive,
+                                onChanged:
+                                    (value) =>
+                                        setDialogState(() => isActive = value),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 32),
+
+                        // Assigned customers
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color:
+                                  Theme.of(
+                                    statefulBuilderContext,
+                                  ).colorScheme.outline,
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Pelanggan yang ditugaskan',
+                                    style: bodyStyle,
+                                  ),
+                                  IconButton(
+                                    onPressed: () async {
+                                      final newCustomerId =
+                                          await showCustomerSelectorPopup();
+
+                                      if (newCustomerId != null &&
+                                          newCustomerId.isNotEmpty &&
+                                          !assignedCustomers.contains(
+                                            newCustomerId,
+                                          )) {
+                                        setDialogState(() {
+                                          assignedCustomers.add(newCustomerId);
+                                        });
+                                      }
+                                    },
+                                    icon: const Icon(Icons.add),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  minHeight: ScreenUtil().screenHeight * 0.05,
+                                  maxHeight: ScreenUtil().screenHeight * 0.3,
+                                ),
+                                child:
+                                    assignedCustomers.isNotEmpty
+                                        ? ListView.separated(
+                                          itemCount: assignedCustomers.length,
+                                          separatorBuilder:
+                                              (context, index) => Divider(
+                                                color:
+                                                    Theme.of(
+                                                      context,
+                                                    ).colorScheme.onSurface,
+                                                thickness: 1,
+                                                height: 1,
+                                              ),
+                                          itemBuilder: (context, index) {
+                                            return ListTile(
+                                              title: Text(
+                                                ref
+                                                    .watch(
+                                                      customerListControllerProvider,
+                                                    )
+                                                    .when(
+                                                      loading:
+                                                          () => 'Memuat...',
+                                                      data: (customerList) {
+                                                        return ref
+                                                            .read(
+                                                              customerListControllerProvider
+                                                                  .notifier,
+                                                            )
+                                                            .getCustomerName(
+                                                              id:
+                                                                  assignedCustomers[index],
+                                                            );
+                                                      },
+                                                      error: (
+                                                        error,
+                                                        stackTrace,
+                                                      ) {
+                                                        ref.invalidate(
+                                                          customerListControllerProvider,
+                                                        );
+                                                        return 'Gagal Memuat Nama';
+                                                      },
+                                                    ),
+                                              ),
+                                              trailing: IconButton(
+                                                icon: Icon(
+                                                  Icons.delete,
+                                                  color:
+                                                      Theme.of(
+                                                        context,
+                                                      ).colorScheme.error,
+                                                ),
+                                                onPressed: () {
+                                                  setDialogState(() {
+                                                    assignedCustomers.removeAt(
+                                                      index,
+                                                    );
+                                                  });
+                                                },
+                                              ),
+                                            );
+                                          },
+                                        )
+                                        : Center(
+                                          child: Text(
+                                            'Belum ada pelanggan',
+                                            style: captionStyle,
+                                          ),
+                                        ),
+                              ),
+                              const SizedBox(height: 12),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+
+                        // Assigned products
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color:
+                                  Theme.of(
+                                    statefulBuilderContext,
+                                  ).colorScheme.outline,
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Produk yang ditugaskan',
+                                    style: bodyStyle,
+                                  ),
+                                  IconButton(
+                                    onPressed: () async {
+                                      final newProductId =
+                                          await showProductSelectorPopup();
+
+                                      if (newProductId != null &&
+                                          newProductId.isNotEmpty &&
+                                          !assignedProducts.contains(
+                                            newProductId,
+                                          )) {
+                                        setDialogState(() {
+                                          assignedProducts.add(newProductId);
+                                        });
+                                      }
+                                    },
+                                    icon: const Icon(Icons.add),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  minHeight: ScreenUtil().screenHeight * 0.05,
+                                  maxHeight: ScreenUtil().screenHeight * 0.3,
+                                ),
+                                child:
+                                    assignedProducts.isNotEmpty
+                                        ? ListView.separated(
+                                          itemCount: assignedProducts.length,
+                                          separatorBuilder:
+                                              (context, index) => Divider(
+                                                color:
+                                                    Theme.of(
+                                                      context,
+                                                    ).colorScheme.onSurface,
+                                                thickness: 1,
+                                                height: 1,
+                                              ),
+                                          itemBuilder: (context, index) {
+                                            return ListTile(
+                                              title: Text(
+                                                ref
+                                                    .watch(
+                                                      productListControllerProvider,
+                                                    )
+                                                    .when(
+                                                      loading:
+                                                          () => 'Memuat...',
+                                                      data: (customerList) {
+                                                        return ref
+                                                            .read(
+                                                              productListControllerProvider
+                                                                  .notifier,
+                                                            )
+                                                            .getProductName(
+                                                              id:
+                                                                  assignedProducts[index],
+                                                            );
+                                                      },
+                                                      error: (
+                                                        error,
+                                                        stackTrace,
+                                                      ) {
+                                                        ref.invalidate(
+                                                          customerListControllerProvider,
+                                                        );
+                                                        return 'Gagal Memuat Nama';
+                                                      },
+                                                    ),
+                                              ),
+                                              trailing: IconButton(
+                                                icon: Icon(
+                                                  Icons.delete,
+                                                  color:
+                                                      Theme.of(
+                                                        context,
+                                                      ).colorScheme.error,
+                                                ),
+                                                onPressed: () {
+                                                  setDialogState(() {
+                                                    assignedProducts.removeAt(
+                                                      index,
+                                                    );
+                                                  });
+                                                },
+                                              ),
+                                            );
+                                          },
+                                        )
+                                        : Center(
+                                          child: Text(
+                                            'Belum ada produk',
+                                            style: captionStyle,
+                                          ),
+                                        ),
+                              ),
+                              const SizedBox(height: 12),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              actionsAlignment: MainAxisAlignment.end,
+              actions: [
+                TextButton(
+                  onPressed:
+                      dialogActionButtonEnabled
+                          ? () {
+                            Navigator.pop(statefulBuilderContext);
+                          }
+                          : null,
+                  child: Text('Batal', style: captionStyle),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        Theme.of(statefulBuilderContext).colorScheme.primary,
+                    foregroundColor:
+                        Theme.of(statefulBuilderContext).colorScheme.onPrimary,
+                    textStyle: buttonStyle,
+                  ),
+                  onPressed: dialogActionButtonEnabled ? submitUserData : null,
+                  child: Text(
+                    userData == null ? 'Tambah' : 'Perbarui',
+                    style: bodyStyle,
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future<String?> showCustomerSelectorPopup() async {
+    ref.read(customerListControllerProvider.notifier).resetSearch();
+    return showDialog<String>(
+      context: context,
+      builder: (context) {
+        return Consumer(
+          builder: (context, ref, _) {
+            return AlertDialog(
+              title: Row(
+                children: [
+                  Expanded(
+                    child: customSearchBar(
+                      context: context,
+                      hint: 'Cari Pelanggan...',
+                      onChanged: (query) {
+                        ref
+                            .read(customerListControllerProvider.notifier)
+                            .searchCustomer(query);
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  IconButton(
+                    icon: const Icon(Icons.refresh),
+                    tooltip: 'Segarkan Daftar Pelanggan',
+                    onPressed: () {
+                      _refreshCustomerList();
+                    },
+                  ),
+                ],
+              ),
+              content: SizedBox(
+                width: ScreenUtil().screenWidth * 0.2,
+                height: ScreenUtil().screenHeight * 0.3,
+                child: ref
+                    .watch(customerListControllerProvider)
+                    .when(
+                      loading:
+                          () =>
+                              const Center(child: CircularProgressIndicator()),
+                      data: (productList) {
+                        if (productList == null || productList.isEmpty) {
+                          return const Center(
+                            child: Text('Data Pelanggan Tidak Ditemukan'),
+                          );
+                        }
+
+                        return ListView.separated(
+                          itemCount: productList.length,
+                          separatorBuilder:
+                              (context, index) => Divider(
+                                color: Theme.of(context).colorScheme.onSurface,
+                                thickness: 1,
+                                height: 1,
+                              ),
+                          itemBuilder: (context, index) {
+                            final data = productList[index];
+
+                            return GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap:
+                                  () => Navigator.pop(
+                                    context,
+                                    getIdFromName(name: data.name),
+                                  ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    data.fields?.companyName?.stringValue ??
+                                        '-',
+                                  ),
+                                  const Icon(Icons.arrow_forward_ios, size: 10),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      error: (error, _) {
+                        final exception = error as ApiException;
+
+                        return Center(
+                          child: Text(
+                            'Gagal Memuat Data Pelanggan: ${exception.message}',
+                            style: errorStyle,
+                          ),
+                        );
+                      },
+                    ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future<String?> showProductSelectorPopup() async {
+    ref.read(productListControllerProvider.notifier).resetSearch();
+    return showDialog<String>(
+      context: context,
+      builder: (context) {
+        return Consumer(
+          builder: (context, ref, _) {
+            return AlertDialog(
+              title: Row(
+                children: [
+                  Expanded(
+                    child: customSearchBar(
+                      context: context,
+                      hint: 'Cari Produk...',
+                      onChanged: (query) {
+                        ref
+                            .read(productListControllerProvider.notifier)
+                            .searchProduct(query);
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  IconButton(
+                    icon: const Icon(Icons.refresh),
+                    tooltip: 'Segarkan Daftar Pelanggan',
+                    onPressed: () {
+                      _refreshProductList();
+                    },
+                  ),
+                ],
+              ),
+              content: SizedBox(
+                width: ScreenUtil().screenWidth * 0.2,
+                height: ScreenUtil().screenHeight * 0.3,
+                child: ref
+                    .watch(productListControllerProvider)
+                    .when(
+                      loading:
+                          () =>
+                              const Center(child: CircularProgressIndicator()),
+                      data: (productList) {
+                        if (productList == null || productList.isEmpty) {
+                          return const Center(
+                            child: Text('Data Produk Tidak Ditemukan'),
+                          );
+                        }
+
+                        return ListView.separated(
+                          itemCount: productList.length,
+                          separatorBuilder:
+                              (context, index) => Divider(
+                                color: Theme.of(context).colorScheme.onSurface,
+                                thickness: 1,
+                                height: 1,
+                              ),
+                          itemBuilder: (context, index) {
+                            final data = productList[index];
+
+                            return GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap:
+                                  () => Navigator.pop(
+                                    context,
+                                    getIdFromName(name: data.name),
+                                  ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    data.fields?.productName?.stringValue ??
+                                        '-',
+                                  ),
+                                  const Icon(Icons.arrow_forward_ios, size: 10),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      error: (error, _) {
+                        final exception = error as ApiException;
+
+                        return Center(
+                          child: Text(
+                            'Gagal Memuat Data Produk: ${exception.message}',
+                            style: errorStyle,
+                          ),
+                        );
+                      },
+                    ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  List<String> generateListFromFirebaseList(List<Email> listData) {
+    final List<String> result = [];
+    for (var emailObject in listData) {
+      if (emailObject.stringValue != null) {
+        result.add(emailObject.stringValue!);
+      }
+    }
+    return result;
+  }
+
+  Future<void> _refreshCustomerList() async {
+    ref.invalidate(customerListControllerProvider);
+  }
+
+  Future<void> _refreshProductList() async {
+    ref.invalidate(productListControllerProvider);
   }
 
   Future<void> _refreshUserList() async {
