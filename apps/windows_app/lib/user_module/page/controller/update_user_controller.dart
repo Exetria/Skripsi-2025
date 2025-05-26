@@ -50,33 +50,37 @@ class UpdateUserController extends _$UpdateUserController {
     return state;
   }
 
-  Future<AsyncValue<UserDomain?>> updateUser(
-    //   {
-    //   required File? productImage,
-    //   required String productName,
-    //   required String brand,
-    //   required String companyCode,
-    //   required int productPrice,
-    //   required int unitPerPackage,
-    //   required String description,
-    //   required bool available,
-    //   required Map<String, String>? attributes,
-    // }
-  ) async {
+  Future<AsyncValue<UserDomain?>> updateUser({
+    required File? userPhoto,
+    required String previousUserPhotoLink,
+    required String userId,
+    required String userName,
+    required String fullName,
+    required String phoneNumber,
+    required String email,
+    String? newPassword,
+    required bool isAdmin,
+    required bool isActive,
+    required List<String> assignedCustomers,
+    required List<String> assignedProducts,
+  }) async {
     final repository = ref.watch(UpdateUserRepositoryProvider);
 
     state = const AsyncLoading();
 
     final result = await repository.updateUser(
-      // productImage: productImage,
-      // productName: productName,
-      // brand: brand,
-      // companyCode: companyCode,
-      // productPrice: productPrice,
-      // unitPerPackage: unitPerPackage,
-      // description: description,
-      // available: available,
-      // attributes: attributes,
+      userPhoto: userPhoto,
+      previousUserPhotoLink: previousUserPhotoLink,
+      userId: userId,
+      userName: userName,
+      fullName: fullName,
+      phoneNumber: phoneNumber,
+      email: email,
+      newPassword: newPassword,
+      isAdmin: isAdmin,
+      isActive: isActive,
+      assignedCustomers: assignedCustomers,
+      assignedProducts: assignedProducts,
     );
 
     state = await result.fold(

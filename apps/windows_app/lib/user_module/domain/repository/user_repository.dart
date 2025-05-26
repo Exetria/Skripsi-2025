@@ -21,7 +21,20 @@ abstract class UserRepository {
     required List<String> assignedCustomers,
     required List<String> assignedProducts,
   });
-  Future<Either<ApiException, UserDomain?>> updateUser();
+  Future<Either<ApiException, UserDomain?>> updateUser({
+    required File? userPhoto,
+    required String previousUserPhotoLink,
+    required String userId,
+    required String userName,
+    required String fullName,
+    required String phoneNumber,
+    required String email,
+    String? newPassword,
+    required bool isAdmin,
+    required bool isActive,
+    required List<String> assignedCustomers,
+    required List<String> assignedProducts,
+  });
 }
 
 final UserListRepositoryProvider = Provider<UserRepository>(

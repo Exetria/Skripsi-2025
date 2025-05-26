@@ -46,8 +46,37 @@ class UpdateUserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Either<ApiException, UserDomain?>> updateUser() {
-    // TODO: implement updateUser
-    throw UnimplementedError();
+  Future<Either<ApiException, UserDomain?>> updateUser({
+    required File? userPhoto,
+    required String previousUserPhotoLink,
+    required String userId,
+    required String userName,
+    required String fullName,
+    required String phoneNumber,
+    required String email,
+    String? newPassword,
+    required bool isAdmin,
+    required bool isActive,
+    required List<String> assignedCustomers,
+    required List<String> assignedProducts,
+  }) async {
+    final resp = await remoteProcess(
+      remoteDataSource.updateUser(
+        userPhoto: userPhoto,
+        previousUserPhotoLink: previousUserPhotoLink,
+        userId: userId,
+        userName: userName,
+        fullName: fullName,
+        phoneNumber: phoneNumber,
+        email: email,
+        newPassword: newPassword,
+        isAdmin: isAdmin,
+        isActive: isActive,
+        assignedCustomers: assignedCustomers,
+        assignedProducts: assignedProducts,
+      ),
+    );
+
+    return resp.fold((l) => Left(l), (r) => Right(r));
   }
 }

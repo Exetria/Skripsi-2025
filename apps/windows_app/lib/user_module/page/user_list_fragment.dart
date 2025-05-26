@@ -232,7 +232,7 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
 
     File? userPhoto;
     String? imageError;
-    String? previousImageLink;
+    String? previousUserPhotoLink;
 
     final userNameController = TextEditingController();
     final userFullNameController = TextEditingController();
@@ -251,7 +251,7 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
 
     // If productData is provided, populate the fields
     if (userData != null) {
-      previousImageLink = userData.fields?.photoUrl?.stringValue ?? '';
+      previousUserPhotoLink = userData.fields?.photoUrl?.stringValue ?? '';
 
       userNameController.text = userData.fields?.userName?.stringValue ?? '';
       userFullNameController.text =
@@ -326,21 +326,22 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                           : await ref
                               .read(updateUserControllerProvider.notifier)
                               .updateUser(
-                                // productId: getIdFromName(
-                                //   name: productData.name,
-                                // ),
-                                // productImage: productImage,
-                                // previousProductImageLink: previousImageLink,
-                                // productName: userNameController.text,
-                                // brand: userFullNameController.text,
-                                // companyCode: userPhoneController.text,
-                                // productPrice:
-                                //     int.tryParse(priceController.text) ?? 0,
-                                // unitPerPackage:
-                                //     int.tryParse(priceController.text) ?? 0,
-                                // description: descriptionController.text,
-                                // available: available,
-                                // attributes: attributes,
+                                userPhoto: userPhoto,
+                                previousUserPhotoLink:
+                                    previousUserPhotoLink ?? '',
+                                userId: getIdFromName(name: userData.name),
+                                userName: userNameController.text,
+                                fullName: userFullNameController.text,
+                                phoneNumber: userPhoneController.text,
+                                email: userEmailController.text,
+                                newPassword:
+                                    userPasswordController.text.isNotEmpty
+                                        ? userPasswordController.text
+                                        : null,
+                                isAdmin: isAdmin,
+                                isActive: isActive,
+                                assignedCustomers: assignedCustomers,
+                                assignedProducts: assignedProducts,
                               );
 
                   if (submitState is AsyncData) {
@@ -450,8 +451,8 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                                         ),
                                       )
                                       : userPhoto == null &&
-                                          previousImageLink != null &&
-                                          previousImageLink.isNotEmpty
+                                          previousUserPhotoLink != null &&
+                                          previousUserPhotoLink.isNotEmpty
                                       ? AspectRatio(
                                         aspectRatio: 1 / 1,
                                         child: ClipRRect(
@@ -459,7 +460,7 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                                             360,
                                           ),
                                           child: Image.network(
-                                            previousImageLink,
+                                            previousUserPhotoLink,
                                             fit: BoxFit.cover,
                                             errorBuilder: (
                                               context,
@@ -490,8 +491,8 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                                         ),
                                       )
                                       : userPhoto == null &&
-                                          previousImageLink != null &&
-                                          previousImageLink.isEmpty
+                                          previousUserPhotoLink != null &&
+                                          previousUserPhotoLink.isEmpty
                                       ? AspectRatio(
                                         aspectRatio: 1 / 1,
                                         child: ClipRRect(
@@ -590,16 +591,19 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                         const SizedBox(height: 12),
 
                         // Email
-                        buildInputBox(
-                          controller: userEmailController,
-                          label: 'Email',
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Email tidak boleh kosong';
-                            }
-                            return null;
-                          },
-                        ),
+                        userData == null
+                            ? buildInputBox(
+                              controller: userEmailController,
+                              label: 'Email',
+                              validator: (value) {
+                                if (userData != null) return null;
+                                if (value == null || value.isEmpty) {
+                                  return 'Email tidak boleh kosong';
+                                }
+                                return null;
+                              },
+                            )
+                            : const SizedBox.shrink(),
                         const SizedBox(height: 12),
 
                         // Password
