@@ -70,6 +70,14 @@ BoxDecoration photoBoxDecoration(BuildContext context) {
   );
 }
 
+BoxDecoration photoCircleDecoration(BuildContext context) {
+  return BoxDecoration(
+    shape: BoxShape.circle,
+    color: Theme.of(context).colorScheme.surface,
+    border: Border.all(color: Theme.of(context).colorScheme.outline),
+  );
+}
+
 // ITEM CARD
 Widget itemCard({
   required BuildContext context,
