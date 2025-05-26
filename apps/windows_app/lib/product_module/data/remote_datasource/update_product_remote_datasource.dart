@@ -19,7 +19,7 @@ abstract class UpdateProductRemoteDatasource {
   Future<ProductDomain> updateProduct({
     required String productId,
     required File? productImage,
-    required String? previousProductImageLink,
+    required String previousProductImageLink,
     required String productName,
     required String brand,
     required String companyCode,
@@ -99,7 +99,7 @@ class UpdateProductRemoteDatasourceImpl
   Future<ProductDomain> updateProduct({
     required String productId,
     required File? productImage,
-    required String? previousProductImageLink,
+    required String previousProductImageLink,
     required String productName,
     required String brand,
     required String companyCode,
@@ -129,6 +129,8 @@ class UpdateProductRemoteDatasourceImpl
       );
       productImageLink =
           'https://firebasestorage.googleapis.com/v0/b/${productPhotoResponse['bucket']}/o/$productFileName?alt=media&token=${productPhotoResponse['downloadTokens']}';
+    } else {
+      productImageLink = previousProductImageLink;
     }
 
     Map<String, dynamic> result = await apiCallPatch(
@@ -151,12 +153,7 @@ class UpdateProductRemoteDatasourceImpl
           'price': {'integerValue': productPrice.toString()},
           'company_code': {'stringValue': companyCode},
           'brand': {'stringValue': brand},
-          'product_image': {
-            'stringValue':
-                productImageLink.isNotEmpty
-                    ? productImageLink
-                    : previousProductImageLink ?? '',
-          },
+          'product_image': {'stringValue': productImageLink},
         },
       },
     );

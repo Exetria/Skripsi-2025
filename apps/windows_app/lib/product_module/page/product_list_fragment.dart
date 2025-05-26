@@ -252,7 +252,8 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                                   name: productData.name,
                                 ),
                                 productImage: productImage,
-                                previousProductImageLink: previousImageLink,
+                                previousProductImageLink:
+                                    previousImageLink ?? '',
                                 productName: productNameController.text,
                                 brand: brandController.text,
                                 companyCode: companyCodeController.text,

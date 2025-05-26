@@ -51,7 +51,7 @@ class UpdateProductController extends _$UpdateProductController {
   Future<AsyncValue<ProductDomain?>> updateProduct({
     required String productId,
     required File? productImage,
-    required String? previousProductImageLink,
+    required String previousProductImageLink,
     required String productName,
     required String brand,
     required String companyCode,
