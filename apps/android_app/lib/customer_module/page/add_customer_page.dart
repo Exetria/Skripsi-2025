@@ -204,7 +204,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
 
               buildInputBox(
                 controller: _carbonCopyController,
-                label: 'Carbon Copy (CC)',
+                label: 'Tembusan / CC',
                 validator: (value) {
                   return (value != null && value != '')
                       ? null
@@ -233,6 +233,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                     controller: _creditPeriodController,
                     label: 'Jangka Waktu Kredit (dalam hari)',
                     suffix: 'hari',
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     validator: (value) {
                       return (value != null && value != '')
                           ? null
@@ -511,9 +512,10 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
         // Owner National ID
         buildInputBox(
           controller: _ownerNationalIdController,
-          label: 'NIK Pemilik',
+          label: 'NIK Pemilik (jika ada)',
           validator: (value) {
-            return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
+            return null;
+            // return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
           },
         ),
         SizedBox(height: 16.h),
@@ -687,7 +689,8 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
       ktpPhotoStatus = _ktpPhoto != null;
       ownerAddressFilled = _ownerAddressController.text.isNotEmpty;
       ownerTaxIdFilled = _ownerTaxIdController.text.isNotEmpty;
-      ownerNationalIdFilled = _ownerNationalIdController.text.isNotEmpty;
+      ownerNationalIdFilled = true;
+      // ownerNationalIdFilled = _ownerNationalIdController.text.isNotEmpty;
       ownershipStatusFilled = _ownershipStatusController.text.isNotEmpty;
       picPositionFilled = true;
     }
@@ -758,11 +761,6 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
     _formKey.currentState?.validate();
 
     if (isAllRequiredDataFilled()) {
-      // print('asds masuk betul');
-      // setState(() {
-      //   _submitButtonEnabled = true;
-      // });
-      // return;
       final state = await ref
           .read(createCustomerRequestControllerProvider.notifier)
           .createCustomerRequest(
@@ -847,7 +845,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
         showFeedbackDialog(
           context: context,
           type: 3,
-          message: apiException.message,
+          message: 'Gagal Mengirim Form: ${apiException.message}',
           onClose: () {
             setState(() {
               _submitButtonEnabled = true;

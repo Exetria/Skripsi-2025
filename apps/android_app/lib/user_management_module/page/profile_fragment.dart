@@ -336,7 +336,7 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
           showFeedbackDialog(
             context: context,
             type: 3,
-            message: apiException.message,
+            message: 'Terjadi Kesalahan ${apiException.message}',
           );
         } else {
           showFeedbackDialog(
@@ -386,7 +386,7 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
           showFeedbackDialog(
             context: context,
             type: 3,
-            message: apiException.message,
+            message: 'Terjadi Kesalahan ${apiException.message}',
           );
         } else {
           showFeedbackDialog(
