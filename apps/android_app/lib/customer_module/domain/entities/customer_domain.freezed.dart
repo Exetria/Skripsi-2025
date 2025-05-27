@@ -289,47 +289,54 @@ Fields _$FieldsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Fields {
+  @JsonKey(name: 'pic_national_id_photo')
+  ApprovedBy? get picNationalIdPhoto => throw _privateConstructorUsedError;
   @JsonKey(name: 'company_store_condition')
   ApprovedBy? get companyStoreCondition => throw _privateConstructorUsedError;
-  @JsonKey(name: 'owner_name')
-  ApprovedBy? get ownerName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'subscription_type')
-  ApprovedBy? get subscriptionType => throw _privateConstructorUsedError;
-  @JsonKey(name: 'customer_type')
-  ApprovedBy? get customerType => throw _privateConstructorUsedError;
-  @JsonKey(name: 'company_location')
-  CompanyLocation? get companyLocation => throw _privateConstructorUsedError;
-  @JsonKey(name: 'owner_address')
-  ApprovedBy? get ownerAddress => throw _privateConstructorUsedError;
-  @JsonKey(name: 'owner_national_id')
-  ApprovedBy? get ownerNationalId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'owner_tax_id')
-  ApprovedBy? get ownerTaxId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'requested_by')
-  ApprovedBy? get requestedBy => throw _privateConstructorUsedError;
-  @JsonKey(name: 'owner_national_id_photo')
-  ApprovedBy? get ownerNationalIdPhoto => throw _privateConstructorUsedError;
-  @JsonKey(name: 'company_address')
-  ApprovedBy? get companyAddress => throw _privateConstructorUsedError;
-  @JsonKey(name: 'note')
-  ApprovedBy? get note => throw _privateConstructorUsedError;
-  @JsonKey(name: 'company_email')
-  ApprovedBy? get companyEmail => throw _privateConstructorUsedError;
-  @JsonKey(name: 'approved_by')
-  ApprovedBy? get approvedBy => throw _privateConstructorUsedError;
-  @JsonKey(name: 'ownership_status')
-  ApprovedBy? get ownershipStatus => throw _privateConstructorUsedError;
-  @JsonKey(name: 'company_store_photo')
-  CompanyStorePhoto? get companyStorePhoto =>
-      throw _privateConstructorUsedError;
-  @JsonKey(name: 'company_name')
-  ApprovedBy? get companyName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'owner_phone_number')
-  ApprovedBy? get ownerPhoneNumber => throw _privateConstructorUsedError;
+  @JsonKey(name: 'pic_phone_number')
+  ApprovedBy? get picPhoneNumber => throw _privateConstructorUsedError;
   @JsonKey(name: 'blacklisted')
   Blacklisted? get blacklisted => throw _privateConstructorUsedError;
+  @JsonKey(name: 'company_address')
+  ApprovedBy? get companyAddress => throw _privateConstructorUsedError;
+  @JsonKey(name: 'pic_address')
+  ApprovedBy? get picAddress => throw _privateConstructorUsedError;
+  @JsonKey(name: 'credit_limit')
+  Credit? get creditLimit => throw _privateConstructorUsedError;
+  @JsonKey(name: 'company_store_photo')
+  ApprovedBy? get companyStorePhoto => throw _privateConstructorUsedError;
+  @JsonKey(name: 'note')
+  ApprovedBy? get note => throw _privateConstructorUsedError;
+  @JsonKey(name: 'company_tax_id')
+  ApprovedBy? get companyTaxId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'credit_period')
+  Credit? get creditPeriod => throw _privateConstructorUsedError;
+  @JsonKey(name: 'pic_position')
+  ApprovedBy? get picPosition => throw _privateConstructorUsedError;
+  @JsonKey(name: 'company_email')
+  ApprovedBy? get companyEmail => throw _privateConstructorUsedError;
+  @JsonKey(name: 'company_name')
+  ApprovedBy? get companyName => throw _privateConstructorUsedError;
   @JsonKey(name: 'company_phone_number')
   ApprovedBy? get companyPhoneNumber => throw _privateConstructorUsedError;
+  @JsonKey(name: 'company_location')
+  CompanyLocation? get companyLocation => throw _privateConstructorUsedError;
+  @JsonKey(name: 'pic_tax_id')
+  ApprovedBy? get picTaxId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'customer_type')
+  ApprovedBy? get customerType => throw _privateConstructorUsedError;
+  @JsonKey(name: 'subscription_type')
+  ApprovedBy? get subscriptionType => throw _privateConstructorUsedError;
+  @JsonKey(name: 'ownership_status')
+  ApprovedBy? get ownershipStatus => throw _privateConstructorUsedError;
+  @JsonKey(name: 'requested_by')
+  ApprovedBy? get requestedBy => throw _privateConstructorUsedError;
+  @JsonKey(name: 'pic_name')
+  ApprovedBy? get picName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'approved_by')
+  ApprovedBy? get approvedBy => throw _privateConstructorUsedError;
+  @JsonKey(name: 'pic_national_id')
+  ApprovedBy? get picNationalId => throw _privateConstructorUsedError;
 
   /// Serializes this Fields to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -346,48 +353,56 @@ abstract class $FieldsCopyWith<$Res> {
       _$FieldsCopyWithImpl<$Res, Fields>;
   @useResult
   $Res call({
+    @JsonKey(name: 'pic_national_id_photo') ApprovedBy? picNationalIdPhoto,
     @JsonKey(name: 'company_store_condition') ApprovedBy? companyStoreCondition,
-    @JsonKey(name: 'owner_name') ApprovedBy? ownerName,
-    @JsonKey(name: 'subscription_type') ApprovedBy? subscriptionType,
-    @JsonKey(name: 'customer_type') ApprovedBy? customerType,
-    @JsonKey(name: 'company_location') CompanyLocation? companyLocation,
-    @JsonKey(name: 'owner_address') ApprovedBy? ownerAddress,
-    @JsonKey(name: 'owner_national_id') ApprovedBy? ownerNationalId,
-    @JsonKey(name: 'owner_tax_id') ApprovedBy? ownerTaxId,
-    @JsonKey(name: 'requested_by') ApprovedBy? requestedBy,
-    @JsonKey(name: 'owner_national_id_photo') ApprovedBy? ownerNationalIdPhoto,
-    @JsonKey(name: 'company_address') ApprovedBy? companyAddress,
-    @JsonKey(name: 'note') ApprovedBy? note,
-    @JsonKey(name: 'company_email') ApprovedBy? companyEmail,
-    @JsonKey(name: 'approved_by') ApprovedBy? approvedBy,
-    @JsonKey(name: 'ownership_status') ApprovedBy? ownershipStatus,
-    @JsonKey(name: 'company_store_photo') CompanyStorePhoto? companyStorePhoto,
-    @JsonKey(name: 'company_name') ApprovedBy? companyName,
-    @JsonKey(name: 'owner_phone_number') ApprovedBy? ownerPhoneNumber,
+    @JsonKey(name: 'pic_phone_number') ApprovedBy? picPhoneNumber,
     @JsonKey(name: 'blacklisted') Blacklisted? blacklisted,
+    @JsonKey(name: 'company_address') ApprovedBy? companyAddress,
+    @JsonKey(name: 'pic_address') ApprovedBy? picAddress,
+    @JsonKey(name: 'credit_limit') Credit? creditLimit,
+    @JsonKey(name: 'company_store_photo') ApprovedBy? companyStorePhoto,
+    @JsonKey(name: 'note') ApprovedBy? note,
+    @JsonKey(name: 'company_tax_id') ApprovedBy? companyTaxId,
+    @JsonKey(name: 'credit_period') Credit? creditPeriod,
+    @JsonKey(name: 'pic_position') ApprovedBy? picPosition,
+    @JsonKey(name: 'company_email') ApprovedBy? companyEmail,
+    @JsonKey(name: 'company_name') ApprovedBy? companyName,
     @JsonKey(name: 'company_phone_number') ApprovedBy? companyPhoneNumber,
+    @JsonKey(name: 'company_location') CompanyLocation? companyLocation,
+    @JsonKey(name: 'pic_tax_id') ApprovedBy? picTaxId,
+    @JsonKey(name: 'customer_type') ApprovedBy? customerType,
+    @JsonKey(name: 'subscription_type') ApprovedBy? subscriptionType,
+    @JsonKey(name: 'ownership_status') ApprovedBy? ownershipStatus,
+    @JsonKey(name: 'requested_by') ApprovedBy? requestedBy,
+    @JsonKey(name: 'pic_name') ApprovedBy? picName,
+    @JsonKey(name: 'approved_by') ApprovedBy? approvedBy,
+    @JsonKey(name: 'pic_national_id') ApprovedBy? picNationalId,
   });
 
+  $ApprovedByCopyWith<$Res>? get picNationalIdPhoto;
   $ApprovedByCopyWith<$Res>? get companyStoreCondition;
-  $ApprovedByCopyWith<$Res>? get ownerName;
-  $ApprovedByCopyWith<$Res>? get subscriptionType;
-  $ApprovedByCopyWith<$Res>? get customerType;
-  $CompanyLocationCopyWith<$Res>? get companyLocation;
-  $ApprovedByCopyWith<$Res>? get ownerAddress;
-  $ApprovedByCopyWith<$Res>? get ownerNationalId;
-  $ApprovedByCopyWith<$Res>? get ownerTaxId;
-  $ApprovedByCopyWith<$Res>? get requestedBy;
-  $ApprovedByCopyWith<$Res>? get ownerNationalIdPhoto;
-  $ApprovedByCopyWith<$Res>? get companyAddress;
-  $ApprovedByCopyWith<$Res>? get note;
-  $ApprovedByCopyWith<$Res>? get companyEmail;
-  $ApprovedByCopyWith<$Res>? get approvedBy;
-  $ApprovedByCopyWith<$Res>? get ownershipStatus;
-  $CompanyStorePhotoCopyWith<$Res>? get companyStorePhoto;
-  $ApprovedByCopyWith<$Res>? get companyName;
-  $ApprovedByCopyWith<$Res>? get ownerPhoneNumber;
+  $ApprovedByCopyWith<$Res>? get picPhoneNumber;
   $BlacklistedCopyWith<$Res>? get blacklisted;
+  $ApprovedByCopyWith<$Res>? get companyAddress;
+  $ApprovedByCopyWith<$Res>? get picAddress;
+  $CreditCopyWith<$Res>? get creditLimit;
+  $ApprovedByCopyWith<$Res>? get companyStorePhoto;
+  $ApprovedByCopyWith<$Res>? get note;
+  $ApprovedByCopyWith<$Res>? get companyTaxId;
+  $CreditCopyWith<$Res>? get creditPeriod;
+  $ApprovedByCopyWith<$Res>? get picPosition;
+  $ApprovedByCopyWith<$Res>? get companyEmail;
+  $ApprovedByCopyWith<$Res>? get companyName;
   $ApprovedByCopyWith<$Res>? get companyPhoneNumber;
+  $CompanyLocationCopyWith<$Res>? get companyLocation;
+  $ApprovedByCopyWith<$Res>? get picTaxId;
+  $ApprovedByCopyWith<$Res>? get customerType;
+  $ApprovedByCopyWith<$Res>? get subscriptionType;
+  $ApprovedByCopyWith<$Res>? get ownershipStatus;
+  $ApprovedByCopyWith<$Res>? get requestedBy;
+  $ApprovedByCopyWith<$Res>? get picName;
+  $ApprovedByCopyWith<$Res>? get approvedBy;
+  $ApprovedByCopyWith<$Res>? get picNationalId;
 }
 
 /// @nodoc
@@ -405,132 +420,170 @@ class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? picNationalIdPhoto = freezed,
     Object? companyStoreCondition = freezed,
-    Object? ownerName = freezed,
-    Object? subscriptionType = freezed,
-    Object? customerType = freezed,
-    Object? companyLocation = freezed,
-    Object? ownerAddress = freezed,
-    Object? ownerNationalId = freezed,
-    Object? ownerTaxId = freezed,
-    Object? requestedBy = freezed,
-    Object? ownerNationalIdPhoto = freezed,
-    Object? companyAddress = freezed,
-    Object? note = freezed,
-    Object? companyEmail = freezed,
-    Object? approvedBy = freezed,
-    Object? ownershipStatus = freezed,
-    Object? companyStorePhoto = freezed,
-    Object? companyName = freezed,
-    Object? ownerPhoneNumber = freezed,
+    Object? picPhoneNumber = freezed,
     Object? blacklisted = freezed,
+    Object? companyAddress = freezed,
+    Object? picAddress = freezed,
+    Object? creditLimit = freezed,
+    Object? companyStorePhoto = freezed,
+    Object? note = freezed,
+    Object? companyTaxId = freezed,
+    Object? creditPeriod = freezed,
+    Object? picPosition = freezed,
+    Object? companyEmail = freezed,
+    Object? companyName = freezed,
     Object? companyPhoneNumber = freezed,
+    Object? companyLocation = freezed,
+    Object? picTaxId = freezed,
+    Object? customerType = freezed,
+    Object? subscriptionType = freezed,
+    Object? ownershipStatus = freezed,
+    Object? requestedBy = freezed,
+    Object? picName = freezed,
+    Object? approvedBy = freezed,
+    Object? picNationalId = freezed,
   }) {
     return _then(
       _value.copyWith(
+            picNationalIdPhoto:
+                freezed == picNationalIdPhoto
+                    ? _value.picNationalIdPhoto
+                    : picNationalIdPhoto // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
             companyStoreCondition:
                 freezed == companyStoreCondition
                     ? _value.companyStoreCondition
                     : companyStoreCondition // ignore: cast_nullable_to_non_nullable
                         as ApprovedBy?,
-            ownerName:
-                freezed == ownerName
-                    ? _value.ownerName
-                    : ownerName // ignore: cast_nullable_to_non_nullable
-                        as ApprovedBy?,
-            subscriptionType:
-                freezed == subscriptionType
-                    ? _value.subscriptionType
-                    : subscriptionType // ignore: cast_nullable_to_non_nullable
-                        as ApprovedBy?,
-            customerType:
-                freezed == customerType
-                    ? _value.customerType
-                    : customerType // ignore: cast_nullable_to_non_nullable
-                        as ApprovedBy?,
-            companyLocation:
-                freezed == companyLocation
-                    ? _value.companyLocation
-                    : companyLocation // ignore: cast_nullable_to_non_nullable
-                        as CompanyLocation?,
-            ownerAddress:
-                freezed == ownerAddress
-                    ? _value.ownerAddress
-                    : ownerAddress // ignore: cast_nullable_to_non_nullable
-                        as ApprovedBy?,
-            ownerNationalId:
-                freezed == ownerNationalId
-                    ? _value.ownerNationalId
-                    : ownerNationalId // ignore: cast_nullable_to_non_nullable
-                        as ApprovedBy?,
-            ownerTaxId:
-                freezed == ownerTaxId
-                    ? _value.ownerTaxId
-                    : ownerTaxId // ignore: cast_nullable_to_non_nullable
-                        as ApprovedBy?,
-            requestedBy:
-                freezed == requestedBy
-                    ? _value.requestedBy
-                    : requestedBy // ignore: cast_nullable_to_non_nullable
-                        as ApprovedBy?,
-            ownerNationalIdPhoto:
-                freezed == ownerNationalIdPhoto
-                    ? _value.ownerNationalIdPhoto
-                    : ownerNationalIdPhoto // ignore: cast_nullable_to_non_nullable
-                        as ApprovedBy?,
-            companyAddress:
-                freezed == companyAddress
-                    ? _value.companyAddress
-                    : companyAddress // ignore: cast_nullable_to_non_nullable
-                        as ApprovedBy?,
-            note:
-                freezed == note
-                    ? _value.note
-                    : note // ignore: cast_nullable_to_non_nullable
-                        as ApprovedBy?,
-            companyEmail:
-                freezed == companyEmail
-                    ? _value.companyEmail
-                    : companyEmail // ignore: cast_nullable_to_non_nullable
-                        as ApprovedBy?,
-            approvedBy:
-                freezed == approvedBy
-                    ? _value.approvedBy
-                    : approvedBy // ignore: cast_nullable_to_non_nullable
-                        as ApprovedBy?,
-            ownershipStatus:
-                freezed == ownershipStatus
-                    ? _value.ownershipStatus
-                    : ownershipStatus // ignore: cast_nullable_to_non_nullable
-                        as ApprovedBy?,
-            companyStorePhoto:
-                freezed == companyStorePhoto
-                    ? _value.companyStorePhoto
-                    : companyStorePhoto // ignore: cast_nullable_to_non_nullable
-                        as CompanyStorePhoto?,
-            companyName:
-                freezed == companyName
-                    ? _value.companyName
-                    : companyName // ignore: cast_nullable_to_non_nullable
-                        as ApprovedBy?,
-            ownerPhoneNumber:
-                freezed == ownerPhoneNumber
-                    ? _value.ownerPhoneNumber
-                    : ownerPhoneNumber // ignore: cast_nullable_to_non_nullable
+            picPhoneNumber:
+                freezed == picPhoneNumber
+                    ? _value.picPhoneNumber
+                    : picPhoneNumber // ignore: cast_nullable_to_non_nullable
                         as ApprovedBy?,
             blacklisted:
                 freezed == blacklisted
                     ? _value.blacklisted
                     : blacklisted // ignore: cast_nullable_to_non_nullable
                         as Blacklisted?,
+            companyAddress:
+                freezed == companyAddress
+                    ? _value.companyAddress
+                    : companyAddress // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            picAddress:
+                freezed == picAddress
+                    ? _value.picAddress
+                    : picAddress // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            creditLimit:
+                freezed == creditLimit
+                    ? _value.creditLimit
+                    : creditLimit // ignore: cast_nullable_to_non_nullable
+                        as Credit?,
+            companyStorePhoto:
+                freezed == companyStorePhoto
+                    ? _value.companyStorePhoto
+                    : companyStorePhoto // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            note:
+                freezed == note
+                    ? _value.note
+                    : note // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            companyTaxId:
+                freezed == companyTaxId
+                    ? _value.companyTaxId
+                    : companyTaxId // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            creditPeriod:
+                freezed == creditPeriod
+                    ? _value.creditPeriod
+                    : creditPeriod // ignore: cast_nullable_to_non_nullable
+                        as Credit?,
+            picPosition:
+                freezed == picPosition
+                    ? _value.picPosition
+                    : picPosition // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            companyEmail:
+                freezed == companyEmail
+                    ? _value.companyEmail
+                    : companyEmail // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            companyName:
+                freezed == companyName
+                    ? _value.companyName
+                    : companyName // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
             companyPhoneNumber:
                 freezed == companyPhoneNumber
                     ? _value.companyPhoneNumber
                     : companyPhoneNumber // ignore: cast_nullable_to_non_nullable
                         as ApprovedBy?,
+            companyLocation:
+                freezed == companyLocation
+                    ? _value.companyLocation
+                    : companyLocation // ignore: cast_nullable_to_non_nullable
+                        as CompanyLocation?,
+            picTaxId:
+                freezed == picTaxId
+                    ? _value.picTaxId
+                    : picTaxId // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            customerType:
+                freezed == customerType
+                    ? _value.customerType
+                    : customerType // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            subscriptionType:
+                freezed == subscriptionType
+                    ? _value.subscriptionType
+                    : subscriptionType // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            ownershipStatus:
+                freezed == ownershipStatus
+                    ? _value.ownershipStatus
+                    : ownershipStatus // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            requestedBy:
+                freezed == requestedBy
+                    ? _value.requestedBy
+                    : requestedBy // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            picName:
+                freezed == picName
+                    ? _value.picName
+                    : picName // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            approvedBy:
+                freezed == approvedBy
+                    ? _value.approvedBy
+                    : approvedBy // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
+            picNationalId:
+                freezed == picNationalId
+                    ? _value.picNationalId
+                    : picNationalId // ignore: cast_nullable_to_non_nullable
+                        as ApprovedBy?,
           )
           as $Val,
     );
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get picNationalIdPhoto {
+    if (_value.picNationalIdPhoto == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.picNationalIdPhoto!, (value) {
+      return _then(_value.copyWith(picNationalIdPhoto: value) as $Val);
+    });
   }
 
   /// Create a copy of Fields
@@ -551,237 +604,13 @@ class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get ownerName {
-    if (_value.ownerName == null) {
+  $ApprovedByCopyWith<$Res>? get picPhoneNumber {
+    if (_value.picPhoneNumber == null) {
       return null;
     }
 
-    return $ApprovedByCopyWith<$Res>(_value.ownerName!, (value) {
-      return _then(_value.copyWith(ownerName: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get subscriptionType {
-    if (_value.subscriptionType == null) {
-      return null;
-    }
-
-    return $ApprovedByCopyWith<$Res>(_value.subscriptionType!, (value) {
-      return _then(_value.copyWith(subscriptionType: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get customerType {
-    if (_value.customerType == null) {
-      return null;
-    }
-
-    return $ApprovedByCopyWith<$Res>(_value.customerType!, (value) {
-      return _then(_value.copyWith(customerType: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CompanyLocationCopyWith<$Res>? get companyLocation {
-    if (_value.companyLocation == null) {
-      return null;
-    }
-
-    return $CompanyLocationCopyWith<$Res>(_value.companyLocation!, (value) {
-      return _then(_value.copyWith(companyLocation: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get ownerAddress {
-    if (_value.ownerAddress == null) {
-      return null;
-    }
-
-    return $ApprovedByCopyWith<$Res>(_value.ownerAddress!, (value) {
-      return _then(_value.copyWith(ownerAddress: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get ownerNationalId {
-    if (_value.ownerNationalId == null) {
-      return null;
-    }
-
-    return $ApprovedByCopyWith<$Res>(_value.ownerNationalId!, (value) {
-      return _then(_value.copyWith(ownerNationalId: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get ownerTaxId {
-    if (_value.ownerTaxId == null) {
-      return null;
-    }
-
-    return $ApprovedByCopyWith<$Res>(_value.ownerTaxId!, (value) {
-      return _then(_value.copyWith(ownerTaxId: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get requestedBy {
-    if (_value.requestedBy == null) {
-      return null;
-    }
-
-    return $ApprovedByCopyWith<$Res>(_value.requestedBy!, (value) {
-      return _then(_value.copyWith(requestedBy: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get ownerNationalIdPhoto {
-    if (_value.ownerNationalIdPhoto == null) {
-      return null;
-    }
-
-    return $ApprovedByCopyWith<$Res>(_value.ownerNationalIdPhoto!, (value) {
-      return _then(_value.copyWith(ownerNationalIdPhoto: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get companyAddress {
-    if (_value.companyAddress == null) {
-      return null;
-    }
-
-    return $ApprovedByCopyWith<$Res>(_value.companyAddress!, (value) {
-      return _then(_value.copyWith(companyAddress: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get note {
-    if (_value.note == null) {
-      return null;
-    }
-
-    return $ApprovedByCopyWith<$Res>(_value.note!, (value) {
-      return _then(_value.copyWith(note: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get companyEmail {
-    if (_value.companyEmail == null) {
-      return null;
-    }
-
-    return $ApprovedByCopyWith<$Res>(_value.companyEmail!, (value) {
-      return _then(_value.copyWith(companyEmail: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get approvedBy {
-    if (_value.approvedBy == null) {
-      return null;
-    }
-
-    return $ApprovedByCopyWith<$Res>(_value.approvedBy!, (value) {
-      return _then(_value.copyWith(approvedBy: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get ownershipStatus {
-    if (_value.ownershipStatus == null) {
-      return null;
-    }
-
-    return $ApprovedByCopyWith<$Res>(_value.ownershipStatus!, (value) {
-      return _then(_value.copyWith(ownershipStatus: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CompanyStorePhotoCopyWith<$Res>? get companyStorePhoto {
-    if (_value.companyStorePhoto == null) {
-      return null;
-    }
-
-    return $CompanyStorePhotoCopyWith<$Res>(_value.companyStorePhoto!, (value) {
-      return _then(_value.copyWith(companyStorePhoto: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get companyName {
-    if (_value.companyName == null) {
-      return null;
-    }
-
-    return $ApprovedByCopyWith<$Res>(_value.companyName!, (value) {
-      return _then(_value.copyWith(companyName: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ApprovedByCopyWith<$Res>? get ownerPhoneNumber {
-    if (_value.ownerPhoneNumber == null) {
-      return null;
-    }
-
-    return $ApprovedByCopyWith<$Res>(_value.ownerPhoneNumber!, (value) {
-      return _then(_value.copyWith(ownerPhoneNumber: value) as $Val);
+    return $ApprovedByCopyWith<$Res>(_value.picPhoneNumber!, (value) {
+      return _then(_value.copyWith(picPhoneNumber: value) as $Val);
     });
   }
 
@@ -803,6 +632,146 @@ class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get companyAddress {
+    if (_value.companyAddress == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.companyAddress!, (value) {
+      return _then(_value.copyWith(companyAddress: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get picAddress {
+    if (_value.picAddress == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.picAddress!, (value) {
+      return _then(_value.copyWith(picAddress: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CreditCopyWith<$Res>? get creditLimit {
+    if (_value.creditLimit == null) {
+      return null;
+    }
+
+    return $CreditCopyWith<$Res>(_value.creditLimit!, (value) {
+      return _then(_value.copyWith(creditLimit: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get companyStorePhoto {
+    if (_value.companyStorePhoto == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.companyStorePhoto!, (value) {
+      return _then(_value.copyWith(companyStorePhoto: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get note {
+    if (_value.note == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.note!, (value) {
+      return _then(_value.copyWith(note: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get companyTaxId {
+    if (_value.companyTaxId == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.companyTaxId!, (value) {
+      return _then(_value.copyWith(companyTaxId: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CreditCopyWith<$Res>? get creditPeriod {
+    if (_value.creditPeriod == null) {
+      return null;
+    }
+
+    return $CreditCopyWith<$Res>(_value.creditPeriod!, (value) {
+      return _then(_value.copyWith(creditPeriod: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get picPosition {
+    if (_value.picPosition == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.picPosition!, (value) {
+      return _then(_value.copyWith(picPosition: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get companyEmail {
+    if (_value.companyEmail == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.companyEmail!, (value) {
+      return _then(_value.copyWith(companyEmail: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get companyName {
+    if (_value.companyName == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.companyName!, (value) {
+      return _then(_value.copyWith(companyName: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
   $ApprovedByCopyWith<$Res>? get companyPhoneNumber {
     if (_value.companyPhoneNumber == null) {
       return null;
@@ -810,6 +779,132 @@ class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
 
     return $ApprovedByCopyWith<$Res>(_value.companyPhoneNumber!, (value) {
       return _then(_value.copyWith(companyPhoneNumber: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CompanyLocationCopyWith<$Res>? get companyLocation {
+    if (_value.companyLocation == null) {
+      return null;
+    }
+
+    return $CompanyLocationCopyWith<$Res>(_value.companyLocation!, (value) {
+      return _then(_value.copyWith(companyLocation: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get picTaxId {
+    if (_value.picTaxId == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.picTaxId!, (value) {
+      return _then(_value.copyWith(picTaxId: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get customerType {
+    if (_value.customerType == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.customerType!, (value) {
+      return _then(_value.copyWith(customerType: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get subscriptionType {
+    if (_value.subscriptionType == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.subscriptionType!, (value) {
+      return _then(_value.copyWith(subscriptionType: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get ownershipStatus {
+    if (_value.ownershipStatus == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.ownershipStatus!, (value) {
+      return _then(_value.copyWith(ownershipStatus: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get requestedBy {
+    if (_value.requestedBy == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.requestedBy!, (value) {
+      return _then(_value.copyWith(requestedBy: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get picName {
+    if (_value.picName == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.picName!, (value) {
+      return _then(_value.copyWith(picName: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get approvedBy {
+    if (_value.approvedBy == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.approvedBy!, (value) {
+      return _then(_value.copyWith(approvedBy: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedByCopyWith<$Res>? get picNationalId {
+    if (_value.picNationalId == null) {
+      return null;
+    }
+
+    return $ApprovedByCopyWith<$Res>(_value.picNationalId!, (value) {
+      return _then(_value.copyWith(picNationalId: value) as $Val);
     });
   }
 }
@@ -823,68 +918,80 @@ abstract class _$$FieldsImplCopyWith<$Res> implements $FieldsCopyWith<$Res> {
   @override
   @useResult
   $Res call({
+    @JsonKey(name: 'pic_national_id_photo') ApprovedBy? picNationalIdPhoto,
     @JsonKey(name: 'company_store_condition') ApprovedBy? companyStoreCondition,
-    @JsonKey(name: 'owner_name') ApprovedBy? ownerName,
-    @JsonKey(name: 'subscription_type') ApprovedBy? subscriptionType,
-    @JsonKey(name: 'customer_type') ApprovedBy? customerType,
-    @JsonKey(name: 'company_location') CompanyLocation? companyLocation,
-    @JsonKey(name: 'owner_address') ApprovedBy? ownerAddress,
-    @JsonKey(name: 'owner_national_id') ApprovedBy? ownerNationalId,
-    @JsonKey(name: 'owner_tax_id') ApprovedBy? ownerTaxId,
-    @JsonKey(name: 'requested_by') ApprovedBy? requestedBy,
-    @JsonKey(name: 'owner_national_id_photo') ApprovedBy? ownerNationalIdPhoto,
-    @JsonKey(name: 'company_address') ApprovedBy? companyAddress,
-    @JsonKey(name: 'note') ApprovedBy? note,
-    @JsonKey(name: 'company_email') ApprovedBy? companyEmail,
-    @JsonKey(name: 'approved_by') ApprovedBy? approvedBy,
-    @JsonKey(name: 'ownership_status') ApprovedBy? ownershipStatus,
-    @JsonKey(name: 'company_store_photo') CompanyStorePhoto? companyStorePhoto,
-    @JsonKey(name: 'company_name') ApprovedBy? companyName,
-    @JsonKey(name: 'owner_phone_number') ApprovedBy? ownerPhoneNumber,
+    @JsonKey(name: 'pic_phone_number') ApprovedBy? picPhoneNumber,
     @JsonKey(name: 'blacklisted') Blacklisted? blacklisted,
+    @JsonKey(name: 'company_address') ApprovedBy? companyAddress,
+    @JsonKey(name: 'pic_address') ApprovedBy? picAddress,
+    @JsonKey(name: 'credit_limit') Credit? creditLimit,
+    @JsonKey(name: 'company_store_photo') ApprovedBy? companyStorePhoto,
+    @JsonKey(name: 'note') ApprovedBy? note,
+    @JsonKey(name: 'company_tax_id') ApprovedBy? companyTaxId,
+    @JsonKey(name: 'credit_period') Credit? creditPeriod,
+    @JsonKey(name: 'pic_position') ApprovedBy? picPosition,
+    @JsonKey(name: 'company_email') ApprovedBy? companyEmail,
+    @JsonKey(name: 'company_name') ApprovedBy? companyName,
     @JsonKey(name: 'company_phone_number') ApprovedBy? companyPhoneNumber,
+    @JsonKey(name: 'company_location') CompanyLocation? companyLocation,
+    @JsonKey(name: 'pic_tax_id') ApprovedBy? picTaxId,
+    @JsonKey(name: 'customer_type') ApprovedBy? customerType,
+    @JsonKey(name: 'subscription_type') ApprovedBy? subscriptionType,
+    @JsonKey(name: 'ownership_status') ApprovedBy? ownershipStatus,
+    @JsonKey(name: 'requested_by') ApprovedBy? requestedBy,
+    @JsonKey(name: 'pic_name') ApprovedBy? picName,
+    @JsonKey(name: 'approved_by') ApprovedBy? approvedBy,
+    @JsonKey(name: 'pic_national_id') ApprovedBy? picNationalId,
   });
 
   @override
+  $ApprovedByCopyWith<$Res>? get picNationalIdPhoto;
+  @override
   $ApprovedByCopyWith<$Res>? get companyStoreCondition;
   @override
-  $ApprovedByCopyWith<$Res>? get ownerName;
-  @override
-  $ApprovedByCopyWith<$Res>? get subscriptionType;
-  @override
-  $ApprovedByCopyWith<$Res>? get customerType;
-  @override
-  $CompanyLocationCopyWith<$Res>? get companyLocation;
-  @override
-  $ApprovedByCopyWith<$Res>? get ownerAddress;
-  @override
-  $ApprovedByCopyWith<$Res>? get ownerNationalId;
-  @override
-  $ApprovedByCopyWith<$Res>? get ownerTaxId;
-  @override
-  $ApprovedByCopyWith<$Res>? get requestedBy;
-  @override
-  $ApprovedByCopyWith<$Res>? get ownerNationalIdPhoto;
-  @override
-  $ApprovedByCopyWith<$Res>? get companyAddress;
-  @override
-  $ApprovedByCopyWith<$Res>? get note;
-  @override
-  $ApprovedByCopyWith<$Res>? get companyEmail;
-  @override
-  $ApprovedByCopyWith<$Res>? get approvedBy;
-  @override
-  $ApprovedByCopyWith<$Res>? get ownershipStatus;
-  @override
-  $CompanyStorePhotoCopyWith<$Res>? get companyStorePhoto;
-  @override
-  $ApprovedByCopyWith<$Res>? get companyName;
-  @override
-  $ApprovedByCopyWith<$Res>? get ownerPhoneNumber;
+  $ApprovedByCopyWith<$Res>? get picPhoneNumber;
   @override
   $BlacklistedCopyWith<$Res>? get blacklisted;
   @override
+  $ApprovedByCopyWith<$Res>? get companyAddress;
+  @override
+  $ApprovedByCopyWith<$Res>? get picAddress;
+  @override
+  $CreditCopyWith<$Res>? get creditLimit;
+  @override
+  $ApprovedByCopyWith<$Res>? get companyStorePhoto;
+  @override
+  $ApprovedByCopyWith<$Res>? get note;
+  @override
+  $ApprovedByCopyWith<$Res>? get companyTaxId;
+  @override
+  $CreditCopyWith<$Res>? get creditPeriod;
+  @override
+  $ApprovedByCopyWith<$Res>? get picPosition;
+  @override
+  $ApprovedByCopyWith<$Res>? get companyEmail;
+  @override
+  $ApprovedByCopyWith<$Res>? get companyName;
+  @override
   $ApprovedByCopyWith<$Res>? get companyPhoneNumber;
+  @override
+  $CompanyLocationCopyWith<$Res>? get companyLocation;
+  @override
+  $ApprovedByCopyWith<$Res>? get picTaxId;
+  @override
+  $ApprovedByCopyWith<$Res>? get customerType;
+  @override
+  $ApprovedByCopyWith<$Res>? get subscriptionType;
+  @override
+  $ApprovedByCopyWith<$Res>? get ownershipStatus;
+  @override
+  $ApprovedByCopyWith<$Res>? get requestedBy;
+  @override
+  $ApprovedByCopyWith<$Res>? get picName;
+  @override
+  $ApprovedByCopyWith<$Res>? get approvedBy;
+  @override
+  $ApprovedByCopyWith<$Res>? get picNationalId;
 }
 
 /// @nodoc
@@ -901,128 +1008,152 @@ class __$$FieldsImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? picNationalIdPhoto = freezed,
     Object? companyStoreCondition = freezed,
-    Object? ownerName = freezed,
-    Object? subscriptionType = freezed,
-    Object? customerType = freezed,
-    Object? companyLocation = freezed,
-    Object? ownerAddress = freezed,
-    Object? ownerNationalId = freezed,
-    Object? ownerTaxId = freezed,
-    Object? requestedBy = freezed,
-    Object? ownerNationalIdPhoto = freezed,
-    Object? companyAddress = freezed,
-    Object? note = freezed,
-    Object? companyEmail = freezed,
-    Object? approvedBy = freezed,
-    Object? ownershipStatus = freezed,
-    Object? companyStorePhoto = freezed,
-    Object? companyName = freezed,
-    Object? ownerPhoneNumber = freezed,
+    Object? picPhoneNumber = freezed,
     Object? blacklisted = freezed,
+    Object? companyAddress = freezed,
+    Object? picAddress = freezed,
+    Object? creditLimit = freezed,
+    Object? companyStorePhoto = freezed,
+    Object? note = freezed,
+    Object? companyTaxId = freezed,
+    Object? creditPeriod = freezed,
+    Object? picPosition = freezed,
+    Object? companyEmail = freezed,
+    Object? companyName = freezed,
     Object? companyPhoneNumber = freezed,
+    Object? companyLocation = freezed,
+    Object? picTaxId = freezed,
+    Object? customerType = freezed,
+    Object? subscriptionType = freezed,
+    Object? ownershipStatus = freezed,
+    Object? requestedBy = freezed,
+    Object? picName = freezed,
+    Object? approvedBy = freezed,
+    Object? picNationalId = freezed,
   }) {
     return _then(
       _$FieldsImpl(
+        picNationalIdPhoto:
+            freezed == picNationalIdPhoto
+                ? _value.picNationalIdPhoto
+                : picNationalIdPhoto // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
         companyStoreCondition:
             freezed == companyStoreCondition
                 ? _value.companyStoreCondition
                 : companyStoreCondition // ignore: cast_nullable_to_non_nullable
                     as ApprovedBy?,
-        ownerName:
-            freezed == ownerName
-                ? _value.ownerName
-                : ownerName // ignore: cast_nullable_to_non_nullable
-                    as ApprovedBy?,
-        subscriptionType:
-            freezed == subscriptionType
-                ? _value.subscriptionType
-                : subscriptionType // ignore: cast_nullable_to_non_nullable
-                    as ApprovedBy?,
-        customerType:
-            freezed == customerType
-                ? _value.customerType
-                : customerType // ignore: cast_nullable_to_non_nullable
-                    as ApprovedBy?,
-        companyLocation:
-            freezed == companyLocation
-                ? _value.companyLocation
-                : companyLocation // ignore: cast_nullable_to_non_nullable
-                    as CompanyLocation?,
-        ownerAddress:
-            freezed == ownerAddress
-                ? _value.ownerAddress
-                : ownerAddress // ignore: cast_nullable_to_non_nullable
-                    as ApprovedBy?,
-        ownerNationalId:
-            freezed == ownerNationalId
-                ? _value.ownerNationalId
-                : ownerNationalId // ignore: cast_nullable_to_non_nullable
-                    as ApprovedBy?,
-        ownerTaxId:
-            freezed == ownerTaxId
-                ? _value.ownerTaxId
-                : ownerTaxId // ignore: cast_nullable_to_non_nullable
-                    as ApprovedBy?,
-        requestedBy:
-            freezed == requestedBy
-                ? _value.requestedBy
-                : requestedBy // ignore: cast_nullable_to_non_nullable
-                    as ApprovedBy?,
-        ownerNationalIdPhoto:
-            freezed == ownerNationalIdPhoto
-                ? _value.ownerNationalIdPhoto
-                : ownerNationalIdPhoto // ignore: cast_nullable_to_non_nullable
-                    as ApprovedBy?,
-        companyAddress:
-            freezed == companyAddress
-                ? _value.companyAddress
-                : companyAddress // ignore: cast_nullable_to_non_nullable
-                    as ApprovedBy?,
-        note:
-            freezed == note
-                ? _value.note
-                : note // ignore: cast_nullable_to_non_nullable
-                    as ApprovedBy?,
-        companyEmail:
-            freezed == companyEmail
-                ? _value.companyEmail
-                : companyEmail // ignore: cast_nullable_to_non_nullable
-                    as ApprovedBy?,
-        approvedBy:
-            freezed == approvedBy
-                ? _value.approvedBy
-                : approvedBy // ignore: cast_nullable_to_non_nullable
-                    as ApprovedBy?,
-        ownershipStatus:
-            freezed == ownershipStatus
-                ? _value.ownershipStatus
-                : ownershipStatus // ignore: cast_nullable_to_non_nullable
-                    as ApprovedBy?,
-        companyStorePhoto:
-            freezed == companyStorePhoto
-                ? _value.companyStorePhoto
-                : companyStorePhoto // ignore: cast_nullable_to_non_nullable
-                    as CompanyStorePhoto?,
-        companyName:
-            freezed == companyName
-                ? _value.companyName
-                : companyName // ignore: cast_nullable_to_non_nullable
-                    as ApprovedBy?,
-        ownerPhoneNumber:
-            freezed == ownerPhoneNumber
-                ? _value.ownerPhoneNumber
-                : ownerPhoneNumber // ignore: cast_nullable_to_non_nullable
+        picPhoneNumber:
+            freezed == picPhoneNumber
+                ? _value.picPhoneNumber
+                : picPhoneNumber // ignore: cast_nullable_to_non_nullable
                     as ApprovedBy?,
         blacklisted:
             freezed == blacklisted
                 ? _value.blacklisted
                 : blacklisted // ignore: cast_nullable_to_non_nullable
                     as Blacklisted?,
+        companyAddress:
+            freezed == companyAddress
+                ? _value.companyAddress
+                : companyAddress // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        picAddress:
+            freezed == picAddress
+                ? _value.picAddress
+                : picAddress // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        creditLimit:
+            freezed == creditLimit
+                ? _value.creditLimit
+                : creditLimit // ignore: cast_nullable_to_non_nullable
+                    as Credit?,
+        companyStorePhoto:
+            freezed == companyStorePhoto
+                ? _value.companyStorePhoto
+                : companyStorePhoto // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        note:
+            freezed == note
+                ? _value.note
+                : note // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        companyTaxId:
+            freezed == companyTaxId
+                ? _value.companyTaxId
+                : companyTaxId // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        creditPeriod:
+            freezed == creditPeriod
+                ? _value.creditPeriod
+                : creditPeriod // ignore: cast_nullable_to_non_nullable
+                    as Credit?,
+        picPosition:
+            freezed == picPosition
+                ? _value.picPosition
+                : picPosition // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        companyEmail:
+            freezed == companyEmail
+                ? _value.companyEmail
+                : companyEmail // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        companyName:
+            freezed == companyName
+                ? _value.companyName
+                : companyName // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
         companyPhoneNumber:
             freezed == companyPhoneNumber
                 ? _value.companyPhoneNumber
                 : companyPhoneNumber // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        companyLocation:
+            freezed == companyLocation
+                ? _value.companyLocation
+                : companyLocation // ignore: cast_nullable_to_non_nullable
+                    as CompanyLocation?,
+        picTaxId:
+            freezed == picTaxId
+                ? _value.picTaxId
+                : picTaxId // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        customerType:
+            freezed == customerType
+                ? _value.customerType
+                : customerType // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        subscriptionType:
+            freezed == subscriptionType
+                ? _value.subscriptionType
+                : subscriptionType // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        ownershipStatus:
+            freezed == ownershipStatus
+                ? _value.ownershipStatus
+                : ownershipStatus // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        requestedBy:
+            freezed == requestedBy
+                ? _value.requestedBy
+                : requestedBy // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        picName:
+            freezed == picName
+                ? _value.picName
+                : picName // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        approvedBy:
+            freezed == approvedBy
+                ? _value.approvedBy
+                : approvedBy // ignore: cast_nullable_to_non_nullable
+                    as ApprovedBy?,
+        picNationalId:
+            freezed == picNationalId
+                ? _value.picNationalId
+                : picNationalId // ignore: cast_nullable_to_non_nullable
                     as ApprovedBy?,
       ),
     );
@@ -1033,95 +1164,111 @@ class __$$FieldsImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$FieldsImpl implements _Fields {
   const _$FieldsImpl({
+    @JsonKey(name: 'pic_national_id_photo') this.picNationalIdPhoto,
     @JsonKey(name: 'company_store_condition') this.companyStoreCondition,
-    @JsonKey(name: 'owner_name') this.ownerName,
-    @JsonKey(name: 'subscription_type') this.subscriptionType,
-    @JsonKey(name: 'customer_type') this.customerType,
-    @JsonKey(name: 'company_location') this.companyLocation,
-    @JsonKey(name: 'owner_address') this.ownerAddress,
-    @JsonKey(name: 'owner_national_id') this.ownerNationalId,
-    @JsonKey(name: 'owner_tax_id') this.ownerTaxId,
-    @JsonKey(name: 'requested_by') this.requestedBy,
-    @JsonKey(name: 'owner_national_id_photo') this.ownerNationalIdPhoto,
-    @JsonKey(name: 'company_address') this.companyAddress,
-    @JsonKey(name: 'note') this.note,
-    @JsonKey(name: 'company_email') this.companyEmail,
-    @JsonKey(name: 'approved_by') this.approvedBy,
-    @JsonKey(name: 'ownership_status') this.ownershipStatus,
-    @JsonKey(name: 'company_store_photo') this.companyStorePhoto,
-    @JsonKey(name: 'company_name') this.companyName,
-    @JsonKey(name: 'owner_phone_number') this.ownerPhoneNumber,
+    @JsonKey(name: 'pic_phone_number') this.picPhoneNumber,
     @JsonKey(name: 'blacklisted') this.blacklisted,
+    @JsonKey(name: 'company_address') this.companyAddress,
+    @JsonKey(name: 'pic_address') this.picAddress,
+    @JsonKey(name: 'credit_limit') this.creditLimit,
+    @JsonKey(name: 'company_store_photo') this.companyStorePhoto,
+    @JsonKey(name: 'note') this.note,
+    @JsonKey(name: 'company_tax_id') this.companyTaxId,
+    @JsonKey(name: 'credit_period') this.creditPeriod,
+    @JsonKey(name: 'pic_position') this.picPosition,
+    @JsonKey(name: 'company_email') this.companyEmail,
+    @JsonKey(name: 'company_name') this.companyName,
     @JsonKey(name: 'company_phone_number') this.companyPhoneNumber,
+    @JsonKey(name: 'company_location') this.companyLocation,
+    @JsonKey(name: 'pic_tax_id') this.picTaxId,
+    @JsonKey(name: 'customer_type') this.customerType,
+    @JsonKey(name: 'subscription_type') this.subscriptionType,
+    @JsonKey(name: 'ownership_status') this.ownershipStatus,
+    @JsonKey(name: 'requested_by') this.requestedBy,
+    @JsonKey(name: 'pic_name') this.picName,
+    @JsonKey(name: 'approved_by') this.approvedBy,
+    @JsonKey(name: 'pic_national_id') this.picNationalId,
   });
 
   factory _$FieldsImpl.fromJson(Map<String, dynamic> json) =>
       _$$FieldsImplFromJson(json);
 
   @override
+  @JsonKey(name: 'pic_national_id_photo')
+  final ApprovedBy? picNationalIdPhoto;
+  @override
   @JsonKey(name: 'company_store_condition')
   final ApprovedBy? companyStoreCondition;
   @override
-  @JsonKey(name: 'owner_name')
-  final ApprovedBy? ownerName;
-  @override
-  @JsonKey(name: 'subscription_type')
-  final ApprovedBy? subscriptionType;
-  @override
-  @JsonKey(name: 'customer_type')
-  final ApprovedBy? customerType;
-  @override
-  @JsonKey(name: 'company_location')
-  final CompanyLocation? companyLocation;
-  @override
-  @JsonKey(name: 'owner_address')
-  final ApprovedBy? ownerAddress;
-  @override
-  @JsonKey(name: 'owner_national_id')
-  final ApprovedBy? ownerNationalId;
-  @override
-  @JsonKey(name: 'owner_tax_id')
-  final ApprovedBy? ownerTaxId;
-  @override
-  @JsonKey(name: 'requested_by')
-  final ApprovedBy? requestedBy;
-  @override
-  @JsonKey(name: 'owner_national_id_photo')
-  final ApprovedBy? ownerNationalIdPhoto;
-  @override
-  @JsonKey(name: 'company_address')
-  final ApprovedBy? companyAddress;
-  @override
-  @JsonKey(name: 'note')
-  final ApprovedBy? note;
-  @override
-  @JsonKey(name: 'company_email')
-  final ApprovedBy? companyEmail;
-  @override
-  @JsonKey(name: 'approved_by')
-  final ApprovedBy? approvedBy;
-  @override
-  @JsonKey(name: 'ownership_status')
-  final ApprovedBy? ownershipStatus;
-  @override
-  @JsonKey(name: 'company_store_photo')
-  final CompanyStorePhoto? companyStorePhoto;
-  @override
-  @JsonKey(name: 'company_name')
-  final ApprovedBy? companyName;
-  @override
-  @JsonKey(name: 'owner_phone_number')
-  final ApprovedBy? ownerPhoneNumber;
+  @JsonKey(name: 'pic_phone_number')
+  final ApprovedBy? picPhoneNumber;
   @override
   @JsonKey(name: 'blacklisted')
   final Blacklisted? blacklisted;
   @override
+  @JsonKey(name: 'company_address')
+  final ApprovedBy? companyAddress;
+  @override
+  @JsonKey(name: 'pic_address')
+  final ApprovedBy? picAddress;
+  @override
+  @JsonKey(name: 'credit_limit')
+  final Credit? creditLimit;
+  @override
+  @JsonKey(name: 'company_store_photo')
+  final ApprovedBy? companyStorePhoto;
+  @override
+  @JsonKey(name: 'note')
+  final ApprovedBy? note;
+  @override
+  @JsonKey(name: 'company_tax_id')
+  final ApprovedBy? companyTaxId;
+  @override
+  @JsonKey(name: 'credit_period')
+  final Credit? creditPeriod;
+  @override
+  @JsonKey(name: 'pic_position')
+  final ApprovedBy? picPosition;
+  @override
+  @JsonKey(name: 'company_email')
+  final ApprovedBy? companyEmail;
+  @override
+  @JsonKey(name: 'company_name')
+  final ApprovedBy? companyName;
+  @override
   @JsonKey(name: 'company_phone_number')
   final ApprovedBy? companyPhoneNumber;
+  @override
+  @JsonKey(name: 'company_location')
+  final CompanyLocation? companyLocation;
+  @override
+  @JsonKey(name: 'pic_tax_id')
+  final ApprovedBy? picTaxId;
+  @override
+  @JsonKey(name: 'customer_type')
+  final ApprovedBy? customerType;
+  @override
+  @JsonKey(name: 'subscription_type')
+  final ApprovedBy? subscriptionType;
+  @override
+  @JsonKey(name: 'ownership_status')
+  final ApprovedBy? ownershipStatus;
+  @override
+  @JsonKey(name: 'requested_by')
+  final ApprovedBy? requestedBy;
+  @override
+  @JsonKey(name: 'pic_name')
+  final ApprovedBy? picName;
+  @override
+  @JsonKey(name: 'approved_by')
+  final ApprovedBy? approvedBy;
+  @override
+  @JsonKey(name: 'pic_national_id')
+  final ApprovedBy? picNationalId;
 
   @override
   String toString() {
-    return 'Fields(companyStoreCondition: $companyStoreCondition, ownerName: $ownerName, subscriptionType: $subscriptionType, customerType: $customerType, companyLocation: $companyLocation, ownerAddress: $ownerAddress, ownerNationalId: $ownerNationalId, ownerTaxId: $ownerTaxId, requestedBy: $requestedBy, ownerNationalIdPhoto: $ownerNationalIdPhoto, companyAddress: $companyAddress, note: $note, companyEmail: $companyEmail, approvedBy: $approvedBy, ownershipStatus: $ownershipStatus, companyStorePhoto: $companyStorePhoto, companyName: $companyName, ownerPhoneNumber: $ownerPhoneNumber, blacklisted: $blacklisted, companyPhoneNumber: $companyPhoneNumber)';
+    return 'Fields(picNationalIdPhoto: $picNationalIdPhoto, companyStoreCondition: $companyStoreCondition, picPhoneNumber: $picPhoneNumber, blacklisted: $blacklisted, companyAddress: $companyAddress, picAddress: $picAddress, creditLimit: $creditLimit, companyStorePhoto: $companyStorePhoto, note: $note, companyTaxId: $companyTaxId, creditPeriod: $creditPeriod, picPosition: $picPosition, companyEmail: $companyEmail, companyName: $companyName, companyPhoneNumber: $companyPhoneNumber, companyLocation: $companyLocation, picTaxId: $picTaxId, customerType: $customerType, subscriptionType: $subscriptionType, ownershipStatus: $ownershipStatus, requestedBy: $requestedBy, picName: $picName, approvedBy: $approvedBy, picNationalId: $picNationalId)';
   }
 
   @override
@@ -1129,71 +1276,82 @@ class _$FieldsImpl implements _Fields {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FieldsImpl &&
+            (identical(other.picNationalIdPhoto, picNationalIdPhoto) ||
+                other.picNationalIdPhoto == picNationalIdPhoto) &&
             (identical(other.companyStoreCondition, companyStoreCondition) ||
                 other.companyStoreCondition == companyStoreCondition) &&
-            (identical(other.ownerName, ownerName) ||
-                other.ownerName == ownerName) &&
-            (identical(other.subscriptionType, subscriptionType) ||
-                other.subscriptionType == subscriptionType) &&
-            (identical(other.customerType, customerType) ||
-                other.customerType == customerType) &&
-            (identical(other.companyLocation, companyLocation) ||
-                other.companyLocation == companyLocation) &&
-            (identical(other.ownerAddress, ownerAddress) ||
-                other.ownerAddress == ownerAddress) &&
-            (identical(other.ownerNationalId, ownerNationalId) ||
-                other.ownerNationalId == ownerNationalId) &&
-            (identical(other.ownerTaxId, ownerTaxId) ||
-                other.ownerTaxId == ownerTaxId) &&
-            (identical(other.requestedBy, requestedBy) ||
-                other.requestedBy == requestedBy) &&
-            (identical(other.ownerNationalIdPhoto, ownerNationalIdPhoto) ||
-                other.ownerNationalIdPhoto == ownerNationalIdPhoto) &&
-            (identical(other.companyAddress, companyAddress) ||
-                other.companyAddress == companyAddress) &&
-            (identical(other.note, note) || other.note == note) &&
-            (identical(other.companyEmail, companyEmail) ||
-                other.companyEmail == companyEmail) &&
-            (identical(other.approvedBy, approvedBy) ||
-                other.approvedBy == approvedBy) &&
-            (identical(other.ownershipStatus, ownershipStatus) ||
-                other.ownershipStatus == ownershipStatus) &&
-            (identical(other.companyStorePhoto, companyStorePhoto) ||
-                other.companyStorePhoto == companyStorePhoto) &&
-            (identical(other.companyName, companyName) ||
-                other.companyName == companyName) &&
-            (identical(other.ownerPhoneNumber, ownerPhoneNumber) ||
-                other.ownerPhoneNumber == ownerPhoneNumber) &&
+            (identical(other.picPhoneNumber, picPhoneNumber) ||
+                other.picPhoneNumber == picPhoneNumber) &&
             (identical(other.blacklisted, blacklisted) ||
                 other.blacklisted == blacklisted) &&
+            (identical(other.companyAddress, companyAddress) ||
+                other.companyAddress == companyAddress) &&
+            (identical(other.picAddress, picAddress) ||
+                other.picAddress == picAddress) &&
+            (identical(other.creditLimit, creditLimit) ||
+                other.creditLimit == creditLimit) &&
+            (identical(other.companyStorePhoto, companyStorePhoto) ||
+                other.companyStorePhoto == companyStorePhoto) &&
+            (identical(other.note, note) || other.note == note) &&
+            (identical(other.companyTaxId, companyTaxId) ||
+                other.companyTaxId == companyTaxId) &&
+            (identical(other.creditPeriod, creditPeriod) ||
+                other.creditPeriod == creditPeriod) &&
+            (identical(other.picPosition, picPosition) ||
+                other.picPosition == picPosition) &&
+            (identical(other.companyEmail, companyEmail) ||
+                other.companyEmail == companyEmail) &&
+            (identical(other.companyName, companyName) ||
+                other.companyName == companyName) &&
             (identical(other.companyPhoneNumber, companyPhoneNumber) ||
-                other.companyPhoneNumber == companyPhoneNumber));
+                other.companyPhoneNumber == companyPhoneNumber) &&
+            (identical(other.companyLocation, companyLocation) ||
+                other.companyLocation == companyLocation) &&
+            (identical(other.picTaxId, picTaxId) ||
+                other.picTaxId == picTaxId) &&
+            (identical(other.customerType, customerType) ||
+                other.customerType == customerType) &&
+            (identical(other.subscriptionType, subscriptionType) ||
+                other.subscriptionType == subscriptionType) &&
+            (identical(other.ownershipStatus, ownershipStatus) ||
+                other.ownershipStatus == ownershipStatus) &&
+            (identical(other.requestedBy, requestedBy) ||
+                other.requestedBy == requestedBy) &&
+            (identical(other.picName, picName) || other.picName == picName) &&
+            (identical(other.approvedBy, approvedBy) ||
+                other.approvedBy == approvedBy) &&
+            (identical(other.picNationalId, picNationalId) ||
+                other.picNationalId == picNationalId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
     runtimeType,
+    picNationalIdPhoto,
     companyStoreCondition,
-    ownerName,
-    subscriptionType,
-    customerType,
-    companyLocation,
-    ownerAddress,
-    ownerNationalId,
-    ownerTaxId,
-    requestedBy,
-    ownerNationalIdPhoto,
-    companyAddress,
-    note,
-    companyEmail,
-    approvedBy,
-    ownershipStatus,
-    companyStorePhoto,
-    companyName,
-    ownerPhoneNumber,
+    picPhoneNumber,
     blacklisted,
+    companyAddress,
+    picAddress,
+    creditLimit,
+    companyStorePhoto,
+    note,
+    companyTaxId,
+    creditPeriod,
+    picPosition,
+    companyEmail,
+    companyName,
     companyPhoneNumber,
+    companyLocation,
+    picTaxId,
+    customerType,
+    subscriptionType,
+    ownershipStatus,
+    requestedBy,
+    picName,
+    approvedBy,
+    picNationalId,
   ]);
 
   /// Create a copy of Fields
@@ -1212,93 +1370,108 @@ class _$FieldsImpl implements _Fields {
 
 abstract class _Fields implements Fields {
   const factory _Fields({
+    @JsonKey(name: 'pic_national_id_photo')
+    final ApprovedBy? picNationalIdPhoto,
     @JsonKey(name: 'company_store_condition')
     final ApprovedBy? companyStoreCondition,
-    @JsonKey(name: 'owner_name') final ApprovedBy? ownerName,
-    @JsonKey(name: 'subscription_type') final ApprovedBy? subscriptionType,
-    @JsonKey(name: 'customer_type') final ApprovedBy? customerType,
-    @JsonKey(name: 'company_location') final CompanyLocation? companyLocation,
-    @JsonKey(name: 'owner_address') final ApprovedBy? ownerAddress,
-    @JsonKey(name: 'owner_national_id') final ApprovedBy? ownerNationalId,
-    @JsonKey(name: 'owner_tax_id') final ApprovedBy? ownerTaxId,
-    @JsonKey(name: 'requested_by') final ApprovedBy? requestedBy,
-    @JsonKey(name: 'owner_national_id_photo')
-    final ApprovedBy? ownerNationalIdPhoto,
-    @JsonKey(name: 'company_address') final ApprovedBy? companyAddress,
-    @JsonKey(name: 'note') final ApprovedBy? note,
-    @JsonKey(name: 'company_email') final ApprovedBy? companyEmail,
-    @JsonKey(name: 'approved_by') final ApprovedBy? approvedBy,
-    @JsonKey(name: 'ownership_status') final ApprovedBy? ownershipStatus,
-    @JsonKey(name: 'company_store_photo')
-    final CompanyStorePhoto? companyStorePhoto,
-    @JsonKey(name: 'company_name') final ApprovedBy? companyName,
-    @JsonKey(name: 'owner_phone_number') final ApprovedBy? ownerPhoneNumber,
+    @JsonKey(name: 'pic_phone_number') final ApprovedBy? picPhoneNumber,
     @JsonKey(name: 'blacklisted') final Blacklisted? blacklisted,
+    @JsonKey(name: 'company_address') final ApprovedBy? companyAddress,
+    @JsonKey(name: 'pic_address') final ApprovedBy? picAddress,
+    @JsonKey(name: 'credit_limit') final Credit? creditLimit,
+    @JsonKey(name: 'company_store_photo') final ApprovedBy? companyStorePhoto,
+    @JsonKey(name: 'note') final ApprovedBy? note,
+    @JsonKey(name: 'company_tax_id') final ApprovedBy? companyTaxId,
+    @JsonKey(name: 'credit_period') final Credit? creditPeriod,
+    @JsonKey(name: 'pic_position') final ApprovedBy? picPosition,
+    @JsonKey(name: 'company_email') final ApprovedBy? companyEmail,
+    @JsonKey(name: 'company_name') final ApprovedBy? companyName,
     @JsonKey(name: 'company_phone_number') final ApprovedBy? companyPhoneNumber,
+    @JsonKey(name: 'company_location') final CompanyLocation? companyLocation,
+    @JsonKey(name: 'pic_tax_id') final ApprovedBy? picTaxId,
+    @JsonKey(name: 'customer_type') final ApprovedBy? customerType,
+    @JsonKey(name: 'subscription_type') final ApprovedBy? subscriptionType,
+    @JsonKey(name: 'ownership_status') final ApprovedBy? ownershipStatus,
+    @JsonKey(name: 'requested_by') final ApprovedBy? requestedBy,
+    @JsonKey(name: 'pic_name') final ApprovedBy? picName,
+    @JsonKey(name: 'approved_by') final ApprovedBy? approvedBy,
+    @JsonKey(name: 'pic_national_id') final ApprovedBy? picNationalId,
   }) = _$FieldsImpl;
 
   factory _Fields.fromJson(Map<String, dynamic> json) = _$FieldsImpl.fromJson;
 
   @override
+  @JsonKey(name: 'pic_national_id_photo')
+  ApprovedBy? get picNationalIdPhoto;
+  @override
   @JsonKey(name: 'company_store_condition')
   ApprovedBy? get companyStoreCondition;
   @override
-  @JsonKey(name: 'owner_name')
-  ApprovedBy? get ownerName;
-  @override
-  @JsonKey(name: 'subscription_type')
-  ApprovedBy? get subscriptionType;
-  @override
-  @JsonKey(name: 'customer_type')
-  ApprovedBy? get customerType;
-  @override
-  @JsonKey(name: 'company_location')
-  CompanyLocation? get companyLocation;
-  @override
-  @JsonKey(name: 'owner_address')
-  ApprovedBy? get ownerAddress;
-  @override
-  @JsonKey(name: 'owner_national_id')
-  ApprovedBy? get ownerNationalId;
-  @override
-  @JsonKey(name: 'owner_tax_id')
-  ApprovedBy? get ownerTaxId;
-  @override
-  @JsonKey(name: 'requested_by')
-  ApprovedBy? get requestedBy;
-  @override
-  @JsonKey(name: 'owner_national_id_photo')
-  ApprovedBy? get ownerNationalIdPhoto;
-  @override
-  @JsonKey(name: 'company_address')
-  ApprovedBy? get companyAddress;
-  @override
-  @JsonKey(name: 'note')
-  ApprovedBy? get note;
-  @override
-  @JsonKey(name: 'company_email')
-  ApprovedBy? get companyEmail;
-  @override
-  @JsonKey(name: 'approved_by')
-  ApprovedBy? get approvedBy;
-  @override
-  @JsonKey(name: 'ownership_status')
-  ApprovedBy? get ownershipStatus;
-  @override
-  @JsonKey(name: 'company_store_photo')
-  CompanyStorePhoto? get companyStorePhoto;
-  @override
-  @JsonKey(name: 'company_name')
-  ApprovedBy? get companyName;
-  @override
-  @JsonKey(name: 'owner_phone_number')
-  ApprovedBy? get ownerPhoneNumber;
+  @JsonKey(name: 'pic_phone_number')
+  ApprovedBy? get picPhoneNumber;
   @override
   @JsonKey(name: 'blacklisted')
   Blacklisted? get blacklisted;
   @override
+  @JsonKey(name: 'company_address')
+  ApprovedBy? get companyAddress;
+  @override
+  @JsonKey(name: 'pic_address')
+  ApprovedBy? get picAddress;
+  @override
+  @JsonKey(name: 'credit_limit')
+  Credit? get creditLimit;
+  @override
+  @JsonKey(name: 'company_store_photo')
+  ApprovedBy? get companyStorePhoto;
+  @override
+  @JsonKey(name: 'note')
+  ApprovedBy? get note;
+  @override
+  @JsonKey(name: 'company_tax_id')
+  ApprovedBy? get companyTaxId;
+  @override
+  @JsonKey(name: 'credit_period')
+  Credit? get creditPeriod;
+  @override
+  @JsonKey(name: 'pic_position')
+  ApprovedBy? get picPosition;
+  @override
+  @JsonKey(name: 'company_email')
+  ApprovedBy? get companyEmail;
+  @override
+  @JsonKey(name: 'company_name')
+  ApprovedBy? get companyName;
+  @override
   @JsonKey(name: 'company_phone_number')
   ApprovedBy? get companyPhoneNumber;
+  @override
+  @JsonKey(name: 'company_location')
+  CompanyLocation? get companyLocation;
+  @override
+  @JsonKey(name: 'pic_tax_id')
+  ApprovedBy? get picTaxId;
+  @override
+  @JsonKey(name: 'customer_type')
+  ApprovedBy? get customerType;
+  @override
+  @JsonKey(name: 'subscription_type')
+  ApprovedBy? get subscriptionType;
+  @override
+  @JsonKey(name: 'ownership_status')
+  ApprovedBy? get ownershipStatus;
+  @override
+  @JsonKey(name: 'requested_by')
+  ApprovedBy? get requestedBy;
+  @override
+  @JsonKey(name: 'pic_name')
+  ApprovedBy? get picName;
+  @override
+  @JsonKey(name: 'approved_by')
+  ApprovedBy? get approvedBy;
+  @override
+  @JsonKey(name: 'pic_national_id')
+  ApprovedBy? get picNationalId;
 
   /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
@@ -1990,10 +2163,10 @@ MapValueFields _$MapValueFieldsFromJson(Map<String, dynamic> json) {
 mixin _$MapValueFields {
   @JsonKey(name: 'accuracy')
   Accuracy? get accuracy => throw _privateConstructorUsedError;
-  @JsonKey(name: 'latitude')
-  Itude? get latitude => throw _privateConstructorUsedError;
   @JsonKey(name: 'longitude')
-  Itude? get longitude => throw _privateConstructorUsedError;
+  Accuracy? get longitude => throw _privateConstructorUsedError;
+  @JsonKey(name: 'latitude')
+  Accuracy? get latitude => throw _privateConstructorUsedError;
 
   /// Serializes this MapValueFields to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -2014,13 +2187,13 @@ abstract class $MapValueFieldsCopyWith<$Res> {
   @useResult
   $Res call({
     @JsonKey(name: 'accuracy') Accuracy? accuracy,
-    @JsonKey(name: 'latitude') Itude? latitude,
-    @JsonKey(name: 'longitude') Itude? longitude,
+    @JsonKey(name: 'longitude') Accuracy? longitude,
+    @JsonKey(name: 'latitude') Accuracy? latitude,
   });
 
   $AccuracyCopyWith<$Res>? get accuracy;
-  $ItudeCopyWith<$Res>? get latitude;
-  $ItudeCopyWith<$Res>? get longitude;
+  $AccuracyCopyWith<$Res>? get longitude;
+  $AccuracyCopyWith<$Res>? get latitude;
 }
 
 /// @nodoc
@@ -2039,8 +2212,8 @@ class _$MapValueFieldsCopyWithImpl<$Res, $Val extends MapValueFields>
   @override
   $Res call({
     Object? accuracy = freezed,
-    Object? latitude = freezed,
     Object? longitude = freezed,
+    Object? latitude = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -2049,16 +2222,16 @@ class _$MapValueFieldsCopyWithImpl<$Res, $Val extends MapValueFields>
                     ? _value.accuracy
                     : accuracy // ignore: cast_nullable_to_non_nullable
                         as Accuracy?,
-            latitude:
-                freezed == latitude
-                    ? _value.latitude
-                    : latitude // ignore: cast_nullable_to_non_nullable
-                        as Itude?,
             longitude:
                 freezed == longitude
                     ? _value.longitude
                     : longitude // ignore: cast_nullable_to_non_nullable
-                        as Itude?,
+                        as Accuracy?,
+            latitude:
+                freezed == latitude
+                    ? _value.latitude
+                    : latitude // ignore: cast_nullable_to_non_nullable
+                        as Accuracy?,
           )
           as $Val,
     );
@@ -2082,13 +2255,13 @@ class _$MapValueFieldsCopyWithImpl<$Res, $Val extends MapValueFields>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ItudeCopyWith<$Res>? get latitude {
-    if (_value.latitude == null) {
+  $AccuracyCopyWith<$Res>? get longitude {
+    if (_value.longitude == null) {
       return null;
     }
 
-    return $ItudeCopyWith<$Res>(_value.latitude!, (value) {
-      return _then(_value.copyWith(latitude: value) as $Val);
+    return $AccuracyCopyWith<$Res>(_value.longitude!, (value) {
+      return _then(_value.copyWith(longitude: value) as $Val);
     });
   }
 
@@ -2096,13 +2269,13 @@ class _$MapValueFieldsCopyWithImpl<$Res, $Val extends MapValueFields>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ItudeCopyWith<$Res>? get longitude {
-    if (_value.longitude == null) {
+  $AccuracyCopyWith<$Res>? get latitude {
+    if (_value.latitude == null) {
       return null;
     }
 
-    return $ItudeCopyWith<$Res>(_value.longitude!, (value) {
-      return _then(_value.copyWith(longitude: value) as $Val);
+    return $AccuracyCopyWith<$Res>(_value.latitude!, (value) {
+      return _then(_value.copyWith(latitude: value) as $Val);
     });
   }
 }
@@ -2118,16 +2291,16 @@ abstract class _$$MapValueFieldsImplCopyWith<$Res>
   @useResult
   $Res call({
     @JsonKey(name: 'accuracy') Accuracy? accuracy,
-    @JsonKey(name: 'latitude') Itude? latitude,
-    @JsonKey(name: 'longitude') Itude? longitude,
+    @JsonKey(name: 'longitude') Accuracy? longitude,
+    @JsonKey(name: 'latitude') Accuracy? latitude,
   });
 
   @override
   $AccuracyCopyWith<$Res>? get accuracy;
   @override
-  $ItudeCopyWith<$Res>? get latitude;
+  $AccuracyCopyWith<$Res>? get longitude;
   @override
-  $ItudeCopyWith<$Res>? get longitude;
+  $AccuracyCopyWith<$Res>? get latitude;
 }
 
 /// @nodoc
@@ -2145,8 +2318,8 @@ class __$$MapValueFieldsImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? accuracy = freezed,
-    Object? latitude = freezed,
     Object? longitude = freezed,
+    Object? latitude = freezed,
   }) {
     return _then(
       _$MapValueFieldsImpl(
@@ -2155,16 +2328,16 @@ class __$$MapValueFieldsImplCopyWithImpl<$Res>
                 ? _value.accuracy
                 : accuracy // ignore: cast_nullable_to_non_nullable
                     as Accuracy?,
-        latitude:
-            freezed == latitude
-                ? _value.latitude
-                : latitude // ignore: cast_nullable_to_non_nullable
-                    as Itude?,
         longitude:
             freezed == longitude
                 ? _value.longitude
                 : longitude // ignore: cast_nullable_to_non_nullable
-                    as Itude?,
+                    as Accuracy?,
+        latitude:
+            freezed == latitude
+                ? _value.latitude
+                : latitude // ignore: cast_nullable_to_non_nullable
+                    as Accuracy?,
       ),
     );
   }
@@ -2175,8 +2348,8 @@ class __$$MapValueFieldsImplCopyWithImpl<$Res>
 class _$MapValueFieldsImpl implements _MapValueFields {
   const _$MapValueFieldsImpl({
     @JsonKey(name: 'accuracy') this.accuracy,
-    @JsonKey(name: 'latitude') this.latitude,
     @JsonKey(name: 'longitude') this.longitude,
+    @JsonKey(name: 'latitude') this.latitude,
   });
 
   factory _$MapValueFieldsImpl.fromJson(Map<String, dynamic> json) =>
@@ -2186,15 +2359,15 @@ class _$MapValueFieldsImpl implements _MapValueFields {
   @JsonKey(name: 'accuracy')
   final Accuracy? accuracy;
   @override
-  @JsonKey(name: 'latitude')
-  final Itude? latitude;
-  @override
   @JsonKey(name: 'longitude')
-  final Itude? longitude;
+  final Accuracy? longitude;
+  @override
+  @JsonKey(name: 'latitude')
+  final Accuracy? latitude;
 
   @override
   String toString() {
-    return 'MapValueFields(accuracy: $accuracy, latitude: $latitude, longitude: $longitude)';
+    return 'MapValueFields(accuracy: $accuracy, longitude: $longitude, latitude: $latitude)';
   }
 
   @override
@@ -2204,15 +2377,15 @@ class _$MapValueFieldsImpl implements _MapValueFields {
             other is _$MapValueFieldsImpl &&
             (identical(other.accuracy, accuracy) ||
                 other.accuracy == accuracy) &&
-            (identical(other.latitude, latitude) ||
-                other.latitude == latitude) &&
             (identical(other.longitude, longitude) ||
-                other.longitude == longitude));
+                other.longitude == longitude) &&
+            (identical(other.latitude, latitude) ||
+                other.latitude == latitude));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, accuracy, latitude, longitude);
+  int get hashCode => Object.hash(runtimeType, accuracy, longitude, latitude);
 
   /// Create a copy of MapValueFields
   /// with the given fields replaced by the non-null parameter values.
@@ -2234,8 +2407,8 @@ class _$MapValueFieldsImpl implements _MapValueFields {
 abstract class _MapValueFields implements MapValueFields {
   const factory _MapValueFields({
     @JsonKey(name: 'accuracy') final Accuracy? accuracy,
-    @JsonKey(name: 'latitude') final Itude? latitude,
-    @JsonKey(name: 'longitude') final Itude? longitude,
+    @JsonKey(name: 'longitude') final Accuracy? longitude,
+    @JsonKey(name: 'latitude') final Accuracy? latitude,
   }) = _$MapValueFieldsImpl;
 
   factory _MapValueFields.fromJson(Map<String, dynamic> json) =
@@ -2245,11 +2418,11 @@ abstract class _MapValueFields implements MapValueFields {
   @JsonKey(name: 'accuracy')
   Accuracy? get accuracy;
   @override
-  @JsonKey(name: 'latitude')
-  Itude? get latitude;
-  @override
   @JsonKey(name: 'longitude')
-  Itude? get longitude;
+  Accuracy? get longitude;
+  @override
+  @JsonKey(name: 'latitude')
+  Accuracy? get latitude;
 
   /// Create a copy of MapValueFields
   /// with the given fields replaced by the non-null parameter values.
@@ -2416,210 +2589,53 @@ abstract class _Accuracy implements Accuracy {
       throw _privateConstructorUsedError;
 }
 
-Itude _$ItudeFromJson(Map<String, dynamic> json) {
-  return _Itude.fromJson(json);
+Credit _$CreditFromJson(Map<String, dynamic> json) {
+  return _Credit.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Itude {
-  @JsonKey(name: 'doubleValue')
-  double? get doubleValue => throw _privateConstructorUsedError;
+mixin _$Credit {
+  @JsonKey(name: 'integerValue')
+  String? get integerValue => throw _privateConstructorUsedError;
 
-  /// Serializes this Itude to a JSON map.
+  /// Serializes this Credit to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of Itude
+  /// Create a copy of Credit
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $ItudeCopyWith<Itude> get copyWith => throw _privateConstructorUsedError;
+  $CreditCopyWith<Credit> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ItudeCopyWith<$Res> {
-  factory $ItudeCopyWith(Itude value, $Res Function(Itude) then) =
-      _$ItudeCopyWithImpl<$Res, Itude>;
+abstract class $CreditCopyWith<$Res> {
+  factory $CreditCopyWith(Credit value, $Res Function(Credit) then) =
+      _$CreditCopyWithImpl<$Res, Credit>;
   @useResult
-  $Res call({@JsonKey(name: 'doubleValue') double? doubleValue});
+  $Res call({@JsonKey(name: 'integerValue') String? integerValue});
 }
 
 /// @nodoc
-class _$ItudeCopyWithImpl<$Res, $Val extends Itude>
-    implements $ItudeCopyWith<$Res> {
-  _$ItudeCopyWithImpl(this._value, this._then);
+class _$CreditCopyWithImpl<$Res, $Val extends Credit>
+    implements $CreditCopyWith<$Res> {
+  _$CreditCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of Itude
+  /// Create a copy of Credit
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? doubleValue = freezed}) {
+  $Res call({Object? integerValue = freezed}) {
     return _then(
       _value.copyWith(
-            doubleValue:
-                freezed == doubleValue
-                    ? _value.doubleValue
-                    : doubleValue // ignore: cast_nullable_to_non_nullable
-                        as double?,
-          )
-          as $Val,
-    );
-  }
-}
-
-/// @nodoc
-abstract class _$$ItudeImplCopyWith<$Res> implements $ItudeCopyWith<$Res> {
-  factory _$$ItudeImplCopyWith(
-    _$ItudeImpl value,
-    $Res Function(_$ItudeImpl) then,
-  ) = __$$ItudeImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({@JsonKey(name: 'doubleValue') double? doubleValue});
-}
-
-/// @nodoc
-class __$$ItudeImplCopyWithImpl<$Res>
-    extends _$ItudeCopyWithImpl<$Res, _$ItudeImpl>
-    implements _$$ItudeImplCopyWith<$Res> {
-  __$$ItudeImplCopyWithImpl(
-    _$ItudeImpl _value,
-    $Res Function(_$ItudeImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of Itude
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? doubleValue = freezed}) {
-    return _then(
-      _$ItudeImpl(
-        doubleValue:
-            freezed == doubleValue
-                ? _value.doubleValue
-                : doubleValue // ignore: cast_nullable_to_non_nullable
-                    as double?,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$ItudeImpl implements _Itude {
-  const _$ItudeImpl({@JsonKey(name: 'doubleValue') this.doubleValue});
-
-  factory _$ItudeImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ItudeImplFromJson(json);
-
-  @override
-  @JsonKey(name: 'doubleValue')
-  final double? doubleValue;
-
-  @override
-  String toString() {
-    return 'Itude(doubleValue: $doubleValue)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ItudeImpl &&
-            (identical(other.doubleValue, doubleValue) ||
-                other.doubleValue == doubleValue));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, doubleValue);
-
-  /// Create a copy of Itude
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ItudeImplCopyWith<_$ItudeImpl> get copyWith =>
-      __$$ItudeImplCopyWithImpl<_$ItudeImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ItudeImplToJson(this);
-  }
-}
-
-abstract class _Itude implements Itude {
-  const factory _Itude({
-    @JsonKey(name: 'doubleValue') final double? doubleValue,
-  }) = _$ItudeImpl;
-
-  factory _Itude.fromJson(Map<String, dynamic> json) = _$ItudeImpl.fromJson;
-
-  @override
-  @JsonKey(name: 'doubleValue')
-  double? get doubleValue;
-
-  /// Create a copy of Itude
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ItudeImplCopyWith<_$ItudeImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-CompanyStorePhoto _$CompanyStorePhotoFromJson(Map<String, dynamic> json) {
-  return _CompanyStorePhoto.fromJson(json);
-}
-
-/// @nodoc
-mixin _$CompanyStorePhoto {
-  @JsonKey(name: 'stringValue')
-  String? get stringValue => throw _privateConstructorUsedError;
-
-  /// Serializes this CompanyStorePhoto to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of CompanyStorePhoto
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $CompanyStorePhotoCopyWith<CompanyStorePhoto> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $CompanyStorePhotoCopyWith<$Res> {
-  factory $CompanyStorePhotoCopyWith(
-    CompanyStorePhoto value,
-    $Res Function(CompanyStorePhoto) then,
-  ) = _$CompanyStorePhotoCopyWithImpl<$Res, CompanyStorePhoto>;
-  @useResult
-  $Res call({@JsonKey(name: 'stringValue') String? stringValue});
-}
-
-/// @nodoc
-class _$CompanyStorePhotoCopyWithImpl<$Res, $Val extends CompanyStorePhoto>
-    implements $CompanyStorePhotoCopyWith<$Res> {
-  _$CompanyStorePhotoCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of CompanyStorePhoto
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? stringValue = freezed}) {
-    return _then(
-      _value.copyWith(
-            stringValue:
-                freezed == stringValue
-                    ? _value.stringValue
-                    : stringValue // ignore: cast_nullable_to_non_nullable
+            integerValue:
+                freezed == integerValue
+                    ? _value.integerValue
+                    : integerValue // ignore: cast_nullable_to_non_nullable
                         as String?,
           )
           as $Val,
@@ -2628,37 +2644,36 @@ class _$CompanyStorePhotoCopyWithImpl<$Res, $Val extends CompanyStorePhoto>
 }
 
 /// @nodoc
-abstract class _$$CompanyStorePhotoImplCopyWith<$Res>
-    implements $CompanyStorePhotoCopyWith<$Res> {
-  factory _$$CompanyStorePhotoImplCopyWith(
-    _$CompanyStorePhotoImpl value,
-    $Res Function(_$CompanyStorePhotoImpl) then,
-  ) = __$$CompanyStorePhotoImplCopyWithImpl<$Res>;
+abstract class _$$CreditImplCopyWith<$Res> implements $CreditCopyWith<$Res> {
+  factory _$$CreditImplCopyWith(
+    _$CreditImpl value,
+    $Res Function(_$CreditImpl) then,
+  ) = __$$CreditImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@JsonKey(name: 'stringValue') String? stringValue});
+  $Res call({@JsonKey(name: 'integerValue') String? integerValue});
 }
 
 /// @nodoc
-class __$$CompanyStorePhotoImplCopyWithImpl<$Res>
-    extends _$CompanyStorePhotoCopyWithImpl<$Res, _$CompanyStorePhotoImpl>
-    implements _$$CompanyStorePhotoImplCopyWith<$Res> {
-  __$$CompanyStorePhotoImplCopyWithImpl(
-    _$CompanyStorePhotoImpl _value,
-    $Res Function(_$CompanyStorePhotoImpl) _then,
+class __$$CreditImplCopyWithImpl<$Res>
+    extends _$CreditCopyWithImpl<$Res, _$CreditImpl>
+    implements _$$CreditImplCopyWith<$Res> {
+  __$$CreditImplCopyWithImpl(
+    _$CreditImpl _value,
+    $Res Function(_$CreditImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of CompanyStorePhoto
+  /// Create a copy of Credit
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? stringValue = freezed}) {
+  $Res call({Object? integerValue = freezed}) {
     return _then(
-      _$CompanyStorePhotoImpl(
-        stringValue:
-            freezed == stringValue
-                ? _value.stringValue
-                : stringValue // ignore: cast_nullable_to_non_nullable
+      _$CreditImpl(
+        integerValue:
+            freezed == integerValue
+                ? _value.integerValue
+                : integerValue // ignore: cast_nullable_to_non_nullable
                     as String?,
       ),
     );
@@ -2667,69 +2682,63 @@ class __$$CompanyStorePhotoImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$CompanyStorePhotoImpl implements _CompanyStorePhoto {
-  const _$CompanyStorePhotoImpl({
-    @JsonKey(name: 'stringValue') this.stringValue,
-  });
+class _$CreditImpl implements _Credit {
+  const _$CreditImpl({@JsonKey(name: 'integerValue') this.integerValue});
 
-  factory _$CompanyStorePhotoImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CompanyStorePhotoImplFromJson(json);
+  factory _$CreditImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CreditImplFromJson(json);
 
   @override
-  @JsonKey(name: 'stringValue')
-  final String? stringValue;
+  @JsonKey(name: 'integerValue')
+  final String? integerValue;
 
   @override
   String toString() {
-    return 'CompanyStorePhoto(stringValue: $stringValue)';
+    return 'Credit(integerValue: $integerValue)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CompanyStorePhotoImpl &&
-            (identical(other.stringValue, stringValue) ||
-                other.stringValue == stringValue));
+            other is _$CreditImpl &&
+            (identical(other.integerValue, integerValue) ||
+                other.integerValue == integerValue));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, stringValue);
+  int get hashCode => Object.hash(runtimeType, integerValue);
 
-  /// Create a copy of CompanyStorePhoto
+  /// Create a copy of Credit
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$CompanyStorePhotoImplCopyWith<_$CompanyStorePhotoImpl> get copyWith =>
-      __$$CompanyStorePhotoImplCopyWithImpl<_$CompanyStorePhotoImpl>(
-        this,
-        _$identity,
-      );
+  _$$CreditImplCopyWith<_$CreditImpl> get copyWith =>
+      __$$CreditImplCopyWithImpl<_$CreditImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CompanyStorePhotoImplToJson(this);
+    return _$$CreditImplToJson(this);
   }
 }
 
-abstract class _CompanyStorePhoto implements CompanyStorePhoto {
-  const factory _CompanyStorePhoto({
-    @JsonKey(name: 'stringValue') final String? stringValue,
-  }) = _$CompanyStorePhotoImpl;
+abstract class _Credit implements Credit {
+  const factory _Credit({
+    @JsonKey(name: 'integerValue') final String? integerValue,
+  }) = _$CreditImpl;
 
-  factory _CompanyStorePhoto.fromJson(Map<String, dynamic> json) =
-      _$CompanyStorePhotoImpl.fromJson;
+  factory _Credit.fromJson(Map<String, dynamic> json) = _$CreditImpl.fromJson;
 
   @override
-  @JsonKey(name: 'stringValue')
-  String? get stringValue;
+  @JsonKey(name: 'integerValue')
+  String? get integerValue;
 
-  /// Create a copy of CompanyStorePhoto
+  /// Create a copy of Credit
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CompanyStorePhotoImplCopyWith<_$CompanyStorePhotoImpl> get copyWith =>
+  _$$CreditImplCopyWith<_$CreditImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

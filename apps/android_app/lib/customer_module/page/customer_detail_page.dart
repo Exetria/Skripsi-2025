@@ -92,9 +92,9 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
               context: context,
               title: 'Data Pemilik',
               values: [
-                widget.data.fields?.ownerName?.stringValue ?? '-',
+                widget.data.fields?.picName?.stringValue ?? '-',
                 phoneNumberFormat(
-                  widget.data.fields?.ownerPhoneNumber?.stringValue ?? '',
+                  widget.data.fields?.picPhoneNumber?.stringValue ?? '',
                 ),
               ],
               icons: [Icons.person_outline, Icons.phone_outlined],
