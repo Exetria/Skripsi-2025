@@ -56,7 +56,7 @@ class UpdateUserRemoteDatasourceImpl implements UpdateUserRemoteDatasource {
     if (userPhoto != null) {
       final productPhotoResponse = await uploadFileToStorage(
         url:
-            'https://firebasestorage.googleapis.com/v0/b/${dotenv.env['PROJECT_ID']}.appspot.com/o?uploadType=media&name=user/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg',
+            'https://firebasestorage.googleapis.com/v0/b/${dotenv.env['BUCKET_NAME']}/o?uploadType=media&name=user/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg',
         headers: {
           'Authorization': 'Bearer ${userDataHelper?.idToken}',
           'Content-Type': 'application/json',
@@ -138,7 +138,7 @@ class UpdateUserRemoteDatasourceImpl implements UpdateUserRemoteDatasource {
     if (userPhoto != null) {
       final productPhotoResponse = await uploadFileToStorage(
         url:
-            'https://firebasestorage.googleapis.com/v0/b/${dotenv.env['PROJECT_ID']}.appspot.com/o?uploadType=media&name=user/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg',
+            'https://firebasestorage.googleapis.com/v0/b/${dotenv.env['BUCKET_NAME']}/o?uploadType=media&name=user/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg',
         headers: {
           'Authorization': 'Bearer ${userDataHelper?.idToken}',
           'Content-Type': 'application/json',
