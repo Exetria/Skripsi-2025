@@ -43,7 +43,7 @@ class UpdateVisitDataRemoteDatasourceImpl
     if (updateLocationIndex != null && visitPhoto != null) {
       final storePhotoresponse = await uploadFileToStorage(
         url:
-            'https://firebasestorage.googleapis.com/v0/b/${dotenv.env['PROJECT_ID']}.appspot.com/o?uploadType=media&name=visit/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg',
+            'https://firebasestorage.googleapis.com/v0/b/${dotenv.env['BUCKET_NAME']}/o?uploadType=media&name=visit/${DateTime.now().millisecondsSinceEpoch.toString()}.jpg',
         headers: {
           'Authorization': 'Bearer ${userDataHelper?.idToken}',
           'Content-Type': 'application/json',
