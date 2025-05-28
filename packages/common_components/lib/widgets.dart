@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -54,6 +55,28 @@ TextFormField buildInputBox({
       prefixText: prefix,
       suffixText: suffix,
       alignLabelWithHint: true,
+    ),
+  );
+}
+
+// IMAGE ERROR
+Widget imageErrorWidget({required BuildContext context, String? message}) {
+  return Center(
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(
+          Icons.broken_image_outlined,
+          size: Platform.isWindows ? 32 : 32.sp,
+          color: Theme.of(context).colorScheme.error,
+        ),
+        message != null
+            ? SizedBox(height: Platform.isWindows ? 8 : 8.h)
+            : const SizedBox.shrink(),
+        message != null
+            ? Text(message, style: errorStyle)
+            : const SizedBox.shrink(),
+      ],
     ),
   );
 }
