@@ -57,7 +57,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
     return Scaffold(
       appBar: customAppBar(
         context: context,
-        title: 'Add Order',
+        title: 'Tambah Pesanan',
         showLeftButton: true,
       ),
       body: SingleChildScrollView(

@@ -108,7 +108,7 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
     return Scaffold(
       appBar: customAppBar(
         context: context,
-        title: 'Add Visit',
+        title: 'Tambah Visit',
         showLeftButton: true,
         rightButtonIcon: Icons.refresh,
         onRightPressed: () {
