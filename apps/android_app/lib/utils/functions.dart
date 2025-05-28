@@ -237,27 +237,12 @@ Widget infoCard({
                       imageurl,
                       width: double.infinity,
                       fit: BoxFit.cover,
-                      errorBuilder:
-                          (_, __, ___) => Container(
-                            color: dividerColor,
-                            child: Icon(
-                              Icons.error,
-                              color: errorColor,
-                              size: 40.sp,
-                            ),
-                          ),
                       loadingBuilder: (_, child, progress) {
                         if (progress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value:
-                                progress.expectedTotalBytes != null
-                                    ? progress.cumulativeBytesLoaded /
-                                        progress.expectedTotalBytes!
-                                    : null,
-                          ),
-                        );
+                        return const Center(child: CircularProgressIndicator());
                       },
+                      errorBuilder:
+                          (_, __, ___) => imageErrorWidget(context: context),
                     ),
                   ),
                 ),

@@ -221,6 +221,9 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
                                   fit: BoxFit.cover,
                                   width: double.infinity,
                                   height: double.infinity,
+                                  errorBuilder:
+                                      (_, __, ___) =>
+                                          imageErrorWidget(context: context),
                                 ),
                               )
                               : _visitPhotoLink != null
@@ -231,24 +234,17 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
                                   fit: BoxFit.cover,
                                   width: double.infinity,
                                   height: double.infinity,
-                                  errorBuilder: (context, error, stackTrace) {
+                                  loadingBuilder: (_, child, progress) {
+                                    if (progress == null) return child;
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  },
+                                  errorBuilder: (_, __, ___) {
                                     _isOldPhotoFound = false;
-                                    return Center(
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Icon(
-                                            Icons.broken_image_outlined,
-                                            size: 32.sp,
-                                            color: errorColor,
-                                          ),
-                                          SizedBox(height: 8.h),
-                                          Text(
-                                            'Image not found',
-                                            style: errorStyle,
-                                          ),
-                                        ],
-                                      ),
+                                    return imageErrorWidget(
+                                      context: context,
+                                      message: 'Image not found',
                                     );
                                   },
                                 ),

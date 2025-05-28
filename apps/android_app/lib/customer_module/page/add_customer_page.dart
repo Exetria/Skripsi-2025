@@ -224,38 +224,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
               SizedBox(height: 16.h),
 
               // Credit Information
-              ExpansionTile(
-                title: Text('Informasi Pembayaran', style: bodyStyle),
-                childrenPadding: EdgeInsets.symmetric(horizontal: 8.w),
-                children: [
-                  SizedBox(height: 4.h),
-                  buildInputBox(
-                    controller: _creditPeriodController,
-                    label: 'Jangka Waktu Kredit (dalam hari)',
-                    suffix: 'hari',
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    validator: (value) {
-                      return (value != null && value != '')
-                          ? null
-                          : 'Tidak Boleh Kosong';
-                    },
-                  ),
-                  SizedBox(height: 16.h),
-
-                  buildInputBox(
-                    controller: _creditLimitController,
-                    label: 'Batas Kredit (dalam Rp)',
-                    prefix: 'Rp. ',
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    validator: (value) {
-                      return (value != null && value != '')
-                          ? null
-                          : 'Tidak Boleh Kosong';
-                    },
-                  ),
-                  SizedBox(height: 16.h),
-                ],
-              ),
+              buildCreditInfoExpansionTile(),
               SizedBox(height: 16.h),
 
               buildInputBox(
@@ -325,6 +294,9 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                           fit: BoxFit.cover,
                           width: double.infinity,
                           height: double.infinity,
+                          errorBuilder:
+                              (_, __, ___) =>
+                                  imageErrorWidget(context: context),
                         ),
                       )
                       : Center(
@@ -455,6 +427,9 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                           fit: BoxFit.cover,
                           width: double.infinity,
                           height: double.infinity,
+                          errorBuilder:
+                              (_, __, ___) =>
+                                  imageErrorWidget(context: context),
                         ),
                       )
                       : Center(
@@ -588,6 +563,9 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                           fit: BoxFit.cover,
                           width: double.infinity,
                           height: double.infinity,
+                          errorBuilder:
+                              (_, __, ___) =>
+                                  imageErrorWidget(context: context),
                         ),
                       )
                       : Center(
@@ -646,6 +624,37 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
         buildInputBox(
           controller: _picPositionController,
           label: 'Posisi PIC dalam Perusahaan',
+          validator: (value) {
+            return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
+          },
+        ),
+        SizedBox(height: 16.h),
+      ],
+    );
+  }
+
+  Widget buildCreditInfoExpansionTile() {
+    return ExpansionTile(
+      title: Text('Informasi Pembayaran', style: bodyStyle),
+      childrenPadding: EdgeInsets.symmetric(horizontal: 8.w),
+      children: [
+        SizedBox(height: 4.h),
+        buildInputBox(
+          controller: _creditPeriodController,
+          label: 'Jangka Waktu Kredit (dalam hari)',
+          suffix: 'hari',
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          validator: (value) {
+            return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
+          },
+        ),
+        SizedBox(height: 16.h),
+
+        buildInputBox(
+          controller: _creditLimitController,
+          label: 'Batas Kredit (dalam Rp)',
+          prefix: 'Rp. ',
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           validator: (value) {
             return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
           },
