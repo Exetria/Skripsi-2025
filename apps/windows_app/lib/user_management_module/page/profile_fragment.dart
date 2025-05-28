@@ -19,6 +19,8 @@ class _ProfileFragmentState extends ConsumerState<ProfileFragment> {
     final cs = Theme.of(context).colorScheme;
     final user = userDataHelper;
 
+    print('asds${userDataHelper?.photoUrl}');
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Row(
@@ -37,8 +39,21 @@ class _ProfileFragmentState extends ConsumerState<ProfileFragment> {
                   children: [
                     CircleAvatar(
                       radius: 60,
-                      backgroundColor: cs.surface,
-                      child: const Icon(Icons.person, size: 60),
+                      backgroundColor: Theme.of(
+                        context,
+                      ).colorScheme.secondary.withAlpha(30),
+                      backgroundImage:
+                          userDataHelper?.photoUrl.isNotEmpty == true
+                              ? NetworkImage(userDataHelper?.photoUrl ?? '')
+                              : null,
+                      child:
+                          userDataHelper?.photoUrl.isEmpty == true
+                              ? Icon(
+                                Icons.person,
+                                size: 60,
+                                color: Theme.of(context).colorScheme.primary,
+                              )
+                              : null,
                     ),
                     const SizedBox(height: 24),
                     Text(

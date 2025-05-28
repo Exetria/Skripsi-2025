@@ -348,10 +348,16 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                                             fit: BoxFit.cover,
                                             width: double.infinity,
                                             height: double.infinity,
+                                            errorBuilder:
+                                                (_, __, ___) =>
+                                                    imageErrorWidget(
+                                                      context: context,
+                                                    ),
                                           ),
                                         )
                                         : productImage == null &&
-                                            previousImageLink != null
+                                            previousImageLink != null &&
+                                            previousImageLink.isNotEmpty
                                         ? ClipRRect(
                                           borderRadius: BorderRadius.circular(
                                             16.r,
@@ -361,6 +367,23 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                                             fit: BoxFit.cover,
                                             width: double.infinity,
                                             height: double.infinity,
+                                            loadingBuilder: (
+                                              _,
+                                              child,
+                                              progress,
+                                            ) {
+                                              if (progress == null)
+                                                return child;
+                                              return const Center(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              );
+                                            },
+                                            errorBuilder:
+                                                (_, __, ___) =>
+                                                    imageErrorWidget(
+                                                      context: context,
+                                                    ),
                                           ),
                                         )
                                         : Column(

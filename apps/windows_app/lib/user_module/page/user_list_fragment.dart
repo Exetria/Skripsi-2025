@@ -214,21 +214,11 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
     );
   }
 
-  // photo_url v
-  // full_name v
-  // user_name v
-  // phone_number v
-  // email v
-  // role -
-  // is_active -
-  // assigned_products v
-  // assigned_customers v
-
   Future<void> showUserDataPopup({
     required BuildContext context,
     UserDomain? userData,
   }) async {
-    final addProductFormKey = GlobalKey<FormState>();
+    final userDataFormKey = GlobalKey<FormState>();
 
     File? userPhoto;
     String? imageError;
@@ -306,7 +296,7 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                 setDialogState(() {
                   dialogActionButtonEnabled = false;
                 });
-                if (addProductFormKey.currentState?.validate() ?? false) {
+                if (userDataFormKey.currentState?.validate() ?? false) {
                   final submitState =
                       userData == null
                           ? await ref
@@ -374,10 +364,6 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                               : 'Gagal memperbarui pengguna',
                     );
                   }
-                } else if (userPhoto == null) {
-                  setDialogState(() {
-                    imageError = 'Foto pengguna harus dipilih';
-                  });
                 }
                 setDialogState(() {
                   dialogActionButtonEnabled = true;
@@ -398,7 +384,7 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                 width: ScreenUtil().screenWidth * 0.4,
                 child: SingleChildScrollView(
                   child: Form(
-                    key: addProductFormKey,
+                    key: userDataFormKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -422,31 +408,11 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                                           child: Image.file(
                                             userPhoto ?? File(''),
                                             fit: BoxFit.cover,
-                                            errorBuilder: (
-                                              context,
-                                              error,
-                                              stackTrace,
-                                            ) {
-                                              return Center(
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    Icon(
-                                                      Icons
-                                                          .broken_image_outlined,
-                                                      size: 32,
-                                                      color: errorColor,
+                                            errorBuilder:
+                                                (_, __, ___) =>
+                                                    imageErrorWidget(
+                                                      context: context,
                                                     ),
-                                                    const SizedBox(height: 8),
-                                                    Text(
-                                                      'Image not found',
-                                                      style: errorStyle,
-                                                    ),
-                                                  ],
-                                                ),
-                                              );
-                                            },
                                           ),
                                         ),
                                       )
@@ -462,31 +428,23 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                                           child: Image.network(
                                             previousUserPhotoLink,
                                             fit: BoxFit.cover,
-                                            errorBuilder: (
-                                              context,
-                                              error,
-                                              stackTrace,
+                                            loadingBuilder: (
+                                              _,
+                                              child,
+                                              progress,
                                             ) {
-                                              return Center(
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    Icon(
-                                                      Icons
-                                                          .broken_image_outlined,
-                                                      size: 32,
-                                                      color: errorColor,
-                                                    ),
-                                                    const SizedBox(height: 8),
-                                                    Text(
-                                                      'Image not found',
-                                                      style: errorStyle,
-                                                    ),
-                                                  ],
-                                                ),
+                                              if (progress == null)
+                                                return child;
+                                              return const Center(
+                                                child:
+                                                    CircularProgressIndicator(),
                                               );
                                             },
+                                            errorBuilder:
+                                                (_, __, ___) =>
+                                                    imageErrorWidget(
+                                                      context: context,
+                                                    ),
                                           ),
                                         ),
                                       )
@@ -542,14 +500,6 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                           ),
                         ),
                         const SizedBox(height: 32),
-                        // full_name v
-                        // user_name v
-                        // phone_number v
-                        // email v
-                        // role -
-                        // is_active -
-                        // assigned_products
-                        // assigned_customers
 
                         // Username
                         buildInputBox(
