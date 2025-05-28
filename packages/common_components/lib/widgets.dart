@@ -67,7 +67,7 @@ Widget imageErrorWidget({required BuildContext context, String? message}) {
       children: [
         Icon(
           Icons.broken_image_outlined,
-          size: Platform.isWindows ? 32 : 32.sp,
+          size: Platform.isWindows ? 64 : 32.sp,
           color: Theme.of(context).colorScheme.error,
         ),
         message != null
