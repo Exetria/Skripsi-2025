@@ -490,27 +490,20 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
           label: 'NIK Pemilik (jika ada)',
           validator: (value) {
             return null;
-            // return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
           },
         ),
         SizedBox(height: 16.h),
 
         // PIC Tax ID (Non PKP only)
-        _customerType == 'Non PKP'
-            ? buildInputBox(
-              controller: _ownerTaxIdController,
-              label: 'NPWP Pemilik',
-              validator: (value) {
-                if (_customerType == 'PKP') return null;
-                return (value != null && value != '')
-                    ? null
-                    : 'Tidak Boleh Kosong';
-              },
-            )
-            : const SizedBox.shrink(),
-        _customerType == 'Non PKP'
-            ? SizedBox(height: 16.h)
-            : const SizedBox.shrink(),
+        buildInputBox(
+          controller: _ownerTaxIdController,
+          label: 'NPWP Pemilik',
+          validator: (value) {
+            if (_customerType == 'PKP') return null;
+            return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
+          },
+        ),
+        SizedBox(height: 16.h),
 
         // Owner Ownership Status
         buildInputBox(
