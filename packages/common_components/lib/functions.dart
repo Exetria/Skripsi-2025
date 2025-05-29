@@ -110,10 +110,10 @@ void showConfirmationDialog({
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
                             leftButtonBackgroundColor ??
-                            Theme.of(context).colorScheme.primary,
+                            Theme.of(context).colorScheme.error,
                         foregroundColor:
                             leftButtonForegroundColor ??
-                            Theme.of(context).colorScheme.onPrimary,
+                            Theme.of(context).colorScheme.onError,
                         padding: EdgeInsets.symmetric(
                           vertical: Platform.isWindows ? 12 : 12.h,
                         ),
@@ -140,10 +140,10 @@ void showConfirmationDialog({
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
                             rightButtonBackgroundColor ??
-                            Theme.of(context).colorScheme.primary,
+                            Theme.of(context).colorScheme.tertiary,
                         foregroundColor:
                             rightButtonForegroundColor ??
-                            Theme.of(context).colorScheme.onPrimary,
+                            Theme.of(context).colorScheme.onTertiary,
                         padding: EdgeInsets.symmetric(
                           vertical: Platform.isWindows ? 12 : 12.h,
                         ),

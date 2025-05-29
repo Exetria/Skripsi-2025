@@ -36,12 +36,14 @@ TextFormField buildInputBox({
   required TextEditingController controller,
   required String label,
   List<TextInputFormatter>? inputFormatters,
-  String? Function(String?)? validator,
+  Widget? suffixIcon,
   TextInputType? keyboardType,
+  String? Function(String?)? validator,
   String? prefix,
   String? suffix,
   int? maxLines = 1,
   bool enabled = true,
+  bool obscureText = false,
 }) {
   return TextFormField(
     enabled: enabled,
@@ -49,11 +51,13 @@ TextFormField buildInputBox({
     inputFormatters: inputFormatters,
     maxLines: maxLines,
     keyboardType: keyboardType,
+    obscureText: obscureText,
     validator: validator,
     decoration: InputDecoration(
       labelText: label,
       prefixText: prefix,
       suffixText: suffix,
+      suffixIcon: suffixIcon,
       alignLabelWithHint: true,
     ),
   );
