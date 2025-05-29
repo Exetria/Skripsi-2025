@@ -1464,44 +1464,46 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
             }
 
             void deleteCustomerData() async {
-              setDialogState(() {
-                dialogActionButtonEnabled = false;
-              });
-              final deleteState = await ref
-                  .read(updateCustomerControllerProvider.notifier)
-                  .deleteCustomer(
-                    customerId: getIdFromName(name: customerData?.name),
-                  );
+              showConfirmationDialog(
+                context: statefulBuilderContext,
+                message:
+                    'Apakah Anda yakin ingin menghapus data pelanggan ini?',
+                onLeftButtonTap: () {},
+                onRightButtonTap: () async {
+                  final deleteState = await ref
+                      .read(updateCustomerControllerProvider.notifier)
+                      .deleteCustomer(
+                        customerId: getIdFromName(name: customerData?.name),
+                      );
 
-              if (deleteState is AsyncData) {
-                showFeedbackDialog(
-                  context: context,
-                  type: 1,
-                  message: 'Pelanggan berhasil dihapus',
-                  onClose: () {
-                    _refreshCustomerList();
-                    _refreshCustomerRequestList();
-                    Navigator.pop(statefulBuilderContext);
-                  },
-                );
-              } else if (deleteState is AsyncError) {
-                final apiException = deleteState.error as ApiException;
-                showFeedbackDialog(
-                  context: context,
-                  type: 0,
-                  message: apiException.message,
-                );
-              } else {
-                showFeedbackDialog(
-                  context: context,
-                  type: 0,
-                  message: 'Gagal menghapus pelanggan',
-                );
-              }
-
-              setDialogState(() {
-                dialogActionButtonEnabled = true;
-              });
+                  if (deleteState is AsyncData) {
+                    showFeedbackDialog(
+                      context: context,
+                      type: 1,
+                      message: 'Pelanggan berhasil dihapus',
+                      onClose: () {
+                        _refreshCustomerList();
+                        _refreshCustomerRequestList();
+                        Navigator.pop(statefulBuilderContext);
+                      },
+                    );
+                  } else if (deleteState is AsyncError) {
+                    final apiException = deleteState.error as ApiException;
+                    showFeedbackDialog(
+                      context: context,
+                      type: 0,
+                      message:
+                          'Gagal menghapus pelanggan: ${apiException.message}',
+                    );
+                  } else {
+                    showFeedbackDialog(
+                      context: context,
+                      type: 0,
+                      message: 'Gagal menghapus pelanggan',
+                    );
+                  }
+                },
+              );
             }
 
             void rejectCustomerRequest() async {
@@ -1715,83 +1717,101 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                   ),
                 ),
               ),
-              actionsAlignment: MainAxisAlignment.end,
               actions: [
-                customerData != null
-                    ? IconButton(
-                      onPressed: deleteCustomerData,
-                      icon: Icon(
-                        Icons.delete,
-                        color: Theme.of(context).colorScheme.error,
-                      ),
-                    )
-                    : const SizedBox.shrink(),
-                !requestNotApproved
-                    ? Text(
-                      'Permintaan ini sudah diterima/ditolak',
-                      style: errorStyle,
-                    )
-                    : const SizedBox.shrink(),
-                !requestNotApproved
-                    ? const SizedBox(width: 12)
-                    : const SizedBox.shrink(),
-                TextButton(
-                  onPressed:
-                      dialogActionButtonEnabled
-                          ? () {
-                            Navigator.pop(statefulBuilderContext);
-                          }
-                          : null,
-                  child: Text(
-                    requestNotApproved ? 'Batal' : 'Kembali',
-                    style: captionStyle,
-                  ),
-                ),
-
-                customerRequestData != null && requestNotApproved
-                    ? TextButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Theme.of(statefulBuilderContext).colorScheme.error,
-                        foregroundColor:
-                            Theme.of(
-                              statefulBuilderContext,
-                            ).colorScheme.onError,
-                        textStyle: buttonStyle,
-                      ),
-                      onPressed:
-                          dialogActionButtonEnabled
-                              ? rejectCustomerRequest
-                              : null,
-                      child: Text('Tolak', style: captionStyle),
-                    )
-                    : const SizedBox.shrink(),
-
-                requestNotApproved
-                    ? ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Theme.of(
-                              statefulBuilderContext,
-                            ).colorScheme.primary,
-                        foregroundColor:
-                            Theme.of(
-                              statefulBuilderContext,
-                            ).colorScheme.onPrimary,
-                        textStyle: buttonStyle,
-                      ),
-                      onPressed:
-                          dialogActionButtonEnabled ? submitCustomerData : null,
-                      child: Text(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
                         customerData != null
-                            ? 'Perbarui'
-                            : customerRequestData != null
-                            ? 'Terima'
-                            : 'Tambah',
-                        style: bodyStyle,
-                      ),
-                    )
-                    : const SizedBox.shrink(),
+                            ? IconButton(
+                              onPressed: deleteCustomerData,
+                              icon: Icon(
+                                Icons.delete,
+                                color: Theme.of(context).colorScheme.error,
+                              ),
+                            )
+                            : const SizedBox.shrink(),
+                        !requestNotApproved
+                            ? Text(
+                              'Permintaan ini sudah diterima/ditolak',
+                              style: errorStyle,
+                            )
+                            : const SizedBox.shrink(),
+                        !requestNotApproved
+                            ? const SizedBox(width: 12)
+                            : const SizedBox.shrink(),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            foregroundColor:
+                                Theme.of(
+                                  statefulBuilderContext,
+                                ).colorScheme.onSurface,
+                          ),
+                          onPressed:
+                              dialogActionButtonEnabled
+                                  ? () {
+                                    Navigator.pop(statefulBuilderContext);
+                                  }
+                                  : null,
+                          child: const Text('Kembali'),
+                        ),
+
+                        customerRequestData != null && requestNotApproved
+                            ? ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    Theme.of(
+                                      statefulBuilderContext,
+                                    ).colorScheme.error,
+                                foregroundColor:
+                                    Theme.of(
+                                      statefulBuilderContext,
+                                    ).colorScheme.onError,
+                              ),
+                              onPressed:
+                                  dialogActionButtonEnabled
+                                      ? rejectCustomerRequest
+                                      : null,
+                              child: const Text('Tolak'),
+                            )
+                            : const SizedBox.shrink(),
+
+                        requestNotApproved
+                            ? ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    Theme.of(
+                                      statefulBuilderContext,
+                                    ).colorScheme.tertiary,
+                                foregroundColor:
+                                    Theme.of(
+                                      statefulBuilderContext,
+                                    ).colorScheme.onTertiary,
+                              ),
+                              onPressed:
+                                  dialogActionButtonEnabled
+                                      ? submitCustomerData
+                                      : null,
+                              child: Text(
+                                customerData != null
+                                    ? 'Perbarui'
+                                    : customerRequestData != null
+                                    ? 'Terima'
+                                    : 'Tambah',
+                              ),
+                            )
+                            : const SizedBox.shrink(),
+                      ],
+                    ),
+                  ],
+                ),
               ],
             );
           },

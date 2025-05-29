@@ -148,10 +148,8 @@ class UpdateCustomerRemoteDatasourceImpl
         );
       } catch (e) {
         if (e is ApiException) {
-          print('asds ${e.responseBody}');
           rethrow;
         }
-        print('asds $e');
 
         throw ApiException(
           statusCode: -1,
@@ -413,7 +411,6 @@ class UpdateCustomerRemoteDatasourceImpl
     required String? approvalReason,
     required bool approved,
   }) async {
-    print('asds $approvalReason');
     Map<String, dynamic> result = await apiCallPatch(
       url:
           'https://firestore.googleapis.com/v1/projects/${dotenv.env['PROJECT_ID']}/databases/(default)/documents/customerRequests/${getIdFromName(name: customerRequestData?.name)}',
