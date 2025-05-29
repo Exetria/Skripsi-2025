@@ -1,4 +1,4 @@
 apps/windows_app/.env
 apps/android_app/.env
 apps/android_app/android/app/google-services.json
-apps/windows_app/service_account.json
+apps/windows_app/lib/utils/service_account.json
