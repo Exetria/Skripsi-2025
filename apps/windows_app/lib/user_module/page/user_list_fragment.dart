@@ -238,6 +238,7 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
     bool isActive = true;
 
     bool dialogActionButtonEnabled = true;
+    bool obscurePassword = true;
 
     // If productData is provided, populate the fields
     if (userData != null) {
@@ -297,42 +298,50 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                   dialogActionButtonEnabled = false;
                 });
                 if (userDataFormKey.currentState?.validate() ?? false) {
-                  final submitState =
-                      userData == null
-                          ? await ref
-                              .read(updateUserControllerProvider.notifier)
-                              .addUser(
-                                userPhoto: userPhoto,
-                                userName: userNameController.text,
-                                fullName: userFullNameController.text,
-                                phoneNumber: userPhoneController.text,
-                                email: userEmailController.text,
-                                password: userPasswordController.text,
-                                isAdmin: isAdmin,
-                                isActive: isActive,
-                                assignedCustomers: assignedCustomers,
-                                assignedProducts: assignedProducts,
-                              )
-                          : await ref
-                              .read(updateUserControllerProvider.notifier)
-                              .updateUser(
-                                userPhoto: userPhoto,
-                                previousUserPhotoLink:
-                                    previousUserPhotoLink ?? '',
-                                userId: getIdFromName(name: userData.name),
-                                userName: userNameController.text,
-                                fullName: userFullNameController.text,
-                                phoneNumber: userPhoneController.text,
-                                email: userEmailController.text,
-                                newPassword:
-                                    userPasswordController.text.isNotEmpty
-                                        ? userPasswordController.text
-                                        : null,
-                                isAdmin: isAdmin,
-                                isActive: isActive,
-                                assignedCustomers: assignedCustomers,
-                                assignedProducts: assignedProducts,
-                              );
+                  AsyncValue<UserDomain?>? submitState;
+
+                  // Add
+                  if (userData == null &&
+                      userPasswordController.text.length >= 6) {
+                    submitState = await ref
+                        .read(updateUserControllerProvider.notifier)
+                        .addUser(
+                          userPhoto: userPhoto,
+                          userName: userNameController.text,
+                          fullName: userFullNameController.text,
+                          phoneNumber: userPhoneController.text,
+                          email: userEmailController.text,
+                          password: userPasswordController.text,
+                          isAdmin: isAdmin,
+                          isActive: isActive,
+                          assignedCustomers: assignedCustomers,
+                          assignedProducts: assignedProducts,
+                        );
+                  }
+                  // Update
+                  else if (userData != null &&
+                      (userPasswordController.text.isEmpty ||
+                          userPasswordController.text.length >= 6)) {
+                    submitState = await ref
+                        .read(updateUserControllerProvider.notifier)
+                        .updateUser(
+                          userPhoto: userPhoto,
+                          previousUserPhotoLink: previousUserPhotoLink ?? '',
+                          userId: getIdFromName(name: userData.name),
+                          userName: userNameController.text,
+                          fullName: userFullNameController.text,
+                          phoneNumber: userPhoneController.text,
+                          email: userEmailController.text,
+                          newPassword:
+                              userPasswordController.text.isNotEmpty
+                                  ? userPasswordController.text
+                                  : null,
+                          isAdmin: isAdmin,
+                          isActive: isActive,
+                          assignedCustomers: assignedCustomers,
+                          assignedProducts: assignedProducts,
+                        );
+                  }
 
                   if (submitState is AsyncData) {
                     showFeedbackDialog(
@@ -347,12 +356,25 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                         Navigator.pop(statefulBuilderContext);
                       },
                     );
-                  } else if (submitState is AsyncError) {
+                  } else if (submitState is AsyncError && submitState != null) {
                     final apiException = submitState.error as ApiException;
                     showFeedbackDialog(
                       context: context,
                       type: 0,
-                      message: apiException.message,
+                      message:
+                          userData == null
+                              ? 'Gagal menambahkan pengguna: ${apiException.message}'
+                              : 'Gagal memperbarui pengguna: ${apiException.message}',
+                    );
+                  } else if ((userData == null &&
+                          userPasswordController.text.length < 6) ||
+                      (userData != null &&
+                          (userPasswordController.text.isNotEmpty &&
+                              userPasswordController.text.length < 6))) {
+                    showFeedbackDialog(
+                      context: context,
+                      type: 0,
+                      message: 'Password minimal 6 karakter',
                     );
                   } else {
                     showFeedbackDialog(
@@ -369,6 +391,45 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                   dialogActionButtonEnabled = true;
                 });
               }
+            }
+
+            void deleteUserData() {
+              showConfirmationDialog(
+                context: context,
+                message: 'Apakah Anda yakin ingin menghapus data pengguna ini?',
+                onLeftButtonTap: () {},
+                onRightButtonTap: () async {
+                  final deleteState = await ref
+                      .read(updateUserControllerProvider.notifier)
+                      .deleteUser(uid: getIdFromName(name: userData?.name));
+
+                  if (deleteState is AsyncData) {
+                    showFeedbackDialog(
+                      context: context,
+                      type: 1,
+                      message: 'Pengguna berhasil dihapus',
+                      onClose: () {
+                        _refreshUserList();
+                        Navigator.pop(statefulBuilderContext);
+                      },
+                    );
+                  } else if (deleteState is AsyncError) {
+                    final apiException = deleteState.error as ApiException;
+                    showFeedbackDialog(
+                      context: context,
+                      type: 0,
+                      message:
+                          'Gagal menghapus pengguna: ${apiException.message}',
+                    );
+                  } else {
+                    showFeedbackDialog(
+                      context: context,
+                      type: 0,
+                      message: 'Gagal menghapus pengguna',
+                    );
+                  }
+                },
+              );
             }
 
             return AlertDialog(
@@ -554,25 +615,40 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                               },
                             )
                             : const SizedBox.shrink(),
-                        const SizedBox(height: 12),
-
-                        // Password
-                        userData == null
-                            ? buildInputBox(
-                              controller: userPasswordController,
-                              label: 'Password',
-                              validator: (value) {
-                                if (userData != null) return null;
-                                if (value == null || value.isEmpty) {
-                                  return 'Password tidak boleh kosong';
-                                }
-                                return null;
-                              },
-                            )
-                            : const SizedBox.shrink(),
                         userData == null
                             ? const SizedBox(height: 12)
                             : const SizedBox.shrink(),
+
+                        // Password
+                        buildInputBox(
+                          controller: userPasswordController,
+                          label:
+                              userData == null
+                                  ? 'Password'
+                                  : 'Pasword (Kosongkan jika tidak ingin mengubah)',
+                          obscureText: obscurePassword,
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setDialogState(() {
+                                obscurePassword = !obscurePassword;
+                              });
+                            },
+                            icon: Icon(
+                              obscurePassword
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
+                          ),
+                          validator: (value) {
+                            if (userData != null) return null;
+                            if (value == null || value.isEmpty) {
+                              return 'Password tidak boleh kosong';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 12),
 
                         // Role and active status
                         Row(
@@ -856,30 +932,55 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                   ),
                 ),
               ),
-              actionsAlignment: MainAxisAlignment.end,
               actions: [
-                TextButton(
-                  onPressed:
-                      dialogActionButtonEnabled
-                          ? () {
-                            Navigator.pop(statefulBuilderContext);
-                          }
-                          : null,
-                  child: Text('Batal', style: captionStyle),
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        Theme.of(statefulBuilderContext).colorScheme.primary,
-                    foregroundColor:
-                        Theme.of(statefulBuilderContext).colorScheme.onPrimary,
-                    textStyle: buttonStyle,
-                  ),
-                  onPressed: dialogActionButtonEnabled ? submitUserData : null,
-                  child: Text(
-                    userData == null ? 'Tambah' : 'Perbarui',
-                    style: bodyStyle,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    userData != null
+                        ? IconButton(
+                          onPressed: deleteUserData,
+                          icon: Icon(
+                            Icons.delete,
+                            color: Theme.of(context).colorScheme.error,
+                          ),
+                        )
+                        : const SizedBox.shrink(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            foregroundColor:
+                                Theme.of(
+                                  statefulBuilderContext,
+                                ).colorScheme.onSurface,
+                          ),
+                          onPressed:
+                              dialogActionButtonEnabled
+                                  ? () {
+                                    Navigator.pop(statefulBuilderContext);
+                                  }
+                                  : null,
+                          child: const Text('Kembali'),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                Theme.of(
+                                  statefulBuilderContext,
+                                ).colorScheme.tertiary,
+                            foregroundColor:
+                                Theme.of(
+                                  statefulBuilderContext,
+                                ).colorScheme.onTertiary,
+                          ),
+                          onPressed:
+                              dialogActionButtonEnabled ? submitUserData : null,
+                          child: Text(userData == null ? 'Tambah' : 'Perbarui'),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ],
             );

@@ -79,4 +79,13 @@ class UpdateUserRepositoryImpl implements UserRepository {
 
     return resp.fold((l) => Left(l), (r) => Right(r));
   }
+
+  @override
+  Future<Either<ApiException, UserDomain?>> deleteUser({
+    required String uid,
+  }) async {
+    final resp = await remoteProcess(remoteDataSource.deleteUser(uid: uid));
+
+    return resp.fold((l) => Left(l), (r) => Right(r));
+  }
 }

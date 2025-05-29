@@ -90,4 +90,19 @@ class UpdateUserController extends _$UpdateUserController {
 
     return state;
   }
+
+  Future<AsyncValue<UserDomain?>> deleteUser({required String uid}) async {
+    final repository = ref.watch(UpdateUserRepositoryProvider);
+
+    state = const AsyncLoading();
+
+    final result = await repository.deleteUser(uid: uid);
+
+    state = await result.fold(
+      (l) => AsyncError(l, StackTrace.empty),
+      (r) => AsyncData(r),
+    );
+
+    return state;
+  }
 }

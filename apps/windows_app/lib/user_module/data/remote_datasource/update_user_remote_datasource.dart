@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:common_components/common_components.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:windows_app/user_module/domain/entities/user_domain.dart';
+import 'package:windows_app/utils/service_account.dart';
 
 abstract class UpdateUserRemoteDatasource {
   Future<UserDomain> addUser({
@@ -31,6 +32,8 @@ abstract class UpdateUserRemoteDatasource {
     required List<String> assignedCustomers,
     required List<String> assignedProducts,
   });
+
+  Future<UserDomain> deleteUser({required String uid});
 }
 
 class UpdateUserRemoteDatasourceImpl implements UpdateUserRemoteDatasource {
@@ -155,6 +158,13 @@ class UpdateUserRemoteDatasourceImpl implements UpdateUserRemoteDatasource {
       userPhotoLink = previousUserPhotoLink;
     }
 
+    // Change password in FirebaseAuth
+    if (newPassword != null &&
+        newPassword.isNotEmpty &&
+        newPassword.length >= 6) {
+      await changePasswordInFirebaseAuth(uid: userId, newPassword: newPassword);
+    }
+
     // Upload user data to Firestore
     Map<String, dynamic> result = await apiCallPatch(
       url:
@@ -186,6 +196,67 @@ class UpdateUserRemoteDatasourceImpl implements UpdateUserRemoteDatasource {
     );
 
     return UserDomain.fromJson(result);
+  }
+
+  @override
+  Future<UserDomain> deleteUser({required String uid}) async {
+    // Delete in FirebaseAuth
+    deleteUserInFirebaseAuth(uid: uid);
+
+    Map<String, dynamic> result = await apiCallDelete(
+      url:
+          'https://firestore.googleapis.com/v1/projects/${dotenv.env['PROJECT_ID']}/databases/(default)/documents/users/$uid',
+      headers: {
+        'Authorization': 'Bearer ${userDataHelper?.idToken}',
+        'Content-Type': 'application/json',
+      },
+    );
+    return UserDomain.fromJson(result);
+  }
+
+  Future<void> deleteUserInFirebaseAuth({required String uid}) async {
+    final token = await getAccessToken();
+
+    await apiCallPost(
+      url: 'https://identitytoolkit.googleapis.com/v1/accounts:delete',
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+      body: {'localId': uid},
+    );
+  }
+
+  Future<void> updateUserEmailInFirebaseAuth({
+    required String uid,
+    required String newEmail,
+  }) async {
+    final token = await getAccessToken();
+
+    await apiCallPost(
+      url: 'https://identitytoolkit.googleapis.com/v1/accounts:update',
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+      body: {'localId': uid, 'email': newEmail},
+    );
+  }
+
+  Future<void> changePasswordInFirebaseAuth({
+    required String uid,
+    required String newPassword,
+  }) async {
+    final token = await getAccessToken();
+
+    await apiCallPost(
+      url: 'https://identitytoolkit.googleapis.com/v1/accounts:update',
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+      body: {'localId': uid, 'password': newPassword},
+    );
   }
 
   List<Map<String, String>> _createAssignedList(List<String> assignedList) {

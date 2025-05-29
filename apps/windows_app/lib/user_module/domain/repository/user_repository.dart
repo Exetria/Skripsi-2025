@@ -35,6 +35,8 @@ abstract class UserRepository {
     required List<String> assignedCustomers,
     required List<String> assignedProducts,
   });
+
+  Future<Either<ApiException, UserDomain?>> deleteUser({required String uid});
 }
 
 final UserListRepositoryProvider = Provider<UserRepository>(

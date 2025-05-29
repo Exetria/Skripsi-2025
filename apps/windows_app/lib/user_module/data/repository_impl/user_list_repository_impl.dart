@@ -49,4 +49,10 @@ class UserListRepositoryImpl implements UserRepository {
   }) {
     throw UnimplementedError();
   }
+
+  @override
+  Future<Either<ApiException, UserDomain?>> deleteUser({required String uid}) {
+    // TODO: implement deleteUser
+    throw UnimplementedError();
+  }
 }
