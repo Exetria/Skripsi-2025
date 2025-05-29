@@ -19,8 +19,6 @@ class _ProfileFragmentState extends ConsumerState<ProfileFragment> {
     final cs = Theme.of(context).colorScheme;
     final user = userDataHelper;
 
-    print('asds${userDataHelper?.photoUrl}');
-
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Row(
