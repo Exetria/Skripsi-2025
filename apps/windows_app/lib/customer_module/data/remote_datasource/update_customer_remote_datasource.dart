@@ -86,6 +86,8 @@ abstract class UpdateCustomerRemoteDatasource {
     required bool isBlacklisted,
   });
 
+  Future<CustomerDomain> deleteCustomer({required String customerId});
+
   Future<CustomerRequestDomain> updateCustomerRequest({
     required CustomerRequestDomain? customerRequestData,
     required String? approvalReason,
@@ -145,6 +147,12 @@ class UpdateCustomerRemoteDatasourceImpl
           approved: true,
         );
       } catch (e) {
+        if (e is ApiException) {
+          print('asds ${e.responseBody}');
+          rethrow;
+        }
+        print('asds $e');
+
         throw ApiException(
           statusCode: -1,
           message: 'Gagal memperbarui data permintaan pelanggan.',
@@ -387,14 +395,28 @@ class UpdateCustomerRemoteDatasourceImpl
   }
 
   @override
+  Future<CustomerDomain> deleteCustomer({required String customerId}) async {
+    Map<String, dynamic> result = await apiCallDelete(
+      url:
+          'https://firestore.googleapis.com/v1/projects/${dotenv.env['PROJECT_ID']}/databases/(default)/documents/customers/$customerId',
+      headers: {
+        'Authorization': 'Bearer ${userDataHelper?.idToken}',
+        'Content-Type': 'application/json',
+      },
+    );
+    return CustomerDomain.fromJson(result);
+  }
+
+  @override
   Future<CustomerRequestDomain> updateCustomerRequest({
     required CustomerRequestDomain? customerRequestData,
     required String? approvalReason,
     required bool approved,
   }) async {
+    print('asds $approvalReason');
     Map<String, dynamic> result = await apiCallPatch(
       url:
-          'https://firestore.googleapis.com/v1/projects/${dotenv.env['PROJECT_ID']}/databases/(default)/documents/customerRequests',
+          'https://firestore.googleapis.com/v1/projects/${dotenv.env['PROJECT_ID']}/databases/(default)/documents/customerRequests/${getIdFromName(name: customerRequestData?.name)}',
       headers: {
         'Authorization': 'Bearer ${userDataHelper?.idToken}',
         'Content-Type': 'application/json',
@@ -422,7 +444,7 @@ class UpdateCustomerRemoteDatasourceImpl
                           ?.companyLocation
                           ?.mapValue
                           ?.fields
-                          ?.latitude
+                          ?.longitude
                           ?.doubleValue ??
                       0.0,
                 },
@@ -433,7 +455,7 @@ class UpdateCustomerRemoteDatasourceImpl
                           ?.companyLocation
                           ?.mapValue
                           ?.fields
-                          ?.latitude
+                          ?.accuracy
                           ?.doubleValue ??
                       0.0,
                 },
@@ -446,7 +468,9 @@ class UpdateCustomerRemoteDatasourceImpl
                 customerRequestData?.fields?.customerType?.stringValue ?? '',
           },
           'subscription_type': {
-            customerRequestData?.fields?.subscriptionType?.stringValue ?? '',
+            'stringValue':
+                customerRequestData?.fields?.subscriptionType?.stringValue ??
+                '',
           },
 
           'request_destination': {
@@ -530,11 +554,11 @@ class UpdateCustomerRemoteDatasourceImpl
 
           'credit_period': {
             'integerValue':
-                customerRequestData?.fields?.creditPeriod?.integerValue ?? '',
+                customerRequestData?.fields?.creditPeriod?.integerValue ?? 0,
           },
           'credit_limit': {
             'integerValue':
-                customerRequestData?.fields?.creditLimit?.integerValue ?? '',
+                customerRequestData?.fields?.creditLimit?.integerValue ?? 0,
           },
 
           'note': {
@@ -548,9 +572,11 @@ class UpdateCustomerRemoteDatasourceImpl
           'approval_status': {
             'stringValue': approved ? 'approved' : 'rejected',
           },
-          'approved_by': {'nullValue': userDataHelper?.uid ?? ''},
-          'approval_date': {'nullValue': DateTime.now().toIso8601String()},
-          'approval_reason': {'nullValue': approvalReason ?? ''},
+          'approved_by': {'stringValue': userDataHelper?.uid ?? ''},
+          'approval_date': {
+            'timestampValue': DateTime.now().toUtc().toIso8601String(),
+          },
+          'approval_reason': {'stringValue': approvalReason ?? ''},
         },
       },
     );

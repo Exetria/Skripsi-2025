@@ -11,6 +11,7 @@ import 'package:windows_app/customer_module/domain/entities/customer_request_dom
 
 abstract class CustomerRepository {
   Future<Either<ApiException, List<CustomerDomain>?>> getCustomerList();
+
   Future<Either<ApiException, CustomerDomain?>> addCustomer({
     required CustomerRequestDomain? customerRequestData,
     String approvalReason = '',
@@ -51,6 +52,7 @@ abstract class CustomerRepository {
     required String note,
     required bool isBlacklisted,
   });
+
   Future<Either<ApiException, CustomerDomain?>> updateCustomer({
     required String customerId,
 
@@ -90,6 +92,11 @@ abstract class CustomerRepository {
     required String note,
     required bool isBlacklisted,
   });
+
+  Future<Either<ApiException, CustomerDomain?>> deleteCustomer({
+    required String customerId,
+  });
+
   Future<Either<ApiException, List<CustomerRequestDomain>?>>
   getCustomerRequestList();
 

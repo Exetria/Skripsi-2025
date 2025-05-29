@@ -60,6 +60,7 @@ class UpdateCustomerController extends _$UpdateCustomerController {
 
     final result = await repository.addCustomer(
       customerRequestData: customerRequestData,
+      approvalReason: approvalReason,
       companyName: companyName,
       companyAddress: companyAddress,
       companyPhoneNumber: companyPhoneNumber,
@@ -171,6 +172,23 @@ class UpdateCustomerController extends _$UpdateCustomerController {
       note: note,
       isBlacklisted: isBlacklisted,
     );
+
+    state = await result.fold(
+      (l) => AsyncError(l, StackTrace.empty),
+      (r) => AsyncData(r),
+    );
+
+    return state;
+  }
+
+  Future<AsyncValue<CustomerDomain?>> deleteCustomer({
+    required String customerId,
+  }) async {
+    final repository = ref.watch(UpdateCustomerRepositoryProvider);
+
+    state = const AsyncLoading();
+
+    final result = await repository.deleteCustomer(customerId: customerId);
 
     state = await result.fold(
       (l) => AsyncError(l, StackTrace.empty),

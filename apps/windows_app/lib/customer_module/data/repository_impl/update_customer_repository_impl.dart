@@ -59,6 +59,7 @@ class UpdateCustomerRepositoryImpl implements CustomerRepository {
     final resp = await remoteProcess(
       remoteDataSource.addCustomer(
         customerRequestData: customerRequestData,
+        approvalReason: approvalReason,
         companyName: companyName,
         companyAddress: companyAddress,
         companyPhoneNumber: companyPhoneNumber,
@@ -165,6 +166,17 @@ class UpdateCustomerRepositoryImpl implements CustomerRepository {
         note: note,
         isBlacklisted: isBlacklisted,
       ),
+    );
+
+    return resp.fold((l) => Left(l), (r) => Right(r));
+  }
+
+  @override
+  Future<Either<ApiException, CustomerDomain?>> deleteCustomer({
+    required String customerId,
+  }) async {
+    final resp = await remoteProcess(
+      remoteDataSource.deleteCustomer(customerId: customerId),
     );
 
     return resp.fold((l) => Left(l), (r) => Right(r));

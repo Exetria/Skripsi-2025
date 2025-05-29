@@ -105,6 +105,13 @@ class CustomerListRepositoryImpl implements CustomerRepository {
   }
 
   @override
+  Future<Either<ApiException, CustomerDomain?>> deleteCustomer({
+    required String customerId,
+  }) {
+    throw UnimplementedError();
+  }
+
+  @override
   Future<Either<ApiException, List<CustomerRequestDomain>?>>
   getCustomerRequestList() {
     throw UnimplementedError();

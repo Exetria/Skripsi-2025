@@ -103,6 +103,13 @@ class CustomerRequestListRepositoryImpl implements CustomerRepository {
   }
 
   @override
+  Future<Either<ApiException, CustomerDomain?>> deleteCustomer({
+    required String customerId,
+  }) {
+    throw UnimplementedError();
+  }
+
+  @override
   Future<Either<ApiException, List<CustomerRequestDomain>?>>
   getCustomerRequestList() async {
     final resp = await remoteProcess(remoteDataSource.getCustomerRequestList());

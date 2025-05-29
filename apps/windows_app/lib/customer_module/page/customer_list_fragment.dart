@@ -240,6 +240,7 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
             ),
           );
         }
+
         return LayoutBuilder(
           builder: (context, constraints) {
             final crossCount = getCrossAxisCount(constraints);
@@ -255,6 +256,9 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
               itemCount: customerRequestList.length,
               itemBuilder: (context, index) {
                 final data = customerRequestList[index];
+                final status =
+                    data.fields?.approvalStatus?.stringValue ?? 'Error';
+
                 return itemCard(
                   context: context,
                   icon: Icons.add_business,
@@ -266,7 +270,14 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                             data.fields?.companyPhoneNumber?.stringValue ?? '',
                           )
                           : null,
-                  onTap: () {},
+                  bottomText: status[0].toUpperCase() + status.substring(1),
+                  onTap: () {
+                    showCustomerDataPopup(
+                      context: context,
+                      customerData: null,
+                      customerRequestData: data,
+                    );
+                  },
                 );
               },
             );
@@ -335,6 +346,7 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
     String? selectedCustomerType;
 
     // Checkbox / toggle
+    bool requestNotApproved = true;
     bool isBlacklisted = false;
 
     List<String> customerTypes = ['', 'PKP', 'Non PKP'];
@@ -443,6 +455,10 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
 
       noteController.text = customerData.fields?.note?.stringValue ?? '';
     } else if (customerRequestData != null) {
+      // Check if request already done
+      requestNotApproved =
+          customerRequestData.fields?.approvalStatus?.stringValue == 'pending';
+
       // Dropdown selections
       selectedCustomerType =
           customerTypes.contains(
@@ -1085,7 +1101,7 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
 
                   // Credit & metadata fields
                   buildInputBox(
-                    controller: creditLimitController,
+                    controller: creditPeriodController,
                     label: 'Jangka Waktu Kredit (dalam hari)',
                     suffix: 'hari',
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -1099,7 +1115,7 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                   const SizedBox(height: 12),
 
                   buildInputBox(
-                    controller: creditPeriodController,
+                    controller: creditLimitController,
                     label: 'Batas Kredit (dalam Rp)',
                     prefix: 'Rp. ',
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -1220,7 +1236,7 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
               return allFlags.every((flag) => flag);
             }
 
-            void submitUserData() async {
+            void submitCustomerData() async {
               {
                 setDialogState(() {
                   dialogActionButtonEnabled = false;
@@ -1395,7 +1411,6 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                                 note: noteController.text,
                                 isBlacklisted: isBlacklisted,
                               );
-
                   if (submitState is AsyncData) {
                     showFeedbackDialog(
                       context: context,
@@ -1407,11 +1422,8 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                               ? 'Permintaan pelanggan berhasil diterima'
                               : 'Pelanggan berhasil ditambahkan',
                       onClose: () {
-                        seeCustomer
-                            ? ref.invalidate(customerListControllerProvider)
-                            : ref.invalidate(
-                              customerRequestListControllerProvider,
-                            );
+                        _refreshCustomerList();
+                        _refreshCustomerRequestList();
                         Navigator.pop(statefulBuilderContext);
                       },
                     );
@@ -1449,6 +1461,47 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                   dialogActionButtonEnabled = true;
                 });
               }
+            }
+
+            void deleteCustomerData() async {
+              setDialogState(() {
+                dialogActionButtonEnabled = false;
+              });
+              final deleteState = await ref
+                  .read(updateCustomerControllerProvider.notifier)
+                  .deleteCustomer(
+                    customerId: getIdFromName(name: customerData?.name),
+                  );
+
+              if (deleteState is AsyncData) {
+                showFeedbackDialog(
+                  context: context,
+                  type: 1,
+                  message: 'Pelanggan berhasil dihapus',
+                  onClose: () {
+                    _refreshCustomerList();
+                    _refreshCustomerRequestList();
+                    Navigator.pop(statefulBuilderContext);
+                  },
+                );
+              } else if (deleteState is AsyncError) {
+                final apiException = deleteState.error as ApiException;
+                showFeedbackDialog(
+                  context: context,
+                  type: 0,
+                  message: apiException.message,
+                );
+              } else {
+                showFeedbackDialog(
+                  context: context,
+                  type: 0,
+                  message: 'Gagal menghapus pelanggan',
+                );
+              }
+
+              setDialogState(() {
+                dialogActionButtonEnabled = true;
+              });
             }
 
             void rejectCustomerRequest() async {
@@ -1664,6 +1717,24 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
               ),
               actionsAlignment: MainAxisAlignment.end,
               actions: [
+                customerData != null
+                    ? IconButton(
+                      onPressed: deleteCustomerData,
+                      icon: Icon(
+                        Icons.delete,
+                        color: Theme.of(context).colorScheme.error,
+                      ),
+                    )
+                    : const SizedBox.shrink(),
+                !requestNotApproved
+                    ? Text(
+                      'Permintaan ini sudah diterima/ditolak',
+                      style: errorStyle,
+                    )
+                    : const SizedBox.shrink(),
+                !requestNotApproved
+                    ? const SizedBox(width: 12)
+                    : const SizedBox.shrink(),
                 TextButton(
                   onPressed:
                       dialogActionButtonEnabled
@@ -1671,11 +1742,23 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                             Navigator.pop(statefulBuilderContext);
                           }
                           : null,
-                  child: Text('Batal', style: captionStyle),
+                  child: Text(
+                    requestNotApproved ? 'Batal' : 'Kembali',
+                    style: captionStyle,
+                  ),
                 ),
 
-                customerRequestData != null
+                customerRequestData != null && requestNotApproved
                     ? TextButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Theme.of(statefulBuilderContext).colorScheme.error,
+                        foregroundColor:
+                            Theme.of(
+                              statefulBuilderContext,
+                            ).colorScheme.onError,
+                        textStyle: buttonStyle,
+                      ),
                       onPressed:
                           dialogActionButtonEnabled
                               ? rejectCustomerRequest
@@ -1684,24 +1767,31 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                     )
                     : const SizedBox.shrink(),
 
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        Theme.of(statefulBuilderContext).colorScheme.primary,
-                    foregroundColor:
-                        Theme.of(statefulBuilderContext).colorScheme.onPrimary,
-                    textStyle: buttonStyle,
-                  ),
-                  onPressed: dialogActionButtonEnabled ? submitUserData : null,
-                  child: Text(
-                    customerData != null
-                        ? 'Perbarui'
-                        : customerRequestData != null
-                        ? 'Terima'
-                        : 'Tambah',
-                    style: bodyStyle,
-                  ),
-                ),
+                requestNotApproved
+                    ? ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Theme.of(
+                              statefulBuilderContext,
+                            ).colorScheme.primary,
+                        foregroundColor:
+                            Theme.of(
+                              statefulBuilderContext,
+                            ).colorScheme.onPrimary,
+                        textStyle: buttonStyle,
+                      ),
+                      onPressed:
+                          dialogActionButtonEnabled ? submitCustomerData : null,
+                      child: Text(
+                        customerData != null
+                            ? 'Perbarui'
+                            : customerRequestData != null
+                            ? 'Terima'
+                            : 'Tambah',
+                        style: bodyStyle,
+                      ),
+                    )
+                    : const SizedBox.shrink(),
               ],
             );
           },
