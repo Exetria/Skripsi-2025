@@ -75,4 +75,15 @@ class UpdateProductRepositoryImpl implements ProductRepository {
 
     return resp.fold((l) => Left(l), (r) => Right(r));
   }
+
+  @override
+  Future<Either<ApiException, ProductDomain?>> deleteProduct({
+    required String productId,
+  }) async {
+    final resp = await remoteProcess(
+      remoteDataSource.deleteProduct(productId: productId),
+    );
+
+    return resp.fold((l) => Left(l), (r) => Right(r));
+  }
 }

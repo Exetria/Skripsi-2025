@@ -307,6 +307,47 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
               }
             }
 
+            void deleteProductData() async {
+              showConfirmationDialog(
+                context: statefulBuilderContext,
+                message: 'Apakah Anda yakin ingin menghapus data produk ini?',
+                onLeftButtonTap: () {},
+                onRightButtonTap: () async {
+                  final deleteState = await ref
+                      .read(updateProductControllerProvider.notifier)
+                      .deleteProduct(
+                        productId: getIdFromName(name: productData?.name),
+                      );
+
+                  if (deleteState is AsyncData) {
+                    showFeedbackDialog(
+                      context: context,
+                      type: 1,
+                      message: 'Produk berhasil dihapus',
+                      onClose: () {
+                        _refreshProductList();
+                        Navigator.pop(statefulBuilderContext);
+                      },
+                    );
+                  } else if (deleteState is AsyncError) {
+                    final apiException = deleteState.error as ApiException;
+                    showFeedbackDialog(
+                      context: context,
+                      type: 0,
+                      message:
+                          'Gagal menghapus produk: ${apiException.message}',
+                    );
+                  } else {
+                    showFeedbackDialog(
+                      context: context,
+                      type: 0,
+                      message: 'Gagal menghapus produk',
+                    );
+                  }
+                },
+              );
+            }
+
             return AlertDialog(
               title: Center(
                 child: Text(
@@ -654,31 +695,59 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                   ),
                 ),
               ),
-              actionsAlignment: MainAxisAlignment.end,
               actions: [
-                TextButton(
-                  onPressed:
-                      dialogActionButtonEnabled
-                          ? () {
-                            Navigator.pop(statefulBuilderContext);
-                          }
-                          : null,
-                  child: Text('Batal', style: captionStyle),
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        Theme.of(statefulBuilderContext).colorScheme.primary,
-                    foregroundColor:
-                        Theme.of(statefulBuilderContext).colorScheme.onPrimary,
-                    textStyle: buttonStyle,
-                  ),
-                  onPressed:
-                      dialogActionButtonEnabled ? submitProductData : null,
-                  child: Text(
-                    productData == null ? 'Tambah' : 'Perbarui',
-                    style: bodyStyle,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    productData != null
+                        ? IconButton(
+                          onPressed: deleteProductData,
+                          icon: Icon(
+                            Icons.delete,
+                            color: Theme.of(context).colorScheme.error,
+                          ),
+                        )
+                        : const SizedBox.shrink(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            foregroundColor:
+                                Theme.of(
+                                  statefulBuilderContext,
+                                ).colorScheme.onSurface,
+                          ),
+                          onPressed:
+                              dialogActionButtonEnabled
+                                  ? () {
+                                    Navigator.pop(statefulBuilderContext);
+                                  }
+                                  : null,
+                          child: const Text('Kembali'),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                Theme.of(
+                                  statefulBuilderContext,
+                                ).colorScheme.tertiary,
+                            foregroundColor:
+                                Theme.of(
+                                  statefulBuilderContext,
+                                ).colorScheme.onTertiary,
+                          ),
+                          onPressed:
+                              dialogActionButtonEnabled
+                                  ? submitProductData
+                                  : null,
+                          child: Text(
+                            productData == null ? 'Tambah' : 'Perbarui',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ],
             );

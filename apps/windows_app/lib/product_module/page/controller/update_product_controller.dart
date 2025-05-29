@@ -86,4 +86,21 @@ class UpdateProductController extends _$UpdateProductController {
 
     return state;
   }
+
+  Future<AsyncValue<ProductDomain?>> deleteProduct({
+    required String productId,
+  }) async {
+    final repository = ref.watch(UpdateProductRepositoryProvider);
+
+    state = const AsyncLoading();
+
+    final result = await repository.deleteProduct(productId: productId);
+
+    state = await result.fold(
+      (l) => AsyncError(l, StackTrace.empty),
+      (r) => AsyncData(r),
+    );
+
+    return state;
+  }
 }

@@ -33,6 +33,10 @@ abstract class ProductRepository {
     required bool available,
     required Map<String, String>? attributes,
   });
+
+  Future<Either<ApiException, ProductDomain?>> deleteProduct({
+    required String productId,
+  });
 }
 
 final ProductListRepositoryProvider = Provider<ProductRepository>(

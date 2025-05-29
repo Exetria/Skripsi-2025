@@ -47,4 +47,11 @@ class ProductListRepositoryImpl implements ProductRepository {
   }) {
     throw UnimplementedError();
   }
+
+  @override
+  Future<Either<ApiException, ProductDomain?>> deleteProduct({
+    required String productId,
+  }) {
+    throw UnimplementedError();
+  }
 }

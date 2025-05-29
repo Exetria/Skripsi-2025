@@ -29,6 +29,8 @@ abstract class UpdateProductRemoteDatasource {
     required bool available,
     required Map<String, String>? attributes,
   });
+
+  Future<ProductDomain> deleteProduct({required String productId});
 }
 
 class UpdateProductRemoteDatasourceImpl
@@ -171,5 +173,18 @@ class UpdateProductRemoteDatasourceImpl
         (entry) => MapEntry(entry.key, {'stringValue': entry.value}),
       ),
     );
+  }
+
+  @override
+  Future<ProductDomain> deleteProduct({required String productId}) async {
+    Map<String, dynamic> result = await apiCallDelete(
+      url:
+          'https://firestore.googleapis.com/v1/projects/${dotenv.env['PROJECT_ID']}/databases/(default)/documents/products/$productId',
+      headers: {
+        'Authorization': 'Bearer ${userDataHelper?.idToken}',
+        'Content-Type': 'application/json',
+      },
+    );
+    return ProductDomain.fromJson(result);
   }
 }
