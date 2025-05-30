@@ -10,18 +10,43 @@ class CustomerRequestListRemoteDatasourceImpl
     implements CustomerRequestListRemoteDatasource {
   @override
   Future<List<CustomerRequestDomain>> getCustomerRequestList() async {
-    Map<String, dynamic> result = await apiCallGet(
+    List<CustomerRequestDomain> customerRequestList = [];
+
+    List<dynamic> result = await apiCallPostList(
       url:
-          'https://firestore.googleapis.com/v1/projects/${dotenv.env['PROJECT_ID']}/databases/(default)/documents/customerRequests',
+          'https://firestore.googleapis.com/v1/projects/${dotenv.env['PROJECT_ID']}/databases/(default)/documents:runQuery',
       headers: {
         'Authorization': 'Bearer ${userDataHelper?.idToken}',
         'Content-Type': 'application/json',
       },
+      body: {
+        'structuredQuery': {
+          'from': [
+            {'collectionId': 'customerRequests'},
+          ],
+          'where': {
+            'fieldFilter': {
+              'field': {'fieldPath': 'requested_by'},
+              'op': 'EQUAL',
+              'value': {'stringValue': userDataHelper?.uid ?? ''},
+            },
+          },
+        },
+      },
     );
 
-    final documents = (result['documents'] as List<dynamic>? ?? []);
-    return documents
-        .map((e) => CustomerRequestDomain.fromJson(e as Map<String, dynamic>))
-        .toList();
+    for (final doc in result) {
+      final document = doc['document'];
+      if (document == null) continue;
+
+      try {
+        final order = CustomerRequestDomain.fromJson(document);
+        customerRequestList.add(order);
+      } catch (_) {
+        continue;
+      }
+    }
+
+    return customerRequestList;
   }
 }
