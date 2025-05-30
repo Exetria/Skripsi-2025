@@ -834,6 +834,9 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
             setState(() {
               _submitButtonEnabled = true;
             });
+
+            // Close form page
+            Navigator.of(context).pop();
           },
         );
         setState(() {
