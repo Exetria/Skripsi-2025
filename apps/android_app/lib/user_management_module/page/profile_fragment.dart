@@ -1,7 +1,9 @@
+import 'package:android_app/customer_module/page/customer_request_list_page.dart';
 import 'package:android_app/user_management_module/domain/entities/attendance_domain.dart';
 import 'package:android_app/user_management_module/page/controller/get_attendance_data_controller.dart';
 import 'package:android_app/user_management_module/page/controller/update_attendance_controller.dart';
 import 'package:android_app/user_management_module/page/login_page.dart';
+import 'package:android_app/utils/functions.dart';
 import 'package:android_app/utils/theme_controller.dart';
 import 'package:android_app/utils/widget_settings.dart';
 import 'package:common_components/common_components.dart';
@@ -75,7 +77,23 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
             ),
           ),
 
-          SizedBox(height: 24.h),
+          SizedBox(height: 16.h),
+
+          Material(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            child: customListItem(
+              context: context,
+              onTap:
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CustomerRequestListPage(),
+                    ),
+                  ),
+              title: 'Lihat Daftar NOO Anda',
+              trailIcon: Icons.arrow_forward_ios,
+            ),
+          ),
 
           const Spacer(),
 

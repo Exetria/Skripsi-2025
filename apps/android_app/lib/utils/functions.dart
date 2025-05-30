@@ -97,10 +97,10 @@ PreferredSizeWidget customAppBar({
 InkWell customListItem({
   required BuildContext context,
   required VoidCallback? onTap,
-  required IconData leadIcon,
+  IconData? leadIcon,
   required String title,
-  required String subtitle,
-  required IconData trailIcon,
+  String? subtitle,
+  IconData? trailIcon,
 }) {
   return InkWell(
     onTap: onTap,
@@ -109,35 +109,43 @@ InkWell customListItem({
       decoration: regularBoxDecoration(context),
       child: Row(
         children: [
-          Container(
-            width: 48.w,
-            height: 48.h,
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.secondary.withAlpha(50),
-              borderRadius: BorderRadius.circular(10.r),
-            ),
-            child: Icon(
-              leadIcon,
-              color: Theme.of(context).colorScheme.secondary,
-              size: 24.sp,
-            ),
-          ),
-          SizedBox(width: 12.w),
+          leadIcon != null
+              ? Container(
+                width: 48.w,
+                height: 48.h,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.secondary.withAlpha(50),
+                  borderRadius: BorderRadius.circular(10.r),
+                ),
+                child: Icon(
+                  leadIcon,
+                  color: Theme.of(context).colorScheme.secondary,
+                  size: 24.sp,
+                ),
+              )
+              : const SizedBox.shrink(),
+          SizedBox(width: leadIcon != null ? 12.w : 6.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(title, style: bodyStyle),
-                SizedBox(height: 4.h),
-                Text(subtitle, style: captionStyle),
+                subtitle != null
+                    ? SizedBox(height: 4.h)
+                    : const SizedBox.shrink(),
+                subtitle != null
+                    ? Text(subtitle, style: captionStyle)
+                    : const SizedBox.shrink(),
               ],
             ),
           ),
-          Icon(
-            trailIcon,
-            size: 16.sp,
-            color: Theme.of(context).colorScheme.onSurface,
-          ),
+          trailIcon != null
+              ? Icon(
+                trailIcon,
+                size: 16.sp,
+                color: Theme.of(context).colorScheme.onSurface,
+              )
+              : const SizedBox.shrink(),
         ],
       ),
     ),
