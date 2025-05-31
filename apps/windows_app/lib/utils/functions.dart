@@ -86,7 +86,8 @@ Widget itemCard({
   required String subtitle,
   String? secondarySubtitle,
   String? tertiarySubtitle,
-  String? bottomText,
+  String? leftBottomText,
+  String? rightBottomText,
   required VoidCallback? onTap,
 }) {
   final cs = Theme.of(context).colorScheme;
@@ -134,9 +135,18 @@ Widget itemCard({
                     ? Text(tertiarySubtitle, style: captionStyle)
                     : const SizedBox.shrink(),
                 const Spacer(),
-                bottomText != null
-                    ? Text(bottomText, style: bodyStyle)
-                    : const SizedBox.shrink(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    leftBottomText != null
+                        ? Text(leftBottomText, style: bodyStyle)
+                        : const SizedBox.shrink(),
+
+                    rightBottomText != null
+                        ? Text(rightBottomText, style: bodyStyle)
+                        : const SizedBox.shrink(),
+                  ],
+                ),
               ],
             ),
           ),
