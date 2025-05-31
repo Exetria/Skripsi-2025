@@ -221,7 +221,7 @@ class UpdateCustomerRemoteDatasourceImpl
             },
           },
           'company_store_condition': {'stringValue': companyStoreCondition},
-          'company_store_photo': {'stringValue': companyStorePhotoUrl},
+          'company_store_photo': {'stringValue': companyStorePhotoUrl ?? ''},
           'subscription_type': {'stringValue': subscriptionType},
           'customer_type': {'stringValue': customerType},
 
@@ -230,7 +230,7 @@ class UpdateCustomerRemoteDatasourceImpl
           'pic_address': {'stringValue': picAddress},
           'pic_phone_number': {'stringValue': picPhoneNumber},
           'pic_national_id': {'stringValue': picNationalId},
-          'pic_national_id_photo': {'stringValue': picNationalIdPhotoUrl},
+          'pic_national_id_photo': {'stringValue': picNationalIdPhotoUrl ?? ''},
           'pic_tax_id': {'stringValue': picTaxId},
           'pic_position': {'stringValue': picPosition},
           'ownership_status': {'stringValue': ownershipStatus},
@@ -244,7 +244,12 @@ class UpdateCustomerRemoteDatasourceImpl
           'note': {'stringValue': note},
 
           // Other business fields
-          'requested_by': {'stringValue': requestedBy},
+          'requested_by': {
+            'stringValue':
+                requestedBy.isNotEmpty
+                    ? requestedBy
+                    : userDataHelper?.uid ?? '',
+          },
           'approved_by': {
             'stringValue': approvedBy,
           }, //Default value set in the UI
