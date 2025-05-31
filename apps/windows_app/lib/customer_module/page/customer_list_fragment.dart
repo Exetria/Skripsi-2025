@@ -1810,7 +1810,7 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                                     Navigator.pop(statefulBuilderContext);
                                   }
                                   : null,
-                          child: const Text('Kembali'),
+                          child: const Text('Tutup'),
                         ),
 
                         customerRequestData != null && requestNotApproved

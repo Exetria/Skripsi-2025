@@ -724,7 +724,7 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                                     Navigator.pop(statefulBuilderContext);
                                   }
                                   : null,
-                          child: const Text('Kembali'),
+                          child: const Text('Tutup'),
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(

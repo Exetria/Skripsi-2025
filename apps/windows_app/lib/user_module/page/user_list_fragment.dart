@@ -971,7 +971,7 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                                     Navigator.pop(statefulBuilderContext);
                                   }
                                   : null,
-                          child: const Text('Kembali'),
+                          child: const Text('Tutup'),
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
