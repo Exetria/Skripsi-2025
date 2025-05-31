@@ -47,7 +47,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
         ref.read(customerListControllerProvider.notifier).resetSearch();
       },
     );
-    _editable = widget.orderData.fields?.orderStatus?.stringValue == 'Pending';
+    _editable = widget.orderData.fields?.orderStatus?.stringValue == 'pending';
     _productDataList = List.from(widget.productDataList);
     _paymentMethod = widget.orderData.fields?.paymentMethod?.stringValue;
     _notesController.text = widget.orderData.fields?.notes?.stringValue ?? '';

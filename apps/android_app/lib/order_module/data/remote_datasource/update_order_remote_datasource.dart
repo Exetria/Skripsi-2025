@@ -83,7 +83,7 @@ class UpdateOrderRemoteDatasourceImpl implements UpdateOrderRemoteDatasource {
           }, // total nett (counted here)
 
           'payment_method': {'stringValue': paymentMethod}, // method
-          'order_status': {'stringValue': 'Pending'}, // status (hardcoded)
+          'order_status': {'stringValue': 'pending'}, // status (hardcoded)
           // 'delivery_date': {'timestampValue': '2025-05-05T18:00:00Z'}, // ommit
           // 'payment_date': {'timestampValue': '2025-05-05T18:00:00Z'},  // ommit
         },
@@ -179,7 +179,7 @@ class UpdateOrderRemoteDatasourceImpl implements UpdateOrderRemoteDatasource {
           }, // total nett (counted here)
 
           'payment_method': {'stringValue': paymentMethod}, // method
-          'order_status': {'stringValue': 'Pending'}, // status (hardcoded)
+          'order_status': {'stringValue': 'pending'}, // status (hardcoded)
           // 'delivery_date': {'timestampValue': '2025-05-05T18:00:00Z'}, // ommit
           // 'payment_date': {'timestampValue': '2025-05-05T18:00:00Z'},  // ommit
         },
