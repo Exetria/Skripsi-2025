@@ -77,7 +77,7 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
                       // LANJUT DARISINI, CONVERT - PASSING KE DETAILS - UPDATE PAKE DATA BARU
                       // Create product list
                       List<Map<String, dynamic>> productDataList =
-                          createVisitDataList(products: productValueList);
+                          createProductDataList(products: productValueList);
 
                       return customListItem(
                         context: context,
@@ -131,7 +131,7 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
     );
   }
 
-  List<Map<String, dynamic>> createVisitDataList({
+  List<Map<String, dynamic>> createProductDataList({
     required List<Value> products,
   }) {
     List<Map<String, dynamic>> result = [];
