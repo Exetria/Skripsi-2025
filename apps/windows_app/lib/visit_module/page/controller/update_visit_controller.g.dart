@@ -1,30 +1,30 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'update_product_controller.dart';
+part of 'update_visit_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$updateProductControllerHash() =>
-    r'd35ddbbd1ea94a78599b6426eda4b426a76fdee0';
+String _$updateVisitControllerHash() =>
+    r'cb96be5da68f301307d22b34a4f140c3f5c909df';
 
-/// See also [UpdateProductController].
-@ProviderFor(UpdateProductController)
-final updateProductControllerProvider = NotifierProvider<
-  UpdateProductController,
-  AsyncValue<ProductDomain?>
+/// See also [UpdateVisitController].
+@ProviderFor(UpdateVisitController)
+final updateVisitControllerProvider = AutoDisposeNotifierProvider<
+  UpdateVisitController,
+  AsyncValue<VisitDomain?>
 >.internal(
-  UpdateProductController.new,
-  name: r'updateProductControllerProvider',
+  UpdateVisitController.new,
+  name: r'updateVisitControllerProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$updateProductControllerHash,
+          : _$updateVisitControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$UpdateProductController = Notifier<AsyncValue<ProductDomain?>>;
+typedef _$UpdateVisitController = AutoDisposeNotifier<AsyncValue<VisitDomain?>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

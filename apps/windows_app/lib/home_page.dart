@@ -8,6 +8,7 @@ import 'package:windows_app/report_module/page/main_report_fragment.dart';
 import 'package:windows_app/user_management_module/page/login_page.dart';
 import 'package:windows_app/user_management_module/page/profile_fragment.dart';
 import 'package:windows_app/user_module/page/user_list_fragment.dart';
+import 'package:windows_app/visit_module/page/visit_list_fragment.dart';
 
 final selectedIndexProvider = StateProvider<int>((ref) => 0);
 
@@ -22,6 +23,7 @@ class _HomePage extends ConsumerState<HomePage> {
   final List<Widget> pages = [
     const MainReportFragment(),
     const UserListFragment(),
+    const VisitListFragment(),
     const OrderListFragment(),
     const CustomerListFragment(),
     const ProductListFragment(),
@@ -82,6 +84,10 @@ class _HomePage extends ConsumerState<HomePage> {
                 const NavigationRailDestination(
                   icon: Icon(Icons.people),
                   label: Text('Pengguna'),
+                ),
+                const NavigationRailDestination(
+                  icon: Icon(Icons.location_on),
+                  label: Text('Kunjungan'),
                 ),
                 const NavigationRailDestination(
                   icon: Icon(Icons.receipt_long),

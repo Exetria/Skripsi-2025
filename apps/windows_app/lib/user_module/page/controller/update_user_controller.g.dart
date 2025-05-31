@@ -7,7 +7,7 @@ part of 'update_user_controller.dart';
 // **************************************************************************
 
 String _$updateUserControllerHash() =>
-    r'cd507063a338e37f59db80df5d8aa94cccdee430';
+    r'b515cfa4ce972a420471066199bf632e6b077f80';
 
 /// See also [UpdateUserController].
 @ProviderFor(UpdateUserController)

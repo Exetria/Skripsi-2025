@@ -1,30 +1,31 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'update_product_controller.dart';
+part of 'visit_list_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$updateProductControllerHash() =>
-    r'd35ddbbd1ea94a78599b6426eda4b426a76fdee0';
+String _$visitListControllerHash() =>
+    r'222ca41d89a5a84cfa77a256cdd0c0391fc92a3f';
 
-/// See also [UpdateProductController].
-@ProviderFor(UpdateProductController)
-final updateProductControllerProvider = NotifierProvider<
-  UpdateProductController,
-  AsyncValue<ProductDomain?>
+/// See also [VisitListController].
+@ProviderFor(VisitListController)
+final visitListControllerProvider = NotifierProvider<
+  VisitListController,
+  AsyncValue<Map<String, Either<ApiException, VisitDomain?>>>
 >.internal(
-  UpdateProductController.new,
-  name: r'updateProductControllerProvider',
+  VisitListController.new,
+  name: r'visitListControllerProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$updateProductControllerHash,
+          : _$visitListControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$UpdateProductController = Notifier<AsyncValue<ProductDomain?>>;
+typedef _$VisitListController =
+    Notifier<AsyncValue<Map<String, Either<ApiException, VisitDomain?>>>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
