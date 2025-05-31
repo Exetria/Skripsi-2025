@@ -1,6 +1,5 @@
 import 'package:android_app/customer_module/page/controller/customer_list_controller.dart';
 import 'package:android_app/utils/functions.dart';
-import 'package:android_app/utils/widget_settings.dart';
 import 'package:android_app/visit_module/domain/entities/visit_domain.dart';
 import 'package:android_app/visit_module/page/add_visit_page.dart';
 import 'package:android_app/visit_module/page/controller/visit_list_controller.dart';
@@ -330,7 +329,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
     return Container(
       height: 50.h,
       padding: EdgeInsets.symmetric(horizontal: 16.w),
-      decoration: regularBoxDecoration(context),
+      decoration: androidBoxDecoration(context),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

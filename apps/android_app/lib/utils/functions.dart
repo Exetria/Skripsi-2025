@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:android_app/utils/widget_settings.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +26,7 @@ PreferredSizeWidget customAppBar({
     preferredSize: Size.fromHeight(subtitle != null ? 80.h : 56.h),
     child: Container(
       padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 32.h, bottom: 8.h),
-      decoration: regularBoxDecoration(context).copyWith(
+      decoration: androidBoxDecoration(context).copyWith(
         color:
             Theme.of(context).brightness == Brightness.light
                 ? tertiaryColor
@@ -106,7 +105,7 @@ InkWell customListItem({
     onTap: onTap,
     child: Container(
       padding: EdgeInsets.all(12.r),
-      decoration: regularBoxDecoration(context),
+      decoration: androidBoxDecoration(context),
       child: Row(
         children: [
           leadIcon != null
@@ -164,7 +163,7 @@ InkWell customSelectorListItem({
     onTap: onTap,
     child: Container(
       padding: EdgeInsets.all(12.r),
-      decoration: regularBoxDecoration(context),
+      decoration: androidBoxDecoration(context),
       child: Row(
         children: [
           Expanded(
@@ -228,7 +227,7 @@ Widget infoCard({
   return Container(
     width: double.infinity,
     padding: EdgeInsets.all(16.r),
-    decoration: regularBoxDecoration(context),
+    decoration: androidBoxDecoration(context),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -287,7 +286,7 @@ Widget productCard({
     child: Container(
       margin: EdgeInsets.only(bottom: 12.h),
       padding: EdgeInsets.all(12.r),
-      decoration: regularBoxDecoration(context),
+      decoration: androidBoxDecoration(context),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

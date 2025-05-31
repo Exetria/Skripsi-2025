@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:android_app/customer_module/page/controller/customer_list_controller.dart';
 import 'package:android_app/utils/functions.dart';
-import 'package:android_app/utils/widget_settings.dart';
 import 'package:android_app/visit_module/page/controller/update_visit_controller.dart';
 import 'package:android_app/visit_module/page/controller/visit_list_controller.dart';
 import 'package:common_components/common_components.dart';

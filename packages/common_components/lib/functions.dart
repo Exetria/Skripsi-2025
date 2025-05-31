@@ -180,3 +180,38 @@ void addCallBackAfterBuild({required VoidCallback callback}) {
     callback();
   });
 }
+
+// ANDROID BOX DECORATION
+BoxDecoration androidBoxDecoration(BuildContext context) {
+  return BoxDecoration(
+    color: Theme.of(context).colorScheme.surface,
+    borderRadius: BorderRadius.circular(Platform.isWindows ? 12 : 12.r),
+    border: Border.all(color: Theme.of(context).colorScheme.outline),
+    boxShadow: [
+      BoxShadow(
+        color: Theme.of(context).colorScheme.shadow,
+        blurRadius: 8,
+        offset: Offset(0, Platform.isWindows ? 6 : 6.h),
+      ),
+    ],
+  );
+}
+
+// DECORATION FOR RECTANGULAR PHOTOS
+BoxDecoration photoBoxDecoration(BuildContext context) {
+  return BoxDecoration(
+    shape: BoxShape.rectangle,
+    color: Theme.of(context).colorScheme.surface,
+    borderRadius: BorderRadius.circular(Platform.isWindows ? 16 : 16.r),
+    border: Border.all(color: Theme.of(context).colorScheme.outline),
+  );
+}
+
+// DECORATION FOR CIRCLE PHOTOS
+BoxDecoration photoCircleDecoration(BuildContext context) {
+  return BoxDecoration(
+    shape: BoxShape.circle,
+    color: Theme.of(context).colorScheme.surface,
+    border: Border.all(color: Theme.of(context).colorScheme.outline),
+  );
+}

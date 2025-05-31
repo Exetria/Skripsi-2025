@@ -1,6 +1,5 @@
 import 'package:android_app/customer_module/domain/entities/customer_domain.dart';
 import 'package:android_app/utils/functions.dart';
-import 'package:android_app/utils/widget_settings.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -105,7 +104,7 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
             Container(
               width: double.infinity,
               padding: EdgeInsets.all(16.r),
-              decoration: regularBoxDecoration(context),
+              decoration: androidBoxDecoration(context),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

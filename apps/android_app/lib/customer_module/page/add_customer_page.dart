@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:android_app/customer_module/page/controller/create_customer_request_controller.dart';
 import 'package:android_app/utils/functions.dart';
-import 'package:android_app/utils/widget_settings.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

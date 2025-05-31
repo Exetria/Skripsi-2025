@@ -1,6 +1,5 @@
 import 'package:android_app/customer_module/page/controller/customer_list_controller.dart';
 import 'package:android_app/utils/functions.dart';
-import 'package:android_app/utils/widget_settings.dart';
 import 'package:android_app/visit_module/page/controller/update_visit_controller.dart';
 import 'package:android_app/visit_module/page/controller/visit_list_controller.dart';
 import 'package:common_components/common_components.dart';
@@ -165,7 +164,7 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
                   itemBuilder: (context, index) {
                     return Container(
                       padding: EdgeInsets.all(8.r),
-                      decoration: regularBoxDecoration(context),
+                      decoration: androidBoxDecoration(context),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

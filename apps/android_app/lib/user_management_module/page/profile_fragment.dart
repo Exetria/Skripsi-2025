@@ -5,7 +5,6 @@ import 'package:android_app/user_management_module/page/controller/update_attend
 import 'package:android_app/user_management_module/page/login_page.dart';
 import 'package:android_app/utils/functions.dart';
 import 'package:android_app/utils/theme_controller.dart';
-import 'package:android_app/utils/widget_settings.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -40,7 +39,7 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
           Container(
             width: double.infinity,
             padding: EdgeInsets.all(8.r),
-            decoration: regularBoxDecoration(context),
+            decoration: androidBoxDecoration(context),
             child: Row(
               children: [
                 CircleAvatar(
