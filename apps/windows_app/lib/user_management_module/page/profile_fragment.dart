@@ -65,7 +65,7 @@ class _ProfileFragmentState extends ConsumerState<ProfileFragment> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      user?.phone ?? 'Telepon Tidak Tersedia',
+                      user?.phone ?? 'Nomor Tidak Tersedia',
                       style: bodyStyle,
                     ),
                     const SizedBox(height: 8),

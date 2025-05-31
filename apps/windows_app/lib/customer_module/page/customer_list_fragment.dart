@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:windows_app/customer_module/domain/entities/customer_domain.dart';
 import 'package:windows_app/customer_module/domain/entities/customer_request_domain.dart';
 import 'package:windows_app/customer_module/page/controller/customer_list_controller.dart';
 import 'package:windows_app/customer_module/page/controller/customer_request_list_controller.dart';
 import 'package:windows_app/customer_module/page/controller/update_customer_controller.dart';
+import 'package:windows_app/user_module/page/controller/user_list_controller.dart';
 import 'package:windows_app/utils/functions.dart';
 
 class CustomerListFragment extends StatefulHookConsumerWidget {
@@ -193,6 +195,13 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
               itemCount: customerList.length,
               itemBuilder: (context, index) {
                 final data = customerList[index];
+                final requesterId = getIdFromName(
+                  name: data.fields?.requestedBy?.stringValue,
+                );
+                final registedDate = DateFormat(
+                  'd MMM yyyy',
+                ).format(DateTime.parse(data.createTime ?? ''));
+
                 return itemCard(
                   context: context,
                   icon: Icons.business_sharp,
@@ -204,6 +213,21 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                             data.fields?.companyPhoneNumber?.stringValue ?? '',
                           )
                           : null,
+                  leftBottomText: ref
+                      .watch(userListControllerProvider)
+                      .when(
+                        loading: () => 'Memuat...',
+                        data: (data) {
+                          return ref
+                              .read(userListControllerProvider.notifier)
+                              .getUserName(id: requesterId);
+                        },
+                        error: (error, stackTrace) {
+                          ref.invalidate(userListControllerProvider);
+                          return 'Gagal Memuat Nama';
+                        },
+                      ),
+                  rightBottomText: registedDate,
 
                   onTap: () {
                     showCustomerDataPopup(context: context, customerData: data);
@@ -256,6 +280,9 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
               itemCount: customerRequestList.length,
               itemBuilder: (context, index) {
                 final data = customerRequestList[index];
+                final requesterId = getIdFromName(
+                  name: data.fields?.requestedBy?.stringValue,
+                );
                 final status =
                     data.fields?.approvalStatus?.stringValue ?? 'Error';
 
@@ -270,7 +297,22 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                             data.fields?.companyPhoneNumber?.stringValue ?? '',
                           )
                           : null,
-                  bottomText: status[0].toUpperCase() + status.substring(1),
+                  leftBottomText: ref
+                      .watch(userListControllerProvider)
+                      .when(
+                        loading: () => 'Memuat...',
+                        data: (data) {
+                          return ref
+                              .read(userListControllerProvider.notifier)
+                              .getUserName(id: requesterId);
+                        },
+                        error: (error, stackTrace) {
+                          ref.invalidate(userListControllerProvider);
+                          return 'Gagal Memuat Nama';
+                        },
+                      ),
+                  rightBottomText:
+                      status[0].toUpperCase() + status.substring(1),
                   onTap: () {
                     showCustomerDataPopup(
                       context: context,
@@ -716,6 +758,7 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                   buildInputBox(
                     controller: companyPhoneController,
                     label: 'Nomor Telepon Perusahaan',
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Nomor telepon perusahaan tidak boleh kosong';
@@ -1060,6 +1103,7 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                   buildInputBox(
                     controller: picPhoneController,
                     label: 'Nomor Telepon PIC',
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     validator: (value) {
                       return (value != null && value != '')
                           ? null
@@ -1432,7 +1476,12 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                     showFeedbackDialog(
                       context: context,
                       type: 0,
-                      message: apiException.message,
+                      message:
+                          customerData != null
+                              ? 'Gagal memperbarui pelanggan: ${apiException.message}'
+                              : customerRequestData != null
+                              ? 'Gagal menerima permintaan pelanggan: ${apiException.message}'
+                              : 'Gagal menambahkan pelanggan: ${apiException.message}',
                     );
                   } else {
                     showFeedbackDialog(
@@ -1532,7 +1581,8 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                 showFeedbackDialog(
                   context: context,
                   type: 0,
-                  message: apiException.message,
+                  message:
+                      'Gagal merespon permintaan pelanggan: ${apiException.message}',
                 );
               } else {
                 showFeedbackDialog(context: context, type: 0, message: '');

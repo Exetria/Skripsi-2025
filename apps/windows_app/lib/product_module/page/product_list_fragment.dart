@@ -77,8 +77,8 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                           icon: Icons.inventory_2,
                           title: data.fields?.productName?.stringValue ?? '-',
                           subtitle: getIdFromName(name: data.name),
-                          bottomText:
-                              "Price per pcs: \n${rupiahFormat(int.tryParse(data.fields?.price?.integerValue ?? '') ?? 0)}",
+                          leftBottomText:
+                              "Harga: \n${rupiahFormat(int.tryParse(data.fields?.price?.integerValue ?? '') ?? 0)}",
                           onTap: () {
                             showProductDataPopup(
                               context: context,

@@ -1,3 +1,4 @@
+import 'package:common_components/common_components.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:windows_app/user_module/domain/entities/user_domain.dart';
 import 'package:windows_app/user_module/domain/repository/user_repository.dart';
@@ -65,5 +66,23 @@ class UserListController extends _$UserListController {
     _searchQuery = '';
     _roleFilter = RoleFilter.all;
     _applyFilters();
+  }
+
+  String getUserName({required String id}) {
+    if (state is! AsyncData) {
+      return 'Memuat...';
+    }
+
+    final userList = _userList ?? [];
+
+    for (var user in userList) {
+      final userId = getIdFromName(name: user.name);
+
+      if (userId == id) {
+        return user.fields?.userName?.stringValue ?? '-';
+      }
+    }
+
+    return 'Nama Tidak Ditemukan';
   }
 }

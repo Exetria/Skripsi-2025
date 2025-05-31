@@ -84,7 +84,7 @@ class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
                             },
                           ),
                           subtitle: getIdFromName(name: data.name),
-                          bottomText:
+                          leftBottomText:
                               "Total: \n${rupiahFormat(int.tryParse(data.fields?.totalPrice?.integerValue ?? '') ?? 0)}",
                           onTap: () {},
                         );

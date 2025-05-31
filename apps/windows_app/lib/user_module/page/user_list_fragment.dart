@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:common_components/common_components.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:windows_app/customer_module/page/controller/customer_list_controller.dart';
 import 'package:windows_app/product_module/page/controller/product_list_controller.dart';
 import 'package:windows_app/user_module/domain/entities/user_domain.dart';
@@ -80,6 +82,9 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                         final name = data.fields?.fullName?.stringValue ?? '-';
                         final email = data.fields?.email?.stringValue ?? '-';
                         final role = data.fields?.role?.stringValue ?? '-';
+                        final registerDate = DateFormat(
+                          'd MMM yyyy',
+                        ).format(DateTime.parse(data.createTime ?? ''));
 
                         return itemCard(
                           context: context,
@@ -92,7 +97,9 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                                     data.fields?.phoneNumber?.stringValue ?? '',
                                   )
                                   : null,
-                          bottomText: role[0].toUpperCase() + role.substring(1),
+                          leftBottomText:
+                              role[0].toUpperCase() + role.substring(1),
+                          rightBottomText: registerDate.toString(),
                           onTap: () {
                             showUserDataPopup(context: context, userData: data);
                           },
@@ -592,6 +599,9 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                         buildInputBox(
                           controller: userPhoneController,
                           label: 'Nomor telepon',
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Nomor telepon tidak boleh kosong';
