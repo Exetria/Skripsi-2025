@@ -1,30 +1,30 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'update_customer_controller.dart';
+part of 'update_order_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$updateCustomerControllerHash() =>
-    r'7daf39c8b7b81351db231ccb34120506321de7c9';
+String _$updateOrderControllerHash() =>
+    r'0dd990da95036d2e06def5db712312cda0284eb4';
 
-/// See also [UpdateCustomerController].
-@ProviderFor(UpdateCustomerController)
-final updateCustomerControllerProvider = NotifierProvider<
-  UpdateCustomerController,
-  AsyncValue<CustomerDomain?>
+/// See also [UpdateOrderController].
+@ProviderFor(UpdateOrderController)
+final updateOrderControllerProvider = AutoDisposeNotifierProvider<
+  UpdateOrderController,
+  AsyncValue<OrderDomain?>
 >.internal(
-  UpdateCustomerController.new,
-  name: r'updateCustomerControllerProvider',
+  UpdateOrderController.new,
+  name: r'updateOrderControllerProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$updateCustomerControllerHash,
+          : _$updateOrderControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$UpdateCustomerController = Notifier<AsyncValue<CustomerDomain?>>;
+typedef _$UpdateOrderController = AutoDisposeNotifier<AsyncValue<OrderDomain?>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
