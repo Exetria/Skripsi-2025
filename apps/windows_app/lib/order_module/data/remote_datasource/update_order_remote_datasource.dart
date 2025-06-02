@@ -125,6 +125,7 @@ class UpdateOrderRemoteDatasourceImpl implements UpdateOrderRemoteDatasource {
     required List<Map<String, dynamic>> productDataList,
   }) async {
     String orderId = getIdFromName(name: oldData.name);
+    String salesId = oldData.fields?.createdBy?.stringValue ?? '';
     String customerId = oldData.fields?.customerId?.stringValue ?? '';
 
     int totalPrice = 0;
@@ -159,7 +160,7 @@ class UpdateOrderRemoteDatasourceImpl implements UpdateOrderRemoteDatasource {
 
     Map<String, dynamic> bodyMap = {
       'fields': {
-        'created_by': {'stringValue': userDataHelper?.uid ?? ''},
+        'created_by': {'stringValue': salesId},
         'customer_id': {'stringValue': customerId}, // cutomerid
         'products': {
           'arrayValue': {'values': productDataList},
