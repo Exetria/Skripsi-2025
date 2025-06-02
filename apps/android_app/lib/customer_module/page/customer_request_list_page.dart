@@ -23,7 +23,7 @@ class _CustomerRequestListPage extends ConsumerState<CustomerRequestListPage> {
     return Scaffold(
       appBar: customAppBar(
         context: context,
-        title: 'Daftar NOO',
+        title: 'Daftar Pendaftaran Pelanggan Baru',
         showLeftButton: true,
       ),
       body: Padding(
@@ -40,7 +40,9 @@ class _CustomerRequestListPage extends ConsumerState<CustomerRequestListPage> {
                       customerRequestList.isEmpty) {
                     return refreshableInfoWidget(
                       refreshFunction: _refreshCustomerRequestList,
-                      content: const Text('Data NOO Tidak Ditemukan'),
+                      content: const Text(
+                        'Data Pendaftaran Pelanggan Tidak Ditemukan',
+                      ),
                     );
                   }
 
@@ -53,12 +55,23 @@ class _CustomerRequestListPage extends ConsumerState<CustomerRequestListPage> {
                       itemBuilder: (context, index) {
                         final data = customerRequestList[index];
 
+                        String approvalStatus =
+                            data.fields?.approvalStatus?.stringValue ?? '';
+                        String displayedApprovalStatus = 'Tidak Tersedia';
+
+                        if (approvalStatus == 'pending') {
+                          displayedApprovalStatus = 'Menunggu Konfirmasi';
+                        } else if (approvalStatus == 'approved') {
+                          displayedApprovalStatus = 'Diterima';
+                        } else if (approvalStatus == 'rejected') {
+                          displayedApprovalStatus = 'Ditolak';
+                        }
+
                         return customListItem(
                           context: context,
                           leadIcon: Icons.add_business,
                           title: data.fields?.companyName?.stringValue ?? '-',
-                          subtitle:
-                              data.fields?.approvalStatus?.stringValue ?? '-',
+                          subtitle: displayedApprovalStatus,
                           onTap: () {},
                         );
                       },
@@ -72,7 +85,7 @@ class _CustomerRequestListPage extends ConsumerState<CustomerRequestListPage> {
                   return refreshableInfoWidget(
                     refreshFunction: _refreshCustomerRequestList,
                     content: Text(
-                      'Gagal Memuat Data NOO: ${exception.message}',
+                      'Gagal Memuat Data Daftar Pendaftaran PelangganS: ${exception.message}',
                       style: errorStyle,
                     ),
                   );

@@ -64,6 +64,26 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
   Widget build(BuildContext context) {
     final customerListState = ref.watch(customerListControllerProvider);
 
+    String orderStatus =
+        widget.orderData.fields?.orderStatus?.stringValue ?? '';
+    String displayedOrderStatus = 'Tidak Tersedia';
+
+    if (orderStatus == 'pending') {
+      displayedOrderStatus = 'Menunggu Konfirmasi';
+    } else if (orderStatus == 'processed') {
+      displayedOrderStatus = 'Dikonfirmasi Admin';
+    } else if (orderStatus == 'in_transit') {
+      displayedOrderStatus = 'Sedang Dikirim';
+    } else if (orderStatus == 'delivered') {
+      displayedOrderStatus = 'Sudah Diterima';
+    } else if (orderStatus == 'finished') {
+      displayedOrderStatus = 'Selesai';
+    } else if (orderStatus == 'cancelled') {
+      displayedOrderStatus = 'Dibatalkan';
+    } else {
+      displayedOrderStatus = ''; // default or “unknown” status
+    }
+
     return Scaffold(
       appBar: customAppBar(
         context: context,
@@ -102,7 +122,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
               title: 'Informasi Order',
               values: [
                 'ID Order:\n${getIdFromName(name: widget.orderData.name)}',
-                "Status Order:\n${widget.orderData.fields?.orderStatus?.stringValue ?? ''}",
+                'Status Order:\n$displayedOrderStatus',
                 // "Total:\n${rupiahFormat(int.tryParse(widget.orderData.fields?.totalPrice?.integerValue ?? '') ?? 0)}",
               ],
               icons: [Icons.donut_small, Icons.donut_small],

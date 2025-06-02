@@ -547,7 +547,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                     children: [
                       // Price per item
                       Text(
-                        "Price per pcs: \n${rupiahFormat(int.tryParse(unitPrice ?? '') ?? 0)}",
+                        "Harga per pcs: \n${rupiahFormat(int.tryParse(unitPrice ?? '') ?? 0)}",
                         style: bodyStyle,
                         softWrap: true,
                         overflow: TextOverflow.visible,
@@ -561,7 +561,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                             child: TextField(
                               controller: quantityController,
                               decoration: const InputDecoration(
-                                labelText: 'Quantity',
+                                labelText: 'Jumlah',
                               ),
                               keyboardType: TextInputType.number,
                               inputFormatters: [
@@ -618,7 +618,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                             child: TextField(
                               controller: discountController,
                               decoration: InputDecoration(
-                                labelText: 'Discount',
+                                labelText: 'Diskon',
                                 prefixText: discountType ? 'Rp. ' : null,
                                 errorText: discountErrorText,
                               ),
@@ -645,14 +645,14 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
                                         newTotalPrice)) {
                                   setState(() {
                                     discountErrorText =
-                                        'Discount amount must be between 0 and $newTotalPrice';
+                                        'Diskon harus diantara 0 hingga $newTotalPrice';
                                   });
                                   return;
                                 } else if (!discountType &&
                                     (int.tryParse(value) ?? 0) > 100) {
                                   setState(() {
                                     discountErrorText =
-                                        'Discount amount must be between 0 and 100';
+                                        'Diskon harus diantara 0% hingga 100%';
                                   });
                                   return;
                                 } else {

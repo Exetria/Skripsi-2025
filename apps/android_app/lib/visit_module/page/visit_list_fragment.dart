@@ -70,7 +70,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                       final error = visitList?.swap().getOrElse(
                         (l) => ApiException(
                           statusCode: -1,
-                          message: 'Unknown Error',
+                          message: 'Terjadi Kesalahan',
                         ),
                       );
 
@@ -259,7 +259,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                                     ? 'Selesai'
                                     : visitStatus == '3'
                                     ? 'Dibatalkan'
-                                    : 'Tidak Diketahui',
+                                    : 'Tidak Tersedia',
                             trailIcon: Icons.arrow_forward_ios,
                             onTap: () {
                               Navigator.push(
