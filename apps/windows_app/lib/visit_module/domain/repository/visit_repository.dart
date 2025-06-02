@@ -8,11 +8,13 @@ import 'package:windows_app/visit_module/data/repository_impl/visit_list_reposit
 import 'package:windows_app/visit_module/domain/entities/visit_domain.dart';
 
 abstract class VisitRepository {
-  Future<Either<ApiException, VisitDomain?>> getVisitList({
+  Future<Either<ApiException, VisitDomain?>> getSalesVisitList({
+    required String salesId,
     required DateTime date,
   });
 
-  Future<Either<ApiException, VisitDomain?>> updateVisit({
+  Future<Either<ApiException, VisitDomain?>> updateSalesVisit({
+    required String salesId,
     required DateTime date,
     required List<Map<String, dynamic>> visitDataList,
     int? updateLocationIndex,

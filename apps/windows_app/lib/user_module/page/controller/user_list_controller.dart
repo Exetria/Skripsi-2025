@@ -85,4 +85,23 @@ class UserListController extends _$UserListController {
 
     return 'Nama Tidak Ditemukan';
   }
+
+  Future<List<String>> getAllSalesId() async {
+    while (state is! AsyncData) {
+      await Future.delayed(const Duration(milliseconds: 100));
+    }
+
+    List<String> salesIdList = [];
+
+    for (UserDomain user in _userList ?? []) {
+      if (user.fields?.role?.stringValue == 'sales') {
+        String salesId = getIdFromName(name: user.name);
+        if (salesId.isNotEmpty) {
+          salesIdList.add(salesId);
+        }
+      }
+    }
+
+    return salesIdList;
+  }
 }

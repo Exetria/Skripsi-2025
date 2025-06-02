@@ -10,21 +10,24 @@ class UpdateVisitRepositoryImpl implements VisitRepository {
   final remoteDataSource = UpdateVisitDataRemoteDatasourceImpl();
 
   @override
-  Future<Either<ApiException, VisitDomain?>> getVisitList({
+  Future<Either<ApiException, VisitDomain?>> getSalesVisitList({
+    required String salesId,
     required DateTime date,
   }) {
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<ApiException, VisitDomain?>> updateVisit({
+  Future<Either<ApiException, VisitDomain?>> updateSalesVisit({
+    required String salesId,
     required DateTime date,
     required List<Map<String, dynamic>> visitDataList,
     int? updateLocationIndex,
     File? visitPhoto,
   }) async {
     final resp = await remoteProcess(
-      remoteDataSource.updateVisit(
+      remoteDataSource.updateSalesVisit(
+        salesId: salesId,
         date: date,
         visitDataList: visitDataList,
         updateLocationIndex: updateLocationIndex,

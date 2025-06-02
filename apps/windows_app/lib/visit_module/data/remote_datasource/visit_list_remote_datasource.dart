@@ -3,13 +3,19 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:windows_app/visit_module/domain/entities/visit_domain.dart';
 
 abstract class GetVisitDataRemoteDatasource {
-  Future<VisitDomain> getVisitList({required DateTime date});
+  Future<VisitDomain> getSalesVisitList({
+    required String salesId,
+    required DateTime date,
+  });
 }
 
 class GetVisitListRemoteDatasourceImpl implements GetVisitDataRemoteDatasource {
   @override
-  Future<VisitDomain> getVisitList({required DateTime date}) async {
-    final documentId = _generateDocumentIdFromDate(date);
+  Future<VisitDomain> getSalesVisitList({
+    required String salesId,
+    required DateTime date,
+  }) async {
+    final documentId = _generateDocumentIdFromDate(salesId, date);
 
     Map<String, dynamic> result = await apiCallGet(
       url:
@@ -23,10 +29,10 @@ class GetVisitListRemoteDatasourceImpl implements GetVisitDataRemoteDatasource {
     return VisitDomain.fromJson(result);
   }
 
-  String _generateDocumentIdFromDate(DateTime date) {
+  String _generateDocumentIdFromDate(String salesId, DateTime date) {
     final formattedDate =
         '${date.day.toString().padLeft(2, '0')}${date.month.toString().padLeft(2, '0')}${date.year}';
 
-    return '${userDataHelper?.uid}-$formattedDate';
+    return '$salesId-$formattedDate';
   }
 }

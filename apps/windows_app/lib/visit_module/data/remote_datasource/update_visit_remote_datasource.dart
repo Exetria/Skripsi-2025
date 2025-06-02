@@ -5,7 +5,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:windows_app/visit_module/domain/entities/visit_domain.dart';
 
 abstract class UpdateVisitDataRemoteDatasource {
-  Future<VisitDomain> updateVisit({
+  Future<VisitDomain> updateSalesVisit({
+    required String salesId,
     required DateTime date,
     required List<Map<String, dynamic>> visitDataList,
     int? updateLocationIndex,
@@ -16,7 +17,8 @@ abstract class UpdateVisitDataRemoteDatasource {
 class UpdateVisitDataRemoteDatasourceImpl
     implements UpdateVisitDataRemoteDatasource {
   @override
-  Future<VisitDomain> updateVisit({
+  Future<VisitDomain> updateSalesVisit({
+    required String salesId,
     required DateTime date,
     required List<Map<String, dynamic>> visitDataList,
     int? updateLocationIndex,

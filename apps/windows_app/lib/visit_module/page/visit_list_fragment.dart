@@ -29,7 +29,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
     Future.microtask(() {
       ref
           .read(visitListControllerProvider.notifier)
-          .fetchVisitsForDate(date: DateTime.now());
+          .fetchAllSalesVisitsForDate(date: DateTime.now());
     });
 
     addCallBackAfterBuild(
@@ -45,7 +45,6 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
   @override
   Widget build(BuildContext context) {
     final customerListState = ref.watch(customerListControllerProvider);
-    final visitListState = ref.watch(visitListControllerProvider);
     final userListState = ref.watch(userListControllerProvider);
 
     void Function()? _addButtonFunction;
@@ -78,16 +77,13 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
               data: (salesList) {
                 if (salesList == null || salesList.isEmpty) {
                   return Center(
-                    child: Text(
-                      'Data Kunjungan Tidak Ditemukan',
-                      style: bodyStyle,
-                    ),
+                    child: Text('Data Sales Tidak Ditemukan', style: bodyStyle),
                   );
                 }
 
                 return LayoutBuilder(
                   builder: (context, constraints) {
-                    final crossCount = getCrossAxisCount(constraints);
+                    final crossCount = getCrossVisitAxisCount(constraints);
                     return GridView.builder(
                       padding: const EdgeInsets.only(top: 8),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -100,28 +96,13 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                       itemBuilder: (context, index) {
                         final data = salesList[index];
 
-                        final name = data.fields?.fullName?.stringValue ?? '-';
-                        final email = data.fields?.email?.stringValue ?? '-';
-                        final role = data.fields?.role?.stringValue ?? '-';
-                        final registerDate = DateFormat(
-                          'd MMM yyyy',
-                        ).format(DateTime.parse(data.createTime ?? ''));
+                        final salesId = getIdFromName(name: data.name);
+                        final salesName =
+                            data.fields?.fullName?.stringValue ?? '-';
 
-                        return itemCard(
-                          context: context,
-                          icon: Icons.person,
-                          title: name,
-                          subtitle: email,
-                          secondarySubtitle:
-                              data.fields?.phoneNumber?.stringValue != null
-                                  ? phoneNumberFormat(
-                                    data.fields?.phoneNumber?.stringValue ?? '',
-                                  )
-                                  : null,
-                          leftBottomText:
-                              role[0].toUpperCase() + role.substring(1),
-                          rightBottomText: registerDate.toString(),
-                          onTap: () {},
+                        return buildVisitListCard(
+                          salesId: salesId,
+                          salesName: salesName,
                         );
                       },
                     );
@@ -132,7 +113,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                 final exception = error as ApiException;
                 return Center(
                   child: Text(
-                    'Gagal Memuat Daftar Kunjungan: ${exception.message}',
+                    'Gagal Memuat Daftar Sales: ${exception.message}',
                     style: errorStyle,
                   ),
                 );
@@ -222,32 +203,6 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
 
   Widget buildMapSection() {
     final cs = Theme.of(context).colorScheme;
-    return buildCard(
-      child: FlutterMap(
-        options: const MapOptions(
-          initialCenter: LatLng(-6.200000, 106.816666),
-          initialZoom: 13,
-        ),
-        children: [
-          TileLayer(
-            urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-          ),
-          MarkerLayer(
-            markers: [
-              Marker(
-                width: 40,
-                height: 40,
-                point: const LatLng(-6.200000, 106.816666),
-                child: Icon(Icons.location_on, color: cs.primary, size: 32),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget buildCard({String? title, required Widget child}) {
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -256,14 +211,244 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            title != null
-                ? Text(title, style: titleStyle)
-                : const SizedBox.shrink(),
-            title != null ? const SizedBox(height: 8) : const SizedBox.shrink(),
-            Expanded(child: child),
+            Expanded(
+              child: FlutterMap(
+                options: const MapOptions(
+                  initialCenter: LatLng(-6.200000, 106.816666),
+                  initialZoom: 13,
+                ),
+                children: [
+                  TileLayer(
+                    urlTemplate:
+                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  ),
+                  MarkerLayer(
+                    markers: [
+                      Marker(
+                        width: 40,
+                        height: 40,
+                        point: const LatLng(-6.200000, 106.816666),
+                        child: Icon(
+                          Icons.location_on,
+                          color: Theme.of(context).colorScheme.primary,
+                          size: 32,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget buildVisitListCard({
+    required String salesId,
+    required String salesName,
+  }) {
+    final visitListState = ref.watch(visitListControllerProvider);
+    bool isHovered = false;
+
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return MouseRegion(
+          onEnter: (_) => setState(() => isHovered = true),
+          onExit: (_) => setState(() => isHovered = false),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            transform:
+                isHovered
+                    ? Matrix4.translationValues(0, -6, 0)
+                    : Matrix4.identity(),
+            decoration: itemCardDecoration(context, isHovered: isHovered),
+            padding: const EdgeInsets.all(12),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.person,
+                        size: 32,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        salesName,
+                        style: subtitleStyle,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Expanded(
+                    child: visitListState.when(
+                      loading:
+                          () =>
+                              const Center(child: CircularProgressIndicator()),
+                      data: (visitDayData) {
+                        final visitList =
+                            visitDayData['$salesId-${_generateVisitIdFromDate(selectedDate)}'];
+
+                        // If empty or null, show empty state
+                        if (visitList == null || visitList.isLeft()) {
+                          final error = visitList?.swap().getOrElse(
+                            (l) => ApiException(
+                              statusCode: -1,
+                              message: 'Terjadi Kesalahan',
+                            ),
+                          );
+
+                          return Center(
+                            child:
+                                error != null
+                                    ? (error).statusCode == 404
+                                        ? const Text(
+                                          'Data Kunjungan Tidak Ditemukan',
+                                        )
+                                        : const Text(
+                                          'Gagal Memuat Data Kunjungan',
+                                        )
+                                    : const Text('Gagal Memuat Data Kunjungan'),
+                          );
+                        }
+
+                        // get the visit data
+                        final VisitDomain? data = visitList.getOrElse(
+                          (error) => null,
+                        );
+
+                        if (data == null) {
+                          return const Center(
+                            child: Text('Data Visit Tidak Ditemukan'),
+                          );
+                        }
+
+                        // Get visit data (list of visit in a day)
+                        List<Value> visits = List<Value>.from(
+                          data.fields?.visits?.arrayValue?.values ?? [],
+                        );
+
+                        // Convert into List<Map<String, dynamic>>
+                        List<Map<String, dynamic>> visitDataList =
+                            _createVisitDataList(visits: visits);
+
+                        if (visitDataList.isEmpty) {
+                          return const Center(
+                            child: Text('Data Visit Tidak Ditemukan'),
+                          );
+                        }
+
+                        return ListView.builder(
+                          itemCount: visitDataList.length,
+                          itemBuilder: (context, index) {
+                            final visitData = visitDataList[index];
+                            final customerId =
+                                visitData['mapValue']['fields']['customer_id']['stringValue'];
+                            final visitStatus =
+                                visitData['mapValue']['fields']['visit_status']['integerValue'];
+
+                            return createVisitTile(
+                              customerId: customerId,
+                              visitStatus:
+                                  visitStatus == '1'
+                                      ? 'Direncanakan'
+                                      : visitStatus == '2'
+                                      ? 'Selesai'
+                                      : visitStatus == '3'
+                                      ? 'Dibatalkan'
+                                      : 'Tidak Tersedia',
+                            );
+                          },
+                        );
+                      },
+                      error: (error, _) {
+                        final exception = error as ApiException;
+                        return Center(
+                          child: Text(
+                            'Gagal Memuat Daftar Kunjungan: ${exception.message}',
+                            style: errorStyle,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        onPressed: () async {
+                          // TODO: Add visit popup
+                        },
+                        icon: const Icon(Icons.add),
+                        tooltip: 'Tambah Kunjungan untuk Sales Ini',
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget createVisitTile({
+    required String customerId,
+    required String visitStatus,
+  }) {
+    final customerListState = ref.watch(customerListControllerProvider);
+    final cs = Theme.of(context).colorScheme;
+    bool isHovered = false;
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return MouseRegion(
+          onEnter: (_) => setState(() => isHovered = true),
+          onExit: (_) => setState(() => isHovered = false),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            transform:
+                isHovered
+                    ? Matrix4.translationValues(0, -4, 0)
+                    : Matrix4.identity(),
+            padding: const EdgeInsets.all(12),
+            child: InkWell(
+              onTap: () {
+                // TODO: Display visit detail
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    customerListState.when(
+                      loading: () => 'Memuat...',
+                      data: (customerList) {
+                        return ref
+                            .read(customerListControllerProvider.notifier)
+                            .getCustomerName(id: customerId);
+                      },
+                      error: (error, stackTrace) {
+                        _refreshCustomerList();
+                        return 'Gagal Memuat Nama';
+                      },
+                    ),
+                  ),
+                  Text(visitStatus),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -330,10 +515,30 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
     return formattedDate;
   }
 
+  int getCrossVisitAxisCount(BoxConstraints constraints) {
+    final width = constraints.maxWidth;
+
+    if (width > 2000) {
+      return 2;
+    } else if (width > 1500) {
+      return 2;
+    } else if (width > 1000) {
+      return 2;
+    } else if (width > 500) {
+      return 1;
+    } else {
+      return 1;
+    }
+  }
+
   Future<void> _refreshVisitList() async {
     ref
         .read(visitListControllerProvider.notifier)
-        .fetchVisitsForDate(date: selectedDate, forceFetch: true);
+        .fetchAllSalesVisitsForDate(date: selectedDate, forceFetch: true);
+  }
+
+  Future<void> _refreshCustomerList() async {
+    ref.invalidate(customerListControllerProvider);
   }
 
   void _changeDate(int offset) {
@@ -342,6 +547,6 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
     });
     ref
         .read(visitListControllerProvider.notifier)
-        .fetchVisitsForDate(date: selectedDate);
+        .fetchAllSalesVisitsForDate(date: selectedDate);
   }
 }

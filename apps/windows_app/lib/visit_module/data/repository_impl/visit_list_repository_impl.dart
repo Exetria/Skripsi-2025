@@ -10,16 +10,20 @@ class GetVisitListRepositoryImpl implements VisitRepository {
   final remoteDataSource = GetVisitListRemoteDatasourceImpl();
 
   @override
-  Future<Either<ApiException, VisitDomain?>> getVisitList({
+  Future<Either<ApiException, VisitDomain?>> getSalesVisitList({
+    required String salesId,
     required DateTime date,
   }) async {
-    final resp = await remoteProcess(remoteDataSource.getVisitList(date: date));
+    final resp = await remoteProcess(
+      remoteDataSource.getSalesVisitList(salesId: salesId, date: date),
+    );
 
     return resp.fold((l) => Left(l), (r) => Right(r));
   }
 
   @override
-  Future<Either<ApiException, VisitDomain?>> updateVisit({
+  Future<Either<ApiException, VisitDomain?>> updateSalesVisit({
+    required String salesId,
     required DateTime date,
     required List<Map<String, dynamic>> visitDataList,
     int? updateLocationIndex,

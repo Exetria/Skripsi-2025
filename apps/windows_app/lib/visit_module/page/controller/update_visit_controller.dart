@@ -14,6 +14,7 @@ class UpdateVisitController extends _$UpdateVisitController {
   }
 
   Future<AsyncValue<VisitDomain?>> updateVisitData({
+    required String salesId,
     required DateTime date,
     required List<Map<String, dynamic>> visitDataList,
     int? updateLocationIndex,
@@ -23,7 +24,8 @@ class UpdateVisitController extends _$UpdateVisitController {
 
     state = const AsyncLoading();
 
-    final result = await repository.updateVisit(
+    final result = await repository.updateSalesVisit(
+      salesId: salesId,
       date: date,
       visitDataList: visitDataList,
       updateLocationIndex: updateLocationIndex,
