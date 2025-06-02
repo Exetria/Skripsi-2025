@@ -183,7 +183,7 @@ class UpdateOrderRemoteDatasourceImpl implements UpdateOrderRemoteDatasource {
     };
 
     // Set delivery date if alreadt exist or just set to delivered
-    if (deliveryDate != null) {
+    if (deliveryDate != null && deliveryDate.isNotEmpty) {
       bodyMap['fields']['delivery_date'] = {'timestampValue': deliveryDate};
     } else if (orderStatus == 'delivered') {
       bodyMap['fields']['delivery_date'] = {
@@ -192,7 +192,7 @@ class UpdateOrderRemoteDatasourceImpl implements UpdateOrderRemoteDatasource {
     }
 
     // Set payment date if already exist or just set to paid
-    if (paymentDate != null) {
+    if (paymentDate != null && paymentDate.isNotEmpty) {
       bodyMap['fields']['payment_date'] = {'timestampValue': paymentDate};
     } else if (orderStatus == 'finished') {
       bodyMap['fields']['payment_date'] = {

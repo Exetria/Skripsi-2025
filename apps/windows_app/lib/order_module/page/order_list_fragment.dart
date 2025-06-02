@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:windows_app/customer_module/page/controller/customer_list_controller.dart';
 import 'package:windows_app/order_module/domain/entities/order_domain.dart';
 import 'package:windows_app/order_module/page/controller/order_list_controller.dart';
+import 'package:windows_app/order_module/page/controller/update_order_controller.dart';
 import 'package:windows_app/product_module/page/controller/product_list_controller.dart';
 import 'package:windows_app/utils/functions.dart';
 
@@ -169,6 +170,10 @@ class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
     String customerId = orderData.fields?.customerId?.stringValue ?? '';
     String paymentMethod = orderData.fields?.paymentMethod?.stringValue ?? '';
     String notes = orderData.fields?.notes?.stringValue ?? '';
+
+    String deliveryDate = orderData.fields?.deliveryDate?.timestampValue ?? '';
+    String paymentDate = orderData.fields?.paymentDate?.timestampValue ?? '';
+
     int total =
         int.tryParse(orderData.fields?.totalPrice?.integerValue ?? '') ?? 0;
     List<Map<String, dynamic>> productDataList = createProductDataList(
@@ -282,7 +287,7 @@ class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            'Total Harga:\n${rupiahFormat(total)}',
+                            'Metode Pembayaran:\n$paymentMethod',
                             style: bodyStyle,
                           ),
                         ),
@@ -290,20 +295,20 @@ class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
                     ),
                     const SizedBox(height: 12),
 
-                    // Payment method
+                    // Total price
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Icon(
-                          Icons.payment,
+                          Icons.attach_money,
                           size: 20,
                           color: Theme.of(context).colorScheme.primary,
                         ),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            'Metode Pembayaran:\n$paymentMethod',
+                            'Total Harga:\n${rupiahFormat(total)}',
                             style: bodyStyle,
                           ),
                         ),
@@ -327,6 +332,56 @@ class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
                         ),
                       ],
                     ),
+                    deliveryDate.isNotEmpty
+                        ? const SizedBox(height: 12)
+                        : const SizedBox.shrink(),
+
+                    // Delivery date
+                    deliveryDate.isNotEmpty
+                        ? Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.local_shipping,
+                              size: 20,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                'Tanggal pengiriman:\n${DateFormat('d MMM yyyy').format(DateTime.parse(deliveryDate))}',
+                                style: bodyStyle,
+                              ),
+                            ),
+                          ],
+                        )
+                        : const SizedBox.shrink(),
+                    paymentDate.isNotEmpty
+                        ? const SizedBox(height: 12)
+                        : const SizedBox.shrink(),
+
+                    // Payment date
+                    paymentDate.isNotEmpty
+                        ? Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.request_quote,
+                              size: 20,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                'Tanggal pembayaran:\n${DateFormat('d MMM yyyy').format(DateTime.parse(paymentDate))}',
+                                style: bodyStyle,
+                              ),
+                            ),
+                          ],
+                        )
+                        : const SizedBox.shrink(),
                   ],
                 ),
               );
@@ -383,7 +438,55 @@ class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
               return cards;
             }
 
-            void submitOrderData() {}
+            void submitOrderData() async {
+              setDialogState(() {
+                dialogActionButtonEnabled = false;
+              });
+
+              if (productDataList.isNotEmpty && selectedOrderStatus != null) {
+                final submitState = await ref
+                    .read(updateOrderControllerProvider.notifier)
+                    .updateOrder(
+                      oldData: orderData,
+                      notes: notes,
+                      paymentMethod: paymentMethod,
+                      orderStatus: selectedOrderStatus ?? '',
+                      deliveryDate: deliveryDate,
+                      paymentDate: paymentDate,
+                      productDataList: productDataList,
+                    );
+
+                if (submitState is AsyncData) {
+                  showFeedbackDialog(
+                    context: context,
+                    type: 1,
+                    message: 'Status pesanan berhasil diperbarui',
+                    onClose: () {
+                      _refreshOrderList();
+                      Navigator.pop(statefulBuilderContext);
+                    },
+                  );
+                } else if (submitState is AsyncError) {
+                  final apiException = submitState.error as ApiException;
+                  showFeedbackDialog(
+                    context: context,
+                    type: 0,
+                    message:
+                        'Gagal memperbarui status pesanan: ${apiException.message}',
+                  );
+                } else {
+                  showFeedbackDialog(
+                    context: context,
+                    type: 0,
+                    message: 'Gagal memperbarui status pesanan',
+                  );
+                }
+              }
+
+              setDialogState(() {
+                dialogActionButtonEnabled = true;
+              });
+            }
 
             return AlertDialog(
               title: Center(child: Text('Data Pesanan', style: subtitleStyle)),
