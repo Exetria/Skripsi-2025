@@ -575,7 +575,6 @@ class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // Placeholder for additional actions if needed
                     const SizedBox.shrink(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -674,7 +673,6 @@ class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
     return result;
   }
 
-  // PRODUCT CARD
   Widget productCard({
     required BuildContext context,
     required String productName,
