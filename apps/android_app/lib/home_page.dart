@@ -2,7 +2,6 @@ import 'package:android_app/customer_module/page/add_customer_page.dart';
 import 'package:android_app/customer_module/page/customer_list_fragment.dart';
 import 'package:android_app/order_module/page/add_order_page.dart';
 import 'package:android_app/order_module/page/order_list_fragment.dart';
-import 'package:android_app/product_module/page/product_list_fragment.dart';
 import 'package:android_app/user_management_module/page/controller/get_attendance_data_controller.dart';
 import 'package:android_app/user_management_module/page/login_page.dart';
 import 'package:android_app/user_management_module/page/profile_fragment.dart';
@@ -30,10 +29,24 @@ class _HomePage extends ConsumerState<HomePage> {
 
   final List<Widget> pages = [
     const VisitListFragment(),
-    const OrderListFragment(),
+    // const OrderListFragment(),
     const CustomerListFragment(),
-    const ProductListFragment(),
+    // const ProductListFragment(),
     const ProfileFragment(),
+  ];
+
+  final List<BottomNavigationBarItem> navBarItems = [
+    const BottomNavigationBarItem(
+      icon: Icon(Icons.directions_walk),
+      label: 'Kunjungan',
+    ),
+    // const BottomNavigationBarItem(
+    //   icon: Icon(Icons.shopping_cart),
+    //   label: 'Order',
+    // ),
+    const BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Pelanggan'),
+    // const BottomNavigationBarItem(icon: Icon(Icons.widgets), label: 'Produk'),
+    const BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
   ];
 
   @override
@@ -93,30 +106,29 @@ class _HomePage extends ConsumerState<HomePage> {
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: selectedIndex,
           onTap: (index) {
-            if (index != 0 && index != 3) {
-              rightButtonIcon = index == 4 ? Icons.refresh : Icons.add;
+            if (pages[index] is OrderListFragment) {
+              rightButtonIcon = Icons.add;
               onRightPressed = () {
-                index == 1
-                    ? Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AddOrderPage(),
-                      ),
-                    )
-                    : index == 2
-                    ? Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AddCustomerPage(),
-                      ),
-                    )
-                    : index == 4
-                    ? ref.invalidate(getAttendanceDataControllerProvider)
-                    : null;
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AddOrderPage()),
+                );
               };
-            } else {
-              rightButtonIcon = null;
-              onRightPressed = null;
+            } else if (pages[index] is CustomerListFragment) {
+              rightButtonIcon = Icons.add;
+              onRightPressed = () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AddCustomerPage(),
+                  ),
+                );
+              };
+            } else if (pages[index] is ProfileFragment) {
+              rightButtonIcon = Icons.refresh;
+              onRightPressed = () {
+                ref.invalidate(getAttendanceDataControllerProvider);
+              };
             }
 
             setState(() {
@@ -142,68 +154,9 @@ class _HomePage extends ConsumerState<HomePage> {
             fontWeight: FontWeight.normal,
           ),
 
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.location_on),
-              label: 'Visit',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.receipt_long),
-              label: 'Order',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.business),
-              label: 'Pelanggan',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.inventory_2),
-              label: 'Produk',
-            ),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
-          ],
+          items: navBarItems,
         ),
       ),
     );
   }
 }
-
-// VISIT
-// 📍 Map Pin Icon → Icons.location_on
-// 🗺️ Map Icon → Icons.map
-// 📌 Location Pin Icon → Icons.place
-// 🛤️ Route/Path Icon → Icons.route
-// 🚶 Person Walking Icon → Icons.directions_walk
-// 🚗 Car Route Icon → Icons.directions_car
-// 📌 Navigation Pin → Icons.navigation
-
-// ORDER
-// 🧾 Receipt Icon → Icons.receipt_long
-// 💳 Payment/Transaction Icon → Icons.payment
-// 📄 Document/Paper Icon → Icons.description
-// 🛒 Shopping Cart Icon → Icons.shopping_cart
-// 💰 Money Icon → Icons.attach_money
-// 🔄 Order Processing Icon → Icons.sync
-// 🏷️ Tag (Sales) Icon → Icons.sell
-
-// PROFILE
-// 🏠 Home/Account Dashboard → Icons.account_circle
-// 👤 User Avatar → Icons.account_box
-// 🔄 Switch Account → Icons.manage_accounts
-// 🆔 ID/Identity → Icons.badge
-// ⚙️ Settings/Profile Management → Icons.settings
-// 📇 Contacts/User List → Icons.contacts
-
-// CUSTOMER
-// 👥 Two People Icon → Icons.group
-// 🏢 Business/Customers → Icons.business
-// 🗂 Contacts/Clients → Icons.contacts
-// 👨‍👩‍👧 Community/Users → Icons.diversity_3 (New in Flutter 3.7+)
-// 📋 Customer List → Icons.list
-// 🤝 Handshake (Partnership/Clients) → Icons.handshake
-
-// PRODUCT
-// 🛍️ Shopping Bag → Icons.shopping_bag
-// 📦 Box/Package → Icons.inventory_2
-// 🏷️ Tag (Product Label) → Icons.sell
-// 🛒 Shopping Cart → Icons.shopping_cart
-// 🏪 Store/Marketplace → Icons.store

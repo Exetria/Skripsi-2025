@@ -69,7 +69,7 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
 
                       return customListItem(
                         context: context,
-                        leadIcon: Icons.business,
+                        leadIcon: Icons.store,
                         title: data.fields?.companyName?.stringValue ?? '-',
                         subtitle:
                             data.fields?.companyAddress?.stringValue ?? '-',

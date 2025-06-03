@@ -65,7 +65,7 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
                 ),
               ],
               icons: [
-                Icons.business_outlined,
+                Icons.store_outlined,
                 Icons.location_on_outlined,
                 Icons.phone_outlined,
               ],
@@ -112,8 +112,9 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
                   SizedBox(height: 8.h),
 
                   Text(
-                    widget.data.fields?.note?.stringValue ??
-                        'Tidak ada catatan',
+                    widget.data.fields?.note?.stringValue?.isNotEmpty ?? false
+                        ? widget.data.fields?.note?.stringValue ?? '-'
+                        : 'Tidak ada catatan',
                     style: bodyStyle,
                   ),
                 ],

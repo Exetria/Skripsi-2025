@@ -68,7 +68,7 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
 
                       return customListItem(
                         context: context,
-                        leadIcon: Icons.inventory_2,
+                        leadIcon: Icons.widgets,
                         title: data.fields?.productName?.stringValue ?? '-',
                         subtitle: data.fields?.brand?.stringValue ?? '-',
                         trailIcon: Icons.arrow_forward_ios,
