@@ -343,14 +343,37 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),
           ),
+          SizedBox(width: 8.w),
           Expanded(
-            child: Center(
-              child: Text(
-                DateFormat.yMMMMd().format(selectedDate),
-                style: subtitleStyle,
+            child: GestureDetector(
+              onTap: () async {
+                final DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: selectedDate,
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2100),
+                  cancelText: 'Tutup',
+                  confirmText: 'Pilih',
+                );
+
+                if (pickedDate != null && pickedDate != selectedDate) {
+                  setState(() {
+                    selectedDate = pickedDate;
+                  });
+                  ref
+                      .read(visitListControllerProvider.notifier)
+                      .fetchVisitsForDate(date: selectedDate);
+                }
+              },
+              child: Center(
+                child: Text(
+                  DateFormat.yMMMMd().format(selectedDate),
+                  style: subtitleStyle,
+                ),
               ),
             ),
           ),
+          SizedBox(width: 8.w),
           IconButton(
             onPressed: () => _changeDate(1),
             icon: Icon(
