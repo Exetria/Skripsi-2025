@@ -352,6 +352,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                   initialDate: selectedDate,
                   firstDate: DateTime(2000),
                   lastDate: DateTime(2100),
+                  helpText: 'Pilih Tanggal',
                   cancelText: 'Tutup',
                   confirmText: 'Pilih',
                 );

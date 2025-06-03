@@ -36,10 +36,10 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
     3: 'Dibatalkan',
   };
 
-  File? _visitPhoto; // Input
-  String? _visitPhotoLink; // Input
-  int? _selectedStatus; // Input
+  File? _visitPhoto;
+  String? _visitPhotoLink;
   String _visitImageError = '';
+  int? _selectedStatus;
   bool _submitButtonEnabled = true;
   bool _pickVisitPhoto = true;
   bool _isOldPhotoFound = true;
@@ -172,7 +172,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
               buildInputBox(
                 enabled: _editable,
                 controller: _notesController,
-                label: 'Catatan',
+                label: 'Keterangan (contoh: penagihan)',
                 maxLines: 4,
                 validator:
                     (value) =>
@@ -329,7 +329,6 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
             _visitImageError = 'Foto harus diisi\nKetuk untuk Mengambil Foto';
           });
         }
-
         return;
       }
 

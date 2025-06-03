@@ -89,7 +89,7 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
                       builder: (context) => const CustomerRequestListPage(),
                     ),
                   ),
-              title: 'Lihat Daftar Pendaftaran Pelanggan Anda',
+              title: 'Lihat Daftar Ajuan Pelanggan Anda',
               trailIcon: Icons.arrow_forward_ios,
             ),
           ),
