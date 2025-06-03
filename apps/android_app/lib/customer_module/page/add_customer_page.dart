@@ -1,5 +1,3 @@
-// ignore_for_file: unused_local_variable
-
 import 'dart:io';
 
 import 'package:android_app/customer_module/page/controller/create_customer_request_controller.dart';
@@ -51,6 +49,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
   File? _ktpPhoto;
   String? _customerType;
   String? _subscriptionType;
+  String _storePhotoError = '';
   bool _submitButtonEnabled = true;
   bool _pickStorePhotoEnabled = true;
   bool _pickOwnerIdPhotoEnabled = true;
@@ -192,7 +191,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
               SizedBox(height: 16.h),
               buildInputBox(
                 controller: _requestDestinationController,
-                label: 'Tujuan Form',
+                label: 'Tujuan Form (contoh: Bu Rosa)',
                 validator: (value) {
                   return (value != null && value != '')
                       ? null
@@ -203,7 +202,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
 
               buildInputBox(
                 controller: _carbonCopyController,
-                label: 'Tembusan / CC',
+                label: 'Tembusan (contoh: Pak Budi)',
                 validator: (value) {
                   return (value != null && value != '')
                       ? null
@@ -274,6 +273,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                     if (pickedImage != null) {
                       setState(() {
                         _storePhoto = pickedImage;
+                        _storePhotoError = '';
                       });
                     }
                     _pickStorePhotoEnabled = true;
@@ -305,13 +305,23 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                             Icon(
                               Icons.camera_alt_outlined,
                               size: 32.sp,
-                              color: dividerColor,
+                              color:
+                                  _storePhotoError.isEmpty
+                                      ? dividerColor
+                                      : Theme.of(context).colorScheme.error,
                             ),
                             SizedBox(height: 8.h),
-                            Text(
-                              'Ketuk untuk Mengambil Foto',
-                              style: captionStyle,
-                            ),
+                            _storePhotoError.isEmpty
+                                ? Text(
+                                  'Ketuk untuk Mengambil Foto',
+                                  style: captionStyle,
+                                )
+                                : Text(
+                                  _storePhotoError,
+                                  style: captionStyle.copyWith(
+                                    color: Theme.of(context).colorScheme.error,
+                                  ),
+                                ),
                           ],
                         ),
                       ),
@@ -344,6 +354,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
         buildInputBox(
           controller: _companyPhoneController,
           label: 'Nomor Telepon Perusahaan',
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           validator: (value) {
             return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
           },
@@ -397,6 +408,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
       children: [
         // KTP Photo
         Center(child: Text('Foto KTP Pemilik', style: captionStyle)),
+        Center(child: Text('(jika ada)', style: captionStyle)),
         GestureDetector(
           onTap:
               _pickOwnerIdPhotoEnabled
@@ -477,6 +489,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
         buildInputBox(
           controller: _ownerPhoneController,
           label: 'Nomor Telepon Pemilik',
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           validator: (value) {
             return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
           },
@@ -656,7 +669,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
     );
   }
 
-  bool isAllRequiredDataFilled() {
+  bool isAllRequiredTextDataFilled() {
     // Upper Data
     final customerTypeStatus = _customerType != null;
     final subscriptionTypeStatus = _subscriptionType != null;
@@ -666,7 +679,6 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
     final creditLimitFilled = _creditLimitController.text != '';
 
     // Company Data
-    final storePhotoStatus = _storePhoto != null;
     final companyNameFilled = _companyNameController.text != '';
     final companyAddressFilled = _companyAddressController.text != '';
     final companyPhoneFilled = _companyPhoneController.text != '';
@@ -685,31 +697,29 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
     bool ownerPhoneFilled = _ownerPhoneController.text.isNotEmpty;
     bool picPositionFilled;
 
+    // Field is not required after revision
+    ktpPhotoStatus = true;
+    ownerNationalIdFilled = true;
+
     // Owner data needed for Non PKP
     if (_customerType == 'Non PKP') {
-      ktpPhotoStatus = _ktpPhoto != null;
       ownerAddressFilled = _ownerAddressController.text.isNotEmpty;
       ownerTaxIdFilled = _ownerTaxIdController.text.isNotEmpty;
-      ownerNationalIdFilled = true;
       // ownerNationalIdFilled = _ownerNationalIdController.text.isNotEmpty;
       ownershipStatusFilled = _ownershipStatusController.text.isNotEmpty;
       picPositionFilled = true;
     }
     // PIC data needed for PKP
     else if (_customerType == 'PKP') {
-      ktpPhotoStatus = true;
       ownerAddressFilled = true;
       ownerTaxIdFilled = true;
-      ownerNationalIdFilled = true;
       ownershipStatusFilled = true;
       picPositionFilled = _picPositionController.text.isNotEmpty;
     }
     // Nullify all data if customer type is not selected
     else {
-      ktpPhotoStatus = false;
       ownerAddressFilled = false;
       ownerTaxIdFilled = false;
-      ownerNationalIdFilled = false;
       ownershipStatusFilled = false;
       picPositionFilled = false;
     }
@@ -724,7 +734,6 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
       carbonCopyFilled,
 
       // Company Data
-      storePhotoStatus,
       companyNameFilled,
       companyAddressFilled,
       companyPhoneFilled,
@@ -755,13 +764,45 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
   }
 
   void _submit() async {
-    setState(() {
-      _submitButtonEnabled = false;
-    });
     // Validate to trigger warning
     _formKey.currentState?.validate();
 
-    if (isAllRequiredDataFilled()) {
+    if (!isAllRequiredTextDataFilled()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Data Belum Lengkap'),
+          behavior: SnackBarBehavior.floating,
+          duration: Duration(seconds: 2),
+        ),
+      );
+
+      if (_storePhoto == null) {
+        setState(() {
+          _storePhotoError =
+              'Foto Gedung / Toko harus diisi\nKetuk untuk Mengambil Foto';
+        });
+      }
+
+      return;
+    }
+
+    if (_storePhoto == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Foto Gedung / Toko Belum Diisi')),
+      );
+
+      setState(() {
+        _storePhotoError =
+            'Foto Gedung / Toko harus diisi\nKetuk untuk Mengambil Foto';
+      });
+      return;
+    }
+
+    setState(() {
+      _submitButtonEnabled = false;
+    });
+
+    if (isAllRequiredTextDataFilled()) {
       final state = await ref
           .read(createCustomerRequestControllerProvider.notifier)
           .createCustomerRequest(
@@ -869,13 +910,6 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
         );
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Data Belum Lengkap'),
-          behavior: SnackBarBehavior.floating,
-          duration: Duration(seconds: 2),
-        ),
-      );
       setState(() {
         _submitButtonEnabled = true;
       });

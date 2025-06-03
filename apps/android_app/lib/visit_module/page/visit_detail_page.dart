@@ -39,6 +39,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
   File? _visitPhoto; // Input
   String? _visitPhotoLink; // Input
   int? _selectedStatus; // Input
+  String _visitImageError = '';
   bool _submitButtonEnabled = true;
   bool _pickVisitPhoto = true;
   bool _isOldPhotoFound = true;
@@ -176,7 +177,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
                 validator:
                     (value) =>
                         value == null || value.trim().isEmpty
-                            ? 'Catatan tidak boleh kosong'
+                            ? 'Tidak Boleh Kosong'
                             : null,
               ),
               SizedBox(height: 32.h),
@@ -196,6 +197,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
                             if (pickedImage != null) {
                               setState(() {
                                 _visitPhoto = pickedImage;
+                                _visitImageError = '';
                               });
                             }
                             _pickVisitPhoto = true;
@@ -243,7 +245,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
                                     _isOldPhotoFound = false;
                                     return imageErrorWidget(
                                       context: context,
-                                      message: 'Image not found',
+                                      message: 'Gambar Tidak Ditemukan',
                                     );
                                   },
                                 ),
@@ -255,15 +257,30 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
                                     Icon(
                                       Icons.camera_alt_outlined,
                                       size: 32.sp,
-                                      color: dividerColor,
+                                      color:
+                                          _visitImageError.isEmpty
+                                              ? dividerColor
+                                              : Theme.of(
+                                                context,
+                                              ).colorScheme.error,
                                     ),
                                     SizedBox(height: 8.h),
-                                    Text(
-                                      _selectedStatus == 1
-                                          ? 'Foto Tidak Diperlukan'
-                                          : 'Ketuk untuk Mengambil Foto',
-                                      style: captionStyle,
-                                    ),
+                                    _visitImageError.isEmpty
+                                        ? Text(
+                                          _selectedStatus == 1
+                                              ? 'Foto Tidak Diperlukan'
+                                              : 'Ketuk untuk Mengambil Foto',
+                                          style: captionStyle,
+                                        )
+                                        : Text(
+                                          _visitImageError,
+                                          style: captionStyle.copyWith(
+                                            color:
+                                                Theme.of(
+                                                  context,
+                                                ).colorScheme.error,
+                                          ),
+                                        ),
                                   ],
                                 ),
                               ),
@@ -298,57 +315,77 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
 
   void _submit() async {
     {
-      if (_formKey.currentState!.validate()) {
-        // Photo requirement safeguard
+      // Form validation safeguard
+      if (!_formKey.currentState!.validate()) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Data Belum Lengkap')));
+
+        // Set image error if visit photo is required
         if (_selectedStatus != 1 &&
             ((_visitPhotoLink == null || !_isOldPhotoFound) &&
                 _visitPhoto == null)) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(const SnackBar(content: Text('Photo is required')));
-          return;
+          setState(() {
+            _visitImageError = 'Foto harus diisi\nKetuk untuk Mengambil Foto';
+          });
         }
 
-        // Update item at index
-        final item = widget.visitDataList[widget.index];
-
-        final fields = item['mapValue']?['fields'] as Map<String, dynamic>?;
-
-        if (fields != null) {
-          fields['visit_status'] = {
-            'integerValue': (_selectedStatus ?? 0).toString(),
-          };
-          fields['visit_notes'] = {'stringValue': _notesController.text};
-        }
-
-        // Disable submit button
-        setState(() {
-          _submitButtonEnabled = false;
-        });
-
-        // Update Firestore
-        await ref
-            .read(updateVisitControllerProvider.notifier)
-            .updateVisitData(
-              date: widget.date,
-              visitDataList: widget.visitDataList,
-              updateLocationIndex: widget.index,
-              visitPhoto: _selectedStatus != 1 ? _visitPhoto : null,
-            );
-
-        // Refresh visit list
-        await ref
-            .read(visitListControllerProvider.notifier)
-            .fetchVisitsForDate(date: widget.date, forceFetch: true);
-
-        // Enable submit button
-        setState(() {
-          _submitButtonEnabled = true;
-        });
-
-        // Back to visit list
-        Navigator.pop(context);
+        return;
       }
+
+      // Photo requirement safeguard
+      if (_selectedStatus != 1 &&
+          ((_visitPhotoLink == null || !_isOldPhotoFound) &&
+              _visitPhoto == null)) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Foto Kunjungan Belum Diisi')),
+        );
+
+        setState(() {
+          _visitImageError = 'Foto harus diisi\nKetuk untuk Mengambil Foto';
+        });
+        return;
+      }
+
+      // Update item at index
+      final item = widget.visitDataList[widget.index];
+
+      final fields = item['mapValue']?['fields'] as Map<String, dynamic>?;
+
+      if (fields != null) {
+        fields['visit_status'] = {
+          'integerValue': (_selectedStatus ?? 0).toString(),
+        };
+        fields['visit_notes'] = {'stringValue': _notesController.text};
+      }
+
+      // Disable submit button
+      setState(() {
+        _submitButtonEnabled = false;
+      });
+
+      // Update Firestore
+      await ref
+          .read(updateVisitControllerProvider.notifier)
+          .updateVisitData(
+            date: widget.date,
+            visitDataList: widget.visitDataList,
+            updateLocationIndex: widget.index,
+            visitPhoto: _selectedStatus != 1 ? _visitPhoto : null,
+          );
+
+      // Refresh visit list
+      await ref
+          .read(visitListControllerProvider.notifier)
+          .fetchVisitsForDate(date: widget.date, forceFetch: true);
+
+      // Enable submit button
+      setState(() {
+        _submitButtonEnabled = true;
+      });
+
+      // Back to visit list
+      Navigator.pop(context);
     }
   }
 }
