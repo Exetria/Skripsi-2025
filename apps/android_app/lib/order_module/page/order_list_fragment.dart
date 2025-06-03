@@ -18,6 +18,8 @@ class OrderListFragment extends StatefulHookConsumerWidget {
 }
 
 class _OrderListFragment extends ConsumerState<OrderListFragment> {
+  DateTimeRange? _selectedDateRange;
+
   @override
   void initState() {
     super.initState();
@@ -39,14 +41,64 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
       child: Column(
         children: [
           // Search Bar
-          customSearchBar(
-            context: context,
-            hint: 'Cari Order...',
-            onChanged: (query) {
-              ref
-                  .read(orderListControllerProvider.notifier)
-                  .searchOrderByCustomer(query);
-            },
+          Row(
+            children: [
+              Expanded(
+                child: customSearchBar(
+                  context: context,
+                  hint: 'Cari Order...',
+                  onChanged: (query) {
+                    ref
+                        .read(orderListControllerProvider.notifier)
+                        .searchOrderByCustomer(query);
+                  },
+                ),
+              ),
+
+              Row(
+                children: [
+                  // Reset Filter Button
+                  _selectedDateRange != null
+                      ? IconButton(
+                        icon: const Icon(Icons.clear),
+                        onPressed: () {
+                          ref
+                              .read(orderListControllerProvider.notifier)
+                              .resetSearch();
+
+                          setState(() {
+                            _selectedDateRange = null;
+                          });
+                        },
+                      )
+                      : const SizedBox.shrink(),
+
+                  // Date Range Picker Button
+                  IconButton(
+                    icon: const Icon(Icons.date_range),
+                    onPressed: () {
+                      showDateRangePicker(
+                        context: context,
+                        firstDate: DateTime(2020),
+                        lastDate: DateTime.now(),
+                        helpText: 'Pilih Rentang Tanggal',
+                        saveText: 'Terapkan',
+                      ).then((value) {
+                        if (value != null) {
+                          ref
+                              .read(orderListControllerProvider.notifier)
+                              .filterOrderByDateRange(value);
+
+                          setState(() {
+                            _selectedDateRange = value;
+                          });
+                        }
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ],
           ),
 
           SizedBox(height: 12.h),
@@ -81,7 +133,7 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
 
                       return customListItem(
                         context: context,
-                        leadIcon: Icons.receipt_long,
+                        leadIcon: Icons.shopping_cart,
                         title: customerListState.when(
                           loading: () => 'Memuat...',
                           data: (customerList) {
@@ -93,7 +145,7 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
                           },
                         ),
                         subtitle:
-                            '${(data.createTime != null && data.createTime != '') ? DateFormat.yMMMMd().format(DateTime.parse(data.createTime!)) : "Gagal Memuat Tanggal"}\nStatus: ${data.fields?.orderStatus?.stringValue ?? "-"}',
+                            '${(data.createTime != null && data.createTime != '') ? DateFormat.yMMMMd().format(DateTime.parse(data.createTime!)) : "Gagal Memuat Tanggal"}\nStatus: ${getOrderStatusText(data.fields?.orderStatus?.stringValue ?? "-")}',
                         trailIcon: Icons.arrow_forward_ios,
                         onTap: () {
                           Navigator.push(
@@ -187,5 +239,6 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
 
   Future<void> _refreshOrderList() async {
     ref.invalidate(orderListControllerProvider);
+    _selectedDateRange = null;
   }
 }
