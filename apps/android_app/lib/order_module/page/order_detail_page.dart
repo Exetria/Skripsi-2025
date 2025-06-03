@@ -64,25 +64,9 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
   Widget build(BuildContext context) {
     final customerListState = ref.watch(customerListControllerProvider);
 
-    String orderStatus =
-        widget.orderData.fields?.orderStatus?.stringValue ?? '';
-    String displayedOrderStatus = 'Tidak Tersedia';
-
-    if (orderStatus == 'pending') {
-      displayedOrderStatus = 'Menunggu Konfirmasi';
-    } else if (orderStatus == 'processed') {
-      displayedOrderStatus = 'Dikonfirmasi Admin';
-    } else if (orderStatus == 'in_transit') {
-      displayedOrderStatus = 'Sedang Dikirim';
-    } else if (orderStatus == 'delivered') {
-      displayedOrderStatus = 'Sudah Diterima';
-    } else if (orderStatus == 'finished') {
-      displayedOrderStatus = 'Selesai';
-    } else if (orderStatus == 'cancelled') {
-      displayedOrderStatus = 'Dibatalkan';
-    } else {
-      displayedOrderStatus = ''; // default or “unknown” status
-    }
+    String displayedOrderStatus = getOrderStatusText(
+      widget.orderData.fields?.orderStatus?.stringValue ?? '',
+    );
 
     return Scaffold(
       appBar: customAppBar(
@@ -172,6 +156,86 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
               decoration: const InputDecoration(labelText: 'Catatan'),
             ),
             SizedBox(height: 24.h),
+
+            // Ordered products
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Daftar Produk', style: sectionTitleStyle),
+                GestureDetector(
+                  onTap:
+                      _editable
+                          ? () async {
+                            // Add product
+                            String? newProductId =
+                                await showProductSelectorPopup();
+                            String? productPrice = await ref
+                                .read(productListControllerProvider.notifier)
+                                .getProductPrice(id: newProductId ?? '');
+
+                            for (var productData in _productDataList) {
+                              String? productId =
+                                  productData['mapValue']['fields']['product_id']['stringValue'];
+
+                              if (productId == newProductId) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Produk Sudah Ada'),
+                                    behavior: SnackBarBehavior.floating,
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                                return;
+                              }
+                            }
+
+                            if (newProductId != null && mounted) {
+                              setState(() {
+                                // discount_amount added later
+                                // discount_percentage added later
+                                _productDataList.add({
+                                  'mapValue': {
+                                    'fields': {
+                                      'product_id': {
+                                        'stringValue': newProductId,
+                                      },
+                                      'quantity': {'integerValue': '1'},
+                                      'unit_price': {
+                                        'integerValue': productPrice,
+                                      },
+                                      'total_price': {
+                                        'integerValue': productPrice,
+                                      },
+                                    },
+                                  },
+                                });
+                              });
+                            }
+
+                            ref
+                                .read(productListControllerProvider.notifier)
+                                .getProductPrice(id: newProductId ?? '');
+                          }
+                          : null,
+                  child:
+                      _editable
+                          ? Container(
+                            padding: EdgeInsets.all(8.r),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.primary,
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.circular(12.r),
+                            ),
+                            child: Icon(
+                              Icons.add,
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
+                          )
+                          : const SizedBox.shrink(),
+                ),
+              ],
+            ),
+            SizedBox(height: 12.h),
 
             // Product list
             ...generateProductList(),
