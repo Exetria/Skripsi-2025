@@ -1,5 +1,9 @@
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:windows_app/customer_module/page/controller/customer_list_controller.dart';
+import 'package:windows_app/product_module/page/controller/product_list_controller.dart';
 
 // COLUMN COUNT
 int getCrossAxisCount(BoxConstraints constraints) {
@@ -138,17 +142,276 @@ Widget itemCard({
   );
 }
 
-// BoxDecoration regularBoxDecoration(BuildContext context) {
-//   return BoxDecoration(
-//     color: Theme.of(context).colorScheme.surface,
-//     borderRadius: BorderRadius.circular(Platform.isWindows ? 12 : 12.r),
-//     border: Border.all(color: Theme.of(context).colorScheme.outline),
-//     boxShadow: [
-//       BoxShadow(
-//         color: Theme.of(context).colorScheme.shadow,
-//         blurRadius: 8,
-//         offset: Offset(0, Platform.isWindows ? 6 : 6.h),
-//       ),
-//     ],
-//   );
-// }
+// CUSTOMER SELECTOR POPUP
+Future<String?> showCustomerSelectorPopup({
+  required WidgetRef ref,
+  required BuildContext context,
+}) async {
+  ref.read(customerListControllerProvider.notifier).resetSearch();
+  return showDialog<String>(
+    context: context,
+    builder: (context) {
+      return Consumer(
+        builder: (context, ref, _) {
+          return AlertDialog(
+            title: Row(
+              children: [
+                Expanded(
+                  child: customSearchBar(
+                    context: context,
+                    hint: 'Cari Pelanggan...',
+                    onChanged: (query) {
+                      ref
+                          .read(customerListControllerProvider.notifier)
+                          .searchCustomer(query);
+                    },
+                  ),
+                ),
+                const SizedBox(width: 8),
+                IconButton(
+                  icon: const Icon(Icons.refresh),
+                  tooltip: 'Segarkan Daftar Pelanggan',
+                  onPressed: () {
+                    ref.invalidate(customerListControllerProvider);
+                  },
+                ),
+              ],
+            ),
+            content: SizedBox(
+              width: ScreenUtil().screenWidth * 0.2,
+              height: ScreenUtil().screenHeight * 0.3,
+              child: ref
+                  .watch(customerListControllerProvider)
+                  .when(
+                    loading:
+                        () => const Center(child: CircularProgressIndicator()),
+                    data: (productList) {
+                      if (productList == null || productList.isEmpty) {
+                        return const Center(
+                          child: Text('Data Pelanggan Tidak Ditemukan'),
+                        );
+                      }
+
+                      return ListView.separated(
+                        itemCount: productList.length,
+                        separatorBuilder:
+                            (context, index) => const SizedBox(height: 8),
+                        itemBuilder: (context, index) {
+                          final data = productList[index];
+                          bool isHovered = false;
+
+                          return StatefulBuilder(
+                            builder: (context, setState) {
+                              return MouseRegion(
+                                onEnter:
+                                    (_) => setState(() => isHovered = true),
+                                onExit:
+                                    (_) => setState(() => isHovered = false),
+                                child: AnimatedContainer(
+                                  duration: const Duration(milliseconds: 200),
+                                  transform:
+                                      isHovered
+                                          ? Matrix4.translationValues(0, -4, 0)
+                                          : Matrix4.identity(),
+                                  padding: const EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                    // Give a slightly different fill color so the border shows
+                                    color:
+                                        Theme.of(context).colorScheme.surface,
+                                    border: Border.all(
+                                      // Use a contrasting color (e.g., onSurface) and make it a bit thicker
+                                      color:
+                                          isHovered
+                                              ? Theme.of(
+                                                context,
+                                              ).colorScheme.primary
+                                              : Theme.of(context)
+                                                  .colorScheme
+                                                  .onSurface
+                                                  .withOpacity(0.5),
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: InkWell(
+                                    onTap:
+                                        () => Navigator.pop(
+                                          context,
+                                          getIdFromName(name: data.name),
+                                        ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          data
+                                                  .fields
+                                                  ?.companyName
+                                                  ?.stringValue ??
+                                              '-',
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      );
+                    },
+                    error: (error, _) {
+                      final exception = error as ApiException;
+
+                      return Center(
+                        child: Text(
+                          'Gagal Memuat Data Pelanggan: ${exception.message}',
+                          style: errorStyle,
+                        ),
+                      );
+                    },
+                  ),
+            ),
+          );
+        },
+      );
+    },
+  );
+}
+
+// PRODUCT SELECTOR POPUP
+Future<String?> showProductSelectorPopup({
+  required WidgetRef ref,
+  required BuildContext context,
+}) async {
+  ref.read(productListControllerProvider.notifier).resetSearch();
+  return showDialog<String>(
+    context: context,
+    builder: (context) {
+      return Consumer(
+        builder: (context, ref, _) {
+          return AlertDialog(
+            title: Row(
+              children: [
+                Expanded(
+                  child: customSearchBar(
+                    context: context,
+                    hint: 'Cari Produk...',
+                    onChanged: (query) {
+                      ref
+                          .read(productListControllerProvider.notifier)
+                          .searchProduct(query);
+                    },
+                  ),
+                ),
+                const SizedBox(width: 8),
+                IconButton(
+                  icon: const Icon(Icons.refresh),
+                  tooltip: 'Segarkan Daftar Pelanggan',
+                  onPressed: () {
+                    ref.invalidate(productListControllerProvider);
+                  },
+                ),
+              ],
+            ),
+            content: SizedBox(
+              width: ScreenUtil().screenWidth * 0.2,
+              height: ScreenUtil().screenHeight * 0.3,
+              child: ref
+                  .watch(productListControllerProvider)
+                  .when(
+                    loading:
+                        () => const Center(child: CircularProgressIndicator()),
+                    data: (productList) {
+                      if (productList == null || productList.isEmpty) {
+                        return const Center(
+                          child: Text('Data Produk Tidak Ditemukan'),
+                        );
+                      }
+
+                      return ListView.separated(
+                        itemCount: productList.length,
+                        separatorBuilder:
+                            (context, index) => const SizedBox(height: 8),
+                        itemBuilder: (context, index) {
+                          final data = productList[index];
+                          bool isHovered = false;
+
+                          return StatefulBuilder(
+                            builder: (context, setState) {
+                              return MouseRegion(
+                                onEnter:
+                                    (_) => setState(() => isHovered = true),
+                                onExit:
+                                    (_) => setState(() => isHovered = false),
+                                child: AnimatedContainer(
+                                  duration: const Duration(milliseconds: 200),
+                                  transform:
+                                      isHovered
+                                          ? Matrix4.translationValues(0, -4, 0)
+                                          : Matrix4.identity(),
+                                  padding: const EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                    // Give a slightly different fill color so the border shows
+                                    color:
+                                        Theme.of(context).colorScheme.surface,
+                                    border: Border.all(
+                                      // Use a contrasting color (e.g., onSurface) and make it a bit thicker
+                                      color:
+                                          isHovered
+                                              ? Theme.of(
+                                                context,
+                                              ).colorScheme.primary
+                                              : Theme.of(context)
+                                                  .colorScheme
+                                                  .onSurface
+                                                  .withOpacity(0.5),
+                                      width: 1.5,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: InkWell(
+                                    onTap:
+                                        () => Navigator.pop(
+                                          context,
+                                          getIdFromName(name: data.name),
+                                        ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          data
+                                                  .fields
+                                                  ?.productName
+                                                  ?.stringValue ??
+                                              '-',
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      );
+                    },
+                    error: (error, _) {
+                      final exception = error as ApiException;
+
+                      return Center(
+                        child: Text(
+                          'Gagal Memuat Data Produk: ${exception.message}',
+                          style: errorStyle,
+                        ),
+                      );
+                    },
+                  ),
+            ),
+          );
+        },
+      );
+    },
+  );
+}

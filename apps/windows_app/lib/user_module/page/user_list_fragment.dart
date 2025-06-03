@@ -714,7 +714,10 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                                   IconButton(
                                     onPressed: () async {
                                       final newCustomerId =
-                                          await showCustomerSelectorPopup();
+                                          await showCustomerSelectorPopup(
+                                            ref: ref,
+                                            context: context,
+                                          );
 
                                       if (newCustomerId != null &&
                                           newCustomerId.isNotEmpty &&
@@ -840,7 +843,10 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                                   IconButton(
                                     onPressed: () async {
                                       final newProductId =
-                                          await showProductSelectorPopup();
+                                          await showProductSelectorPopup(
+                                            ref: ref,
+                                            context: context,
+                                          );
 
                                       if (newProductId != null &&
                                           newProductId.isNotEmpty &&
@@ -1000,204 +1006,6 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
     );
   }
 
-  Future<String?> showCustomerSelectorPopup() async {
-    ref.read(customerListControllerProvider.notifier).resetSearch();
-    return showDialog<String>(
-      context: context,
-      builder: (context) {
-        return Consumer(
-          builder: (context, ref, _) {
-            return AlertDialog(
-              title: Row(
-                children: [
-                  Expanded(
-                    child: customSearchBar(
-                      context: context,
-                      hint: 'Cari Pelanggan...',
-                      onChanged: (query) {
-                        ref
-                            .read(customerListControllerProvider.notifier)
-                            .searchCustomer(query);
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  IconButton(
-                    icon: const Icon(Icons.refresh),
-                    tooltip: 'Segarkan Daftar Pelanggan',
-                    onPressed: () {
-                      _refreshCustomerList();
-                    },
-                  ),
-                ],
-              ),
-              content: SizedBox(
-                width: ScreenUtil().screenWidth * 0.2,
-                height: ScreenUtil().screenHeight * 0.3,
-                child: ref
-                    .watch(customerListControllerProvider)
-                    .when(
-                      loading:
-                          () =>
-                              const Center(child: CircularProgressIndicator()),
-                      data: (productList) {
-                        if (productList == null || productList.isEmpty) {
-                          return const Center(
-                            child: Text('Data Pelanggan Tidak Ditemukan'),
-                          );
-                        }
-
-                        return ListView.separated(
-                          itemCount: productList.length,
-                          separatorBuilder:
-                              (context, index) => Divider(
-                                color: Theme.of(context).colorScheme.onSurface,
-                                thickness: 1,
-                                height: 1,
-                              ),
-                          itemBuilder: (context, index) {
-                            final data = productList[index];
-
-                            return GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap:
-                                  () => Navigator.pop(
-                                    context,
-                                    getIdFromName(name: data.name),
-                                  ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    data.fields?.companyName?.stringValue ??
-                                        '-',
-                                  ),
-                                  const Icon(Icons.arrow_forward_ios, size: 10),
-                                ],
-                              ),
-                            );
-                          },
-                        );
-                      },
-                      error: (error, _) {
-                        final exception = error as ApiException;
-
-                        return Center(
-                          child: Text(
-                            'Gagal Memuat Data Pelanggan: ${exception.message}',
-                            style: errorStyle,
-                          ),
-                        );
-                      },
-                    ),
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
-
-  Future<String?> showProductSelectorPopup() async {
-    ref.read(productListControllerProvider.notifier).resetSearch();
-    return showDialog<String>(
-      context: context,
-      builder: (context) {
-        return Consumer(
-          builder: (context, ref, _) {
-            return AlertDialog(
-              title: Row(
-                children: [
-                  Expanded(
-                    child: customSearchBar(
-                      context: context,
-                      hint: 'Cari Produk...',
-                      onChanged: (query) {
-                        ref
-                            .read(productListControllerProvider.notifier)
-                            .searchProduct(query);
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  IconButton(
-                    icon: const Icon(Icons.refresh),
-                    tooltip: 'Segarkan Daftar Pelanggan',
-                    onPressed: () {
-                      _refreshProductList();
-                    },
-                  ),
-                ],
-              ),
-              content: SizedBox(
-                width: ScreenUtil().screenWidth * 0.2,
-                height: ScreenUtil().screenHeight * 0.3,
-                child: ref
-                    .watch(productListControllerProvider)
-                    .when(
-                      loading:
-                          () =>
-                              const Center(child: CircularProgressIndicator()),
-                      data: (productList) {
-                        if (productList == null || productList.isEmpty) {
-                          return const Center(
-                            child: Text('Data Produk Tidak Ditemukan'),
-                          );
-                        }
-
-                        return ListView.separated(
-                          itemCount: productList.length,
-                          separatorBuilder:
-                              (context, index) => Divider(
-                                color: Theme.of(context).colorScheme.onSurface,
-                                thickness: 1,
-                                height: 1,
-                              ),
-                          itemBuilder: (context, index) {
-                            final data = productList[index];
-
-                            return GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap:
-                                  () => Navigator.pop(
-                                    context,
-                                    getIdFromName(name: data.name),
-                                  ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    data.fields?.productName?.stringValue ??
-                                        '-',
-                                  ),
-                                  const Icon(Icons.arrow_forward_ios, size: 10),
-                                ],
-                              ),
-                            );
-                          },
-                        );
-                      },
-                      error: (error, _) {
-                        final exception = error as ApiException;
-
-                        return Center(
-                          child: Text(
-                            'Gagal Memuat Data Produk: ${exception.message}',
-                            style: errorStyle,
-                          ),
-                        );
-                      },
-                    ),
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
-
   List<String> generateListFromFirebaseList(List<Email> listData) {
     final List<String> result = [];
     for (var emailObject in listData) {
@@ -1206,10 +1014,6 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
       }
     }
     return result;
-  }
-
-  Future<void> _refreshCustomerList() async {
-    ref.invalidate(customerListControllerProvider);
   }
 
   Future<void> _refreshProductList() async {
