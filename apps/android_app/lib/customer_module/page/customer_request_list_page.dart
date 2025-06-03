@@ -23,7 +23,7 @@ class _CustomerRequestListPage extends ConsumerState<CustomerRequestListPage> {
     return Scaffold(
       appBar: customAppBar(
         context: context,
-        title: 'Daftar Pendaftaran Pelanggan Baru',
+        title: 'Daftar Ajuan',
         showLeftButton: true,
       ),
       body: Padding(

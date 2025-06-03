@@ -709,7 +709,7 @@ class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
           ),
 
           // Item total price & delete button
-          Text('Qty: $quantity', style: captionStyle),
+          Text('Jumlah: $quantity', style: captionStyle),
         ],
       ),
     );

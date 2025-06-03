@@ -526,3 +526,22 @@ Future<void> launchGoogleMapsRouteNavigation({
     ).showSnackBar(const SnackBar(content: Text('Could not open map')));
   }
 }
+
+// GET ORDER STATUS TEXT
+String getOrderStatusText(String orderStatus) {
+  if (orderStatus == 'pending') {
+    return 'Menunggu Konfirmasi';
+  } else if (orderStatus == 'processed') {
+    return 'Dikonfirmasi Admin';
+  } else if (orderStatus == 'in_transit') {
+    return 'Sedang Dikirim';
+  } else if (orderStatus == 'delivered') {
+    return 'Sudah Diterima';
+  } else if (orderStatus == 'finished') {
+    return 'Selesai';
+  } else if (orderStatus == 'cancelled') {
+    return 'Dibatalkan';
+  } else {
+    return 'Tidak Tersedia';
+  }
+}

@@ -153,7 +153,7 @@ class _AddOrderPageState extends ConsumerState<AddOrderPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Produk', style: sectionTitleStyle),
+                  Text('Daftar Produk', style: sectionTitleStyle),
                   GestureDetector(
                     onTap: () async {
                       // Add product
