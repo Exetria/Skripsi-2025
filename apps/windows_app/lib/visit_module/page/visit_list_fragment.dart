@@ -1,6 +1,9 @@
 // ignore_for_file: unused_local_variable
 
+import 'dart:io';
+
 import 'package:common_components/common_components.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +14,7 @@ import 'package:windows_app/customer_module/page/controller/customer_list_contro
 import 'package:windows_app/user_module/page/controller/user_list_controller.dart';
 import 'package:windows_app/utils/functions.dart';
 import 'package:windows_app/visit_module/domain/entities/visit_domain.dart';
+import 'package:windows_app/visit_module/page/controller/update_visit_controller.dart';
 import 'package:windows_app/visit_module/page/controller/visit_list_controller.dart';
 
 class VisitListFragment extends StatefulHookConsumerWidget {
@@ -83,7 +87,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
 
                 return LayoutBuilder(
                   builder: (context, constraints) {
-                    final crossCount = getCrossVisitAxisCount(constraints);
+                    final crossCount = _getVisitCrossAxisCount(constraints);
                     return GridView.builder(
                       padding: const EdgeInsets.only(top: 8),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -100,7 +104,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                         final salesName =
                             data.fields?.fullName?.stringValue ?? '-';
 
-                        return buildVisitListCard(
+                        return _buildVisitListCard(
                           salesId: salesId,
                           salesName: salesName,
                         );
@@ -177,14 +181,38 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
               padding: EdgeInsets.zero,
               constraints: const BoxConstraints(),
             ),
-            Expanded(
-              child: Center(
-                child: Text(
-                  DateFormat.yMMMMd().format(selectedDate),
-                  style: bodyStyle, // same text style you use elsewhere
+            const SizedBox(width: 8),
+            GestureDetector(
+              onTap: () async {
+                final DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: selectedDate,
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2100),
+                  helpText: 'Pilih Tanggal',
+                  cancelText: 'Tutup',
+                  confirmText: 'Pilih',
+                );
+
+                if (pickedDate != null && pickedDate != selectedDate) {
+                  setState(() {
+                    selectedDate = pickedDate;
+                  });
+                  ref
+                      .read(visitListControllerProvider.notifier)
+                      .fetchAllSalesVisitsForDate(date: selectedDate);
+                }
+              },
+              child: Expanded(
+                child: Center(
+                  child: Text(
+                    DateFormat.yMMMMd().format(selectedDate),
+                    style: bodyStyle, // same text style you use elsewhere
+                  ),
                 ),
               ),
             ),
+            const SizedBox(width: 8),
             IconButton(
               onPressed: () => _changeDate(1),
               icon: Icon(
@@ -201,7 +229,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
     );
   }
 
-  Widget buildMapSection() {
+  Widget _buildMapSection() {
     final cs = Theme.of(context).colorScheme;
     return Card(
       elevation: 4,
@@ -245,11 +273,14 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
     );
   }
 
-  Widget buildVisitListCard({
+  Widget _buildVisitListCard({
     required String salesId,
     required String salesName,
   }) {
     final visitListState = ref.watch(visitListControllerProvider);
+
+    List<Map<String, dynamic>> visitDataList = [];
+
     bool isHovered = false;
 
     return StatefulBuilder(
@@ -337,8 +368,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                         );
 
                         // Convert into List<Map<String, dynamic>>
-                        List<Map<String, dynamic>> visitDataList =
-                            _createVisitDataList(visits: visits);
+                        visitDataList = _createVisitDataList(visits: visits);
 
                         if (visitDataList.isEmpty) {
                           return const Center(
@@ -346,8 +376,10 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                           );
                         }
 
-                        return ListView.builder(
+                        return ListView.separated(
                           itemCount: visitDataList.length,
+                          separatorBuilder:
+                              (context, index) => const SizedBox(height: 12),
                           itemBuilder: (context, index) {
                             final visitData = visitDataList[index];
                             final customerId =
@@ -355,7 +387,8 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                             final visitStatus =
                                 visitData['mapValue']['fields']['visit_status']['integerValue'];
 
-                            return createVisitTile(
+                            return _createVisitTile(
+                              salesId: salesId,
                               customerId: customerId,
                               visitStatus:
                                   visitStatus == '1'
@@ -365,6 +398,9 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                                       : visitStatus == '3'
                                       ? 'Dibatalkan'
                                       : 'Tidak Tersedia',
+                              salesName: salesName,
+                              index: index,
+                              visitDataList: visitDataList,
                             );
                           },
                         );
@@ -385,8 +421,13 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       IconButton(
-                        onPressed: () async {
-                          // TODO: Add visit popup
+                        onPressed: () {
+                          showAddVisitPopup(
+                            context: context,
+                            salesId: salesId,
+                            salesName: salesName,
+                            visitDataList: visitDataList,
+                          );
                         },
                         icon: const Icon(Icons.add),
                         tooltip: 'Tambah Kunjungan untuk Sales Ini',
@@ -402,11 +443,28 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
     );
   }
 
-  Widget createVisitTile({
+  Widget _createVisitTile({
+    required String salesId,
     required String customerId,
     required String visitStatus,
+    required String salesName,
+    required int index,
+    required List<Map<String, dynamic>> visitDataList,
   }) {
     final customerListState = ref.watch(customerListControllerProvider);
+
+    String customerName = customerListState.when(
+      loading: () => 'Memuat...',
+      data: (customerList) {
+        return ref
+            .read(customerListControllerProvider.notifier)
+            .getCustomerName(id: customerId);
+      },
+      error: (error, stackTrace) {
+        _refreshCustomerList();
+        return 'Gagal Memuat Nama';
+      },
+    );
     final cs = Theme.of(context).colorScheme;
     bool isHovered = false;
     return StatefulBuilder(
@@ -421,32 +479,549 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                     ? Matrix4.translationValues(0, -4, 0)
                     : Matrix4.identity(),
             padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              // Give a slightly different fill color so the border shows
+              color: cs.surface,
+              border: Border.all(
+                // Use a contrasting color (e.g., onSurface) and make it a bit thicker
+                color: isHovered ? cs.primary : cs.onSurface.withOpacity(0.5),
+                width: 1.5,
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
             child: InkWell(
               onTap: () {
-                // TODO: Display visit detail
+                showUpdateVisitDataPopup(
+                  context: context,
+                  salesId: salesId,
+                  salesName: salesName,
+                  customerName: customerName,
+                  index: index,
+                  visitDataList: visitDataList,
+                );
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    customerListState.when(
-                      loading: () => 'Memuat...',
-                      data: (customerList) {
-                        return ref
-                            .read(customerListControllerProvider.notifier)
-                            .getCustomerName(id: customerId);
-                      },
-                      error: (error, stackTrace) {
-                        _refreshCustomerList();
-                        return 'Gagal Memuat Nama';
-                      },
-                    ),
-                  ),
-                  Text(visitStatus),
-                ],
+                children: [Text(customerName), Text(visitStatus)],
               ),
             ),
           ),
+        );
+      },
+    );
+  }
+
+  Future<void> showAddVisitPopup({
+    required BuildContext context,
+    required String salesId,
+    required String salesName,
+    required List<Map<String, dynamic>> visitDataList,
+  }) async {
+    final customerListState = ref.watch(customerListControllerProvider);
+
+    TextEditingController _customerIdController = TextEditingController();
+    String? _selectedCustomerId;
+
+    bool dialogActionButtonEnabled = true;
+
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (statefulBuilderContext, setDialogState) {
+            void addVisitData() async {
+              setDialogState(() {
+                dialogActionButtonEnabled = false;
+              });
+
+              visitDataList.add({
+                'mapValue': {
+                  'fields': {
+                    'customer_id': {
+                      'stringValue': getIdFromName(name: _selectedCustomerId),
+                    },
+                    'visit_status': {'integerValue': '1'},
+                    'visit_notes': {'stringValue': ''},
+                  },
+                },
+              });
+
+              // Submit new visit data
+              final submitState = await ref
+                  .read(updateVisitControllerProvider.notifier)
+                  .updateVisitData(
+                    salesId: salesId,
+                    date: selectedDate,
+                    visitDataList: visitDataList,
+                  );
+
+              // Refresh visit list
+              await ref
+                  .read(visitListControllerProvider.notifier)
+                  .fetchSalesVisitsForDate(
+                    salesId: salesId,
+                    date: selectedDate,
+                    forceFetch: true,
+                  );
+              Navigator.pop(statefulBuilderContext);
+
+              setDialogState(() {
+                dialogActionButtonEnabled = true;
+              });
+            }
+
+            return AlertDialog(
+              title: Center(
+                child: Text(
+                  'Tambah Kunjungan untuk $salesName',
+                  style: subtitleStyle,
+                ),
+              ),
+              content: SizedBox(
+                width: ScreenUtil().screenWidth * 0.4,
+                child: SingleChildScrollView(
+                  child: Form(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        TextFormField(
+                          readOnly: true,
+                          controller: _customerIdController,
+                          decoration: InputDecoration(
+                            labelText: 'Pilih Pelanggan',
+                            fillColor: Theme.of(context).colorScheme.surface,
+                          ),
+                          validator: (_) {
+                            return _selectedCustomerId == null
+                                ? 'Tidak Boleh Kosong'
+                                : null;
+                          },
+                          onTap: () async {
+                            // get selected customer Id
+                            final newSelectedId =
+                                await showCustomerSelectorPopup(
+                                  ref: ref,
+                                  context: context,
+                                );
+
+                            // if selected id exist, update
+                            if (newSelectedId != null && mounted) {
+                              setState(() {
+                                _selectedCustomerId = newSelectedId;
+
+                                _customerIdController
+                                    .text = customerListState.when(
+                                  loading: () => 'Memuat...',
+                                  data: (data) {
+                                    return ref
+                                        .read(
+                                          customerListControllerProvider
+                                              .notifier,
+                                        )
+                                        .getCustomerName(
+                                          id: _selectedCustomerId ?? '',
+                                        );
+                                  },
+                                  error: (error, stackTrace) {
+                                    ref.invalidate(
+                                      customerListControllerProvider,
+                                    );
+                                    return 'Gagal Memuat Nama';
+                                  },
+                                );
+                              });
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              actions: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const SizedBox.shrink(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            foregroundColor:
+                                Theme.of(
+                                  statefulBuilderContext,
+                                ).colorScheme.onSurface,
+                          ),
+                          onPressed:
+                              dialogActionButtonEnabled
+                                  ? () {
+                                    Navigator.pop(statefulBuilderContext);
+                                  }
+                                  : null,
+                          child: const Text('Tutup'),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                Theme.of(
+                                  statefulBuilderContext,
+                                ).colorScheme.tertiary,
+                            foregroundColor:
+                                Theme.of(
+                                  statefulBuilderContext,
+                                ).colorScheme.onTertiary,
+                          ),
+                          onPressed:
+                              dialogActionButtonEnabled ? addVisitData : null,
+                          child: const Text('Tambah'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> showUpdateVisitDataPopup({
+    required BuildContext context,
+    required String salesId,
+    required String salesName,
+    required String customerName,
+    required int index,
+    required List<Map<String, dynamic>> visitDataList,
+  }) async {
+    final customerListState = ref.watch(customerListControllerProvider);
+
+    final _updateVisitFormKey = GlobalKey<FormState>();
+
+    final Map<int, String> _statusOptions = {
+      1: 'Direncanakan',
+      2: 'Selesai',
+      3: 'Dibatalkan',
+    };
+
+    File? _visitPhoto;
+    String? _visitPhotoLink;
+    String? _visitImageError;
+    bool _isOldPhotoFound = true;
+
+    TextEditingController _notesController = TextEditingController();
+    int? _selectedStatus;
+
+    bool dialogActionButtonEnabled = true;
+
+    // Init status
+    final statusString =
+        visitDataList[index]['mapValue']?['fields']?['visit_status']?['integerValue'];
+    _selectedStatus = int.tryParse(statusString);
+
+    // Init notes
+    final visitNote =
+        visitDataList[index]['mapValue']?['fields']?['visit_notes']?['stringValue'];
+    if (visitNote != null && visitNote.isNotEmpty) {
+      _notesController.text = visitNote;
+    }
+
+    // Init photo url
+    _visitPhotoLink =
+        visitDataList[index]['mapValue']?['fields']?['visit_photo_url']?['stringValue'];
+
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (statefulBuilderContext, setDialogState) {
+            Future<void> pickImage() async {
+              // Safeguard if dialog closed
+              if (statefulBuilderContext.mounted == false) return;
+
+              // Pick image
+              final result = await FilePicker.platform.pickFiles(
+                type: FileType.image,
+                withData: true,
+              );
+              if (result == null) return;
+              if (result.files.single.path == null) {
+                setDialogState(() => _visitImageError = 'Gagal membaca file');
+                return;
+              }
+              // If dialog still mounted, display image
+              if (statefulBuilderContext.mounted) {
+                setDialogState(() {
+                  _visitPhoto = File(result.files.single.path ?? '');
+                  _visitImageError = null;
+                });
+              }
+            }
+
+            void updateVisitData() async {
+              setDialogState(() {
+                dialogActionButtonEnabled = false;
+              });
+
+              if (_updateVisitFormKey.currentState?.validate() ?? false) {
+                final item = visitDataList[index];
+
+                final fields =
+                    item['mapValue']?['fields'] as Map<String, dynamic>?;
+
+                if (fields != null) {
+                  fields['visit_status'] = {
+                    'integerValue': (_selectedStatus ?? 0).toString(),
+                  };
+                  fields['visit_notes'] = {
+                    'stringValue': _notesController.text,
+                  };
+                }
+
+                // Update Firestore
+                await ref
+                    .read(updateVisitControllerProvider.notifier)
+                    .updateVisitData(
+                      salesId: salesId,
+                      date: selectedDate,
+                      visitDataList: visitDataList,
+                      updateLocationIndex: index,
+                      visitPhoto: _selectedStatus != 1 ? _visitPhoto : null,
+                    );
+
+                // Refresh visit list
+                await ref
+                    .read(visitListControllerProvider.notifier)
+                    .fetchSalesVisitsForDate(
+                      salesId: salesId,
+                      date: selectedDate,
+                      forceFetch: true,
+                    );
+
+                Navigator.pop(statefulBuilderContext);
+              }
+
+              setDialogState(() {
+                dialogActionButtonEnabled = true;
+              });
+            }
+
+            return AlertDialog(
+              title: Center(
+                child: Text(
+                  'Perbarui Kunjungan $salesName ke $customerName',
+                  style: subtitleStyle,
+                ),
+              ),
+              content: SizedBox(
+                width: ScreenUtil().screenWidth * 0.4,
+                child: SingleChildScrollView(
+                  child: Form(
+                    key: _updateVisitFormKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // Store photo
+                        Center(
+                          child: GestureDetector(
+                            onTap: () {
+                              pickImage();
+                            },
+                            child: Container(
+                              width: ScreenUtil().screenWidth * 0.3,
+                              decoration: photoBoxDecoration(
+                                statefulBuilderContext,
+                              ),
+                              child: AspectRatio(
+                                aspectRatio: 16 / 9,
+                                child:
+                                    _visitPhoto != null
+                                        ? ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            16,
+                                          ),
+                                          child: Image.file(
+                                            _visitPhoto ?? File(''),
+                                            fit: BoxFit.cover,
+                                            width: double.infinity,
+                                            height: double.infinity,
+                                            errorBuilder:
+                                                (_, __, ___) =>
+                                                    imageErrorWidget(
+                                                      context: context,
+                                                    ),
+                                          ),
+                                        )
+                                        : _visitPhoto == null &&
+                                            _visitPhotoLink != null &&
+                                            _visitPhotoLink.isNotEmpty
+                                        ? ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            16,
+                                          ),
+                                          child: Image.network(
+                                            _visitPhotoLink,
+                                            fit: BoxFit.cover,
+                                            width: double.infinity,
+                                            height: double.infinity,
+                                            loadingBuilder: (
+                                              _,
+                                              child,
+                                              progress,
+                                            ) {
+                                              if (progress == null) {
+                                                return child;
+                                              }
+                                              return const Center(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              );
+                                            },
+                                            errorBuilder: (_, __, ___) {
+                                              _isOldPhotoFound = false;
+                                              return imageErrorWidget(
+                                                context: context,
+                                              );
+                                            },
+                                          ),
+                                        )
+                                        : Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(
+                                              Icons.camera_alt_outlined,
+                                              size: 64,
+                                              color:
+                                                  Theme.of(
+                                                    context,
+                                                  ).colorScheme.outline,
+                                            ),
+                                            const SizedBox(height: 8),
+                                            _visitImageError != null
+                                                ? Text(
+                                                  _visitImageError!,
+                                                  style: errorStyle,
+                                                )
+                                                : Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      'Klik untuk Memilih Gambar',
+                                                      style: captionStyle,
+                                                    ),
+                                                  ],
+                                                ),
+                                          ],
+                                        ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 32),
+
+                        // Visit Status
+                        DropdownButtonFormField<int>(
+                          value: _selectedStatus,
+                          dropdownColor: Theme.of(context).colorScheme.surface,
+                          icon: Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                          decoration: const InputDecoration(
+                            labelText: 'Status Pesanan',
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 14,
+                            ),
+                          ),
+                          items:
+                              _statusOptions.entries.map((entry) {
+                                return DropdownMenuItem(
+                                  value: entry.key,
+                                  child: Text(entry.value, style: bodyStyle),
+                                );
+                              }).toList(),
+                          onChanged: (val) {
+                            setDialogState(() {
+                              _selectedStatus = val;
+                            });
+                          },
+                          validator: (value) {
+                            return value == null ? 'Tidak Boleh Kosong' : null;
+                          },
+                        ),
+                        const SizedBox(height: 16),
+
+                        // Notes
+                        buildInputBox(
+                          controller: _notesController,
+                          label: 'Keterangan',
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Tidak Boleh Kosong';
+                            }
+                            return null;
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              actions: [
+                const SizedBox.shrink(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            foregroundColor:
+                                Theme.of(
+                                  statefulBuilderContext,
+                                ).colorScheme.onSurface,
+                          ),
+                          onPressed:
+                              dialogActionButtonEnabled
+                                  ? () {
+                                    Navigator.pop(statefulBuilderContext);
+                                  }
+                                  : null,
+                          child: const Text('Tutup'),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                Theme.of(
+                                  statefulBuilderContext,
+                                ).colorScheme.tertiary,
+                            foregroundColor:
+                                Theme.of(
+                                  statefulBuilderContext,
+                                ).colorScheme.onTertiary,
+                          ),
+                          onPressed:
+                              dialogActionButtonEnabled
+                                  ? updateVisitData
+                                  : null,
+                          child: const Text('Perbarui'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
         );
       },
     );
@@ -515,7 +1090,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
     return formattedDate;
   }
 
-  int getCrossVisitAxisCount(BoxConstraints constraints) {
+  int _getVisitCrossAxisCount(BoxConstraints constraints) {
     final width = constraints.maxWidth;
 
     if (width > 2000) {

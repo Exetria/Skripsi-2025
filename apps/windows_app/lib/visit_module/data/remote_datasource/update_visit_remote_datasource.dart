@@ -24,7 +24,7 @@ class UpdateVisitDataRemoteDatasourceImpl
     int? updateLocationIndex,
     File? visitPhoto,
   }) async {
-    final documentId = _generateDocumentIdFromDate(date);
+    final documentId = _generateDocumentIdFromDate(salesId, date);
 
     // Update location if needed
     if (updateLocationIndex != null) {
@@ -74,7 +74,7 @@ class UpdateVisitDataRemoteDatasourceImpl
       },
       body: {
         'fields': {
-          'created_by': {'stringValue': userDataHelper?.uid},
+          'created_by': {'stringValue': salesId},
           'visit_date': {'timestampValue': date.toUtc().toIso8601String()},
           'visits': {
             'arrayValue': {'values': visitDataList},
@@ -86,10 +86,10 @@ class UpdateVisitDataRemoteDatasourceImpl
     return VisitDomain.fromJson(result);
   }
 
-  String _generateDocumentIdFromDate(DateTime date) {
+  String _generateDocumentIdFromDate(String salesId, DateTime date) {
     final formattedDate =
         '${date.day.toString().padLeft(2, '0')}${date.month.toString().padLeft(2, '0')}${date.year}';
 
-    return '${userDataHelper?.uid}-$formattedDate';
+    return '$salesId-$formattedDate';
   }
 }
