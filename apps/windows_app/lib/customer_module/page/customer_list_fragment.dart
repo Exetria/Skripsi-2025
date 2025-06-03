@@ -1209,15 +1209,14 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
               bool ownerPhoneFilled = picPhoneController.text.isNotEmpty;
               bool picPositionFilled;
 
+              // Field is not required after revision
+              ktpPhotoStatus = true;
+              ownerNationalIdFilled = true;
+
               // Owner data needed for Non PKP
               if (selectedCustomerType == 'Non PKP') {
-                ktpPhotoStatus =
-                    picNationalIdPhoto != null ||
-                    (previousPicNationalIdPhotoLink != null &&
-                        previousPicNationalIdPhotoLink.isNotEmpty);
                 ownerAddressFilled = picAddressController.text.isNotEmpty;
                 ownerTaxIdFilled = picTaxIdController.text.isNotEmpty;
-                ownerNationalIdFilled = true;
                 // ownerNationalIdFilled = _ownerNationalIdController.text.isNotEmpty;
                 ownershipStatusFilled =
                     ownershipStatusController.text.isNotEmpty;
@@ -1225,19 +1224,15 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
               }
               // PIC data needed for PKP
               else if (selectedCustomerType == 'PKP') {
-                ktpPhotoStatus = true;
                 ownerAddressFilled = true;
                 ownerTaxIdFilled = true;
-                ownerNationalIdFilled = true;
                 ownershipStatusFilled = true;
                 picPositionFilled = picPositionController.text.isNotEmpty;
               }
               // Nullify all data if customer type is not selected
               else {
-                ktpPhotoStatus = false;
                 ownerAddressFilled = false;
                 ownerTaxIdFilled = false;
-                ownerNationalIdFilled = false;
                 ownershipStatusFilled = false;
                 picPositionFilled = false;
               }
@@ -1495,15 +1490,11 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                               : 'Gagal menambahkan pelanggan',
                     );
                   }
-                } else if (companyStorePhoto == null ||
-                    picNationalIdPhoto == null) {
+                } else if (companyStorePhoto == null) {
                   setDialogState(() {
                     companyStorePhoto == null
                         ? companyStorePhotoError = 'Foto toko harus dipilih'
                         : companyStorePhotoError = null;
-                    picNationalIdPhoto == null
-                        ? picNationalIdPhotoError = 'Foto KTP harus dipilih'
-                        : picNationalIdPhotoError = null;
                   });
                 }
                 setDialogState(() {
