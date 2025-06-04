@@ -56,8 +56,7 @@ class _HomePage extends ConsumerState<HomePage> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder:
-                (_) => LoginPage(kicked: true, reason: 'User Not Signed In'),
+            builder: (_) => LoginPage(kicked: true, reason: 'Anda Belum Login'),
           ),
         );
       }

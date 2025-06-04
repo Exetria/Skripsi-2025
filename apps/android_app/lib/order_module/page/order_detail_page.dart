@@ -765,7 +765,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Not editable'),
+          content: Text('Tidak Dapat Diubah'),
           behavior: SnackBarBehavior.floating,
           duration: Duration(seconds: 2),
         ),

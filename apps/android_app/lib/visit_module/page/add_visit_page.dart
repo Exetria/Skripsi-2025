@@ -107,7 +107,7 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
     return Scaffold(
       appBar: customAppBar(
         context: context,
-        title: 'Tambah Visit',
+        title: 'Tambah Kunjungan',
         showLeftButton: true,
         rightButtonIcon: Icons.refresh,
         onRightPressed: () {
@@ -184,7 +184,7 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
                                   showConfirmationDialog(
                                     context: context,
                                     message:
-                                        'Apakah Anda yakin ingin menambahkan visit ke \n${customerList[index].fields?.companyName?.stringValue ?? "-"}',
+                                        'Apakah Anda yakin ingin menambahkan kunjungan ke \n${customerList[index].fields?.companyName?.stringValue ?? "-"}',
                                     rightButtonBackgroundColor:
                                         Theme.of(context).colorScheme.tertiary,
                                     leftButtonBackgroundColor:

@@ -493,7 +493,7 @@ Future<void> launchGoogleMapNavigation({
   } catch (e) {
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('Could not open map')));
+    ).showSnackBar(const SnackBar(content: Text('Tidak Dapat Membuka Peta')));
   }
 }
 
@@ -523,7 +523,7 @@ Future<void> launchGoogleMapsRouteNavigation({
   } catch (e) {
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('Could not open map')));
+    ).showSnackBar(const SnackBar(content: Text('Tidak Dapat Membuka Peta')));
   }
 }
 

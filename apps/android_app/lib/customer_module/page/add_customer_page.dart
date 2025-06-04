@@ -202,7 +202,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
 
               buildInputBox(
                 controller: _carbonCopyController,
-                label: 'Tembusan (contoh: Pak Budi)',
+                label: 'Tembusan (isi "-" jika tidak ada)',
                 validator: (value) {
                   return (value != null && value != '')
                       ? null
@@ -333,7 +333,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
         // Company Name
         buildInputBox(
           controller: _companyNameController,
-          label: 'Nama Perusahaan',
+          label: 'Nama Perusahaan / Toko',
           validator: (value) {
             return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
           },
@@ -343,7 +343,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
         // Company Email
         buildInputBox(
           controller: _companyEmailController,
-          label: 'Email Perusahaan',
+          label: 'Email Perusahaan / Toko (isi "-" jika tidak ada)',
           validator: (value) {
             return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
           },
@@ -391,7 +391,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
         // Store Condition
         buildInputBox(
           controller: _storeConditionController,
-          label: 'Kondisi Gedung / Toko',
+          label: 'Keterangan Gedung / Toko (contoh: ruko 2 lantai)',
           validator: (value) {
             return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
           },
@@ -520,7 +520,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
         // Owner Ownership Status
         buildInputBox(
           controller: _ownershipStatusController,
-          label: 'Status Kepemilikan',
+          label: 'Kepemilikan (contoh: milik sendiri)',
           validator: (value) {
             if (_customerType == 'PKP') return null;
             return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
@@ -628,7 +628,7 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
         // PIC Position
         buildInputBox(
           controller: _picPositionController,
-          label: 'Posisi PIC dalam Perusahaan',
+          label: 'Posisi PIC dalam Perusahaan (contoh: manager)',
           validator: (value) {
             return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
           },
