@@ -304,7 +304,7 @@ class _MainReportFragmentState extends ConsumerState<MainReportFragment> {
         separatorBuilder: (_, __) => const Divider(),
         itemBuilder: (context, i) {
           return ListTile(
-            leading: const Icon(Icons.location_on),
+            leading: const Icon(Icons.directions_walk),
             title: Text('Kunjungan #${i + 1}'),
             subtitle: const Text('Customer XYZ'),
             onTap: () => _centerMapOnVisit(i),
@@ -342,7 +342,7 @@ class _MainReportFragmentState extends ConsumerState<MainReportFragment> {
                 width: 40,
                 height: 40,
                 point: const LatLng(-6.200000, 106.816666),
-                child: Icon(Icons.location_on, color: cs.primary, size: 32),
+                child: Icon(Icons.directions_walk, color: cs.primary, size: 32),
               ),
             ],
           ),

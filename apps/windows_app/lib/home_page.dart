@@ -86,19 +86,19 @@ class _HomePage extends ConsumerState<HomePage> {
                   label: Text('Pengguna'),
                 ),
                 const NavigationRailDestination(
-                  icon: Icon(Icons.location_on),
+                  icon: Icon(Icons.directions_walk),
                   label: Text('Kunjungan'),
                 ),
                 const NavigationRailDestination(
-                  icon: Icon(Icons.receipt_long),
+                  icon: Icon(Icons.shopping_cart),
                   label: Text('Pesanan'),
                 ),
                 const NavigationRailDestination(
-                  icon: Icon(Icons.business),
+                  icon: Icon(Icons.store),
                   label: Text('Pelanggan'),
                 ),
                 const NavigationRailDestination(
-                  icon: Icon(Icons.inventory_2),
+                  icon: Icon(Icons.widgets),
                   label: Text('Produk'),
                 ),
                 const NavigationRailDestination(

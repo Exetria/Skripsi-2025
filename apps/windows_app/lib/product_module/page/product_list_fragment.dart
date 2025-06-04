@@ -74,7 +74,7 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                         final data = customerList[index];
                         return itemCard(
                           context: context,
-                          icon: Icons.inventory_2,
+                          icon: Icons.widgets,
                           title: data.fields?.productName?.stringValue ?? '-',
                           subtitle: getIdFromName(name: data.name),
                           leftBottomText:

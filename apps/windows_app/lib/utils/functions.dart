@@ -228,7 +228,7 @@ Future<String?> showCustomerSelectorPopup({
                                               : Theme.of(context)
                                                   .colorScheme
                                                   .onSurface
-                                                  .withOpacity(0.5),
+                                                  .withAlpha(128),
                                       width: 1.5,
                                     ),
                                     borderRadius: BorderRadius.circular(8),
@@ -365,7 +365,7 @@ Future<String?> showProductSelectorPopup({
                                               : Theme.of(context)
                                                   .colorScheme
                                                   .onSurface
-                                                  .withOpacity(0.5),
+                                                  .withAlpha(128),
                                       width: 1.5,
                                     ),
                                     borderRadius: BorderRadius.circular(8),

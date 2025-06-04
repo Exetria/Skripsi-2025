@@ -257,7 +257,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                         height: 40,
                         point: const LatLng(-6.200000, 106.816666),
                         child: Icon(
-                          Icons.location_on,
+                          Icons.directions_walk,
                           color: Theme.of(context).colorScheme.primary,
                           size: 32,
                         ),
@@ -483,8 +483,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
               // Give a slightly different fill color so the border shows
               color: cs.surface,
               border: Border.all(
-                // Use a contrasting color (e.g., onSurface) and make it a bit thicker
-                color: isHovered ? cs.primary : cs.onSurface.withOpacity(0.5),
+                color: isHovered ? cs.primary : cs.onSurface.withAlpha(128),
                 width: 1.5,
               ),
               borderRadius: BorderRadius.circular(8),

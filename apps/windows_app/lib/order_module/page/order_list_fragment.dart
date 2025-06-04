@@ -80,7 +80,7 @@ class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
 
                         return itemCard(
                           context: context,
-                          icon: Icons.receipt_long,
+                          icon: Icons.shopping_cart,
                           title: customerListState.when(
                             loading: () => 'Memuat...',
                             data: (customerList) {

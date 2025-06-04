@@ -501,8 +501,9 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                                               child,
                                               progress,
                                             ) {
-                                              if (progress == null)
+                                              if (progress == null) {
                                                 return child;
+                                              }
                                               return const Center(
                                                 child:
                                                     CircularProgressIndicator(),
@@ -1014,10 +1015,6 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
       }
     }
     return result;
-  }
-
-  Future<void> _refreshProductList() async {
-    ref.invalidate(productListControllerProvider);
   }
 
   Future<void> _refreshUserList() async {

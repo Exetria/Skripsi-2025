@@ -110,7 +110,7 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                 });
               },
               icon: Icon(
-                Icons.business_sharp,
+                Icons.store,
                 color:
                     seeCustomer
                         ? Theme.of(context).colorScheme.primary
@@ -204,7 +204,7 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
 
                 return itemCard(
                   context: context,
-                  icon: Icons.business_sharp,
+                  icon: Icons.store,
                   title: data.fields?.companyName?.stringValue ?? '-',
                   subtitle: data.fields?.companyAddress?.stringValue ?? '-',
                   secondarySubtitle:
