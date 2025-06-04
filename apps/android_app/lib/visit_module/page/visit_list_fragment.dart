@@ -346,6 +346,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
           SizedBox(width: 8.w),
           Expanded(
             child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
               onTap: () async {
                 final DateTime? pickedDate = await showDatePicker(
                   context: context,
