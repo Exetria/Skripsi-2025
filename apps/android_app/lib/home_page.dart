@@ -40,7 +40,7 @@ class _HomePage extends ConsumerState<HomePage> {
       icon: Icon(Icons.directions_walk),
       label: 'Kunjungan',
     ),
-    // const BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Order',),
+    // const BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Pesanan',),
     const BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Pelanggan'),
     // const BottomNavigationBarItem(icon: Icon(Icons.widgets), label: 'Produk'),
     const BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
