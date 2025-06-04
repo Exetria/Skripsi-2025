@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:windows_app/customer_module/page/controller/customer_list_controller.dart';
 import 'package:windows_app/order_module/domain/entities/order_domain.dart';
@@ -19,7 +20,54 @@ class OrderListController extends _$OrderListController {
       (r) => AsyncData(r),
     );
     _orderList = state.value;
+    sortOrderByDate();
     return state.value;
+  }
+
+  void sortOrderByDate() {
+    if (_orderList == null) return;
+
+    _orderList?.sort((a, b) {
+      final dateA = DateTime.tryParse(a.createTime ?? '');
+      final dateB = DateTime.tryParse(b.createTime ?? '');
+
+      if (dateA == null && dateB == null) return 0;
+      if (dateA == null) return 1;
+      if (dateB == null) return -1;
+
+      return dateB.compareTo(dateA);
+    });
+  }
+
+  void filterOrderByDateRange(DateTimeRange dateRange) {
+    if (_orderList == null) return;
+
+    // Normalize start and end dates to remove time component
+    final startDate = DateTime(
+      dateRange.start.year,
+      dateRange.start.month,
+      dateRange.start.day,
+    );
+    final endDate = DateTime(
+      dateRange.end.year,
+      dateRange.end.month,
+      dateRange.end.day,
+    );
+
+    final filteredList =
+        _orderList?.where((order) {
+          final parsed = DateTime.tryParse(order.createTime ?? '');
+          if (parsed == null) return false;
+
+          final orderDate = DateTime(parsed.year, parsed.month, parsed.day);
+
+          return orderDate.isAtSameMomentAs(startDate) ||
+              orderDate.isAtSameMomentAs(endDate) ||
+              (orderDate.isAfter(startDate) && orderDate.isBefore(endDate));
+        }).toList() ??
+        [];
+
+    state = AsyncData(filteredList);
   }
 
   void searchOrderByCustomer(String query) async {

@@ -7,7 +7,7 @@ part of 'order_list_controller.dart';
 // **************************************************************************
 
 String _$orderListControllerHash() =>
-    r'e901bafab102d76f423aaa5bf04c454a70d05d95';
+    r'9e5c9e53ba7c2190aef59406d800770fd088047f';
 
 /// See also [OrderListController].
 @ProviderFor(OrderListController)
