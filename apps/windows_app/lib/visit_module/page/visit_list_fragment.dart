@@ -137,13 +137,28 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
           children: [
             SizedBox(
               width: ScreenUtil().screenWidth * 0.25,
-              child: _buildDateSelector(),
+              child: customSearchBar(
+                context: context,
+                hint: 'Cari Sales...',
+                onChanged: (query) {
+                  ref
+                      .read(userListControllerProvider.notifier)
+                      .searchUser(query);
+                },
+              ),
             ),
             const SizedBox(width: 16),
           ],
         ),
         Row(
           children: [
+            SizedBox(
+              width: ScreenUtil().screenWidth * 0.25,
+              child: _buildDateSelector(),
+            ),
+
+            const SizedBox(width: 16),
+
             IconButton(
               onPressed: _refreshVisitList,
               icon: const Icon(Icons.refresh),
@@ -182,32 +197,33 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
               constraints: const BoxConstraints(),
             ),
             const SizedBox(width: 8),
-            GestureDetector(
-              onTap: () async {
-                final DateTime? pickedDate = await showDatePicker(
-                  context: context,
-                  initialDate: selectedDate,
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(2100),
-                  helpText: 'Pilih Tanggal',
-                  cancelText: 'Tutup',
-                  confirmText: 'Pilih',
-                );
+            Expanded(
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () async {
+                  final DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: selectedDate,
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                    helpText: 'Pilih Tanggal',
+                    cancelText: 'Tutup',
+                    confirmText: 'Pilih',
+                  );
 
-                if (pickedDate != null && pickedDate != selectedDate) {
-                  setState(() {
-                    selectedDate = pickedDate;
-                  });
-                  ref
-                      .read(visitListControllerProvider.notifier)
-                      .fetchAllSalesVisitsForDate(date: selectedDate);
-                }
-              },
-              child: Expanded(
+                  if (pickedDate != null && pickedDate != selectedDate) {
+                    setState(() {
+                      selectedDate = pickedDate;
+                    });
+                    ref
+                        .read(visitListControllerProvider.notifier)
+                        .fetchAllSalesVisitsForDate(date: selectedDate);
+                  }
+                },
                 child: Center(
                   child: Text(
                     DateFormat.yMMMMd().format(selectedDate),
-                    style: bodyStyle, // same text style you use elsewhere
+                    style: bodyStyle,
                   ),
                 ),
               ),
@@ -420,6 +436,16 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      IconButton(
+                        onPressed: () {
+                          // TODO: Switch to map view
+                        },
+                        icon: const Icon(Icons.map),
+                        tooltip: 'Lihat Pada Peta',
+                      ),
+
+                      const SizedBox(width: 12),
+
                       IconButton(
                         onPressed: () {
                           showAddVisitPopup(
@@ -660,6 +686,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                                   : null,
                           child: const Text('Tutup'),
                         ),
+                        const SizedBox(width: 12),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor:
@@ -979,6 +1006,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    const SizedBox.shrink(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -997,6 +1025,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                                   : null,
                           child: const Text('Tutup'),
                         ),
+                        const SizedBox(width: 12),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor:
