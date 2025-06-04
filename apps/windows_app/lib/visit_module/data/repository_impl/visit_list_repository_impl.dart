@@ -6,8 +6,8 @@ import 'package:windows_app/visit_module/data/remote_datasource/visit_list_remot
 import 'package:windows_app/visit_module/domain/entities/visit_domain.dart';
 import 'package:windows_app/visit_module/domain/repository/visit_repository.dart';
 
-class GetVisitListRepositoryImpl implements VisitRepository {
-  final remoteDataSource = GetVisitListRemoteDatasourceImpl();
+class VisitListRepositoryImpl implements VisitRepository {
+  final remoteDataSource = VisitListRemoteDatasourceImpl();
 
   @override
   Future<Either<ApiException, VisitDomain?>> getSalesVisitList({
@@ -30,5 +30,16 @@ class GetVisitListRepositoryImpl implements VisitRepository {
     File? visitPhoto,
   }) {
     throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<ApiException, List<VisitDomain>?>> getFilteredVisitList({
+    required DateTime startDate,
+  }) async {
+    final resp = await remoteProcess(
+      remoteDataSource.getFilteredVisitList(startDate: startDate),
+    );
+
+    return resp.fold((l) => Left(l), (r) => Right(r));
   }
 }

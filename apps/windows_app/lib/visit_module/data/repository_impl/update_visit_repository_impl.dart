@@ -37,4 +37,11 @@ class UpdateVisitRepositoryImpl implements VisitRepository {
 
     return resp.fold((l) => Left(l), (r) => Right(r));
   }
+
+  @override
+  Future<Either<ApiException, List<VisitDomain>?>> getFilteredVisitList({
+    required DateTime startDate,
+  }) {
+    throw UnimplementedError();
+  }
 }

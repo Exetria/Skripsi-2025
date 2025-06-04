@@ -20,10 +20,14 @@ abstract class VisitRepository {
     int? updateLocationIndex,
     File? visitPhoto,
   });
+
+  Future<Either<ApiException, List<VisitDomain>?>> getFilteredVisitList({
+    required DateTime startDate,
+  });
 }
 
-final getVisitListRepositoryProvider = Provider<VisitRepository>(
-  (ref) => GetVisitListRepositoryImpl(),
+final visitListRepositoryProvider = Provider<VisitRepository>(
+  (ref) => VisitListRepositoryImpl(),
 );
 
 final updateVisitRepositoryProvider = Provider<VisitRepository>(

@@ -35,7 +35,7 @@ class VisitListController extends _$VisitListController {
       }
 
       // Call API
-      final repository = ref.watch(getVisitListRepositoryProvider);
+      final repository = ref.watch(visitListRepositoryProvider);
       state = const AsyncLoading();
       final result = await repository.getSalesVisitList(
         salesId: salesId,
@@ -69,7 +69,7 @@ class VisitListController extends _$VisitListController {
     }
 
     // Call API
-    final repository = ref.watch(getVisitListRepositoryProvider);
+    final repository = ref.watch(visitListRepositoryProvider);
     state = const AsyncLoading();
     final result = await repository.getSalesVisitList(
       salesId: salesId,
