@@ -1,4 +1,4 @@
-import 'package:common_components/variables.dart';
+import 'package:common_components/common_components.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -6,6 +6,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:windows_app/utils/functions.dart';
+import 'package:windows_app/visit_module/domain/entities/visit_domain.dart';
+import 'package:windows_app/visit_module/page/controller/filtered_visit_controller.dart';
 
 class MainReportFragment extends StatefulHookConsumerWidget {
   const MainReportFragment({super.key});
@@ -15,10 +17,15 @@ class MainReportFragment extends StatefulHookConsumerWidget {
 }
 
 class _MainReportFragmentState extends ConsumerState<MainReportFragment> {
+  final salesForceCountStartDate = DateTime(
+    DateTime.now().year,
+    DateTime.now().month - 3,
+    DateTime.now().day,
+  );
+
   DateTimeRange _selectedRange;
   String _selectedProduct;
   String _selectedSales;
-  final int _salesForceCount = 0;
 
   final List<String> _products = ['Semua Produk', 'Produk A', 'Produk B'];
   final List<String> _sales = ['Semua Sales', 'Sales 1', 'Sales 2'];
@@ -32,13 +39,11 @@ class _MainReportFragmentState extends ConsumerState<MainReportFragment> {
       _selectedSales = 'Semua Sales';
 
   @override
-  void initState() {
-    super.initState();
-    calculateSalesForce();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final filteredVisitListState = ref.watch(
+      filteredVisitControllerProvider(salesForceCountStartDate),
+    );
+
     final cs = Theme.of(context).colorScheme;
 
     return SingleChildScrollView(
@@ -250,14 +255,16 @@ class _MainReportFragmentState extends ConsumerState<MainReportFragment> {
                       children: [
                         buildVisitsSection(),
                         const SizedBox(width: 12),
-                        buildSalesForceSection(),
+                        buildSalesForceSection(filteredVisitListState),
                       ],
                     )
                     : Row(
                       children: [
                         Expanded(child: buildVisitsSection()),
                         const SizedBox(width: 12),
-                        Expanded(child: buildSalesForceSection()),
+                        Expanded(
+                          child: buildSalesForceSection(filteredVisitListState),
+                        ),
                       ],
                     );
               },
@@ -314,11 +321,62 @@ class _MainReportFragmentState extends ConsumerState<MainReportFragment> {
     );
   }
 
-  Widget buildSalesForceSection() {
-    return buildCard(
-      title: 'Tenaga Sales Saat Ini',
-      child: Center(
-        child: Text(_salesForceCount.toString(), style: subtitleStyle),
+  Widget buildSalesForceSection(
+    AsyncValue<List<VisitDomain>?> filteredVisitListState,
+  ) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Perkiraan Tenaga Sales yang Dibutuhkan',
+                  style: titleStyle,
+                ),
+                IconButton(
+                  icon: const Icon(Icons.info_outline),
+                  onPressed: () {},
+                  tooltip:
+                      'Tenaga sales dihitung berdasarkan jumlah kunjungan selama 3 bulan terakhir',
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Expanded(
+              child: Center(
+                child: filteredVisitListState.when(
+                  loading: () {
+                    return const CircularProgressIndicator();
+                  },
+                  data: (data) {
+                    final salesForceCount =
+                        ref
+                            .read(
+                              filteredVisitControllerProvider(
+                                salesForceCountStartDate,
+                              ).notifier,
+                            )
+                            .calculateSalesForce();
+
+                    return Text('$salesForceCount Orang Sales');
+                  },
+                  error: (error, stackTrace) {
+                    return Text(
+                      'Error: ${error.toString()}',
+                      style: const TextStyle(color: Colors.red),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -367,10 +425,6 @@ class _MainReportFragmentState extends ConsumerState<MainReportFragment> {
         ),
       ),
     );
-  }
-
-  void calculateSalesForce() {
-    // TODO: implement sales force calculation
   }
 
   void _refreshData() {
