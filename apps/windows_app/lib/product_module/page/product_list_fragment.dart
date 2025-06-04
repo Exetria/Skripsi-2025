@@ -413,8 +413,9 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                                               child,
                                               progress,
                                             ) {
-                                              if (progress == null)
+                                              if (progress == null) {
                                                 return child;
+                                              }
                                               return const Center(
                                                 child:
                                                     CircularProgressIndicator(),
@@ -726,6 +727,7 @@ class _ProductListFragment extends ConsumerState<ProductListFragment> {
                                   : null,
                           child: const Text('Tutup'),
                         ),
+                        const SizedBox(width: 12),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor:

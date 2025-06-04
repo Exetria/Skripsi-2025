@@ -980,6 +980,7 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                                   : null,
                           child: const Text('Tutup'),
                         ),
+                        const SizedBox(width: 12),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor:

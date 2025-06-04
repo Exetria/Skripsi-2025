@@ -594,6 +594,7 @@ class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
                                   : null,
                           child: const Text('Tutup'),
                         ),
+                        const SizedBox(width: 12),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor:

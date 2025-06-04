@@ -283,6 +283,9 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                 final requesterId = getIdFromName(
                   name: data.fields?.requestedBy?.stringValue,
                 );
+                final createDate = DateFormat(
+                  'd MMM yyyy',
+                ).format(DateTime.parse(data.createTime ?? ''));
                 final status =
                     data.fields?.approvalStatus?.stringValue ?? 'Error';
 
@@ -312,7 +315,11 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                         },
                       ),
                   rightBottomText:
-                      status[0].toUpperCase() + status.substring(1),
+                      createDate +
+                      '\n' +
+                      status[0].toUpperCase() +
+                      status.substring(1),
+
                   onTap: () {
                     showCustomerDataPopup(
                       context: context,
@@ -1804,6 +1811,10 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                           child: const Text('Tutup'),
                         ),
 
+                        // Separator
+                        customerRequestData != null && requestNotApproved
+                            ? const SizedBox(width: 12)
+                            : const SizedBox.shrink(),
                         customerRequestData != null && requestNotApproved
                             ? ElevatedButton(
                               style: ElevatedButton.styleFrom(
@@ -1824,6 +1835,10 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                             )
                             : const SizedBox.shrink(),
 
+                        // Separator
+                        requestNotApproved
+                            ? const SizedBox(width: 12)
+                            : const SizedBox.shrink(),
                         requestNotApproved
                             ? ElevatedButton(
                               style: ElevatedButton.styleFrom(
