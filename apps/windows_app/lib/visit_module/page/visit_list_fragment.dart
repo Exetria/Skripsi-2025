@@ -44,6 +44,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
     addCallBackAfterBuild(
       callback: () {
         ref.read(customerListControllerProvider.notifier).resetSearch();
+        ref.read(userListControllerProvider.notifier).resetSearch();
         ref
             .read(userListControllerProvider.notifier)
             .changeRoleFilter(RoleFilter.sales);
@@ -170,8 +171,8 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                     viewedMarkers = [];
                     _switchPageView();
                   },
-                  icon: const Icon(Icons.clear_all),
-                  tooltip: 'Kembali ke Daftar Semua Sales',
+                  icon: const Icon(Icons.list),
+                  tooltip: 'Kembali ke Daftar Kunjungan Sales',
                 )
                 : const SizedBox.shrink(),
           ],
@@ -398,7 +399,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                         visitDataList = _createVisitDataList(visits: visits);
 
                         // Populate viewed markers
-                        populateViewedMarker(visitDataList: visitDataList);
+                        populateViewedMarkers(visitDataList: visitDataList);
 
                         if (visitDataList.isEmpty) {
                           return const Center(
@@ -629,7 +630,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                           _switchPageView();
                         },
                         icon: const Icon(Icons.map),
-                        tooltip: 'Lihat Pada Peta',
+                        tooltip: 'Lihat di Peta',
                       ),
 
                       const SizedBox(width: 12),
@@ -1332,7 +1333,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
     ref.invalidate(customerListControllerProvider);
   }
 
-  Future<void> populateViewedMarker({
+  Future<void> populateViewedMarkers({
     required List<Map<String, dynamic>> visitDataList,
   }) async {
     if (viewedMarkers.isNotEmpty) {
