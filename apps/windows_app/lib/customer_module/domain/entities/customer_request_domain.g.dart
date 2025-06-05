@@ -13,9 +13,7 @@ _$CustomerRequestDomainImpl _$$CustomerRequestDomainImplFromJson(
   fields:
       json['fields'] == null
           ? null
-          : CustomerRequestDomainFields.fromJson(
-            json['fields'] as Map<String, dynamic>,
-          ),
+          : Fields.fromJson(json['fields'] as Map<String, dynamic>),
   createTime: json['createTime'] as String?,
   updateTime: json['updateTime'] as String?,
 );
@@ -29,9 +27,7 @@ Map<String, dynamic> _$$CustomerRequestDomainImplToJson(
   'updateTime': instance.updateTime,
 };
 
-_$CustomerRequestDomainFieldsImpl _$$CustomerRequestDomainFieldsImplFromJson(
-  Map<String, dynamic> json,
-) => _$CustomerRequestDomainFieldsImpl(
+_$FieldsImpl _$$FieldsImplFromJson(Map<String, dynamic> json) => _$FieldsImpl(
   approvedBy:
       json['approved_by'] == null
           ? null
@@ -188,38 +184,37 @@ _$CustomerRequestDomainFieldsImpl _$$CustomerRequestDomainFieldsImplFromJson(
           : Approval.fromJson(json['approval_date'] as Map<String, dynamic>),
 );
 
-Map<String, dynamic> _$$CustomerRequestDomainFieldsImplToJson(
-  _$CustomerRequestDomainFieldsImpl instance,
-) => <String, dynamic>{
-  'approved_by': instance.approvedBy,
-  'company_store_condition': instance.companyStoreCondition,
-  'approval_status': instance.approvalStatus,
-  'company_tax_id': instance.companyTaxId,
-  'request_destination': instance.requestDestination,
-  'pic_national_id_photo': instance.picNationalIdPhoto,
-  'pic_position': instance.picPosition,
-  'company_location': instance.companyLocation,
-  'subscription_type': instance.subscriptionType,
-  'pic_national_id': instance.picNationalId,
-  'pic_address': instance.picAddress,
-  'pic_tax_id': instance.picTaxId,
-  'customer_type': instance.customerType,
-  'requested_by': instance.requestedBy,
-  'company_name': instance.companyName,
-  'carbon_copy': instance.carbonCopy,
-  'company_email': instance.companyEmail,
-  'credit_period': instance.creditPeriod,
-  'company_phone_number': instance.companyPhoneNumber,
-  'ownership_status': instance.ownershipStatus,
-  'note': instance.note,
-  'company_store_photo': instance.companyStorePhoto,
-  'credit_limit': instance.creditLimit,
-  'pic_name': instance.picName,
-  'pic_phone_number': instance.picPhoneNumber,
-  'approval_reason': instance.approvalReason,
-  'company_address': instance.companyAddress,
-  'approval_date': instance.approvalDate,
-};
+Map<String, dynamic> _$$FieldsImplToJson(_$FieldsImpl instance) =>
+    <String, dynamic>{
+      'approved_by': instance.approvedBy,
+      'company_store_condition': instance.companyStoreCondition,
+      'approval_status': instance.approvalStatus,
+      'company_tax_id': instance.companyTaxId,
+      'request_destination': instance.requestDestination,
+      'pic_national_id_photo': instance.picNationalIdPhoto,
+      'pic_position': instance.picPosition,
+      'company_location': instance.companyLocation,
+      'subscription_type': instance.subscriptionType,
+      'pic_national_id': instance.picNationalId,
+      'pic_address': instance.picAddress,
+      'pic_tax_id': instance.picTaxId,
+      'customer_type': instance.customerType,
+      'requested_by': instance.requestedBy,
+      'company_name': instance.companyName,
+      'carbon_copy': instance.carbonCopy,
+      'company_email': instance.companyEmail,
+      'credit_period': instance.creditPeriod,
+      'company_phone_number': instance.companyPhoneNumber,
+      'ownership_status': instance.ownershipStatus,
+      'note': instance.note,
+      'company_store_photo': instance.companyStorePhoto,
+      'credit_limit': instance.creditLimit,
+      'pic_name': instance.picName,
+      'pic_phone_number': instance.picPhoneNumber,
+      'approval_reason': instance.approvalReason,
+      'company_address': instance.companyAddress,
+      'approval_date': instance.approvalDate,
+    };
 
 _$ApprovalImpl _$$ApprovalImplFromJson(Map<String, dynamic> json) =>
     _$ApprovalImpl(timestampValue: json['timestampValue'] as String?);

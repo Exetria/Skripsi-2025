@@ -7,7 +7,7 @@ part 'customer_request_domain.g.dart';
 class CustomerRequestDomain with _$CustomerRequestDomain {
   const factory CustomerRequestDomain({
     @JsonKey(name: 'name') String? name,
-    @JsonKey(name: 'fields') CustomerRequestDomainFields? fields,
+    @JsonKey(name: 'fields') Fields? fields,
     @JsonKey(name: 'createTime') String? createTime,
     @JsonKey(name: 'updateTime') String? updateTime,
   }) = _CustomerRequestDomain;
@@ -17,8 +17,8 @@ class CustomerRequestDomain with _$CustomerRequestDomain {
 }
 
 @freezed
-class CustomerRequestDomainFields with _$CustomerRequestDomainFields {
-  const factory CustomerRequestDomainFields({
+class Fields with _$Fields {
+  const factory Fields({
     @JsonKey(name: 'approved_by') ApprovalStatus? approvedBy,
     @JsonKey(name: 'company_store_condition')
     ApprovalStatus? companyStoreCondition,
@@ -48,10 +48,9 @@ class CustomerRequestDomainFields with _$CustomerRequestDomainFields {
     @JsonKey(name: 'approval_reason') Approval? approvalReason,
     @JsonKey(name: 'company_address') ApprovalStatus? companyAddress,
     @JsonKey(name: 'approval_date') Approval? approvalDate,
-  }) = _CustomerRequestDomainFields;
+  }) = _Fields;
 
-  factory CustomerRequestDomainFields.fromJson(Map<String, dynamic> json) =>
-      _$CustomerRequestDomainFieldsFromJson(json);
+  factory Fields.fromJson(Map<String, dynamic> json) => _$FieldsFromJson(json);
 }
 
 @freezed
