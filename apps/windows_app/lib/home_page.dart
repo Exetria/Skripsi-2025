@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:windows_app/customer_module/page/customer_list_fragment.dart';
 import 'package:windows_app/order_module/page/order_list_fragment.dart';
 import 'package:windows_app/product_module/page/product_list_fragment.dart';
-import 'package:windows_app/report_module/page/main_report_fragment.dart';
+import 'package:windows_app/report_module/page/attendance_list_fragment.dart';
 import 'package:windows_app/user_management_module/page/login_page.dart';
 import 'package:windows_app/user_management_module/page/profile_fragment.dart';
 import 'package:windows_app/user_module/page/user_list_fragment.dart';
@@ -21,13 +21,44 @@ class HomePage extends StatefulHookConsumerWidget {
 
 class _HomePage extends ConsumerState<HomePage> {
   final List<Widget> pages = [
-    const MainReportFragment(),
     const UserListFragment(),
+    const AttendanceListFragment(),
     const VisitListFragment(),
     const OrderListFragment(),
     const CustomerListFragment(),
     const ProductListFragment(),
     const ProfileFragment(),
+  ];
+
+  final List<NavigationRailDestination> navRailItems = [
+    const NavigationRailDestination(
+      icon: Icon(Icons.people),
+      label: Text('Pengguna'),
+    ),
+    const NavigationRailDestination(
+      icon: Icon(Icons.how_to_reg),
+      label: Text('Kehadiran'),
+    ),
+    const NavigationRailDestination(
+      icon: Icon(Icons.directions_walk),
+      label: Text('Kunjungan'),
+    ),
+    const NavigationRailDestination(
+      icon: Icon(Icons.shopping_cart),
+      label: Text('Pesanan'),
+    ),
+    const NavigationRailDestination(
+      icon: Icon(Icons.store),
+      label: Text('Pelanggan'),
+    ),
+    const NavigationRailDestination(
+      icon: Icon(Icons.widgets),
+      label: Text('Produk'),
+    ),
+    const NavigationRailDestination(
+      icon: Icon(Icons.person),
+      label: Text('Profil'),
+    ),
   ];
 
   @override
@@ -76,36 +107,7 @@ class _HomePage extends ConsumerState<HomePage> {
                 ),
               ),
 
-              destinations: [
-                const NavigationRailDestination(
-                  icon: Icon(Icons.dashboard),
-                  label: Text('Beranda'),
-                ),
-                const NavigationRailDestination(
-                  icon: Icon(Icons.people),
-                  label: Text('Pengguna'),
-                ),
-                const NavigationRailDestination(
-                  icon: Icon(Icons.directions_walk),
-                  label: Text('Kunjungan'),
-                ),
-                const NavigationRailDestination(
-                  icon: Icon(Icons.shopping_cart),
-                  label: Text('Pesanan'),
-                ),
-                const NavigationRailDestination(
-                  icon: Icon(Icons.store),
-                  label: Text('Pelanggan'),
-                ),
-                const NavigationRailDestination(
-                  icon: Icon(Icons.widgets),
-                  label: Text('Produk'),
-                ),
-                const NavigationRailDestination(
-                  icon: Icon(Icons.person),
-                  label: Text('Profil'),
-                ),
-              ],
+              destinations: navRailItems,
             ),
           ),
 
