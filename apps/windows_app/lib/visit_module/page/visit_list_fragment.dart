@@ -27,6 +27,11 @@ class VisitListFragment extends StatefulHookConsumerWidget {
 class _VisitListFragment extends ConsumerState<VisitListFragment> {
   DateTime selectedDate = DateTime.now();
 
+  String viewedSalesId = '';
+  String viewedsalesName = '';
+  List<Marker> viewedMarkers = [];
+  bool listViewEnabled = true;
+
   @override
   void initState() {
     super.initState();
@@ -67,63 +72,71 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
           const SizedBox(height: 12),
 
           // MAP & LIST
-          // Expanded(
-          //   child: Row(
-          //     children: [
-          //       Expanded(flex: 7, child: buildMapSection()),
-          //       Expanded(flex: 3, child: buildMapSection()),
-          //     ],
-          //   ),
-          // ),
-          Expanded(
-            child: userListState.when(
-              loading: () => const Center(child: CircularProgressIndicator()),
-              data: (salesList) {
-                if (salesList == null || salesList.isEmpty) {
-                  return Center(
-                    child: Text('Data Sales Tidak Ditemukan', style: bodyStyle),
-                  );
-                }
+          listViewEnabled
+              ? Expanded(
+                child: userListState.when(
+                  loading:
+                      () => const Center(child: CircularProgressIndicator()),
+                  data: (salesList) {
+                    if (salesList == null || salesList.isEmpty) {
+                      return Center(
+                        child: Text(
+                          'Data Sales Tidak Ditemukan',
+                          style: bodyStyle,
+                        ),
+                      );
+                    }
 
-                return LayoutBuilder(
-                  builder: (context, constraints) {
-                    final crossCount = _getVisitCrossAxisCount(constraints);
-                    return GridView.builder(
-                      padding: const EdgeInsets.only(top: 8),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: crossCount,
-                        crossAxisSpacing: 16,
-                        mainAxisSpacing: 16,
-                        childAspectRatio: getChildAspectRatio(constraints),
-                      ),
-                      itemCount: salesList.length,
-                      itemBuilder: (context, index) {
-                        final data = salesList[index];
+                    return LayoutBuilder(
+                      builder: (context, constraints) {
+                        final crossCount = _getVisitCrossAxisCount(constraints);
+                        return GridView.builder(
+                          padding: const EdgeInsets.only(top: 8),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: crossCount,
+                                crossAxisSpacing: 16,
+                                mainAxisSpacing: 16,
+                                childAspectRatio: getChildAspectRatio(
+                                  constraints,
+                                ),
+                              ),
+                          itemCount: salesList.length,
+                          itemBuilder: (context, index) {
+                            final data = salesList[index];
 
-                        final salesId = getIdFromName(name: data.name);
-                        final salesName =
-                            data.fields?.fullName?.stringValue ?? '-';
+                            final salesId = getIdFromName(name: data.name);
+                            final salesName =
+                                data.fields?.fullName?.stringValue ?? '-';
 
-                        return _buildVisitListCard(
-                          salesId: salesId,
-                          salesName: salesName,
+                            return _buildVisitListCard(
+                              salesId: salesId,
+                              salesName: salesName,
+                            );
+                          },
                         );
                       },
                     );
                   },
-                );
-              },
-              error: (error, _) {
-                final exception = error as ApiException;
-                return Center(
-                  child: Text(
-                    'Gagal Memuat Daftar Sales: ${exception.message}',
-                    style: errorStyle,
-                  ),
-                );
-              },
-            ),
-          ),
+                  error: (error, _) {
+                    final exception = error as ApiException;
+                    return Center(
+                      child: Text(
+                        'Gagal Memuat Daftar Sales: ${exception.message}',
+                        style: errorStyle,
+                      ),
+                    );
+                  },
+                ),
+              )
+              : Expanded(
+                child: Row(
+                  children: [
+                    Expanded(flex: 7, child: _buildMapSection()),
+                    Expanded(flex: 3, child: _buildSalesVisitList()),
+                  ],
+                ),
+              ),
         ],
       ),
     );
@@ -148,6 +161,19 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
               ),
             ),
             const SizedBox(width: 16),
+            !listViewEnabled
+                ? IconButton(
+                  onPressed: () {
+                    // Reset viewed sales and visit data
+                    viewedSalesId = '';
+                    viewedsalesName = '';
+                    viewedMarkers = [];
+                    _switchPageView();
+                  },
+                  icon: const Icon(Icons.clear_all),
+                  tooltip: 'Kembali ke Daftar Semua Sales',
+                )
+                : const SizedBox.shrink(),
           ],
         ),
         Row(
@@ -258,7 +284,10 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
             Expanded(
               child: FlutterMap(
                 options: const MapOptions(
-                  initialCenter: LatLng(-6.200000, 106.816666),
+                  initialCenter: LatLng(
+                    -7.2960801,
+                    112.738667,
+                  ), // Default to Surabaya
                   initialZoom: 13,
                 ),
                 children: [
@@ -266,17 +295,174 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                     urlTemplate:
                         'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                   ),
-                  MarkerLayer(
-                    markers: [
-                      Marker(
-                        width: 40,
-                        height: 40,
-                        point: const LatLng(-6.200000, 106.816666),
-                        child: Icon(
-                          Icons.directions_walk,
-                          color: Theme.of(context).colorScheme.primary,
-                          size: 32,
-                        ),
+                  MarkerLayer(markers: viewedMarkers),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSalesVisitList() {
+    if (viewedSalesId.isEmpty || viewedsalesName.isEmpty) {
+      return Center(
+        child: Text('Tidak ada Sales yang Dipilih', style: bodyStyle),
+      );
+    }
+
+    final visitListState = ref.watch(visitListControllerProvider);
+    List<Map<String, dynamic>> visitDataList = [];
+
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.person,
+                        size: 32,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        viewedsalesName,
+                        style: subtitleStyle,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Expanded(
+                    child: visitListState.when(
+                      loading: () {
+                        viewedMarkers.clear();
+                        return const Center(child: CircularProgressIndicator());
+                      },
+                      data: (visitDayData) {
+                        final visitList =
+                            visitDayData['$viewedSalesId-${_generateVisitIdFromDate(selectedDate)}'];
+
+                        // If empty or null, show empty state
+                        if (visitList == null || visitList.isLeft()) {
+                          final error = visitList?.swap().getOrElse(
+                            (l) => ApiException(
+                              statusCode: -1,
+                              message: 'Terjadi Kesalahan',
+                            ),
+                          );
+
+                          return Center(
+                            child:
+                                error != null
+                                    ? (error).statusCode == 404
+                                        ? const Text(
+                                          'Data Kunjungan Tidak Ditemukan',
+                                        )
+                                        : const Text(
+                                          'Gagal Memuat Data Kunjungan',
+                                        )
+                                    : const Text('Gagal Memuat Data Kunjungan'),
+                          );
+                        }
+
+                        // get the visit data
+                        final VisitDomain? data = visitList.getOrElse(
+                          (error) => null,
+                        );
+
+                        if (data == null) {
+                          return const Center(
+                            child: Text('Data Visit Tidak Ditemukan'),
+                          );
+                        }
+
+                        // Get visit data (list of visit in a day)
+                        List<Value> visits = List<Value>.from(
+                          data.fields?.visits?.arrayValue?.values ?? [],
+                        );
+
+                        // Convert into List<Map<String, dynamic>>
+                        visitDataList = _createVisitDataList(visits: visits);
+
+                        // Populate viewed markers
+                        populateViewedMarker(visitDataList: visitDataList);
+
+                        if (visitDataList.isEmpty) {
+                          return const Center(
+                            child: Text('Data Visit Tidak Ditemukan'),
+                          );
+                        }
+
+                        return ListView.separated(
+                          itemCount: visitDataList.length,
+                          separatorBuilder:
+                              (context, index) => const SizedBox(height: 12),
+                          itemBuilder: (context, index) {
+                            final visitData = visitDataList[index];
+                            final customerId =
+                                visitData['mapValue']['fields']['customer_id']['stringValue'];
+                            final visitStatus =
+                                visitData['mapValue']['fields']['visit_status']['integerValue'];
+
+                            return _createVisitTile(
+                              salesId: viewedSalesId,
+                              customerId: customerId,
+                              visitStatus:
+                                  visitStatus == '1'
+                                      ? 'Direncanakan'
+                                      : visitStatus == '2'
+                                      ? 'Selesai'
+                                      : visitStatus == '3'
+                                      ? 'Dibatalkan'
+                                      : 'Tidak Tersedia',
+                              salesName: viewedsalesName,
+                              index: index,
+                              visitDataList: visitDataList,
+                            );
+                          },
+                        );
+                      },
+                      error: (error, _) {
+                        viewedMarkers.clear();
+
+                        final exception = error as ApiException;
+                        return Center(
+                          child: Text(
+                            'Gagal Memuat Daftar Kunjungan: ${exception.message}',
+                            style: errorStyle,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          showAddVisitPopup(
+                            context: context,
+                            salesId: viewedSalesId,
+                            salesName: viewedsalesName,
+                            visitDataList: visitDataList,
+                          );
+                        },
+                        icon: const Icon(Icons.add),
+                        tooltip: 'Tambah Kunjungan untuk Sales Ini',
                       ),
                     ],
                   ),
@@ -296,7 +482,6 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
     final visitListState = ref.watch(visitListControllerProvider);
 
     List<Map<String, dynamic>> visitDataList = [];
-
     bool isHovered = false;
 
     return StatefulBuilder(
@@ -438,7 +623,10 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                     children: [
                       IconButton(
                         onPressed: () {
-                          // TODO: Switch to map view
+                          // Sales visit list set in the card builder
+                          viewedSalesId = salesId;
+                          viewedsalesName = salesName;
+                          _switchPageView();
                         },
                         icon: const Icon(Icons.map),
                         tooltip: 'Lihat Pada Peta',
@@ -1144,8 +1332,53 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
     ref.invalidate(customerListControllerProvider);
   }
 
+  Future<void> populateViewedMarker({
+    required List<Map<String, dynamic>> visitDataList,
+  }) async {
+    if (viewedMarkers.isNotEmpty) {
+      return;
+    }
+
+    for (int i = 0; i < visitDataList.length; i++) {
+      final customerId =
+          visitDataList[i]['mapValue']['fields']['customer_id']['stringValue'];
+      final customerLocation = await ref
+          .read(customerListControllerProvider.notifier)
+          .getCustomerLocation(id: customerId);
+
+      if (customerLocation == null) continue;
+
+      viewedMarkers.add(
+        Marker(
+          width: 40,
+          height: 40,
+          point: LatLng(customerLocation.latitude, customerLocation.longitude),
+          child: IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.location_on,
+              color: Theme.of(context).colorScheme.primary,
+              size: 32,
+            ),
+            tooltip: 'Kunjungan ke-${i + 1}',
+          ),
+        ),
+      );
+    }
+
+    // Refresh map with new markers
+    setState(() {});
+  }
+
+  void _switchPageView() {
+    setState(() {
+      listViewEnabled = !listViewEnabled;
+    });
+  }
+
   void _changeDate(int offset) {
     setState(() {
+      viewedMarkers.clear();
       selectedDate = selectedDate.add(Duration(days: offset));
     });
     ref
