@@ -7,7 +7,7 @@ part of 'attendance_list_controller.dart';
 // **************************************************************************
 
 String _$attendanceListControllerHash() =>
-    r'4cbfe5e2c9ac00cc32834eb253c195ac0118eb4f';
+    r'858e1bf71413313b36883827ab1afb024b99ac0d';
 
 /// See also [AttendanceListController].
 @ProviderFor(AttendanceListController)
