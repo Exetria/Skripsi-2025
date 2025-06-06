@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:windows_app/customer_module/domain/entities/customer_domain.dart';
 import 'package:windows_app/customer_module/domain/entities/customer_request_domain.dart';
 import 'package:windows_app/customer_module/domain/repository/customer_repository.dart';
+import 'package:windows_app/user_module/domain/entities/user_domain.dart';
 
 part 'update_customer_controller.g.dart';
 
@@ -16,6 +17,7 @@ class UpdateCustomerController extends _$UpdateCustomerController {
 
   Future<AsyncValue<CustomerDomain?>> addCustomer({
     CustomerRequestDomain? customerRequestData,
+    UserDomain? userData,
     String approvalReason = '',
 
     // Company data
@@ -60,6 +62,7 @@ class UpdateCustomerController extends _$UpdateCustomerController {
 
     final result = await repository.addCustomer(
       customerRequestData: customerRequestData,
+      userData: userData,
       approvalReason: approvalReason,
       companyName: companyName,
       companyAddress: companyAddress,

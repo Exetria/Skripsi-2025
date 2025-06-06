@@ -950,6 +950,20 @@ Future<void> showCustomerDataPopup({
               });
               if ((customerDataFormKey.currentState?.validate() ?? false) &&
                   isAllRequiredDataFilled()) {
+                final userData =
+                    customerRequestData != null
+                        ? ref
+                            .read(userListControllerProvider.notifier)
+                            .getUserById(
+                              id:
+                                  customerRequestData
+                                      .fields
+                                      ?.requestedBy
+                                      ?.stringValue ??
+                                  '',
+                            )
+                        : null;
+
                 final submitState =
                     // Update customer
                     customerData != null
@@ -1020,6 +1034,7 @@ Future<void> showCustomerDataPopup({
                             .read(updateCustomerControllerProvider.notifier)
                             .addCustomer(
                               customerRequestData: customerRequestData,
+                              userData: userData,
                               approvalReason: approvalReasonController.text,
 
                               subscriptionType: selectedSubscriptionType ?? '',
@@ -1126,6 +1141,10 @@ Future<void> showCustomerDataPopup({
                             ? 'Permintaan pelanggan berhasil diterima'
                             : 'Pelanggan berhasil ditambahkan',
                     onClose: () {
+                      // If customerData is not null, refresh user list
+                      if (customerRequestData != null) {
+                        ref.invalidate(userListControllerProvider);
+                      }
                       ref.invalidate(customerListControllerProvider);
                       ref.invalidate(customerRequestListControllerProvider);
                       Navigator.pop(statefulBuilderContext);

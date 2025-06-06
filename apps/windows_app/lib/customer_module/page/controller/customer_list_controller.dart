@@ -20,7 +20,23 @@ class CustomerListController extends _$CustomerListController {
       (r) => AsyncData(r),
     );
     _customerList = state.value;
+    sortOrderByDate();
     return state.value;
+  }
+
+  void sortOrderByDate() {
+    if (_customerList == null) return;
+
+    _customerList?.sort((a, b) {
+      final dateA = DateTime.tryParse(a.createTime ?? '');
+      final dateB = DateTime.tryParse(b.createTime ?? '');
+
+      if (dateA == null && dateB == null) return 0;
+      if (dateA == null) return 1;
+      if (dateB == null) return -1;
+
+      return dateB.compareTo(dateA);
+    });
   }
 
   void searchCustomer(String query) {

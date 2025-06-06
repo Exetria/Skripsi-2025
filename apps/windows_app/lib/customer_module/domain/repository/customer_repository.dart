@@ -8,12 +8,14 @@ import 'package:windows_app/customer_module/data/repository_impl/customer_reques
 import 'package:windows_app/customer_module/data/repository_impl/update_customer_repository_impl.dart';
 import 'package:windows_app/customer_module/domain/entities/customer_domain.dart';
 import 'package:windows_app/customer_module/domain/entities/customer_request_domain.dart';
+import 'package:windows_app/user_module/domain/entities/user_domain.dart';
 
 abstract class CustomerRepository {
   Future<Either<ApiException, List<CustomerDomain>?>> getCustomerList();
 
   Future<Either<ApiException, CustomerDomain?>> addCustomer({
-    required CustomerRequestDomain? customerRequestData,
+    CustomerRequestDomain? customerRequestData,
+    UserDomain? userData,
     String approvalReason = '',
 
     // Company data

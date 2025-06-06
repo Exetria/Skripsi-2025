@@ -6,6 +6,7 @@ import 'package:windows_app/customer_module/data/remote_datasource/customer_list
 import 'package:windows_app/customer_module/domain/entities/customer_domain.dart';
 import 'package:windows_app/customer_module/domain/entities/customer_request_domain.dart';
 import 'package:windows_app/customer_module/domain/repository/customer_repository.dart';
+import 'package:windows_app/user_module/domain/entities/user_domain.dart';
 
 class CustomerListRepositoryImpl implements CustomerRepository {
   final remoteDataSource = CustomerListRemoteDatasourceImpl();
@@ -19,7 +20,8 @@ class CustomerListRepositoryImpl implements CustomerRepository {
 
   @override
   Future<Either<ApiException, CustomerDomain?>> addCustomer({
-    required CustomerRequestDomain? customerRequestData,
+    CustomerRequestDomain? customerRequestData,
+    UserDomain? userData,
     String approvalReason = '',
 
     // Company data

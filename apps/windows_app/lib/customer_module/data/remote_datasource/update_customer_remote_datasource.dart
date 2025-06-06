@@ -4,10 +4,14 @@ import 'package:common_components/common_components.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:windows_app/customer_module/domain/entities/customer_domain.dart';
 import 'package:windows_app/customer_module/domain/entities/customer_request_domain.dart';
+import 'package:windows_app/user_module/data/remote_datasource/update_user_remote_datasource.dart';
+import 'package:windows_app/user_module/domain/entities/user_domain.dart';
+import 'package:windows_app/utils/popups.dart';
 
 abstract class UpdateCustomerRemoteDatasource {
   Future<CustomerDomain> addCustomer({
     CustomerRequestDomain? customerRequestData,
+    UserDomain? userData,
     String approvalReason = '',
 
     // Company data
@@ -100,6 +104,7 @@ class UpdateCustomerRemoteDatasourceImpl
   @override
   Future<CustomerDomain> addCustomer({
     CustomerRequestDomain? customerRequestData,
+    UserDomain? userData,
     String approvalReason = '',
 
     // Company data
@@ -257,7 +262,45 @@ class UpdateCustomerRemoteDatasourceImpl
       },
     );
 
-    return CustomerDomain.fromJson(result);
+    final resultCustomerDomain = CustomerDomain.fromJson(result);
+
+    // If user is given, register the customer
+    if (userData != null) {
+      final previousUserPhotoLink =
+          userData.fields?.photoUrl?.stringValue ?? '';
+      final userId = getIdFromName(name: userData.name);
+      final userName = userData.fields?.userName?.stringValue ?? '';
+      final fullName = userData.fields?.fullName?.stringValue ?? '';
+      final phoneNumber = userData.fields?.phoneNumber?.stringValue ?? '';
+      final email = userData.fields?.email?.stringValue ?? '';
+      final isAdmin = userData.fields?.role?.stringValue == 'admin';
+      final isActive = userData.fields?.isActive?.booleanValue ?? true;
+      final assignedCustomers = generateListFromFirebaseList(
+        userData.fields?.assignedCustomers?.arrayValue?.values ?? [],
+      );
+      final assignedProducts = generateListFromFirebaseList(
+        userData.fields?.assignedProducts?.arrayValue?.values ?? [],
+      );
+
+      // Add new customer Id
+      assignedCustomers.add(getIdFromName(name: resultCustomerDomain.name));
+
+      UpdateUserRemoteDatasourceImpl().updateUser(
+        userPhoto: null,
+        previousUserPhotoLink: previousUserPhotoLink,
+        userId: userId,
+        userName: userName,
+        fullName: fullName,
+        phoneNumber: phoneNumber,
+        email: email,
+        isAdmin: isAdmin,
+        isActive: isActive,
+        assignedCustomers: assignedCustomers,
+        assignedProducts: assignedProducts,
+      );
+    }
+
+    return resultCustomerDomain;
   }
 
   @override

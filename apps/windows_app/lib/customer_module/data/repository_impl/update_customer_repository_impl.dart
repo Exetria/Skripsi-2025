@@ -6,6 +6,7 @@ import 'package:windows_app/customer_module/data/remote_datasource/update_custom
 import 'package:windows_app/customer_module/domain/entities/customer_domain.dart';
 import 'package:windows_app/customer_module/domain/entities/customer_request_domain.dart';
 import 'package:windows_app/customer_module/domain/repository/customer_repository.dart';
+import 'package:windows_app/user_module/domain/entities/user_domain.dart';
 
 class UpdateCustomerRepositoryImpl implements CustomerRepository {
   final remoteDataSource = UpdateCustomerRemoteDatasourceImpl();
@@ -18,6 +19,7 @@ class UpdateCustomerRepositoryImpl implements CustomerRepository {
   @override
   Future<Either<ApiException, CustomerDomain?>> addCustomer({
     CustomerRequestDomain? customerRequestData,
+    UserDomain? userData,
     String approvalReason = '',
 
     // Company data
@@ -59,6 +61,7 @@ class UpdateCustomerRepositoryImpl implements CustomerRepository {
     final resp = await remoteProcess(
       remoteDataSource.addCustomer(
         customerRequestData: customerRequestData,
+        userData: userData,
         approvalReason: approvalReason,
         companyName: companyName,
         companyAddress: companyAddress,
