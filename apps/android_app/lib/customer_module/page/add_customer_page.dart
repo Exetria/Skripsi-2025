@@ -954,10 +954,6 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
     });
 
     if (isAllRequiredTextDataFilled() && _storePhoto != null) {
-      setState(() {
-        _submitButtonEnabled = true;
-      });
-
       final state = await ref
           .read(createCustomerRequestControllerProvider.notifier)
           .createCustomerRequest(
