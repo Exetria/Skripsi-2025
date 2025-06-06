@@ -5,6 +5,7 @@ import 'package:android_app/order_module/domain/entities/order_domain.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image/image.dart' as imaglib;
@@ -353,6 +354,7 @@ Widget refreshableInfoWidget({
 // PICK IMAGE
 Future<File?> pickImage({
   required BuildContext context,
+  bool compressImage = true,
   bool fromGallery = false,
 }) async {
   try {
@@ -363,19 +365,25 @@ Future<File?> pickImage({
     final image = await imagePicker.pickImage(
       source: fromGallery ? ImageSource.gallery : ImageSource.camera,
     );
-
-    final currentLocation = await futureLocation;
-
     if (image == null) {
       return null;
     }
 
-    final result = await drawWatermark(
-      imageFile: File(image.path),
+    File? finalImage =
+        compressImage
+            ? await compressImageFile(imageFile: image, quality: 40)
+            : File(image.path);
+
+    if (finalImage == null) {
+      return null;
+    }
+
+    final currentLocation = await futureLocation;
+
+    return await drawWatermark(
+      imageFile: finalImage,
       location: currentLocation,
     );
-
-    return result;
   } on ApiException catch (apiException) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -390,6 +398,30 @@ Future<File?> pickImage({
   }
 }
 
+// COMPRESS IMAGE
+Future<File?> compressImageFile({
+  required XFile imageFile,
+  int quality = 80,
+}) async {
+  // Get a temporary directory to store the compressed file
+  final tempDir = await getTemporaryDirectory();
+  final targetPath =
+      '${tempDir.path}/IMG_${DateTime.now().millisecondsSinceEpoch}.jpg';
+
+  // Perform compression
+  final compressedFile = await FlutterImageCompress.compressAndGetFile(
+    imageFile.path,
+    targetPath,
+    quality: quality,
+  );
+
+  if (compressedFile == null) {
+    return null;
+  }
+
+  return File(compressedFile.path);
+}
+
 // DRAW WATERMARK
 Future<File?> drawWatermark({
   required File imageFile,
@@ -402,6 +434,7 @@ Future<File?> drawWatermark({
 
   if (!await imageFile.exists()) return null;
 
+  // Decode the image (LAMA, HARUS DI SEPARATE THREAD)
   final originalImage = await compute(_decodeImageFromFile, imageFile.path);
   if (originalImage == null) return null;
 
@@ -431,24 +464,28 @@ Future<File?> drawWatermark({
 
     imaglib.drawString(originalImage, font: font, x: lineX, y: lineY, line);
   }
-
   // Save to temp file
   final tempDir = await getTemporaryDirectory();
   final output = File(
     '${tempDir.path}/watermarked_${DateTime.now().millisecondsSinceEpoch}.jpg',
   );
 
-  await output.writeAsBytes(imaglib.encodeJpg(originalImage));
+  // Encode the image to a Uint8List (LAMA, HARUS DI SEPARATE THREAD)
+  final list = await compute(_encodeImageToUint8List, originalImage);
 
-  return output;
+  return await output.writeAsBytes(list);
 }
 
-// SEPARATE IMAGE DECODER (Different thread)
+// SEPARATE IMAGE DECODER/ENCODER (Different thread)
 imaglib.Image? _decodeImageFromFile(String path) {
   final file = File(path);
   if (!file.existsSync()) return null;
   final bytes = file.readAsBytesSync();
   return imaglib.decodeImage(bytes);
+}
+
+Uint8List _encodeImageToUint8List(imaglib.Image image) {
+  return imaglib.encodeJpg(image);
 }
 
 // GET CURRENT POSITION
