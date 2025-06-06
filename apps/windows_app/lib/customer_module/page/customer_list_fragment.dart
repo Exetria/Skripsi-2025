@@ -146,7 +146,7 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                             ? Theme.of(context).colorScheme.primary
                             : Theme.of(context).colorScheme.onSurface,
                   ),
-                  tooltip: 'Tampilkan Permohonan Pelanggan',
+                  tooltip: 'Tampilkan Pendaftaran Pelanggan',
                 ),
                 const SizedBox(width: 12),
               ],
@@ -796,22 +796,6 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ElevatedButton(
-                        style: TextButton.styleFrom(
-                          backgroundColor:
-                              Theme.of(context).colorScheme.surface,
-                          foregroundColor:
-                              Theme.of(context).colorScheme.onSurface,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            listViewEnabled = true;
-                            focusedCustomerData = null;
-                          });
-                        },
-                        child: const Text('Kembali ke Daftar'),
-                      ),
-                      const SizedBox(width: 8),
-                      ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               Theme.of(context).colorScheme.tertiary,
@@ -832,6 +816,22 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                           );
                         },
                         child: const Text('Perbarui Data'),
+                      ),
+                      const SizedBox(width: 8),
+                      ElevatedButton(
+                        style: TextButton.styleFrom(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.surface,
+                          foregroundColor:
+                              Theme.of(context).colorScheme.onSurface,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            listViewEnabled = true;
+                            focusedCustomerData = null;
+                          });
+                        },
+                        child: const Text('Kembali ke Daftar'),
                       ),
                     ],
                   ),
