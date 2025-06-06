@@ -1187,48 +1187,6 @@ Future<void> showCustomerDataPopup({
             }
           }
 
-          void deleteCustomerData() async {
-            showConfirmationDialog(
-              context: statefulBuilderContext,
-              message: 'Apakah Anda yakin ingin menghapus data pelanggan ini?',
-              onLeftButtonTap: () {},
-              onRightButtonTap: () async {
-                final deleteState = await ref
-                    .read(updateCustomerControllerProvider.notifier)
-                    .deleteCustomer(
-                      customerId: getIdFromName(name: customerData?.name),
-                    );
-
-                if (deleteState is AsyncData) {
-                  showFeedbackDialog(
-                    context: context,
-                    type: 1,
-                    message: 'Pelanggan berhasil dihapus',
-                    onClose: () {
-                      ref.invalidate(customerListControllerProvider);
-                      ref.invalidate(customerRequestListControllerProvider);
-                      Navigator.pop(statefulBuilderContext);
-                    },
-                  );
-                } else if (deleteState is AsyncError) {
-                  final apiException = deleteState.error as ApiException;
-                  showFeedbackDialog(
-                    context: context,
-                    type: 0,
-                    message:
-                        'Gagal menghapus pelanggan: ${apiException.message}',
-                  );
-                } else {
-                  showFeedbackDialog(
-                    context: context,
-                    type: 0,
-                    message: 'Gagal menghapus pelanggan',
-                  );
-                }
-              },
-            );
-          }
-
           void rejectCustomerRequest() async {
             setDialogState(() {
               dialogActionButtonEnabled = false;
@@ -1442,15 +1400,6 @@ Future<void> showCustomerDataPopup({
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      customerData != null
-                          ? IconButton(
-                            onPressed: deleteCustomerData,
-                            icon: Icon(
-                              Icons.delete,
-                              color: Theme.of(context).colorScheme.error,
-                            ),
-                          )
-                          : const SizedBox.shrink(),
                       !requestNotApproved
                           ? Text(
                             'Permintaan ini sudah diterima/ditolak',

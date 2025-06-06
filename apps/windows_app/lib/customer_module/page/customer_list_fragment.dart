@@ -7,6 +7,7 @@ import 'package:windows_app/customer_module/domain/entities/customer_domain.dart
 import 'package:windows_app/customer_module/domain/entities/customer_request_domain.dart';
 import 'package:windows_app/customer_module/page/controller/customer_list_controller.dart';
 import 'package:windows_app/customer_module/page/controller/customer_request_list_controller.dart';
+import 'package:windows_app/customer_module/page/controller/update_customer_controller.dart';
 import 'package:windows_app/order_module/domain/entities/order_domain.dart';
 import 'package:windows_app/order_module/page/controller/order_list_controller.dart';
 import 'package:windows_app/user_module/page/controller/user_list_controller.dart';
@@ -415,6 +416,8 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                 true)
             ? focusedCustomerData!.fields!.subscriptionType!.stringValue!
             : '-';
+    final bool blacklisted =
+        focusedCustomerData?.fields?.blacklisted?.booleanValue ?? false;
 
     // Company details
     final String storePhotoUrl =
@@ -634,6 +637,12 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                             label: 'Jenis Langganan',
                             value: subcriptionType,
                           ),
+                          const SizedBox(height: 8),
+
+                          buildDetailRow(
+                            label: 'Masuk Blacklist',
+                            value: blacklisted ? 'Ya' : 'Tidak',
+                          ),
                           const SizedBox(height: 32),
 
                           // Info Company / Store title
@@ -717,15 +726,15 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                           buildDetailRow(label: 'NPWP', value: picTaxId),
                           const SizedBox(height: 8),
 
-                          // Owner Position
-                          buildDetailRow(label: 'Jabatan', value: picPosition),
-                          const SizedBox(height: 8),
-
                           // Ownership Status
                           buildDetailRow(
                             label: 'Status Kepemilikan',
                             value: ownershipStatus,
                           ),
+                          const SizedBox(height: 8),
+
+                          // PIC Position
+                          buildDetailRow(label: 'Jabatan', value: picPosition),
                           const SizedBox(height: 32),
 
                           // Payment info title
@@ -793,45 +802,72 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                   ),
                   // Update button
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Theme.of(context).colorScheme.tertiary,
-                          foregroundColor:
-                              Theme.of(context).colorScheme.onTertiary,
-                        ),
-                        onPressed: () {
-                          showCustomerDataPopup(
-                            ref: ref,
-                            context: context,
-                            customerData: focusedCustomerData,
-                            onclose: () {
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          ElevatedButton(
+                            style: TextButton.styleFrom(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.error,
+                              foregroundColor:
+                                  Theme.of(context).colorScheme.onError,
+                            ),
+                            onPressed: () {
+                              // DELETE CUSTOMER
+                              deleteCustomerData(
+                                customerId: getIdFromName(
+                                  name: focusedCustomerData?.name,
+                                ),
+                              );
+                            },
+                            child: const Text('Hapus Pelanggan'),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.tertiary,
+                              foregroundColor:
+                                  Theme.of(context).colorScheme.onTertiary,
+                            ),
+                            onPressed: () {
+                              showCustomerDataPopup(
+                                ref: ref,
+                                context: context,
+                                customerData: focusedCustomerData,
+                                onclose: () {
+                                  setState(() {
+                                    listViewEnabled = true;
+                                    focusedCustomerData = null;
+                                  });
+                                },
+                              );
+                            },
+                            child: const Text('Perbarui Data'),
+                          ),
+                          const SizedBox(width: 8),
+                          ElevatedButton(
+                            style: TextButton.styleFrom(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.surface,
+                              foregroundColor:
+                                  Theme.of(context).colorScheme.onSurface,
+                            ),
+                            onPressed: () {
                               setState(() {
                                 listViewEnabled = true;
                                 focusedCustomerData = null;
                               });
                             },
-                          );
-                        },
-                        child: const Text('Perbarui Data'),
-                      ),
-                      const SizedBox(width: 8),
-                      ElevatedButton(
-                        style: TextButton.styleFrom(
-                          backgroundColor:
-                              Theme.of(context).colorScheme.surface,
-                          foregroundColor:
-                              Theme.of(context).colorScheme.onSurface,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            listViewEnabled = true;
-                            focusedCustomerData = null;
-                          });
-                        },
-                        child: const Text('Kembali ke Daftar'),
+                            child: const Text('Kembali ke Daftar'),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -921,6 +957,48 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
     );
 
     return orderHistory;
+  }
+
+  void deleteCustomerData({required String customerId}) async {
+    showConfirmationDialog(
+      context: context,
+      message: 'Apakah Anda yakin ingin menghapus data pelanggan ini?',
+      onLeftButtonTap: () {},
+      onRightButtonTap: () async {
+        final deleteState = await ref
+            .read(updateCustomerControllerProvider.notifier)
+            .deleteCustomer(customerId: customerId);
+
+        if (deleteState is AsyncData) {
+          showFeedbackDialog(
+            context: context,
+            type: 1,
+            message: 'Pelanggan berhasil dihapus',
+            onClose: () {
+              ref.invalidate(customerListControllerProvider);
+              ref.invalidate(customerRequestListControllerProvider);
+              setState(() {
+                focusedCustomerData = null;
+                listViewEnabled = true;
+              });
+            },
+          );
+        } else if (deleteState is AsyncError) {
+          final apiException = deleteState.error as ApiException;
+          showFeedbackDialog(
+            context: context,
+            type: 0,
+            message: 'Gagal menghapus pelanggan: ${apiException.message}',
+          );
+        } else {
+          showFeedbackDialog(
+            context: context,
+            type: 0,
+            message: 'Gagal menghapus pelanggan',
+          );
+        }
+      },
+    );
   }
 
   Future<void> _refreshCustomerRequestList() async {
