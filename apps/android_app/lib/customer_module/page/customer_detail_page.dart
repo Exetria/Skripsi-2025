@@ -1,9 +1,14 @@
 import 'package:android_app/customer_module/domain/entities/customer_domain.dart';
+import 'package:android_app/customer_module/page/controller/customer_list_controller.dart';
+import 'package:android_app/order_module/domain/entities/order_domain.dart';
+import 'package:android_app/order_module/page/controller/order_list_controller.dart';
+import 'package:android_app/order_module/page/order_detail_page.dart';
 import 'package:android_app/utils/functions.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 
 class CustomerDetailPage extends StatefulHookConsumerWidget {
   final CustomerDomain data;
@@ -120,9 +125,107 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
                 ],
               ),
             ),
+            SizedBox(height: 12.h),
+
+            buildOrderHistoryCard(),
           ],
         ),
       ),
     );
+  }
+
+  Widget buildOrderHistoryCard() {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(16.r),
+      decoration: androidBoxDecoration(context),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Riwayat Pembelian', style: sectionTitleStyle),
+          SizedBox(height: 8.h),
+
+          ...buildOrderHistoryItems(),
+        ],
+      ),
+    );
+  }
+
+  List<Widget> buildOrderHistoryItems() {
+    final orderListState = ref.watch(orderListControllerProvider);
+    final customerListState = ref.watch(customerListControllerProvider);
+
+    List<Widget> orderHistory = orderListState.when(
+      loading: () => [],
+      data: (orderList) {
+        List<Widget> result = [];
+
+        if (orderList == null || orderList.isEmpty) return [];
+
+        for (OrderDomain data in orderList) {
+          if (getIdFromName(name: widget.data.name) !=
+              data.fields?.customerId?.stringValue) {
+            continue;
+          }
+
+          List<Value> productValueList =
+              data.fields?.products?.arrayValue?.values ?? [];
+
+          // Create product list
+          List<Map<String, dynamic>> productDataList = createProductDataList(
+            products: productValueList,
+          );
+
+          result.add(
+            customListItem(
+              context: context,
+              leadIcon: Icons.shopping_cart,
+              title: customerListState.when(
+                loading: () => 'Memuat...',
+                data: (customerList) {
+                  return "Order ${ref.read(customerListControllerProvider.notifier).getCustomerName(id: data.fields?.customerId?.stringValue ?? '')}";
+                },
+                error: (error, stackTrace) {
+                  return 'Gagal Memuat Nama';
+                },
+              ),
+              subtitle:
+                  '${(data.createTime != null && data.createTime != '') ? DateFormat.yMMMMd().format(DateTime.parse(data.createTime!)) : "Gagal Memuat Tanggal"}\nStatus: ${getOrderStatusText(data.fields?.orderStatus?.stringValue ?? "-")}',
+              trailIcon: Icons.arrow_forward_ios,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:
+                        (context) => OrderDetailPage(
+                          orderData: data,
+                          productDataList: productDataList,
+                        ),
+                  ),
+                );
+              },
+            ),
+          );
+
+          result.add(SizedBox(height: 8.h));
+        }
+
+        return result;
+      },
+      error: (error, _) {
+        final exception = error as ApiException;
+
+        return [
+          Center(
+            child: Text(
+              'Gagal Memuat Data Pesanan: ${exception.message}',
+              style: errorStyle,
+            ),
+          ),
+        ];
+      },
+    );
+
+    return orderHistory;
   }
 }
