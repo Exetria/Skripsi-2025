@@ -54,6 +54,10 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
   bool _pickStorePhotoEnabled = true;
   bool _pickOwnerIdPhotoEnabled = true;
 
+  bool companyDataErrorMessage = false;
+  bool picDataErrorMessage = false;
+  bool paymentInfoErrorMessage = false;
+
   @override
   void dispose() {
     _requestDestinationController.dispose();
@@ -189,27 +193,25 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                 ],
               ),
               SizedBox(height: 16.h),
-              buildInputBox(
-                controller: _requestDestinationController,
-                label: 'Tujuan Form (contoh: Bu Rosa)',
-                validator: (value) {
-                  return (value != null && value != '')
-                      ? null
-                      : 'Tidak Boleh Kosong';
-                },
-              ),
-              SizedBox(height: 16.h),
+              // buildInputBox(
+              //   controller: _requestDestinationController,
+              //   label: 'Tujuan Form (contoh: Bu Rosa)',
+              //   validator: (value) {
+              //     return (value != null && value != '')
+              //         ? null
+              //         : 'Tidak Boleh Kosong';
+              //   },
+              // ),
+              // SizedBox(height: 16.h),
 
-              buildInputBox(
-                controller: _carbonCopyController,
-                label: 'Tembusan (isi "-" jika tidak ada)',
-                validator: (value) {
-                  return (value != null && value != '')
-                      ? null
-                      : 'Tidak Boleh Kosong';
-                },
-              ),
-              SizedBox(height: 16.h),
+              // buildInputBox(
+              //   controller: _carbonCopyController,
+              //   label: 'Tembusan (jika ada)',
+              //   validator: (value) {
+              //     return null;
+              //   },
+              // ),
+              // SizedBox(height: 16.h),
 
               // Company Data
               buildCompanyDataExpansionTile(),
@@ -258,468 +260,584 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
   }
 
   Widget buildCompanyDataExpansionTile() {
-    return ExpansionTile(
-      title: Text('Data Perusahaan / Toko', style: bodyStyle),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Store Image Picker
-        Center(child: Text('Foto Gedung / Toko', style: captionStyle)),
-        GestureDetector(
-          onTap:
-              _pickStorePhotoEnabled
-                  ? () async {
-                    _pickStorePhotoEnabled = false;
-                    File? pickedImage = await pickImage(context: context);
+        ExpansionTile(
+          title: Text('Data Perusahaan / Toko', style: bodyStyle),
+          children: [
+            // Store Image Picker
+            Center(child: Text('Foto Gedung / Toko', style: captionStyle)),
+            GestureDetector(
+              onTap:
+                  _pickStorePhotoEnabled
+                      ? () async {
+                        _pickStorePhotoEnabled = false;
+                        File? pickedImage = await pickImage(context: context);
 
-                    if (pickedImage != null) {
-                      setState(() {
-                        _storePhoto = pickedImage;
-                        _storePhotoError = '';
-                      });
-                    }
-                    _pickStorePhotoEnabled = true;
-                  }
-                  : null,
-          child: Container(
-            width: ScreenUtil().screenWidth * 0.8,
-            decoration: photoBoxDecoration(context),
-            child: AspectRatio(
-              aspectRatio: 3 / 4,
-              child:
-                  _storePhoto != null
-                      ? ClipRRect(
-                        borderRadius: BorderRadius.circular(16.r),
-                        child: Image.file(
-                          _storePhoto!,
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          height: double.infinity,
-                          errorBuilder:
-                              (_, __, ___) =>
-                                  imageErrorWidget(context: context),
-                        ),
-                      )
-                      : Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.camera_alt_outlined,
-                              size: 32.sp,
-                              color:
-                                  _storePhotoError.isEmpty
-                                      ? dividerColor
-                                      : Theme.of(context).colorScheme.error,
+                        if (pickedImage != null) {
+                          setState(() {
+                            _storePhoto = pickedImage;
+                            _storePhotoError = '';
+                          });
+                        }
+                        _pickStorePhotoEnabled = true;
+                      }
+                      : null,
+              child: Container(
+                width: ScreenUtil().screenWidth * 0.8,
+                decoration: photoBoxDecoration(context),
+                child: AspectRatio(
+                  aspectRatio: 3 / 4,
+                  child:
+                      _storePhoto != null
+                          ? ClipRRect(
+                            borderRadius: BorderRadius.circular(16.r),
+                            child: Image.file(
+                              _storePhoto!,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: double.infinity,
+                              errorBuilder:
+                                  (_, __, ___) =>
+                                      imageErrorWidget(context: context),
                             ),
-                            SizedBox(height: 8.h),
-                            _storePhotoError.isEmpty
-                                ? Text(
-                                  'Ketuk untuk Mengambil Foto',
-                                  style: captionStyle,
-                                )
-                                : Text(
-                                  _storePhotoError,
-                                  style: captionStyle.copyWith(
-                                    color: Theme.of(context).colorScheme.error,
-                                  ),
+                          )
+                          : Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.camera_alt_outlined,
+                                  size: 32.sp,
+                                  color:
+                                      _storePhotoError.isEmpty
+                                          ? dividerColor
+                                          : Theme.of(context).colorScheme.error,
                                 ),
-                          ],
-                        ),
-                      ),
+                                SizedBox(height: 8.h),
+                                _storePhotoError.isEmpty
+                                    ? Text(
+                                      'Ketuk untuk Mengambil Foto',
+                                      style: captionStyle,
+                                    )
+                                    : Text(
+                                      _storePhotoError,
+                                      style: captionStyle.copyWith(
+                                        color:
+                                            Theme.of(context).colorScheme.error,
+                                      ),
+                                    ),
+                              ],
+                            ),
+                          ),
+                ),
+              ),
             ),
-          ),
-        ),
-        SizedBox(height: 16.h),
+            SizedBox(height: 16.h),
 
-        // Company Name
-        buildInputBox(
-          controller: _companyNameController,
-          label: 'Nama Perusahaan / Toko',
-          validator: (value) {
-            return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
-          },
-        ),
-        SizedBox(height: 16.h),
-
-        // Company Email
-        buildInputBox(
-          controller: _companyEmailController,
-          label: 'Email Perusahaan / Toko (isi "-" jika tidak ada)',
-          validator: (value) {
-            return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
-          },
-        ),
-        SizedBox(height: 16.h),
-
-        // Company Phone Number
-        buildInputBox(
-          controller: _companyPhoneController,
-          label: 'Nomor Telepon Perusahaan',
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          validator: (value) {
-            return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
-          },
-        ),
-        SizedBox(height: 16.h),
-
-        // Company Address
-        buildInputBox(
-          controller: _companyAddressController,
-          label: 'Alamat Perusahaan',
-          validator: (value) {
-            return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
-          },
-        ),
-        SizedBox(height: 16.h),
-
-        // Company Tax ID (PKP only)
-        _customerType == 'PKP'
-            ? buildInputBox(
-              controller: _companyTaxIdController,
-              label: 'NPWP Perusahaan',
+            // Company Name
+            buildInputBox(
+              controller: _companyNameController,
+              label: 'Nama Perusahaan / Toko',
               validator: (value) {
-                if (_customerType == 'Non PKP') return null;
                 return (value != null && value != '')
                     ? null
                     : 'Tidak Boleh Kosong';
               },
+            ),
+            SizedBox(height: 16.h),
+
+            // Company Email
+            buildInputBox(
+              controller: _companyEmailController,
+              label: 'Email Perusahaan / Toko (jika ada)',
+              validator: (value) {
+                return null;
+              },
+            ),
+            SizedBox(height: 16.h),
+
+            // Company Phone Number
+            buildInputBox(
+              controller: _companyPhoneController,
+              label: 'Nomor Telepon Perusahaan / Toko',
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              validator: (value) {
+                return (value != null && value != '')
+                    ? null
+                    : 'Tidak Boleh Kosong';
+              },
+            ),
+            SizedBox(height: 16.h),
+
+            // Company Address
+            buildInputBox(
+              controller: _companyAddressController,
+              label: 'Alamat Perusahaan / Toko',
+              validator: (value) {
+                return (value != null && value != '')
+                    ? null
+                    : 'Tidak Boleh Kosong';
+              },
+            ),
+            SizedBox(height: 16.h),
+
+            // Company Tax ID (PKP only)
+            _customerType == 'PKP'
+                ? buildInputBox(
+                  controller: _companyTaxIdController,
+                  label: 'NPWP Perusahaan',
+                  validator: (value) {
+                    if (_customerType == 'Non PKP') return null;
+                    return (value != null && value != '')
+                        ? null
+                        : 'Tidak Boleh Kosong';
+                  },
+                )
+                : const SizedBox.shrink(),
+            _customerType == 'PKP'
+                ? SizedBox(height: 16.h)
+                : const SizedBox.shrink(),
+
+            // Store Condition
+            buildInputBox(
+              controller: _storeConditionController,
+              label: 'Keterangan Gedung (contoh: ruko 2 lantai)',
+              validator: (value) {
+                return (value != null && value != '')
+                    ? null
+                    : 'Tidak Boleh Kosong';
+              },
+            ),
+            SizedBox(height: 16.h),
+          ],
+        ),
+        companyDataErrorMessage
+            ? Padding(
+              padding: EdgeInsets.only(left: 8.w),
+              child: Text(
+                'Data Perusahaan / Toko Belum Lengkap',
+                style: footnoteStyle.copyWith(
+                  color: Theme.of(context).colorScheme.error,
+                ),
+              ),
             )
             : const SizedBox.shrink(),
-        _customerType == 'PKP'
-            ? SizedBox(height: 16.h)
-            : const SizedBox.shrink(),
-
-        // Store Condition
-        buildInputBox(
-          controller: _storeConditionController,
-          label: 'Keterangan Gedung / Toko (contoh: ruko 2 lantai)',
-          validator: (value) {
-            return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
-          },
-        ),
-        SizedBox(height: 16.h),
       ],
     );
   }
 
   Widget buildOwnerDataExpansionTile() {
-    return ExpansionTile(
-      title: Text('Data Pemilik', style: bodyStyle),
-      childrenPadding: EdgeInsets.symmetric(horizontal: 8.w),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // KTP Photo
-        Center(child: Text('Foto KTP Pemilik', style: captionStyle)),
-        Center(child: Text('(jika ada)', style: captionStyle)),
-        GestureDetector(
-          onTap:
-              _pickOwnerIdPhotoEnabled
-                  ? () async {
-                    _pickOwnerIdPhotoEnabled = false;
-                    File? pickedImage = await pickImage(context: context);
+        ExpansionTile(
+          title: Text('Data Pemilik', style: bodyStyle),
+          childrenPadding: EdgeInsets.symmetric(horizontal: 8.w),
+          children: [
+            // KTP Photo
+            Center(child: Text('Foto KTP Pemilik', style: captionStyle)),
+            Center(child: Text('(jika ada)', style: captionStyle)),
+            GestureDetector(
+              onTap:
+                  _pickOwnerIdPhotoEnabled
+                      ? () async {
+                        _pickOwnerIdPhotoEnabled = false;
+                        File? pickedImage = await pickImage(context: context);
 
-                    if (pickedImage != null) {
-                      setState(() {
-                        _ktpPhoto = pickedImage;
-                      });
-                    }
-                    _pickOwnerIdPhotoEnabled = true;
-                  }
-                  : null,
-          child: Container(
-            width: ScreenUtil().screenWidth * 0.8,
-            decoration: photoBoxDecoration(context),
-            child: AspectRatio(
-              aspectRatio: 3 / 4,
-              child:
-                  _ktpPhoto != null
-                      ? ClipRRect(
-                        borderRadius: BorderRadius.circular(16.r),
-                        child: Image.file(
-                          _ktpPhoto!,
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          height: double.infinity,
-                          errorBuilder:
-                              (_, __, ___) =>
-                                  imageErrorWidget(context: context),
-                        ),
-                      )
-                      : Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.camera_alt_outlined,
-                              size: 32.sp,
-                              color: dividerColor,
+                        if (pickedImage != null) {
+                          setState(() {
+                            _ktpPhoto = pickedImage;
+                          });
+                        }
+                        _pickOwnerIdPhotoEnabled = true;
+                      }
+                      : null,
+              child: Container(
+                width: ScreenUtil().screenWidth * 0.8,
+                decoration: photoBoxDecoration(context),
+                child: AspectRatio(
+                  aspectRatio: 3 / 4,
+                  child:
+                      _ktpPhoto != null
+                          ? ClipRRect(
+                            borderRadius: BorderRadius.circular(16.r),
+                            child: Image.file(
+                              _ktpPhoto!,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: double.infinity,
+                              errorBuilder:
+                                  (_, __, ___) =>
+                                      imageErrorWidget(context: context),
                             ),
-                            SizedBox(height: 8.h),
-                            Text(
-                              'Ketuk untuk Mengambil Foto',
-                              style: captionStyle,
+                          )
+                          : Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.camera_alt_outlined,
+                                  size: 32.sp,
+                                  color: dividerColor,
+                                ),
+                                SizedBox(height: 8.h),
+                                Text(
+                                  'Ketuk untuk Mengambil Foto',
+                                  style: captionStyle,
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
+                          ),
+                ),
+              ),
             ),
-          ),
-        ),
-        SizedBox(height: 16.h),
+            SizedBox(height: 16.h),
 
-        // Owner Name
-        buildInputBox(
-          controller: _ownerNameController,
-          label: 'Nama Pemilik',
-          validator: (value) {
-            return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
-          },
-        ),
-        SizedBox(height: 16.h),
+            // Owner Name
+            buildInputBox(
+              controller: _ownerNameController,
+              label: 'Nama Pemilik',
+              validator: (value) {
+                return (value != null && value != '')
+                    ? null
+                    : 'Tidak Boleh Kosong';
+              },
+            ),
+            SizedBox(height: 16.h),
 
-        // Owner Address
-        buildInputBox(
-          controller: _ownerAddressController,
-          label: 'Alamat Pemilik',
-          validator: (value) {
-            return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
-          },
-        ),
-        SizedBox(height: 16.h),
+            // Owner Address
+            buildInputBox(
+              controller: _ownerAddressController,
+              label: 'Alamat Pemilik',
+              validator: (value) {
+                return (value != null && value != '')
+                    ? null
+                    : 'Tidak Boleh Kosong';
+              },
+            ),
+            SizedBox(height: 16.h),
 
-        // Owner Phone Number
-        buildInputBox(
-          controller: _ownerPhoneController,
-          label: 'Nomor Telepon Pemilik',
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          validator: (value) {
-            return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
-          },
-        ),
-        SizedBox(height: 16.h),
+            // Owner Phone Number
+            buildInputBox(
+              controller: _ownerPhoneController,
+              label: 'Nomor Telepon Pemilik',
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              validator: (value) {
+                return (value != null && value != '')
+                    ? null
+                    : 'Tidak Boleh Kosong';
+              },
+            ),
+            SizedBox(height: 16.h),
 
-        // Owner National ID
-        buildInputBox(
-          controller: _ownerNationalIdController,
-          label: 'NIK Pemilik (jika ada)',
-          validator: (value) {
-            return null;
-          },
-        ),
-        SizedBox(height: 16.h),
+            // Owner National ID
+            buildInputBox(
+              controller: _ownerNationalIdController,
+              label: 'NIK Pemilik (jika ada)',
+              validator: (value) {
+                return null;
+              },
+            ),
+            SizedBox(height: 16.h),
 
-        // PIC Tax ID (Non PKP only)
-        buildInputBox(
-          controller: _ownerTaxIdController,
-          label: 'NPWP Pemilik',
-          validator: (value) {
-            if (_customerType == 'PKP') return null;
-            return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
-          },
-        ),
-        SizedBox(height: 16.h),
+            // PIC Tax ID (Non PKP only)
+            buildInputBox(
+              controller: _ownerTaxIdController,
+              label: 'NPWP Pemilik',
+              validator: (value) {
+                if (_customerType == 'PKP') return null;
+                return (value != null && value != '')
+                    ? null
+                    : 'Tidak Boleh Kosong';
+              },
+            ),
+            SizedBox(height: 16.h),
 
-        // Owner Ownership Status
-        buildInputBox(
-          controller: _ownershipStatusController,
-          label: 'Kepemilikan (contoh: milik sendiri)',
-          validator: (value) {
-            if (_customerType == 'PKP') return null;
-            return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
-          },
+            // Owner Ownership Status
+            buildInputBox(
+              controller: _ownershipStatusController,
+              label: 'Kepemilikan (contoh: milik sendiri)',
+              validator: (value) {
+                if (_customerType == 'PKP') return null;
+                return (value != null && value != '')
+                    ? null
+                    : 'Tidak Boleh Kosong';
+              },
+            ),
+            SizedBox(height: 16.h),
+          ],
         ),
-        SizedBox(height: 16.h),
+        picDataErrorMessage
+            ? Padding(
+              padding: EdgeInsets.only(left: 8.w),
+              child: Text(
+                'Data Pemilik Belum Lengkap',
+                style: footnoteStyle.copyWith(
+                  color: Theme.of(context).colorScheme.error,
+                ),
+              ),
+            )
+            : const SizedBox.shrink(),
       ],
     );
   }
 
   Widget buildPicDataExpansionTile() {
-    return ExpansionTile(
-      title: Text('Data PIC', style: bodyStyle),
-      childrenPadding: EdgeInsets.symmetric(horizontal: 8.w),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // KTP Photo
-        Center(child: Text('Foto KTP PIC', style: captionStyle)),
-        Center(child: Text('(jika ada)', style: captionStyle)),
-        GestureDetector(
-          onTap:
-              _pickOwnerIdPhotoEnabled
-                  ? () async {
-                    _pickOwnerIdPhotoEnabled = false;
-                    File? pickedImage = await pickImage(context: context);
+        ExpansionTile(
+          title: Text('Data PIC', style: bodyStyle),
+          childrenPadding: EdgeInsets.symmetric(horizontal: 8.w),
+          children: [
+            // KTP Photo
+            Center(child: Text('Foto KTP PIC', style: captionStyle)),
+            Center(child: Text('(jika ada)', style: captionStyle)),
+            GestureDetector(
+              onTap:
+                  _pickOwnerIdPhotoEnabled
+                      ? () async {
+                        _pickOwnerIdPhotoEnabled = false;
+                        File? pickedImage = await pickImage(context: context);
 
-                    if (pickedImage != null) {
-                      setState(() {
-                        _ktpPhoto = pickedImage;
-                      });
-                    }
-                    _pickOwnerIdPhotoEnabled = true;
-                  }
-                  : null,
-          child: Container(
-            width: ScreenUtil().screenWidth * 0.8,
-            decoration: photoBoxDecoration(context),
-            child: AspectRatio(
-              aspectRatio: 3 / 4,
-              child:
-                  _ktpPhoto != null
-                      ? ClipRRect(
-                        borderRadius: BorderRadius.circular(16.r),
-                        child: Image.file(
-                          _ktpPhoto!,
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          height: double.infinity,
-                          errorBuilder:
-                              (_, __, ___) =>
-                                  imageErrorWidget(context: context),
-                        ),
-                      )
-                      : Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.camera_alt_outlined,
-                              size: 32.sp,
-                              color: dividerColor,
+                        if (pickedImage != null) {
+                          setState(() {
+                            _ktpPhoto = pickedImage;
+                          });
+                        }
+                        _pickOwnerIdPhotoEnabled = true;
+                      }
+                      : null,
+              child: Container(
+                width: ScreenUtil().screenWidth * 0.8,
+                decoration: photoBoxDecoration(context),
+                child: AspectRatio(
+                  aspectRatio: 3 / 4,
+                  child:
+                      _ktpPhoto != null
+                          ? ClipRRect(
+                            borderRadius: BorderRadius.circular(16.r),
+                            child: Image.file(
+                              _ktpPhoto!,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: double.infinity,
+                              errorBuilder:
+                                  (_, __, ___) =>
+                                      imageErrorWidget(context: context),
                             ),
-                            SizedBox(height: 8.h),
-                            Text(
-                              'Ketuk untuk Mengambil Foto',
-                              style: captionStyle,
+                          )
+                          : Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.camera_alt_outlined,
+                                  size: 32.sp,
+                                  color: dividerColor,
+                                ),
+                                SizedBox(height: 8.h),
+                                Text(
+                                  'Ketuk untuk Mengambil Foto',
+                                  style: captionStyle,
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
+                          ),
+                ),
+              ),
             ),
-          ),
-        ),
-        SizedBox(height: 16.h),
+            SizedBox(height: 16.h),
 
-        // PIC Name
-        buildInputBox(
-          controller: _ownerNameController,
-          label: 'Nama PIC',
-          validator: (value) {
-            return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
-          },
-        ),
-        SizedBox(height: 16.h),
+            // PIC Name
+            buildInputBox(
+              controller: _ownerNameController,
+              label: 'Nama PIC',
+              validator: (value) {
+                return (value != null && value != '')
+                    ? null
+                    : 'Tidak Boleh Kosong';
+              },
+            ),
+            SizedBox(height: 16.h),
 
-        // PIC Phone Number
-        buildInputBox(
-          controller: _ownerPhoneController,
-          label: 'Nomor Telepon PIC',
-          validator: (value) {
-            return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
-          },
-        ),
-        SizedBox(height: 16.h),
+            // PIC Phone Number
+            buildInputBox(
+              controller: _ownerPhoneController,
+              label: 'Nomor Telepon PIC',
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              validator: (value) {
+                return (value != null && value != '')
+                    ? null
+                    : 'Tidak Boleh Kosong';
+              },
+            ),
+            SizedBox(height: 16.h),
 
-        // PIC National ID
-        buildInputBox(
-          controller: _ownerNationalIdController,
-          label: 'NIK PIC (jika ada)',
-          validator: (value) {
-            return null;
-          },
-        ),
-        SizedBox(height: 16.h),
+            // PIC National ID
+            buildInputBox(
+              controller: _ownerNationalIdController,
+              label: 'NIK PIC (jika ada)',
+              validator: (value) {
+                return null;
+              },
+            ),
+            SizedBox(height: 16.h),
 
-        // PIC Position
-        buildInputBox(
-          controller: _picPositionController,
-          label: 'Posisi PIC dalam Perusahaan (contoh: manager)',
-          validator: (value) {
-            return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
-          },
+            // PIC Position
+            buildInputBox(
+              controller: _picPositionController,
+              label: 'Posisi PIC dalam Perusahaan (contoh: manager)',
+              validator: (value) {
+                return (value != null && value != '')
+                    ? null
+                    : 'Tidak Boleh Kosong';
+              },
+            ),
+            SizedBox(height: 16.h),
+          ],
         ),
-        SizedBox(height: 16.h),
+        picDataErrorMessage
+            ? Padding(
+              padding: EdgeInsets.only(left: 8.w),
+              child: Text(
+                'Data PIC Belum Lengkap',
+                style: footnoteStyle.copyWith(
+                  color: Theme.of(context).colorScheme.error,
+                ),
+              ),
+            )
+            : const SizedBox.shrink(),
       ],
     );
   }
 
   Widget buildCreditInfoExpansionTile() {
-    return ExpansionTile(
-      title: Text('Informasi Pembayaran', style: bodyStyle),
-      childrenPadding: EdgeInsets.symmetric(horizontal: 8.w),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 4.h),
-        buildInputBox(
-          controller: _creditPeriodController,
-          label: 'Jangka Waktu Kredit (dalam hari)',
-          suffix: 'hari',
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          validator: (value) {
-            return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
-          },
-        ),
-        SizedBox(height: 16.h),
+        ExpansionTile(
+          title: Text('Informasi Pembayaran', style: bodyStyle),
+          childrenPadding: EdgeInsets.symmetric(horizontal: 8.w),
+          children: [
+            SizedBox(height: 4.h),
+            buildInputBox(
+              controller: _creditPeriodController,
+              label: 'Jangka Waktu Kredit (dalam hari)',
+              suffix: 'hari',
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              validator: (value) {
+                return (value != null && value != '')
+                    ? null
+                    : 'Tidak Boleh Kosong';
+              },
+            ),
+            SizedBox(height: 16.h),
 
-        buildInputBox(
-          controller: _creditLimitController,
-          label: 'Batas Kredit (dalam Rp)',
-          prefix: 'Rp. ',
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          validator: (value) {
-            return (value != null && value != '') ? null : 'Tidak Boleh Kosong';
-          },
+            buildInputBox(
+              controller: _creditLimitController,
+              label: 'Batas Kredit (dalam Rp)',
+              prefix: 'Rp. ',
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              validator: (value) {
+                return (value != null && value != '')
+                    ? null
+                    : 'Tidak Boleh Kosong';
+              },
+            ),
+            SizedBox(height: 16.h),
+          ],
         ),
-        SizedBox(height: 16.h),
+        paymentInfoErrorMessage
+            ? Padding(
+              padding: EdgeInsets.only(left: 8.w),
+              child: Text(
+                'Informasi Pembayaran Belum Lengkap',
+                style: footnoteStyle.copyWith(
+                  color: Theme.of(context).colorScheme.error,
+                ),
+              ),
+            )
+            : const SizedBox.shrink(),
       ],
     );
   }
 
-  bool isAllRequiredTextDataFilled() {
+  bool isUpperDataFilled() {
     // Upper Data
     final customerTypeStatus = _customerType != null;
     final subscriptionTypeStatus = _subscriptionType != null;
-    final requestDestinationFilled = _requestDestinationController.text != '';
-    final carbonCopyFilled = _carbonCopyController.text != '';
-    final creditPeriodFilled = _creditPeriodController.text != '';
-    final creditLimitFilled = _creditLimitController.text != '';
+    final requestDestinationFilled = true;
+    final carbonCopyFilled = true;
 
+    final allFlags = [
+      customerTypeStatus,
+      subscriptionTypeStatus,
+      requestDestinationFilled,
+      carbonCopyFilled,
+    ];
+
+    return allFlags.every((flag) => flag);
+  }
+
+  bool isCompanyDataFilled() {
     // Company Data
-    final companyNameFilled = _companyNameController.text != '';
-    final companyAddressFilled = _companyAddressController.text != '';
-    final companyPhoneFilled = _companyPhoneController.text != '';
+    final companyNameFilled = _companyNameController.text.isNotEmpty;
+    final companyAddressFilled = _companyAddressController.text.isNotEmpty;
+    final companyPhoneFilled = _companyPhoneController.text.isNotEmpty;
     final companyTaxIdFilled =
         _customerType == 'PKP' ? (_companyTaxIdController.text != '') : true;
-    final companyEmailFilled = _companyEmailController.text != '';
-    final storeConditionFilled = _storeConditionController.text != '';
+    final companyEmailFilled = true;
+    final storeConditionFilled = _storeConditionController.text.isNotEmpty;
 
+    final allFlags = [
+      companyNameFilled,
+      companyAddressFilled,
+      companyPhoneFilled,
+      companyTaxIdFilled,
+      companyEmailFilled,
+      storeConditionFilled,
+    ];
+
+    return allFlags.every((flag) => flag);
+  }
+
+  bool isPicDataFilled() {
     // Owner/PIC Data
     bool ktpPhotoStatus;
-    bool ownerAddressFilled;
-    bool ownerTaxIdFilled;
-    bool ownerNationalIdFilled;
+    bool picAddressFilled;
+    bool picTaxIdFilled;
+    bool picNationalIdFilled;
     bool ownershipStatusFilled;
-    bool ownerNameFilled = _ownerNameController.text.isNotEmpty;
-    bool ownerPhoneFilled = _ownerPhoneController.text.isNotEmpty;
+    bool picNameFilled = _ownerNameController.text.isNotEmpty;
+    bool picPhoneFilled = _ownerPhoneController.text.isNotEmpty;
     bool picPositionFilled;
 
     // Field is not required after revision
     ktpPhotoStatus = true;
-    ownerNationalIdFilled = true;
+    picNationalIdFilled = true;
 
     // Owner data needed for Non PKP
     if (_customerType == 'Non PKP') {
-      ownerAddressFilled = _ownerAddressController.text.isNotEmpty;
-      ownerTaxIdFilled = _ownerTaxIdController.text.isNotEmpty;
+      picAddressFilled = _ownerAddressController.text.isNotEmpty;
+      picTaxIdFilled = _ownerTaxIdController.text.isNotEmpty;
       // ownerNationalIdFilled = _ownerNationalIdController.text.isNotEmpty;
       ownershipStatusFilled = _ownershipStatusController.text.isNotEmpty;
       picPositionFilled = true;
     }
     // PIC data needed for PKP
     else if (_customerType == 'PKP') {
-      ownerAddressFilled = true;
-      ownerTaxIdFilled = true;
+      picAddressFilled = true;
+      picTaxIdFilled = true;
       ownershipStatusFilled = true;
       picPositionFilled = _picPositionController.text.isNotEmpty;
     }
     // Nullify all data if customer type is not selected
     else {
-      ownerAddressFilled = false;
-      ownerTaxIdFilled = false;
+      picAddressFilled = false;
+      picTaxIdFilled = false;
       ownershipStatusFilled = false;
       picPositionFilled = false;
     }
@@ -727,33 +845,15 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
     final noteFilled = true;
 
     final allFlags = [
-      // Upper Data
-      customerTypeStatus,
-      subscriptionTypeStatus,
-      requestDestinationFilled,
-      carbonCopyFilled,
-
-      // Company Data
-      companyNameFilled,
-      companyAddressFilled,
-      companyPhoneFilled,
-      companyTaxIdFilled,
-      companyEmailFilled,
-      storeConditionFilled,
-
       // Owner/PIC Data
       ktpPhotoStatus,
-      ownerNameFilled,
-      ownerAddressFilled,
-      ownerPhoneFilled,
-      ownerTaxIdFilled,
-      ownerNationalIdFilled,
+      picNameFilled,
+      picAddressFilled,
+      picPhoneFilled,
+      picTaxIdFilled,
+      picNationalIdFilled,
       ownershipStatusFilled,
       picPositionFilled,
-
-      // Credit Information
-      creditPeriodFilled,
-      creditLimitFilled,
 
       // Notes
       noteFilled,
@@ -763,38 +863,89 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
     return allFlags.every((flag) => flag);
   }
 
-  void _submit() async {
-    // Validate to trigger warning
-    _formKey.currentState?.validate();
+  bool isPaymentInfoFilled() {
+    final creditPeriodFilled = _creditPeriodController.text.isNotEmpty;
+    final creditLimitFilled = _creditLimitController.text.isNotEmpty;
 
-    if (!isAllRequiredTextDataFilled()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Data Belum Lengkap'),
-          behavior: SnackBarBehavior.floating,
-          duration: Duration(seconds: 2),
-        ),
-      );
+    final allFlags = [creditPeriodFilled, creditLimitFilled];
 
-      if (_storePhoto == null) {
-        setState(() {
-          _storePhotoError =
-              'Foto Gedung / Toko harus diisi\nKetuk untuk Mengambil Foto';
-        });
-      }
+    return allFlags.every((flag) => flag);
+  }
 
-      return;
-    }
+  bool isAllRequiredTextDataFilled() {
+    return isUpperDataFilled() &&
+        isPicDataFilled() &&
+        isCompanyDataFilled() &&
+        isPaymentInfoFilled();
+  }
 
+  bool isStorePhotoExist() {
     if (_storePhoto == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Foto Gedung / Toko Belum Diisi')),
-      );
-
       setState(() {
         _storePhotoError =
             'Foto Gedung / Toko harus diisi\nKetuk untuk Mengambil Foto';
       });
+    } else {
+      setState(() {
+        _storePhotoError = '';
+      });
+    }
+    return _storePhoto != null;
+  }
+
+  void _submit() async {
+    String? errorMessage;
+
+    // Validate to trigger warning
+    _formKey.currentState?.validate();
+
+    // Check payment info
+    if (!isPaymentInfoFilled()) {
+      errorMessage = 'Informasi Pembayaran Belum Lengkap';
+      paymentInfoErrorMessage = true;
+    } else {
+      paymentInfoErrorMessage = false;
+    }
+
+    // Check pic data
+    if (!isPicDataFilled()) {
+      errorMessage = 'Data Pemilik / PIC Belum Lengkap';
+      picDataErrorMessage = true;
+    } else {
+      picDataErrorMessage = false;
+    }
+
+    // Check store photo
+    if (!isStorePhotoExist()) {
+      errorMessage = 'Foto Gedung / Toko Belum Diisi';
+      companyDataErrorMessage = true;
+    } else {
+      companyDataErrorMessage = false;
+    }
+
+    // Check store data
+    if (!isCompanyDataFilled()) {
+      errorMessage = 'Data Perusahaan / Toko Belum Lengkap';
+      companyDataErrorMessage = true;
+    } else {
+      companyDataErrorMessage = false;
+    }
+
+    // Check type & subscription
+    if (!isUpperDataFilled()) {
+      errorMessage = 'Pilih Tipe & Jenis Langganan';
+    }
+
+    if (!isAllRequiredTextDataFilled() || _storePhoto == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(errorMessage ?? 'Data Belum Lengkap'),
+          behavior: SnackBarBehavior.floating,
+          duration: const Duration(seconds: 2),
+        ),
+      );
+
+      isStorePhotoExist();
       return;
     }
 
@@ -802,7 +953,11 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
       _submitButtonEnabled = false;
     });
 
-    if (isAllRequiredTextDataFilled()) {
+    if (isAllRequiredTextDataFilled() && _storePhoto != null) {
+      setState(() {
+        _submitButtonEnabled = true;
+      });
+
       final state = await ref
           .read(createCustomerRequestControllerProvider.notifier)
           .createCustomerRequest(
