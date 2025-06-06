@@ -129,7 +129,9 @@ InkWell customListItem({
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: bodyStyle),
+                title.isNotEmpty
+                    ? Text(title, style: bodyStyle)
+                    : const SizedBox.shrink(),
                 subtitle != null
                     ? SizedBox(height: 4.h)
                     : const SizedBox.shrink(),

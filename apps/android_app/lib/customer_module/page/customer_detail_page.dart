@@ -1,5 +1,4 @@
 import 'package:android_app/customer_module/domain/entities/customer_domain.dart';
-import 'package:android_app/customer_module/page/controller/customer_list_controller.dart';
 import 'package:android_app/order_module/domain/entities/order_domain.dart';
 import 'package:android_app/order_module/page/controller/order_list_controller.dart';
 import 'package:android_app/order_module/page/order_detail_page.dart';
@@ -153,14 +152,15 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
 
   List<Widget> buildOrderHistoryItems() {
     final orderListState = ref.watch(orderListControllerProvider);
-    final customerListState = ref.watch(customerListControllerProvider);
 
     List<Widget> orderHistory = orderListState.when(
-      loading: () => [],
+      loading: () => [Center(child: Text('Memuat', style: bodyStyle))],
       data: (orderList) {
         List<Widget> result = [];
 
-        if (orderList == null || orderList.isEmpty) return [];
+        if (orderList == null || orderList.isEmpty) {
+          return [Center(child: Text('Tidak Ada Riwayat', style: bodyStyle))];
+        }
 
         for (OrderDomain data in orderList) {
           if (getIdFromName(name: widget.data.name) !=
@@ -180,15 +180,7 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
             customListItem(
               context: context,
               leadIcon: Icons.shopping_cart,
-              title: customerListState.when(
-                loading: () => 'Memuat...',
-                data: (customerList) {
-                  return "Order ${ref.read(customerListControllerProvider.notifier).getCustomerName(id: data.fields?.customerId?.stringValue ?? '')}";
-                },
-                error: (error, stackTrace) {
-                  return 'Gagal Memuat Nama';
-                },
-              ),
+              title: '',
               subtitle:
                   '${(data.createTime != null && data.createTime != '') ? DateFormat.yMMMMd().format(DateTime.parse(data.createTime!)) : "Gagal Memuat Tanggal"}\nStatus: ${getOrderStatusText(data.fields?.orderStatus?.stringValue ?? "-")}',
               trailIcon: Icons.arrow_forward_ios,
@@ -210,11 +202,14 @@ class _CustomerDetailPage extends ConsumerState<CustomerDetailPage> {
           result.add(SizedBox(height: 8.h));
         }
 
+        if (result.isEmpty) {
+          return [Center(child: Text('Tidak Ada Riwayat', style: bodyStyle))];
+        }
+
         return result;
       },
       error: (error, _) {
         final exception = error as ApiException;
-
         return [
           Center(
             child: Text(
