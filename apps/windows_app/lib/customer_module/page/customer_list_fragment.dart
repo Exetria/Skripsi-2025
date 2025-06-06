@@ -12,6 +12,8 @@ import 'package:windows_app/customer_module/domain/entities/customer_request_dom
 import 'package:windows_app/customer_module/page/controller/customer_list_controller.dart';
 import 'package:windows_app/customer_module/page/controller/customer_request_list_controller.dart';
 import 'package:windows_app/customer_module/page/controller/update_customer_controller.dart';
+import 'package:windows_app/order_module/domain/entities/order_domain.dart';
+import 'package:windows_app/order_module/page/controller/order_list_controller.dart';
 import 'package:windows_app/user_module/page/controller/user_list_controller.dart';
 import 'package:windows_app/utils/functions.dart';
 
@@ -25,7 +27,10 @@ class CustomerListFragment extends StatefulHookConsumerWidget {
 class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
   TextEditingController searchController = TextEditingController();
 
+  bool listViewEnabled = true;
   bool seeCustomer = true;
+
+  CustomerDomain? focusedCustomerData;
 
   @override
   void initState() {
@@ -57,116 +62,136 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
           _buildHeader(),
           const SizedBox(height: 12),
 
-          Expanded(
-            child:
-                seeCustomer
-                    ? buildCustomerList(customerListState)
-                    : buildCustomerRequestList(customerRequestListState),
-          ),
+          listViewEnabled
+              ? Expanded(
+                child:
+                    seeCustomer
+                        ? buildCustomerList(customerListState)
+                        : buildCustomerRequestList(customerRequestListState),
+              )
+              : Expanded(child: buildCustomerDetailView()),
         ],
       ),
     );
   }
 
   Widget _buildHeader() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
+    return listViewEnabled
+        ? Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(
-              width: ScreenUtil().screenWidth * 0.25,
-              child: customSearchBar(
-                context: context,
-                controller: searchController,
-                hint:
-                    seeCustomer
-                        ? 'Cari Pelanggan...'
-                        : 'Cari Permohonan Pelanggan...',
-                onChanged: (query) {
-                  seeCustomer
-                      ? ref
+            Row(
+              children: [
+                SizedBox(
+                  width: ScreenUtil().screenWidth * 0.25,
+                  child: customSearchBar(
+                    context: context,
+                    controller: searchController,
+                    hint:
+                        seeCustomer
+                            ? 'Cari Pelanggan...'
+                            : 'Cari Permohonan Pelanggan...',
+                    onChanged: (query) {
+                      seeCustomer
+                          ? ref
+                              .read(customerListControllerProvider.notifier)
+                              .searchCustomer(query)
+                          : ref
+                              .read(
+                                customerRequestListControllerProvider.notifier,
+                              )
+                              .searchCustomerRequest(query);
+                    },
+                  ),
+                ),
+                const SizedBox(width: 16),
+
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      seeCustomer = true;
+                      searchController.clear();
+                      ref
                           .read(customerListControllerProvider.notifier)
-                          .searchCustomer(query)
-                      : ref
+                          .resetSearch();
+                      ref
                           .read(customerRequestListControllerProvider.notifier)
-                          .searchCustomerRequest(query);
-                },
-              ),
-            ),
-            const SizedBox(width: 16),
+                          .resetSearch();
+                    });
+                  },
+                  icon: Icon(
+                    Icons.store,
+                    color:
+                        seeCustomer
+                            ? Theme.of(context).colorScheme.primary
+                            : Theme.of(context).colorScheme.onSurface,
+                  ),
+                  tooltip: 'Tampilkan Pelanggan',
+                ),
+                const SizedBox(width: 12),
 
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  seeCustomer = true;
-                  searchController.clear();
-                  ref
-                      .read(customerListControllerProvider.notifier)
-                      .resetSearch();
-                  ref
-                      .read(customerRequestListControllerProvider.notifier)
-                      .resetSearch();
-                });
-              },
-              icon: Icon(
-                Icons.store,
-                color:
-                    seeCustomer
-                        ? Theme.of(context).colorScheme.primary
-                        : Theme.of(context).colorScheme.onSurface,
-              ),
-              tooltip: 'Tampilkan Pelanggan',
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      seeCustomer = false;
+                      searchController.clear();
+                      ref
+                          .read(customerListControllerProvider.notifier)
+                          .resetSearch();
+                      ref
+                          .read(customerRequestListControllerProvider.notifier)
+                          .resetSearch();
+                    });
+                  },
+                  icon: Icon(
+                    Icons.add_business,
+                    color:
+                        !seeCustomer
+                            ? Theme.of(context).colorScheme.primary
+                            : Theme.of(context).colorScheme.onSurface,
+                  ),
+                  tooltip: 'Tampilkan Permohonan Pelanggan',
+                ),
+                const SizedBox(width: 12),
+              ],
             ),
-            const SizedBox(width: 12),
-
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  seeCustomer = false;
-                  searchController.clear();
-                  ref
-                      .read(customerListControllerProvider.notifier)
-                      .resetSearch();
-                  ref
-                      .read(customerRequestListControllerProvider.notifier)
-                      .resetSearch();
-                });
-              },
-              icon: Icon(
-                Icons.add_business,
-                color:
-                    !seeCustomer
-                        ? Theme.of(context).colorScheme.primary
-                        : Theme.of(context).colorScheme.onSurface,
-              ),
-              tooltip: 'Tampilkan Permohonan Pelanggan',
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () async {
+                    showCustomerDataPopup(context: context);
+                  },
+                  icon: const Icon(Icons.add),
+                  tooltip: 'Tambah Pelanggan Baru',
+                ),
+                const SizedBox(width: 8),
+                IconButton(
+                  onPressed:
+                      seeCustomer
+                          ? _refreshCustomerList
+                          : _refreshCustomerRequestList,
+                  icon: const Icon(Icons.refresh),
+                  tooltip: 'Segarkan',
+                ),
+              ],
             ),
-            const SizedBox(width: 12),
           ],
-        ),
-        Row(
+        )
+        : Row(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             IconButton(
               onPressed: () async {
-                showCustomerDataPopup(context: context);
+                setState(() {
+                  listViewEnabled = true;
+                  focusedCustomerData = null;
+                });
               },
-              icon: const Icon(Icons.add),
-              tooltip: 'Tambah Pelanggan Baru',
-            ),
-            const SizedBox(width: 8),
-            IconButton(
-              onPressed:
-                  seeCustomer
-                      ? _refreshCustomerList
-                      : _refreshCustomerRequestList,
-              icon: const Icon(Icons.refresh),
-              tooltip: 'Segarkan',
+              icon: const Icon(Icons.close),
+              tooltip: 'Kembali ke Daftar Pelanggan',
             ),
           ],
-        ),
-      ],
-    );
+        );
   }
 
   Widget buildCustomerList(
@@ -230,7 +255,10 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                   rightBottomText: registedDate,
 
                   onTap: () {
-                    showCustomerDataPopup(context: context, customerData: data);
+                    setState(() {
+                      focusedCustomerData = data;
+                      listViewEnabled = false;
+                    });
                   },
                 );
               },
@@ -343,6 +371,581 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
         );
       },
     );
+  }
+
+  Widget buildCustomerDetailView() {
+    if (listViewEnabled || focusedCustomerData == null) {
+      return Center(
+        child: TextButton(
+          child: const Text('Pelanggan Belum Dipilih'),
+          onPressed: () {
+            setState(() {
+              listViewEnabled = true;
+              focusedCustomerData = null;
+            });
+          },
+        ),
+      );
+    }
+
+    // Customer type and subscription type
+    final String customerType =
+        (focusedCustomerData?.fields?.customerType?.stringValue?.isNotEmpty ==
+                true)
+            ? focusedCustomerData!.fields!.customerType!.stringValue!
+            : '-';
+    final String subcriptionType =
+        (focusedCustomerData
+                    ?.fields
+                    ?.subscriptionType
+                    ?.stringValue
+                    ?.isNotEmpty ==
+                true)
+            ? focusedCustomerData!.fields!.subscriptionType!.stringValue!
+            : '-';
+
+    // Company details
+    final String storePhotoUrl =
+        focusedCustomerData?.fields?.companyStorePhoto?.stringValue ?? '-';
+    final String companyName =
+        (focusedCustomerData?.fields?.companyName?.stringValue?.isNotEmpty ==
+                true)
+            ? focusedCustomerData!.fields!.companyName!.stringValue!
+            : '-';
+    final String companyEmail =
+        (focusedCustomerData?.fields?.companyEmail?.stringValue?.isNotEmpty ==
+                true)
+            ? focusedCustomerData!.fields!.companyEmail!.stringValue!
+            : '-';
+    final String companyPhone =
+        (focusedCustomerData
+                    ?.fields
+                    ?.companyPhoneNumber
+                    ?.stringValue
+                    ?.isNotEmpty ==
+                true)
+            ? focusedCustomerData!.fields!.companyPhoneNumber!.stringValue!
+            : '-';
+    final String companyAddress =
+        (focusedCustomerData?.fields?.companyAddress?.stringValue?.isNotEmpty ==
+                true)
+            ? focusedCustomerData!.fields!.companyAddress!.stringValue!
+            : '-';
+    final String companyTaxId =
+        (focusedCustomerData?.fields?.companyTaxId?.stringValue?.isNotEmpty ==
+                true)
+            ? focusedCustomerData!.fields!.companyTaxId!.stringValue!
+            : '-';
+    final String storeCondition =
+        (focusedCustomerData
+                    ?.fields
+                    ?.companyStoreCondition
+                    ?.stringValue
+                    ?.isNotEmpty ==
+                true)
+            ? focusedCustomerData!.fields!.companyStoreCondition!.stringValue!
+            : '-';
+
+    // PIC details
+    final String picIdPhotoUrl =
+        focusedCustomerData?.fields?.companyStorePhoto?.stringValue ?? '-';
+    final String picName =
+        (focusedCustomerData?.fields?.picName?.stringValue?.isNotEmpty == true)
+            ? focusedCustomerData!.fields!.picName!.stringValue!
+            : '-';
+    final String picAddress =
+        (focusedCustomerData?.fields?.picAddress?.stringValue?.isNotEmpty ==
+                true)
+            ? focusedCustomerData!.fields!.picAddress!.stringValue!
+            : '-';
+    final String picPhone =
+        (focusedCustomerData?.fields?.picPhoneNumber?.stringValue?.isNotEmpty ==
+                true)
+            ? focusedCustomerData!.fields!.picPhoneNumber!.stringValue!
+            : '-';
+    final String picNationalId =
+        (focusedCustomerData?.fields?.picNationalId?.stringValue?.isNotEmpty ==
+                true)
+            ? focusedCustomerData!.fields!.picNationalId!.stringValue!
+            : '-';
+    final String picTaxId =
+        (focusedCustomerData?.fields?.picTaxId?.stringValue?.isNotEmpty == true)
+            ? focusedCustomerData!.fields!.picTaxId!.stringValue!
+            : '-';
+    final String picPosition =
+        (focusedCustomerData?.fields?.picPosition?.stringValue?.isNotEmpty ==
+                true)
+            ? focusedCustomerData!.fields!.picPosition!.stringValue!
+            : '-';
+    final String ownershipStatus =
+        (focusedCustomerData
+                    ?.fields
+                    ?.ownershipStatus
+                    ?.stringValue
+                    ?.isNotEmpty ==
+                true)
+            ? focusedCustomerData!.fields!.ownershipStatus!.stringValue!
+            : '-';
+
+    // Credit details
+    final String creditLimit =
+        focusedCustomerData?.fields?.creditLimit?.integerValue ?? '';
+    final String creditPeriod =
+        focusedCustomerData?.fields?.creditPeriod?.integerValue ?? '';
+
+    // Note
+    final String note =
+        (focusedCustomerData?.fields?.note?.stringValue?.isNotEmpty == true)
+            ? focusedCustomerData!.fields!.ownershipStatus!.stringValue!
+            : '-';
+
+    return Card(
+      color: Theme.of(context).colorScheme.surface,
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Row(
+          children: [
+            // Images
+            Expanded(
+              flex: 2,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Store Photo
+                    Text(
+                      'Foto Toko',
+                      style: sectionTitleStyle.copyWith(
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Container(
+                      width: ScreenUtil().screenWidth * 0.3,
+                      decoration: photoBoxDecoration(context),
+                      child: AspectRatio(
+                        aspectRatio: 16 / 9,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: Image.network(
+                            storePhotoUrl,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: double.infinity,
+                            loadingBuilder: (_, child, progress) {
+                              if (progress == null) return child;
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            },
+                            errorBuilder:
+                                (_, __, ___) =>
+                                    imageErrorWidget(context: context),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 32),
+
+                    // Owner ID Photo
+                    Text(
+                      'Foto KTP Pemilik / PIC',
+                      style: sectionTitleStyle.copyWith(
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Container(
+                      width: ScreenUtil().screenWidth * 0.3,
+                      decoration: photoBoxDecoration(context),
+                      child: AspectRatio(
+                        aspectRatio: 16 / 9,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: Image.network(
+                            picIdPhotoUrl,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: double.infinity,
+                            loadingBuilder: (_, child, progress) {
+                              if (progress == null) return child;
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            },
+                            errorBuilder:
+                                (_, __, ___) =>
+                                    imageErrorWidget(context: context),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            const SizedBox(width: 24),
+
+            // Details
+            Expanded(
+              flex: 3,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Info Company / Store title
+                          Text(
+                            'Detail Perusahaan / Toko',
+                            style: sectionTitleStyle.copyWith(
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
+                          ),
+                          const Divider(
+                            color: Colors.grey,
+                            height: 24,
+                            thickness: 1,
+                          ),
+                          const SizedBox(height: 8),
+                          // Customer type
+                          buildDetailRow(label: 'Tipe', value: customerType),
+                          const SizedBox(height: 8),
+
+                          // Subscription type
+                          buildDetailRow(
+                            label: 'Jenis Langganan',
+                            value: subcriptionType,
+                          ),
+                          const SizedBox(height: 32),
+
+                          // Info Company / Store title
+                          Text(
+                            'Detail Perusahaan / Toko',
+                            style: sectionTitleStyle.copyWith(
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
+                          ),
+                          const Divider(
+                            color: Colors.grey,
+                            height: 24,
+                            thickness: 1,
+                          ),
+                          const SizedBox(height: 8),
+
+                          // Company Name
+                          buildDetailRow(label: 'Nama', value: companyName),
+                          const SizedBox(height: 8),
+
+                          // Company Email
+                          buildDetailRow(label: 'Email', value: companyEmail),
+                          const SizedBox(height: 8),
+
+                          // Company Phone
+                          buildDetailRow(label: 'Telepon', value: companyPhone),
+                          const SizedBox(height: 8),
+
+                          // Company Address
+                          buildDetailRow(
+                            label: 'Alamat',
+                            value: companyAddress,
+                          ),
+                          const SizedBox(height: 8),
+
+                          // Company Tax ID (NPWP)
+                          buildDetailRow(label: 'NPWP', value: companyTaxId),
+                          const SizedBox(height: 8),
+
+                          // Store Condition
+                          buildDetailRow(
+                            label: 'Kondisi Toko',
+                            value: storeCondition,
+                          ),
+                          const SizedBox(height: 32),
+
+                          // Info PIC / Owner title
+                          Text(
+                            'Detail Pemilik / PIC',
+                            style: sectionTitleStyle.copyWith(
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
+                          ),
+                          const Divider(
+                            color: Colors.grey,
+                            height: 24,
+                            thickness: 1,
+                          ),
+                          const SizedBox(height: 8),
+
+                          // Owner Name
+                          buildDetailRow(label: 'Nama', value: picName),
+                          const SizedBox(height: 8),
+
+                          // Owner Address
+                          buildDetailRow(label: 'Alamat', value: picAddress),
+                          const SizedBox(height: 8),
+
+                          // Owner Phone
+                          buildDetailRow(label: 'Telepon', value: picPhone),
+                          const SizedBox(height: 8),
+
+                          // Owner National ID (KTP)
+                          buildDetailRow(
+                            label: 'No. KTP',
+                            value: picNationalId,
+                          ),
+                          const SizedBox(height: 8),
+
+                          // Owner Tax ID (NPWP)
+                          buildDetailRow(label: 'NPWP', value: picTaxId),
+                          const SizedBox(height: 8),
+
+                          // Owner Position
+                          buildDetailRow(label: 'Jabatan', value: picPosition),
+                          const SizedBox(height: 8),
+
+                          // Ownership Status
+                          buildDetailRow(
+                            label: 'Status Kepemilikan',
+                            value: ownershipStatus,
+                          ),
+                          const SizedBox(height: 32),
+
+                          // Payment info title
+                          Text(
+                            'Informasi Pembayaran',
+                            style: sectionTitleStyle.copyWith(
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
+                          ),
+                          const Divider(
+                            color: Colors.grey,
+                            height: 24,
+                            thickness: 1,
+                          ),
+                          const SizedBox(height: 8),
+                          // Credit Limit
+                          buildDetailRow(
+                            label: 'Batas Waktu Kredit',
+                            value: creditPeriod + ' hari',
+                          ),
+                          const SizedBox(height: 8),
+
+                          // Credit Period
+                          buildDetailRow(
+                            label: 'Batas Kredit',
+                            value: rupiahFormat(int.tryParse(creditLimit) ?? 0),
+                          ),
+                          const SizedBox(height: 32),
+
+                          // Note title
+                          Text(
+                            'Catatan',
+                            style: sectionTitleStyle.copyWith(
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
+                          ),
+                          const Divider(
+                            color: Colors.grey,
+                            height: 24,
+                            thickness: 1,
+                          ),
+                          const SizedBox(height: 8),
+                          // Note
+                          Text(note, style: bodyStyle),
+                          const SizedBox(height: 32),
+
+                          // Note title
+                          Text(
+                            'Riwayat Pembelian',
+                            style: sectionTitleStyle.copyWith(
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
+                          ),
+                          const Divider(
+                            color: Colors.grey,
+                            height: 24,
+                            thickness: 1,
+                          ),
+                          const SizedBox(height: 8),
+                          ...buildOrderHistoryItems(),
+                          const SizedBox(height: 32),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // Update button
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ElevatedButton(
+                        style: TextButton.styleFrom(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.surface,
+                          foregroundColor:
+                              Theme.of(context).colorScheme.onSurface,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            listViewEnabled = true;
+                            focusedCustomerData = null;
+                          });
+                        },
+                        child: const Text('Kembali ke Daftar'),
+                      ),
+                      const SizedBox(width: 8),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.tertiary,
+                          foregroundColor:
+                              Theme.of(context).colorScheme.onTertiary,
+                        ),
+                        onPressed: () {
+                          showCustomerDataPopup(
+                            context: context,
+                            customerData: focusedCustomerData,
+                          );
+                        },
+                        child: const Text('Perbarui Data'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildDetailRow({
+    required String label,
+    required String value,
+    double labelWidth = 200,
+  }) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: labelWidth,
+          child: Text(
+            label,
+            style: bodyStyle.copyWith(
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            value,
+            style: bodyStyle.copyWith(
+              color: Theme.of(context).colorScheme.onSurface.withAlpha(200),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  List<Widget> buildOrderHistoryItems() {
+    if (focusedCustomerData == null) {
+      return [
+        Center(child: Text('Gagal Memuat Data Pesanan', style: bodyStyle)),
+      ];
+    }
+
+    final orderListState = ref.watch(orderListControllerProvider);
+
+    List<Widget> orderHistory = orderListState.when(
+      loading: () => [Center(child: Text('Memuat', style: bodyStyle))],
+      data: (orderList) {
+        List<Widget> result = [];
+
+        if (orderList == null || orderList.isEmpty) {
+          return [Center(child: Text('Tidak Ada Riwayat', style: bodyStyle))];
+        }
+
+        for (OrderDomain order in orderList) {
+          if (getIdFromName(name: focusedCustomerData?.name) !=
+              order.fields?.customerId?.stringValue) {
+            continue;
+          }
+
+          List<Value> productValueList =
+              order.fields?.products?.arrayValue?.values ?? [];
+
+          // Create product list
+          List<Map<String, dynamic>> productDataList = createProductDataList(
+            products: productValueList,
+          );
+
+          result.add(
+            // TODO: Add order item widget
+            hoverableCard(
+              context: context,
+              shadow: false,
+              child: InkWell(
+                onTap: () {
+                  showOrderDataPopup(
+                    ref: ref,
+                    context: context,
+                    orderData: order,
+                  );
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      (order.createTime != null && order.createTime != '')
+                          ? DateFormat.yMMMMd().format(
+                            DateTime.parse(order.createTime!),
+                          )
+                          : 'Gagal Memuat Tanggal',
+                      style: bodyStyle,
+                    ),
+                    Text(
+                      getOrderStatusText(
+                        order.fields?.orderStatus?.stringValue ?? '-',
+                      ),
+                      style: bodyStyle,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+
+          result.add(SizedBox(height: 8.h));
+        }
+
+        if (result.isEmpty) {
+          return [Center(child: Text('Tidak Ada Riwayat', style: bodyStyle))];
+        }
+
+        return result;
+      },
+      error: (error, _) {
+        final exception = error as ApiException;
+        return [
+          Center(
+            child: Text(
+              'Gagal Memuat Data Pesanan: ${exception.message}',
+              style: errorStyle,
+            ),
+          ),
+        ];
+      },
+    );
+
+    return orderHistory;
   }
 
   Future<void> showCustomerDataPopup({
@@ -1815,6 +2418,8 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                         customerRequestData != null && requestNotApproved
                             ? const SizedBox(width: 12)
                             : const SizedBox.shrink(),
+
+                        // Reject button
                         customerRequestData != null && requestNotApproved
                             ? ElevatedButton(
                               style: ElevatedButton.styleFrom(
@@ -1839,6 +2444,8 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                         requestNotApproved
                             ? const SizedBox(width: 12)
                             : const SizedBox.shrink(),
+
+                        // Submit button
                         requestNotApproved
                             ? ElevatedButton(
                               style: ElevatedButton.styleFrom(
