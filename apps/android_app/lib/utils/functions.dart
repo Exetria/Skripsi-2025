@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:android_app/order_module/domain/entities/order_domain.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -544,4 +545,55 @@ String getOrderStatusText(String orderStatus) {
   } else {
     return 'Tidak Tersedia';
   }
+}
+
+// CREATE PRODUCT DATA LIST
+List<Map<String, dynamic>> createProductDataList({
+  required List<Value> products,
+}) {
+  List<Map<String, dynamic>> result = [];
+  for (var product in products) {
+    Map<String, dynamic> newMap = {
+      'mapValue': {
+        'fields': {
+          'product_id': {
+            'stringValue':
+                product.mapValue?.fields?.productId?.stringValue ?? '',
+          },
+          'quantity': {
+            'integerValue':
+                product.mapValue?.fields?.quantity?.integerValue ?? '0',
+          },
+          'unit_price': {
+            'integerValue':
+                product.mapValue?.fields?.unitPrice?.integerValue ?? '',
+          },
+          'total_price': {
+            'integerValue':
+                product.mapValue?.fields?.totalPrice?.integerValue ?? '',
+          },
+        },
+      },
+    };
+
+    // Add discount fields conditionally (fixed amount or percentage)
+    if (product.mapValue?.fields?.discountAmount?.integerValue != null) {
+      newMap['mapValue']['fields']['discount_amount'] = {
+        'integerValue':
+            product.mapValue?.fields?.discountAmount?.integerValue ?? '0',
+      };
+    } else if (product.mapValue?.fields?.discountPercentage?.doubleValue !=
+        null) {
+      newMap['mapValue']['fields']['discount_percentage'] = {
+        'doubleValue':
+            product.mapValue?.fields?.discountPercentage?.doubleValue
+                .toString() ??
+            '0',
+      };
+    }
+
+    // Add product data to list
+    result.add(newMap);
+  }
+  return result;
 }

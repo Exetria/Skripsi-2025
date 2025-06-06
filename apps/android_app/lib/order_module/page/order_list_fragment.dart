@@ -126,7 +126,6 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
                       List<Value> productValueList =
                           data.fields?.products?.arrayValue?.values ?? [];
 
-                      // LANJUT DARISINI, CONVERT - PASSING KE DETAILS - UPDATE PAKE DATA BARU
                       // Create product list
                       List<Map<String, dynamic>> productDataList =
                           createProductDataList(products: productValueList);
@@ -181,56 +180,6 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
         ],
       ),
     );
-  }
-
-  List<Map<String, dynamic>> createProductDataList({
-    required List<Value> products,
-  }) {
-    List<Map<String, dynamic>> result = [];
-    for (var product in products) {
-      Map<String, dynamic> newMap = {
-        'mapValue': {
-          'fields': {
-            'product_id': {
-              'stringValue':
-                  product.mapValue?.fields?.productId?.stringValue ?? '',
-            },
-            'quantity': {
-              'integerValue':
-                  product.mapValue?.fields?.quantity?.integerValue ?? '0',
-            },
-            'unit_price': {
-              'integerValue':
-                  product.mapValue?.fields?.unitPrice?.integerValue ?? '',
-            },
-            'total_price': {
-              'integerValue':
-                  product.mapValue?.fields?.totalPrice?.integerValue ?? '',
-            },
-          },
-        },
-      };
-
-      // Add discount fields conditionally (fixed amount or percentage)
-      if (product.mapValue?.fields?.discountAmount?.integerValue != null) {
-        newMap['mapValue']['fields']['discount_amount'] = {
-          'integerValue':
-              product.mapValue?.fields?.discountAmount?.integerValue ?? '0',
-        };
-      } else if (product.mapValue?.fields?.discountPercentage?.doubleValue !=
-          null) {
-        newMap['mapValue']['fields']['discount_percentage'] = {
-          'doubleValue':
-              product.mapValue?.fields?.discountPercentage?.doubleValue
-                  .toString() ??
-              '0',
-        };
-      }
-
-      // Add product data to list
-      result.add(newMap);
-    }
-    return result;
   }
 
   Future<void> _refreshCustomerList() async {
