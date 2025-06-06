@@ -8,6 +8,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:windows_app/report_module/page/controller/attendance_list_controller.dart';
 import 'package:windows_app/user_module/domain/entities/user_domain.dart';
 import 'package:windows_app/user_module/page/controller/user_list_controller.dart';
+import 'package:windows_app/utils/functions.dart';
 
 class AttendanceListFragment extends StatefulHookConsumerWidget {
   const AttendanceListFragment({super.key});
@@ -420,7 +421,6 @@ class _AttendanceListFragment extends ConsumerState<AttendanceListFragment> {
     required String attendanceStatus,
   }) {
     final cs = Theme.of(context).colorScheme;
-    bool isHovered = false;
 
     Color statusColor = cs.error;
     if (attendanceStatus == 'Selesai Absen') {
@@ -429,48 +429,26 @@ class _AttendanceListFragment extends ConsumerState<AttendanceListFragment> {
       statusColor = cs.tertiaryContainer;
     }
 
-    return StatefulBuilder(
-      builder: (context, setStatefulBuilderState) {
-        return MouseRegion(
-          onEnter: (_) => setStatefulBuilderState(() => isHovered = true),
-          onExit: (_) => setStatefulBuilderState(() => isHovered = false),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            transform:
-                isHovered
-                    ? Matrix4.translationValues(0, -4, 0)
-                    : Matrix4.identity(),
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              // Give a slightly different fill color so the border shows
-              color: cs.surface,
-              border: Border.all(
-                color: isHovered ? cs.primary : cs.onSurface.withAlpha(128),
-                width: 1.5,
-              ),
-              borderRadius: BorderRadius.circular(8),
+    return hoverableCard(
+      context: context,
+      child: InkWell(
+        onTap: () {
+          setState(() {
+            focusedSalesId = salesId;
+            focusedSalesName = salesName;
+          });
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(salesName, style: bodyStyle),
+            Text(
+              attendanceStatus,
+              style: bodyStyle.copyWith(color: statusColor),
             ),
-            child: InkWell(
-              onTap: () {
-                setState(() {
-                  focusedSalesId = salesId;
-                  focusedSalesName = salesName;
-                });
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(salesName, style: bodyStyle),
-                  Text(
-                    attendanceStatus,
-                    style: bodyStyle.copyWith(color: statusColor),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
+          ],
+        ),
+      ),
     );
   }
 
