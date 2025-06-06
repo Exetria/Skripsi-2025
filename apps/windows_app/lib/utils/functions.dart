@@ -2,7 +2,11 @@ import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:windows_app/customer_module/page/controller/customer_list_controller.dart';
+import 'package:windows_app/order_module/domain/entities/order_domain.dart';
+import 'package:windows_app/order_module/page/controller/order_list_controller.dart';
+import 'package:windows_app/order_module/page/controller/update_order_controller.dart';
 import 'package:windows_app/product_module/page/controller/product_list_controller.dart';
 
 // COLUMN COUNT
@@ -42,6 +46,7 @@ BoxDecoration itemCardDecoration(
   BuildContext context, {
   bool isSelected = false,
   bool isHovered = false,
+  bool shadow = true,
 }) {
   final cs = Theme.of(context).colorScheme;
   return BoxDecoration(
@@ -54,13 +59,16 @@ BoxDecoration itemCardDecoration(
               : (isHovered ? cs.primary.withAlpha(100) : cs.outline),
       width: 1,
     ),
-    boxShadow: [
-      BoxShadow(
-        color: cs.shadow,
-        blurRadius: isHovered ? 12 : 8,
-        offset: Offset(0, isHovered ? 8 : 6),
-      ),
-    ],
+    boxShadow:
+        shadow
+            ? [
+              BoxShadow(
+                color: cs.shadow,
+                blurRadius: isHovered ? 12 : 8,
+                offset: Offset(0, isHovered ? 8 : 6),
+              ),
+            ]
+            : null,
   );
 }
 
@@ -77,8 +85,63 @@ Widget itemCard({
   required VoidCallback? onTap,
 }) {
   final cs = Theme.of(context).colorScheme;
-  bool isHovered = false;
 
+  return hoverableCard(
+    context: context,
+    child: InkWell(
+      borderRadius: BorderRadius.circular(12),
+      onTap: onTap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, size: 32, color: cs.primary),
+          const SizedBox(height: 8),
+          Text(
+            title,
+            style: subtitleStyle,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(height: 4),
+          Text(subtitle, style: captionStyle),
+          secondarySubtitle != null
+              ? const SizedBox(height: 4)
+              : const SizedBox.shrink(),
+          secondarySubtitle != null
+              ? Text(secondarySubtitle, style: captionStyle)
+              : const SizedBox.shrink(),
+          tertiarySubtitle != null
+              ? const SizedBox(height: 4)
+              : const SizedBox.shrink(),
+          tertiarySubtitle != null
+              ? Text(tertiarySubtitle, style: captionStyle)
+              : const SizedBox.shrink(),
+          const Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              leftBottomText != null
+                  ? Text(leftBottomText, style: bodyStyle)
+                  : const SizedBox.shrink(),
+
+              rightBottomText != null
+                  ? Text(rightBottomText, style: bodyStyle)
+                  : const SizedBox.shrink(),
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+// HOVERABLE ITEM CARD
+Widget hoverableCard({
+  required BuildContext context,
+  bool shadow = true,
+  required Widget child,
+}) {
+  bool isHovered = false;
   return StatefulBuilder(
     builder: (context, setState) {
       return MouseRegion(
@@ -90,52 +153,13 @@ Widget itemCard({
               isHovered
                   ? Matrix4.translationValues(0, -6, 0)
                   : Matrix4.identity(),
-          decoration: itemCardDecoration(context, isHovered: isHovered),
-          padding: const EdgeInsets.all(12),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(12),
-            onTap: onTap,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(icon, size: 32, color: cs.primary),
-                const SizedBox(height: 8),
-                Text(
-                  title,
-                  style: subtitleStyle,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 4),
-                Text(subtitle, style: captionStyle),
-                secondarySubtitle != null
-                    ? const SizedBox(height: 4)
-                    : const SizedBox.shrink(),
-                secondarySubtitle != null
-                    ? Text(secondarySubtitle, style: captionStyle)
-                    : const SizedBox.shrink(),
-                tertiarySubtitle != null
-                    ? const SizedBox(height: 4)
-                    : const SizedBox.shrink(),
-                tertiarySubtitle != null
-                    ? Text(tertiarySubtitle, style: captionStyle)
-                    : const SizedBox.shrink(),
-                const Spacer(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    leftBottomText != null
-                        ? Text(leftBottomText, style: bodyStyle)
-                        : const SizedBox.shrink(),
-
-                    rightBottomText != null
-                        ? Text(rightBottomText, style: bodyStyle)
-                        : const SizedBox.shrink(),
-                  ],
-                ),
-              ],
-            ),
+          decoration: itemCardDecoration(
+            context,
+            isHovered: isHovered,
+            shadow: shadow,
           ),
+          padding: const EdgeInsets.all(12),
+          child: child,
         ),
       );
     },
@@ -215,11 +239,9 @@ Future<String?> showCustomerSelectorPopup({
                                           : Matrix4.identity(),
                                   padding: const EdgeInsets.all(12),
                                   decoration: BoxDecoration(
-                                    // Give a slightly different fill color so the border shows
                                     color:
                                         Theme.of(context).colorScheme.surface,
                                     border: Border.all(
-                                      // Use a contrasting color (e.g., onSurface) and make it a bit thicker
                                       color:
                                           isHovered
                                               ? Theme.of(
@@ -352,11 +374,9 @@ Future<String?> showProductSelectorPopup({
                                           : Matrix4.identity(),
                                   padding: const EdgeInsets.all(12),
                                   decoration: BoxDecoration(
-                                    // Give a slightly different fill color so the border shows
                                     color:
                                         Theme.of(context).colorScheme.surface,
                                     border: Border.all(
-                                      // Use a contrasting color (e.g., onSurface) and make it a bit thicker
                                       color:
                                           isHovered
                                               ? Theme.of(
@@ -414,4 +434,579 @@ Future<String?> showProductSelectorPopup({
       );
     },
   );
+}
+
+// CREATE PRODUCT DATA LIST
+List<Map<String, dynamic>> createProductDataList({
+  required List<Value> products,
+}) {
+  List<Map<String, dynamic>> result = [];
+  for (var product in products) {
+    Map<String, dynamic> newMap = {
+      'mapValue': {
+        'fields': {
+          'product_id': {
+            'stringValue':
+                product.mapValue?.fields?.productId?.stringValue ?? '',
+          },
+          'quantity': {
+            'integerValue':
+                product.mapValue?.fields?.quantity?.integerValue ?? '0',
+          },
+          'unit_price': {
+            'integerValue':
+                product.mapValue?.fields?.unitPrice?.integerValue ?? '',
+          },
+          'total_price': {
+            'integerValue':
+                product.mapValue?.fields?.totalPrice?.integerValue ?? '',
+          },
+        },
+      },
+    };
+
+    // Add discount fields conditionally (fixed amount or percentage)
+    if (product.mapValue?.fields?.discountAmount?.integerValue != null) {
+      newMap['mapValue']['fields']['discount_amount'] = {
+        'integerValue':
+            product.mapValue?.fields?.discountAmount?.integerValue ?? '0',
+      };
+    } else if (product.mapValue?.fields?.discountPercentage?.doubleValue !=
+        null) {
+      newMap['mapValue']['fields']['discount_percentage'] = {
+        'doubleValue':
+            product.mapValue?.fields?.discountPercentage?.doubleValue
+                .toString() ??
+            '0',
+      };
+    }
+
+    // Add product data to list
+    result.add(newMap);
+  }
+  return result;
+}
+
+// SHOW ORDER DATA POPUP
+Future<void> showOrderDataPopup({
+  required WidgetRef ref,
+  required BuildContext context,
+  required OrderDomain orderData,
+}) async {
+  List<String> orderStatuses = [
+    '',
+    'pending',
+    'processed',
+    'in_transit',
+    'delivered',
+    'finished',
+    'cancelled',
+  ];
+
+  String orderId = getIdFromName(name: orderData.name);
+  String customerId = orderData.fields?.customerId?.stringValue ?? '';
+  String paymentMethod = orderData.fields?.paymentMethod?.stringValue ?? '';
+  String notes = orderData.fields?.notes?.stringValue ?? '';
+
+  String deliveryDate = orderData.fields?.deliveryDate?.timestampValue ?? '';
+  String paymentDate = orderData.fields?.paymentDate?.timestampValue ?? '';
+
+  int total =
+      int.tryParse(orderData.fields?.totalPrice?.integerValue ?? '') ?? 0;
+  List<Map<String, dynamic>> productDataList = createProductDataList(
+    products: orderData.fields?.products?.arrayValue?.values ?? [],
+  );
+
+  String? selectedOrderStatus =
+      orderStatuses.contains(orderData.fields?.orderStatus?.stringValue)
+          ? orderData.fields?.orderStatus?.stringValue
+          : null;
+
+  bool dialogActionButtonEnabled = true;
+
+  await showDialog(
+    context: context,
+    builder: (context) {
+      return StatefulBuilder(
+        builder: (statefulBuilderContext, setDialogState) {
+          Widget buildOrderInfoCard() {
+            return Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                border: Border.all(
+                  color: Theme.of(context).colorScheme.outline,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Title
+                  Text('Detail Pesanan', style: subtitleStyle),
+                  const SizedBox(height: 12),
+
+                  // Order id
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.perm_identity,
+                        size: 20,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text('Id Pesanan:\n$orderId', style: bodyStyle),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Customer name
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.perm_identity,
+                        size: 20,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          ref
+                              .watch(customerListControllerProvider)
+                              .when(
+                                loading: () => 'Memuat...',
+                                data: (data) {
+                                  final customerName = ref
+                                      .read(
+                                        customerListControllerProvider.notifier,
+                                      )
+                                      .getCustomerName(id: customerId);
+                                  return 'Pelanggan Tujuan:\n$customerName';
+                                },
+                                error: (error, stackTrace) {
+                                  ref.invalidate(
+                                    customerListControllerProvider,
+                                  );
+                                  return 'Gagal Memuat Nama';
+                                },
+                              ),
+                          style: bodyStyle,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Payment method
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.payment,
+                        size: 20,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          'Metode Pembayaran:\n$paymentMethod',
+                          style: bodyStyle,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Total price
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.attach_money,
+                        size: 20,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          'Total Harga:\n${rupiahFormat(total)}',
+                          style: bodyStyle,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Notes
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.note,
+                        size: 20,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text('Catatan:\n$notes', style: bodyStyle),
+                      ),
+                    ],
+                  ),
+                  deliveryDate.isNotEmpty
+                      ? const SizedBox(height: 12)
+                      : const SizedBox.shrink(),
+
+                  // Delivery date
+                  deliveryDate.isNotEmpty
+                      ? Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.local_shipping,
+                            size: 20,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              'Tanggal pengiriman:\n${DateFormat('d MMM yyyy').format(DateTime.parse(deliveryDate))}',
+                              style: bodyStyle,
+                            ),
+                          ),
+                        ],
+                      )
+                      : const SizedBox.shrink(),
+                  paymentDate.isNotEmpty
+                      ? const SizedBox(height: 12)
+                      : const SizedBox.shrink(),
+
+                  // Payment date
+                  paymentDate.isNotEmpty
+                      ? Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.request_quote,
+                            size: 20,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              'Tanggal pembayaran:\n${DateFormat('d MMM yyyy').format(DateTime.parse(paymentDate))}',
+                              style: bodyStyle,
+                            ),
+                          ),
+                        ],
+                      )
+                      : const SizedBox.shrink(),
+                ],
+              ),
+            );
+          }
+
+          List<Widget> generateProductList() {
+            final productListState = ref.watch(productListControllerProvider);
+            List<Widget> cards = [];
+            // int newTotal = 0;
+
+            for (int index = 0; index < productDataList.length; index++) {
+              final productData = productDataList[index];
+
+              String? productId =
+                  productData['mapValue']['fields']['product_id']['stringValue'];
+              String? quantity =
+                  productData['mapValue']['fields']['quantity']['integerValue'];
+              String? productTotalPrice =
+                  productData['mapValue']['fields']['total_price']['integerValue'];
+
+              // newTotal += int.tryParse(productTotalPrice ?? '') ?? 0;
+
+              cards.add(
+                productCard(
+                  context: context,
+                  productName: productListState.when(
+                    loading: () => 'Memuat...',
+                    data: (data) {
+                      return ref
+                          .read(productListControllerProvider.notifier)
+                          .getProductName(id: productId ?? '');
+                    },
+                    error: (error, stackTrace) {
+                      ref.invalidate(customerListControllerProvider);
+                      return 'Gagal Memuat Nama';
+                    },
+                  ),
+                  quantity: quantity ?? '-',
+                  price: int.tryParse(productTotalPrice ?? '') ?? 0,
+                  onTap: () {
+                    // Handle product tap if needed
+                  },
+                  onDelete: () {},
+                ),
+              );
+
+              cards.add(SizedBox(height: 4.h));
+            }
+
+            // setDialogState(() {
+            //   total = newTotal;
+            // });
+
+            return cards;
+          }
+
+          void submitOrderData() async {
+            setDialogState(() {
+              dialogActionButtonEnabled = false;
+            });
+
+            if (productDataList.isNotEmpty && selectedOrderStatus != null) {
+              final submitState = await ref
+                  .read(updateOrderControllerProvider.notifier)
+                  .updateOrder(
+                    oldData: orderData,
+                    notes: notes,
+                    paymentMethod: paymentMethod,
+                    orderStatus: selectedOrderStatus ?? '',
+                    deliveryDate: deliveryDate,
+                    paymentDate: paymentDate,
+                    productDataList: productDataList,
+                  );
+
+              if (submitState is AsyncData) {
+                showFeedbackDialog(
+                  context: context,
+                  type: 1,
+                  message: 'Status pesanan berhasil diperbarui',
+                  onClose: () {
+                    ref.invalidate(orderListControllerProvider);
+                    Navigator.pop(statefulBuilderContext);
+                  },
+                );
+              } else if (submitState is AsyncError) {
+                final apiException = submitState.error as ApiException;
+                showFeedbackDialog(
+                  context: context,
+                  type: 0,
+                  message:
+                      'Gagal memperbarui status pesanan: ${apiException.message}',
+                );
+              } else {
+                showFeedbackDialog(
+                  context: context,
+                  type: 0,
+                  message: 'Gagal memperbarui status pesanan',
+                );
+              }
+            }
+
+            setDialogState(() {
+              dialogActionButtonEnabled = true;
+            });
+          }
+
+          return AlertDialog(
+            title: Center(child: Text('Data Pesanan', style: subtitleStyle)),
+            content: SizedBox(
+              width: ScreenUtil().screenWidth * 0.4,
+              child: SingleChildScrollView(
+                child: Form(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      buildOrderInfoCard(),
+                      const SizedBox(height: 16),
+                      DropdownButtonFormField<String>(
+                        value: selectedOrderStatus,
+                        dropdownColor: Theme.of(context).colorScheme.surface,
+                        icon: Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                        decoration: const InputDecoration(
+                          labelText: 'Status Pesanan',
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 14,
+                          ),
+                        ),
+                        items:
+                            orderStatuses.map((item) {
+                              return DropdownMenuItem<String>(
+                                value: item != '' ? item : null,
+                                child: Text(item, style: captionStyle),
+                              );
+                            }).toList(),
+                        onChanged: (val) {
+                          setDialogState(() {
+                            selectedOrderStatus = val;
+                          });
+                        },
+                        validator: (value) {
+                          return value == null ? 'Tidak Boleh Kosong' : null;
+                        },
+                      ),
+                      const SizedBox(height: 32),
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color:
+                                Theme.of(
+                                  statefulBuilderContext,
+                                ).colorScheme.outline,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text('Produk yang Dipesan', style: bodyStyle),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            ConstrainedBox(
+                              constraints: BoxConstraints(
+                                minHeight: ScreenUtil().screenHeight * 0.05,
+                                maxHeight: ScreenUtil().screenHeight * 0.3,
+                              ),
+                              child: SingleChildScrollView(
+                                child: Column(children: generateProductList()),
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            actions: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const SizedBox.shrink(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          foregroundColor:
+                              Theme.of(
+                                statefulBuilderContext,
+                              ).colorScheme.onSurface,
+                        ),
+                        onPressed:
+                            dialogActionButtonEnabled
+                                ? () {
+                                  Navigator.pop(statefulBuilderContext);
+                                }
+                                : null,
+                        child: const Text('Tutup'),
+                      ),
+                      const SizedBox(width: 12),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Theme.of(
+                                statefulBuilderContext,
+                              ).colorScheme.tertiary,
+                          foregroundColor:
+                              Theme.of(
+                                statefulBuilderContext,
+                              ).colorScheme.onTertiary,
+                        ),
+                        onPressed:
+                            dialogActionButtonEnabled ? submitOrderData : null,
+                        child: const Text('Perbarui'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          );
+        },
+      );
+    },
+  );
+}
+
+// PRODUCT CARD FOR ORDER DATA POPUP
+Widget productCard({
+  required BuildContext context,
+  required String productName,
+  required String quantity,
+  required num price,
+  required VoidCallback onTap,
+  required VoidCallback onDelete,
+  bool editable = true,
+}) {
+  return Container(
+    padding: const EdgeInsets.all(16),
+    decoration: BoxDecoration(
+      color: Theme.of(context).colorScheme.surface,
+      border: Border.all(
+        color: Theme.of(context).colorScheme.outline,
+        width: 2,
+      ),
+      borderRadius: BorderRadius.circular(12),
+    ),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        // Item name and quantity
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(productName, style: bodyStyle),
+            SizedBox(height: 4.h),
+            Text(rupiahFormat(price), style: bodyStyle),
+          ],
+        ),
+
+        // Item total price & delete button
+        Text('Jumlah: $quantity', style: captionStyle),
+      ],
+    ),
+  );
+}
+
+// GET ORDER STATUS TEXT
+String getOrderStatusText(String orderStatus) {
+  if (orderStatus == 'pending') {
+    return 'Menunggu Konfirmasi';
+  } else if (orderStatus == 'processed') {
+    return 'Dikonfirmasi Admin';
+  } else if (orderStatus == 'in_transit') {
+    return 'Sedang Dikirim';
+  } else if (orderStatus == 'delivered') {
+    return 'Sudah Diterima';
+  } else if (orderStatus == 'finished') {
+    return 'Selesai';
+  } else if (orderStatus == 'cancelled') {
+    return 'Dibatalkan';
+  } else {
+    return 'Tidak Tersedia';
+  }
 }
