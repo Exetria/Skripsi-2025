@@ -22,11 +22,11 @@ class HomePage extends StatefulHookConsumerWidget {
 class _HomePage extends ConsumerState<HomePage> {
   final List<Widget> pages = [
     const UserListFragment(),
-    const AttendanceListFragment(),
-    const VisitListFragment(),
-    const OrderListFragment(),
     const CustomerListFragment(),
     const ProductListFragment(),
+    const OrderListFragment(),
+    const VisitListFragment(),
+    const AttendanceListFragment(),
     const ProfileFragment(),
   ];
 
@@ -36,24 +36,24 @@ class _HomePage extends ConsumerState<HomePage> {
       label: Text('Pengguna'),
     ),
     const NavigationRailDestination(
-      icon: Icon(Icons.how_to_reg),
-      label: Text('Kehadiran'),
-    ),
-    const NavigationRailDestination(
-      icon: Icon(Icons.directions_walk),
-      label: Text('Kunjungan'),
-    ),
-    const NavigationRailDestination(
-      icon: Icon(Icons.shopping_cart),
-      label: Text('Pesanan'),
-    ),
-    const NavigationRailDestination(
       icon: Icon(Icons.store),
       label: Text('Pelanggan'),
     ),
     const NavigationRailDestination(
       icon: Icon(Icons.widgets),
       label: Text('Produk'),
+    ),
+    const NavigationRailDestination(
+      icon: Icon(Icons.shopping_cart),
+      label: Text('Pesanan'),
+    ),
+    const NavigationRailDestination(
+      icon: Icon(Icons.directions_walk),
+      label: Text('Kunjungan'),
+    ),
+    const NavigationRailDestination(
+      icon: Icon(Icons.how_to_reg),
+      label: Text('Kehadiran'),
     ),
     const NavigationRailDestination(
       icon: Icon(Icons.person),
