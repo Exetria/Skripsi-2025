@@ -25,6 +25,7 @@ class _ProfileFragmentState extends ConsumerState<ProfileFragment> {
         children: [
           // ── Left: Profile Card ───────────────────────────
           Expanded(
+            flex: 3,
             child: Card(
               elevation: 4,
               shape: RoundedRectangleBorder(
@@ -80,10 +81,12 @@ class _ProfileFragmentState extends ConsumerState<ProfileFragment> {
 
           // ── Right: Settings & Actions ────────────────────
           Expanded(
+            flex: 7,
             child: Column(
               children: [
                 // Settings card (upper half)
                 Expanded(
+                  flex: 5,
                   child: Card(
                     elevation: 4,
                     shape: RoundedRectangleBorder(
@@ -92,7 +95,7 @@ class _ProfileFragmentState extends ConsumerState<ProfileFragment> {
                     child: Padding(
                       padding: const EdgeInsets.all(16),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Text('Settings', style: sectionTitleStyle),
                           const Divider(),
@@ -110,7 +113,24 @@ class _ProfileFragmentState extends ConsumerState<ProfileFragment> {
                                   val ? ThemeMode.dark : ThemeMode.light;
                             },
                           ),
-                          // TODO: add more setting toggles here
+
+                          const Spacer(),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              ElevatedButton.icon(
+                                icon: const Icon(Icons.exit_to_app),
+                                label: Text('Log Out', style: buttonStyle),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: cs.error,
+                                  foregroundColor: cs.onError,
+                                ),
+                                onPressed:
+                                    logOutButtonEnable ? doSignOut : null,
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -119,37 +139,8 @@ class _ProfileFragmentState extends ConsumerState<ProfileFragment> {
 
                 const SizedBox(height: 16),
 
-                // Other actions card (lower half)
-                Expanded(
-                  child: Card(
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Text('Other Actions', style: sectionTitleStyle),
-                          const Divider(),
-                          ElevatedButton.icon(
-                            icon: const Icon(Icons.exit_to_app),
-                            label: Text('Log Out', style: buttonStyle),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: cs.error,
-                              foregroundColor: cs.onError,
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                            ),
-                            onPressed: logOutButtonEnable ? doSignOut : null,
-                          ),
-                          const SizedBox(height: 12),
-                          // TODO: add more action buttons here
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                // Other Card (lower half)
+                const Expanded(flex: 5, child: SizedBox.shrink()),
               ],
             ),
           ),
