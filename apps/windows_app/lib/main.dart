@@ -1,4 +1,3 @@
-import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -25,12 +24,6 @@ void main() async {
       child: const Main(),
     ),
   );
-
-  doWhenWindowReady(() {
-    final window = appWindow;
-    window.maximize();
-    window.show();
-  });
 }
 
 class Main extends StatefulHookConsumerWidget {

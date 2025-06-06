@@ -1,3 +1,4 @@
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -32,6 +33,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         showFeedbackDialog(context: context, type: 2, message: widget.reason);
       });
     }
+
+    doWhenWindowReady(() {
+      final window = appWindow;
+      window.maximize();
+      window.show();
+    });
   }
 
   @override
