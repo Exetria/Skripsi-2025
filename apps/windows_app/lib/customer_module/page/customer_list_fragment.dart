@@ -463,7 +463,7 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
 
     // PIC details
     final String picIdPhotoUrl =
-        focusedCustomerData?.fields?.companyStorePhoto?.stringValue ?? '-';
+        focusedCustomerData?.fields?.picNationalIdPhoto?.stringValue ?? '-';
     final String picName =
         (focusedCustomerData?.fields?.picName?.stringValue?.isNotEmpty == true)
             ? focusedCustomerData!.fields!.picName!.stringValue!
