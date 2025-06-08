@@ -188,7 +188,9 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
                   onTap:
                       _editable && _selectedStatus != 1 && _pickVisitPhoto
                           ? () async {
-                            _pickVisitPhoto = false;
+                            setState(() {
+                              _pickVisitPhoto = false;
+                            });
                             final pickedImage = await pickImage(
                               context: context,
                             );
@@ -200,7 +202,9 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
                                 _visitImageError = '';
                               });
                             }
-                            _pickVisitPhoto = true;
+                            setState(() {
+                              _pickVisitPhoto = true;
+                            });
                           }
                           : null,
                   child: Container(

@@ -272,7 +272,9 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
               onTap:
                   _pickStorePhotoEnabled
                       ? () async {
-                        _pickStorePhotoEnabled = false;
+                        setState(() {
+                          _pickStorePhotoEnabled = false;
+                        });
                         File? pickedImage = await pickImage(context: context);
 
                         if (pickedImage != null) {
@@ -281,7 +283,9 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                             _storePhotoError = '';
                           });
                         }
-                        _pickStorePhotoEnabled = true;
+                        setState(() {
+                          _pickStorePhotoEnabled = true;
+                        });
                       }
                       : null,
               child: Container(
@@ -599,7 +603,9 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
               onTap:
                   _pickOwnerIdPhotoEnabled
                       ? () async {
-                        _pickOwnerIdPhotoEnabled = false;
+                        setState(() {
+                          _pickOwnerIdPhotoEnabled = false;
+                        });
                         File? pickedImage = await pickImage(context: context);
 
                         if (pickedImage != null) {
@@ -607,7 +613,9 @@ class _AddCustomerPageState extends ConsumerState<AddCustomerPage> {
                             _ktpPhoto = pickedImage;
                           });
                         }
-                        _pickOwnerIdPhotoEnabled = true;
+                        setState(() {
+                          _pickOwnerIdPhotoEnabled = true;
+                        });
                       }
                       : null,
               child: Container(
