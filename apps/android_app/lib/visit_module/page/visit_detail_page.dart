@@ -368,7 +368,7 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
       });
 
       // Update Firestore
-      await ref
+      final submitState = await ref
           .read(updateVisitControllerProvider.notifier)
           .updateVisitData(
             date: widget.date,
@@ -377,18 +377,57 @@ class _VisitDetailPage extends ConsumerState<VisitDetailPage> {
             visitPhoto: _selectedStatus != 1 ? _visitPhoto : null,
           );
 
-      // Refresh visit list
-      await ref
-          .read(visitListControllerProvider.notifier)
-          .fetchVisitsForDate(date: widget.date, forceFetch: true);
+      // If submit success
+      if (submitState is AsyncData) {
+        _selectedStatus = null;
+        _visitPhoto = null;
+        _visitPhotoLink = null;
+        _notesController.text = '';
 
-      // Enable submit button
-      setState(() {
-        _submitButtonEnabled = true;
-      });
+        showFeedbackDialog(
+          context: context,
+          type: 1,
+          message: 'Kunjungan Berhasil Diperbarui',
+          onClose: () {
+            setState(() {
+              _submitButtonEnabled = true;
+            });
 
-      // Back to visit list
-      Navigator.pop(context);
+            // Refresh visit list
+            ref
+                .read(visitListControllerProvider.notifier)
+                .fetchVisitsForDate(date: widget.date, forceFetch: true);
+
+            Navigator.of(context).pop();
+          },
+        );
+      }
+      //  If submit fail
+      else if (submitState is AsyncError) {
+        final apiException = submitState.error as ApiException;
+
+        showFeedbackDialog(
+          context: context,
+          type: 3,
+          message: 'Gagal Memperbarui Kunjungan: ${apiException.message}',
+          onClose: () {
+            setState(() {
+              _submitButtonEnabled = true;
+            });
+          },
+        );
+      } else {
+        showFeedbackDialog(
+          context: context,
+          type: 3,
+          message: 'Gagal Memperbarui Kunjungan',
+          onClose: () {
+            setState(() {
+              _submitButtonEnabled = true;
+            });
+          },
+        );
+      }
     }
   }
 }
