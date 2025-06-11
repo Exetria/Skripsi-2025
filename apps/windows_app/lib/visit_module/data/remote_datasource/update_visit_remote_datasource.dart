@@ -27,16 +27,19 @@ class UpdateVisitDataRemoteDatasourceImpl
     final documentId = _generateDocumentIdFromDate(salesId, date);
 
     // Update location if needed
-    if (updateLocationIndex != null) {
-      // final currentPosition = await getCurrentPosition();
+    // if (updateLocationIndex != null) {
+    //   final currentPosition = await getCurrentPosition();
 
-      // final locationFields =
-      //     visitDataList[updateLocationIndex]['mapValue']?['fields']?['location']?['mapValue']?['fields'];
-
-      // locationFields?['latitude']?['doubleValue'] = currentPosition.latitude;
-      // locationFields?['longitude']?['doubleValue'] = currentPosition.longitude;
-      // locationFields?['accuracy']?['doubleValue'] = currentPosition.accuracy;
-    }
+    //   visitDataList[updateLocationIndex]['mapValue']['fields']['location'] = {
+    //     'mapValue': {
+    //       'fields': {
+    //         'latitude': {'doubleValue': currentPosition.latitude},
+    //         'longitude': {'doubleValue': currentPosition.longitude},
+    //         'accuracy': {'doubleValue': currentPosition.accuracy},
+    //       },
+    //     },
+    //   };
+    // }
 
     String? visitPhotoLink;
 
