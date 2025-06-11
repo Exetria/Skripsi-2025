@@ -452,3 +452,63 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
     );
   }
 }
+
+// final _controller = TextEditingController();
+// Expanded(
+//   child: SingleChildScrollView(
+//     child: Padding(
+//       padding: const EdgeInsets.all(16.0),
+//       child: TextField(
+//         controller: _controller,
+//         readOnly: true, // disallow editing
+//         enableInteractiveSelection:
+//             true, // allow copy/paste selection
+//         maxLines: null, // grow vertically if needed
+//         decoration: const InputDecoration(
+//           border: OutlineInputBorder(),
+//           labelText: 'Result',
+//         ),
+//       ),
+//     ),
+//   ),
+// ),
+// ElevatedButton(
+//   onPressed: () async {
+//     for (int i = 0; i < 10; i++) {
+//       final position = await getCurrentPosition();
+
+//       try {
+//         Map<String, dynamic> result = await apiCallPost(
+//           url:
+//               'https://firestore.googleapis.com/v1/projects/${dotenv.env['PROJECT_ID']}/databases/(default)/documents/locationTest',
+//           headers: {
+//             'Authorization': 'Bearer ${userDataHelper?.idToken}',
+//             'Content-Type': 'application/json',
+//           },
+//           body: {
+//             'fields': {
+//               'latitude': {'doubleValue': position.latitude},
+//               'longitude': {'doubleValue': position.longitude},
+//               'accuracy': {'doubleValue': position.accuracy},
+//               'timestamp': {
+//                 'timestampValue':
+//                     position.timestamp.toIso8601String(),
+//               },
+//               'isMocked': {'booleanValue': position.isMocked},
+//             },
+//           },
+//         );
+//       } catch (e) {}
+
+//       _controller.text +=
+//           'asds $i : ${position.latitude}, ${position.longitude}, ${position.accuracy}\n';
+
+//       print(
+//         'asds $i : ${position.latitude}, ${position.longitude}, ${position.accuracy}',
+//       );
+
+//       await Future.delayed(const Duration(seconds: 1));
+//     }
+//   },
+//   child: const Text('test location'),
+// ),
