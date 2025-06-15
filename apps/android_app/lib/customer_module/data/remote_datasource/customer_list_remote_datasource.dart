@@ -26,10 +26,12 @@ class CustomerListRemoteDatasourceImpl implements CustomerListRemoteDatasource {
       CustomerDomain instance = CustomerDomain.fromJson(result);
 
       // Filter if customer is blacklisted
-      bool blacklisted = instance.fields?.blacklisted?.booleanValue ?? false;
-      if (!(blacklisted)) {
-        customerList.add(instance);
-      }
+      // bool blacklisted = instance.fields?.blacklisted?.booleanValue ?? false;
+      // if (!(blacklisted)) {
+      //   customerList.add(instance);
+      // }
+
+      customerList.add(instance);
     }
 
     return customerList;

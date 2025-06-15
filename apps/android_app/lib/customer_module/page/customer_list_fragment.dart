@@ -14,6 +14,9 @@ class CustomerListFragment extends StatefulHookConsumerWidget {
 }
 
 class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
+  TextEditingController searchController = TextEditingController();
+  bool displayBlacklisted = false;
+
   @override
   void initState() {
     super.initState();
@@ -33,14 +36,34 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
       child: Column(
         children: [
           // Search Bar
-          customSearchBar(
-            context: context,
-            hint: 'Cari Pelanggan...',
-            onChanged: (query) {
-              ref
-                  .read(customerListControllerProvider.notifier)
-                  .searchCustomer(query);
-            },
+          Row(
+            children: [
+              Expanded(
+                child: customSearchBar(
+                  context: context,
+                  controller: searchController,
+                  hint: 'Cari Pelanggan...',
+                  onChanged: (query) {
+                    ref
+                        .read(customerListControllerProvider.notifier)
+                        .searchCustomer(query);
+                  },
+                ),
+              ),
+              SizedBox(width: 8.w),
+              IconButton(
+                icon: Icon(
+                  displayBlacklisted ? Icons.block : Icons.check_circle,
+                  size: 24.sp,
+                ),
+                onPressed: () {
+                  setState(() {
+                    displayBlacklisted = !displayBlacklisted;
+                    searchController.text = '';
+                  });
+                },
+              ),
+            ],
           ),
 
           SizedBox(height: 12.h),
@@ -51,25 +74,43 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
               loading: () => const Center(child: CircularProgressIndicator()),
 
               data: (customerList) {
-                if (customerList == null || customerList.isEmpty) {
+                if (customerList == null) {
                   return refreshableInfoWidget(
                     refreshFunction: _refreshCustomerList,
                     content: const Text('Data Pelanggan Tidak Ditemukan'),
                   );
                 }
 
+                // Filter blacklisted customers if displayBlacklisted is false
+                final finalCustomerList =
+                    customerList
+                        .where(
+                          displayBlacklisted
+                              ? (customer) =>
+                                  customer.fields?.blacklisted?.booleanValue ??
+                                  false
+                              : (customer) =>
+                                  !(customer
+                                          .fields
+                                          ?.blacklisted
+                                          ?.booleanValue ??
+                                      false),
+                        )
+                        .toList();
+
                 return RefreshIndicator(
                   onRefresh: _refreshCustomerList,
                   child: ListView.separated(
-                    itemCount: customerList.length,
+                    itemCount: finalCustomerList.length,
                     separatorBuilder:
                         (context, index) => SizedBox(height: 12.h),
                     itemBuilder: (context, index) {
-                      final data = customerList[index];
+                      final data = finalCustomerList[index];
 
                       return customListItem(
                         context: context,
-                        leadIcon: Icons.store,
+                        leadIcon:
+                            displayBlacklisted ? Icons.block : Icons.store,
                         title: data.fields?.companyName?.stringValue ?? '-',
                         subtitle:
                             data.fields?.companyAddress?.stringValue ?? '-',
