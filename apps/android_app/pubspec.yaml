@@ -13,6 +13,12 @@ dependencies:
   common_components:
     path: ../../packages/common_components
 
+
+  # NOTIFICATION
+  firebase_core: ^3.14.0
+  firebase_messaging: ^15.2.7
+  flutter_local_notifications: ^19.2.1
+
   # RIVERPOD
   flutter_riverpod: ^2.6.1
   hooks_riverpod: ^2.6.1
