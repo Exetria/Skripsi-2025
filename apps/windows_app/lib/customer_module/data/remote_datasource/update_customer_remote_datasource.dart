@@ -424,7 +424,7 @@ class UpdateCustomerRemoteDatasourceImpl
           'credit_period': {'integerValue': creditPeriod},
           'credit_limit': {'integerValue': creditLimit},
 
-          'blacklisted': {'booleanValue': false},
+          'blacklisted': {'booleanValue': isBlacklisted},
 
           'note': {'stringValue': note},
 
