@@ -19,16 +19,18 @@ class UserDomain with _$UserDomain {
 @freezed
 class Fields with _$Fields {
   const factory Fields({
-    @JsonKey(name: 'role') Email? role,
-    @JsonKey(name: 'full_name') Email? fullName,
-    @JsonKey(name: 'email') Email? email,
-    @JsonKey(name: 'is_active') IsActive? isActive,
-    @JsonKey(name: 'phone_number') Email? phoneNumber,
-    @JsonKey(name: 'photo_url') PhotoUrl? photoUrl,
     @JsonKey(name: 'assigned_products') Assigned? assignedProducts,
     @JsonKey(name: 'assigned_customers') Assigned? assignedCustomers,
+    @JsonKey(name: 'fcm_token') Email? fcmToken,
+    @JsonKey(name: 'phone_number') Email? phoneNumber,
     @JsonKey(name: 'user_name') Email? userName,
+    @JsonKey(name: 'email') Email? email,
+    @JsonKey(name: 'full_name') Email? fullName,
+    @JsonKey(name: 'is_active') IsActive? isActive,
+    @JsonKey(name: 'photo_url') Email? photoUrl,
+    @JsonKey(name: 'role') Email? role,
   }) = _Fields;
+
   factory Fields.fromJson(Map<String, dynamic> json) => _$FieldsFromJson(json);
 }
 
@@ -37,6 +39,7 @@ class Assigned with _$Assigned {
   const factory Assigned({
     @JsonKey(name: 'arrayValue') ArrayValue? arrayValue,
   }) = _Assigned;
+
   factory Assigned.fromJson(Map<String, dynamic> json) =>
       _$AssignedFromJson(json);
 }
@@ -45,6 +48,7 @@ class Assigned with _$Assigned {
 class ArrayValue with _$ArrayValue {
   const factory ArrayValue({@JsonKey(name: 'values') List<Email>? values}) =
       _ArrayValue;
+
   factory ArrayValue.fromJson(Map<String, dynamic> json) =>
       _$ArrayValueFromJson(json);
 }
@@ -53,6 +57,7 @@ class ArrayValue with _$ArrayValue {
 class Email with _$Email {
   const factory Email({@JsonKey(name: 'stringValue') String? stringValue}) =
       _Email;
+
   factory Email.fromJson(Map<String, dynamic> json) => _$EmailFromJson(json);
 }
 
@@ -60,14 +65,7 @@ class Email with _$Email {
 class IsActive with _$IsActive {
   const factory IsActive({@JsonKey(name: 'booleanValue') bool? booleanValue}) =
       _IsActive;
+
   factory IsActive.fromJson(Map<String, dynamic> json) =>
       _$IsActiveFromJson(json);
-}
-
-@freezed
-class PhotoUrl with _$PhotoUrl {
-  const factory PhotoUrl({@JsonKey(name: 'stringValue') String? stringValue}) =
-      _PhotoUrl;
-  factory PhotoUrl.fromJson(Map<String, dynamic> json) =>
-      _$PhotoUrlFromJson(json);
 }
