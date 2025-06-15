@@ -7,6 +7,9 @@ plugins {
 
 dependencies {
   implementation(platform("com.google.firebase:firebase-bom:33.10.0"))
+
+  // Desugaring library
+  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
 }
 
 android {
@@ -18,6 +21,9 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+
+        // Enable desugaring for local notification
+        isCoreLibraryDesugaringEnabled = true
     }
 
     kotlinOptions {
