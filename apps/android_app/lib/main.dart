@@ -1,4 +1,5 @@
 import 'package:android_app/splash_screen.dart';
+import 'package:android_app/utils/connection_status_controller.dart';
 import 'package:android_app/utils/theme_controller.dart';
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,16 @@ class Main extends StatefulHookConsumerWidget {
 }
 
 class _MainApp extends ConsumerState<Main> {
+  @override
+  void initState() {
+    super.initState();
+    addCallBackAfterBuild(
+      callback: () {
+        startConnectionChecker(ref);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final themeMode = ref.watch(themeModeProvider);
