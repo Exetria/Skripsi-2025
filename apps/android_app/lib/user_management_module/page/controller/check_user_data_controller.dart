@@ -28,4 +28,21 @@ class CheckUserDataController extends _$CheckUserDataController {
 
     return state.value;
   }
+
+  Future<CheckUserDataDomain?> updateFcmToken({
+    required String fcmToken,
+  }) async {
+    final repository = ref.watch(updateFcmTokenRepositoryProvider);
+
+    state = const AsyncLoading();
+
+    final result = await repository.updateFcmToken(fcmToken: fcmToken);
+
+    state = await result.fold(
+      (l) => AsyncError(l, StackTrace.empty),
+      (r) => AsyncData(r),
+    );
+
+    return state.value;
+  }
 }

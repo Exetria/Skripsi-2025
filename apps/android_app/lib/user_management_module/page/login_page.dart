@@ -5,6 +5,7 @@ import 'package:android_app/user_management_module/page/controller/check_user_da
 import 'package:android_app/user_management_module/page/controller/refresh_token_controller.dart';
 import 'package:android_app/user_management_module/page/controller/sign_in_controller.dart';
 import 'package:common_components/common_components.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -34,11 +35,21 @@ class _LoginPage extends ConsumerState<LoginPage> {
     super.initState();
 
     // Handle kicked user from HomePage
-    if (widget.kicked) {
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        showFeedbackDialog(context: context, type: 2, message: widget.reason);
-      });
-    }
+    // Request permission for notifications
+    addCallBackAfterBuild(
+      callback: () async {
+        if (widget.kicked) {
+          WidgetsBinding.instance.addPostFrameCallback((_) async {
+            showFeedbackDialog(
+              context: context,
+              type: 2,
+              message: widget.reason,
+            );
+          });
+        }
+        await FirebaseMessaging.instance.requestPermission();
+      },
+    );
   }
 
   @override
@@ -289,7 +300,8 @@ class _LoginPage extends ConsumerState<LoginPage> {
           uid: result?.localId ?? '',
         );
 
-    if (userValue?.fields?.role?.stringValue == 'sales') {
+    if (userValue?.fields?.role?.stringValue == 'sales' &&
+        userValue?.fields?.isActive?.booleanValue == true) {
       userDataHelper = UserDataHelper(
         uid: result?.localId ?? '',
         userName: userValue?.fields?.userName?.stringValue ?? '',
@@ -320,6 +332,14 @@ class _LoginPage extends ConsumerState<LoginPage> {
       );
 
       ref.read(refreshTokenControllerProvider.notifier).startAutoRefreshToken();
+
+      // If FCM token not the same, update
+      final String? fcmToken = await FirebaseMessaging.instance.getToken();
+      if (fcmToken != userValue?.fields?.fcmToken?.stringValue) {
+        ref
+            .read(checkUserDataControllerProvider.notifier)
+            .updateFcmToken(fcmToken: fcmToken ?? '');
+      }
 
       setState(() {
         _signInButtonEnabled = true;

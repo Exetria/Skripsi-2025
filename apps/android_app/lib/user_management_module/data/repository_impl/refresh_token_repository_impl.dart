@@ -35,4 +35,11 @@ class RefreshTokenRepositoryImpl implements AuthenticationRepository {
 
     return resp.fold((l) => Left(l), (r) => Right(r));
   }
+
+  @override
+  Future<Either<ApiException, CheckUserDataDomain?>> updateFcmToken({
+    required String fcmToken,
+  }) {
+    throw UnimplementedError();
+  }
 }

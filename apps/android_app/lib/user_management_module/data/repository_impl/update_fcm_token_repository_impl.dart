@@ -1,4 +1,4 @@
-import 'package:android_app/user_management_module/data/remote_datasource/check_user_data_remote_datasource.dart';
+import 'package:android_app/user_management_module/data/remote_datasource/update_fcm_token_remote_datasource.dart';
 import 'package:android_app/user_management_module/domain/entities/check_user_data_domain.dart';
 import 'package:android_app/user_management_module/domain/entities/refresh_token_domain.dart';
 import 'package:android_app/user_management_module/domain/entities/sign_in_domain.dart';
@@ -6,8 +6,8 @@ import 'package:android_app/user_management_module/domain/repository/authenticat
 import 'package:common_components/common_components.dart';
 import 'package:fpdart/fpdart.dart';
 
-class CheckUserDataRepositoryImpl implements AuthenticationRepository {
-  final remoteDataSource = CheckUserDataRemoteDatasourceImpl();
+class UpdateFcmTokenRepositoryImpl implements AuthenticationRepository {
+  final remoteDataSource = UpdateFcmTokenRemoteDatasourceImpl();
 
   @override
   Future<Either<ApiException, SignInDomain?>> signIn({
@@ -21,12 +21,8 @@ class CheckUserDataRepositoryImpl implements AuthenticationRepository {
   Future<Either<ApiException, CheckUserDataDomain?>> checkUserData({
     required String idToken,
     required String uid,
-  }) async {
-    final resp = await remoteProcess(
-      remoteDataSource.checkUserData(idToken: idToken, uid: uid),
-    );
-
-    return resp.fold((l) => Left(l), (r) => Right(r));
+  }) {
+    throw UnimplementedError();
   }
 
   @override
@@ -39,7 +35,11 @@ class CheckUserDataRepositoryImpl implements AuthenticationRepository {
   @override
   Future<Either<ApiException, CheckUserDataDomain?>> updateFcmToken({
     required String fcmToken,
-  }) {
-    throw UnimplementedError();
+  }) async {
+    final resp = await remoteProcess(
+      remoteDataSource.updateFcmToken(fcmToken: fcmToken),
+    );
+
+    return resp.fold((l) => Left(l), (r) => Right(r));
   }
 }

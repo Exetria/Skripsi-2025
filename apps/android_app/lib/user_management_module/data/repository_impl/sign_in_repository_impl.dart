@@ -35,4 +35,11 @@ class SignInRepositoryImpl implements AuthenticationRepository {
   }) {
     throw UnimplementedError();
   }
+
+  @override
+  Future<Either<ApiException, CheckUserDataDomain?>> updateFcmToken({
+    required String fcmToken,
+  }) {
+    throw UnimplementedError();
+  }
 }

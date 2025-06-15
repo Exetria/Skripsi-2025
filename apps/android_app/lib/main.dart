@@ -1,7 +1,9 @@
 import 'package:android_app/splash_screen.dart';
 import 'package:android_app/utils/connection_status_controller.dart';
+import 'package:android_app/utils/foreground_notification_listener.dart';
 import 'package:android_app/utils/theme_controller.dart';
 import 'package:common_components/common_components.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,9 +14,18 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Init .env
   await dotenv.load(fileName: '.env');
 
-  // Check previous theme setting
+  // Init Firebase
+  await Firebase.initializeApp();
+
+  // Init foreground notification listener
+  initializeLocalNotifications();
+  listenToForegroundFCM();
+
+  // Get previous theme setting
   String? themeString = await getDataFromSp(key: 'themeMode');
   final initialThemeMode =
       themeString == '1' ? ThemeMode.dark : ThemeMode.light;
