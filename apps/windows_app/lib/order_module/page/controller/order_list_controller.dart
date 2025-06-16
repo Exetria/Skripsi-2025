@@ -1,3 +1,4 @@
+import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:windows_app/customer_module/page/controller/customer_list_controller.dart';
@@ -80,13 +81,13 @@ class OrderListController extends _$OrderListController {
     }
 
     final filteredList =
-        _orderList?.where((customer) {
+        _orderList?.where((order) {
+          final orderId = getIdFromName(name: order.name);
           final customerName = ref
               .read(customerListControllerProvider.notifier)
-              .getCustomerName(
-                id: customer.fields?.customerId?.stringValue ?? '',
-              );
-          return customerName.toLowerCase().contains(query.toLowerCase());
+              .getCustomerName(id: order.fields?.customerId?.stringValue ?? '');
+          return (customerName.toLowerCase().contains(query.toLowerCase()) ||
+              orderId.toLowerCase().contains(query.toLowerCase()));
         }).toList() ??
         [];
 

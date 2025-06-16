@@ -1,6 +1,7 @@
 import 'package:android_app/customer_module/page/controller/customer_list_controller.dart';
 import 'package:android_app/order_module/domain/entities/order_domain.dart';
 import 'package:android_app/order_module/domain/repository/order_repository.dart';
+import 'package:common_components/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -80,13 +81,13 @@ class OrderListController extends _$OrderListController {
     }
 
     final filteredList =
-        _orderList?.where((customer) {
+        _orderList?.where((order) {
+          final orderId = getIdFromName(name: order.name);
           final customerName = ref
               .read(customerListControllerProvider.notifier)
-              .getCustomerName(
-                id: customer.fields?.customerId?.stringValue ?? '',
-              );
-          return customerName.toLowerCase().contains(query.toLowerCase());
+              .getCustomerName(id: order.fields?.customerId?.stringValue ?? '');
+          return (customerName.toLowerCase().contains(query.toLowerCase()) ||
+              orderId.toLowerCase().contains(query.toLowerCase()));
         }).toList() ??
         [];
 

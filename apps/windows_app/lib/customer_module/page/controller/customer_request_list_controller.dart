@@ -45,9 +45,11 @@ class CustomerRequestListController extends _$CustomerRequestListController {
 
     final filteredList =
         _customerRequestList?.where((customerRequest) {
+          final customerRequestId = getIdFromName(name: customerRequest.name);
           final customerName =
               customerRequest.fields?.companyName?.stringValue ?? '';
-          return customerName.toLowerCase().contains(query.toLowerCase());
+          return (customerName.toLowerCase().contains(query.toLowerCase()) ||
+              customerRequestId.toLowerCase().contains(query.toLowerCase()));
         }).toList() ??
         [];
 

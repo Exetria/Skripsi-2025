@@ -29,9 +29,11 @@ class ProductListController extends _$ProductListController {
     }
 
     final filteredList =
-        _productList?.where((customer) {
-          final productName = customer.fields?.productName?.stringValue ?? '';
-          return productName.toLowerCase().contains(query.toLowerCase());
+        _productList?.where((product) {
+          final productId = getIdFromName(name: product.name);
+          final productName = product.fields?.productName?.stringValue ?? '';
+          return (productName.toLowerCase().contains(query.toLowerCase()) ||
+              productId.toLowerCase().contains(query.toLowerCase()));
         }).toList() ??
         [];
 

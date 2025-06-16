@@ -53,9 +53,11 @@ class UserListController extends _$UserListController {
     // Filter by search query
     if (_searchQuery.isNotEmpty) {
       filtered =
-          filtered.where((u) {
-            final name = u.fields?.fullName?.stringValue ?? '';
-            return name.toLowerCase().contains(_searchQuery.toLowerCase());
+          filtered.where((user) {
+            final id = getIdFromName(name: user.name);
+            final name = user.fields?.fullName?.stringValue ?? '';
+            return (name.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+                id.toLowerCase().contains(_searchQuery.toLowerCase()));
           }).toList();
     }
 
