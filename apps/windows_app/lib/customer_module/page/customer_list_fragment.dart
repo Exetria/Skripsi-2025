@@ -1,5 +1,6 @@
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -514,6 +515,26 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
             ? focusedCustomerData!.fields!.ownershipStatus!.stringValue!
             : '-';
 
+    // Location coordinates
+    final double companyLatitude =
+        focusedCustomerData
+            ?.fields
+            ?.companyLocation
+            ?.mapValue
+            ?.fields
+            ?.latitude
+            ?.doubleValue ??
+        0.0;
+    final double companyLongitude =
+        focusedCustomerData
+            ?.fields
+            ?.companyLocation
+            ?.mapValue
+            ?.fields
+            ?.longitude
+            ?.doubleValue ??
+        0.0;
+
     return Card(
       color: Theme.of(context).colorScheme.surface,
       elevation: 2,
@@ -616,12 +637,41 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // Info Company / Store title
-                          Text(
-                            'Detail Perusahaan / Toko',
-                            style: sectionTitleStyle.copyWith(
-                              color: Theme.of(context).colorScheme.onSurface,
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Detail Perusahaan / Toko',
+                                style: sectionTitleStyle.copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface,
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () async {
+                                  final String googleMapsUri =
+                                      'https://www.google.com/maps/search/?api=1&query=$companyLatitude,$companyLongitude';
+
+                                  await Clipboard.setData(
+                                    ClipboardData(text: googleMapsUri),
+                                  );
+
+                                  // Optional: give user feedback
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'Copied to clipboard',
+                                        style: bodyStyle,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                icon: const Icon(Icons.map),
+                                tooltip: 'Copy Link Maps',
+                              ),
+                            ],
                           ),
+
                           const Divider(
                             color: Colors.grey,
                             height: 24,
