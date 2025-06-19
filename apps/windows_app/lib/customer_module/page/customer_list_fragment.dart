@@ -650,7 +650,10 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                               IconButton(
                                 onPressed: () async {
                                   final String googleMapsUri =
-                                      'https://www.google.com/maps/search/?api=1&query=$companyLatitude,$companyLongitude';
+                                      generateGoogleMapsUri(
+                                        latitude: companyLatitude,
+                                        longitude: companyLongitude,
+                                      );
 
                                   await Clipboard.setData(
                                     ClipboardData(text: googleMapsUri),
@@ -660,7 +663,7 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text(
-                                        'Copied to clipboard',
+                                        'Link Google Maps telah disalin',
                                         style: bodyStyle,
                                       ),
                                     ),
