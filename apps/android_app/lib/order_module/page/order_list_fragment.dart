@@ -54,28 +54,12 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
                   },
                 ),
               ),
-
+              SizedBox(width: 8.w),
               Row(
                 children: [
-                  // Reset Filter Button
-                  _selectedDateRange != null
-                      ? IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: () {
-                          ref
-                              .read(orderListControllerProvider.notifier)
-                              .resetSearch();
-
-                          setState(() {
-                            _selectedDateRange = null;
-                          });
-                        },
-                      )
-                      : const SizedBox.shrink(),
-
                   // Date Range Picker Button
                   IconButton(
-                    icon: const Icon(Icons.date_range),
+                    icon: Icon(Icons.date_range, size: 24.sp),
                     onPressed: () {
                       showDateRangePicker(
                         context: context,
@@ -96,6 +80,21 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
                       });
                     },
                   ),
+                  // Reset Filter Button
+                  _selectedDateRange != null
+                      ? IconButton(
+                        icon: Icon(Icons.clear, size: 24.sp),
+                        onPressed: () {
+                          ref
+                              .read(orderListControllerProvider.notifier)
+                              .resetSearch();
+
+                          setState(() {
+                            _selectedDateRange = null;
+                          });
+                        },
+                      )
+                      : const SizedBox.shrink(),
                 ],
               ),
             ],
