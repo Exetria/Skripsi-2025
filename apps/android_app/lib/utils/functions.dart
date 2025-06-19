@@ -525,7 +525,7 @@ Future<void> launchGoogleMapNavigation({
   required double longitude,
 }) async {
   final Uri googleMapsUri = Uri.parse(
-    'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude',
+    generateGoogleMapsUri(latitude: latitude, longitude: longitude),
   );
 
   try {
