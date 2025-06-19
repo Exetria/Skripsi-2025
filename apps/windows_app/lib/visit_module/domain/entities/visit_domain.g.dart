@@ -30,21 +30,21 @@ _$FieldsImpl _$$FieldsImplFromJson(Map<String, dynamic> json) => _$FieldsImpl(
       json['created_by'] == null
           ? null
           : CreatedBy.fromJson(json['created_by'] as Map<String, dynamic>),
-  visits:
-      json['visits'] == null
-          ? null
-          : Visits.fromJson(json['visits'] as Map<String, dynamic>),
   visitDate:
       json['visit_date'] == null
           ? null
           : VisitDate.fromJson(json['visit_date'] as Map<String, dynamic>),
+  visits:
+      json['visits'] == null
+          ? null
+          : Visits.fromJson(json['visits'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$$FieldsImplToJson(_$FieldsImpl instance) =>
     <String, dynamic>{
       'created_by': instance.createdBy,
-      'visits': instance.visits,
       'visit_date': instance.visitDate,
+      'visits': instance.visits,
     };
 
 _$CreatedByImpl _$$CreatedByImplFromJson(Map<String, dynamic> json) =>
@@ -108,10 +108,6 @@ _$PurpleFieldsImpl _$$PurpleFieldsImplFromJson(
       json['customer_id'] == null
           ? null
           : CreatedBy.fromJson(json['customer_id'] as Map<String, dynamic>),
-  visitPurpose:
-      json['visit_purpose'] == null
-          ? null
-          : CreatedBy.fromJson(json['visit_purpose'] as Map<String, dynamic>),
   visitStatus:
       json['visit_status'] == null
           ? null
@@ -120,26 +116,23 @@ _$PurpleFieldsImpl _$$PurpleFieldsImplFromJson(
       json['visit_notes'] == null
           ? null
           : CreatedBy.fromJson(json['visit_notes'] as Map<String, dynamic>),
-  visitPhotoUrl:
-      json['visit_photo_url'] == null
-          ? null
-          : VisitPhotoUrl.fromJson(
-            json['visit_photo_url'] as Map<String, dynamic>,
-          ),
   location:
       json['location'] == null
           ? null
           : Location.fromJson(json['location'] as Map<String, dynamic>),
+  visitPhotoUrl:
+      json['visit_photo_url'] == null
+          ? null
+          : CreatedBy.fromJson(json['visit_photo_url'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$$PurpleFieldsImplToJson(_$PurpleFieldsImpl instance) =>
     <String, dynamic>{
       'customer_id': instance.customerId,
-      'visit_purpose': instance.visitPurpose,
       'visit_status': instance.visitStatus,
       'visit_notes': instance.visitNotes,
-      'visit_photo_url': instance.visitPhotoUrl,
       'location': instance.location,
+      'visit_photo_url': instance.visitPhotoUrl,
     };
 
 _$LocationImpl _$$LocationImplFromJson(Map<String, dynamic> json) =>
@@ -173,11 +166,11 @@ _$FluffyFieldsImpl _$$FluffyFieldsImplFromJson(Map<String, dynamic> json) =>
       latitude:
           json['latitude'] == null
               ? null
-              : Itude.fromJson(json['latitude'] as Map<String, dynamic>),
+              : Accuracy.fromJson(json['latitude'] as Map<String, dynamic>),
       longitude:
           json['longitude'] == null
               ? null
-              : Itude.fromJson(json['longitude'] as Map<String, dynamic>),
+              : Accuracy.fromJson(json['longitude'] as Map<String, dynamic>),
       accuracy:
           json['accuracy'] == null
               ? null
@@ -192,22 +185,10 @@ Map<String, dynamic> _$$FluffyFieldsImplToJson(_$FluffyFieldsImpl instance) =>
     };
 
 _$AccuracyImpl _$$AccuracyImplFromJson(Map<String, dynamic> json) =>
-    _$AccuracyImpl(doubleValue: (json['doubleValue'] as num?)?.toInt());
+    _$AccuracyImpl(doubleValue: (json['doubleValue'] as num?)?.toDouble());
 
 Map<String, dynamic> _$$AccuracyImplToJson(_$AccuracyImpl instance) =>
     <String, dynamic>{'doubleValue': instance.doubleValue};
-
-_$ItudeImpl _$$ItudeImplFromJson(Map<String, dynamic> json) =>
-    _$ItudeImpl(doubleValue: (json['doubleValue'] as num?)?.toDouble());
-
-Map<String, dynamic> _$$ItudeImplToJson(_$ItudeImpl instance) =>
-    <String, dynamic>{'doubleValue': instance.doubleValue};
-
-_$VisitPhotoUrlImpl _$$VisitPhotoUrlImplFromJson(Map<String, dynamic> json) =>
-    _$VisitPhotoUrlImpl(stringValue: json['stringValue'] as String?);
-
-Map<String, dynamic> _$$VisitPhotoUrlImplToJson(_$VisitPhotoUrlImpl instance) =>
-    <String, dynamic>{'stringValue': instance.stringValue};
 
 _$VisitStatusImpl _$$VisitStatusImplFromJson(Map<String, dynamic> json) =>
     _$VisitStatusImpl(integerValue: json['integerValue'] as String?);

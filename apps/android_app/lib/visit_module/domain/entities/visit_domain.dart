@@ -20,8 +20,8 @@ class VisitDomain with _$VisitDomain {
 class Fields with _$Fields {
   const factory Fields({
     @JsonKey(name: 'created_by') CreatedBy? createdBy,
-    @JsonKey(name: 'visits') Visits? visits,
     @JsonKey(name: 'visit_date') VisitDate? visitDate,
+    @JsonKey(name: 'visits') Visits? visits,
   }) = _Fields;
 
   factory Fields.fromJson(Map<String, dynamic> json) => _$FieldsFromJson(json);
@@ -84,11 +84,10 @@ class ValueMapValue with _$ValueMapValue {
 class PurpleFields with _$PurpleFields {
   const factory PurpleFields({
     @JsonKey(name: 'customer_id') CreatedBy? customerId,
-    @JsonKey(name: 'visit_purpose') CreatedBy? visitPurpose,
     @JsonKey(name: 'visit_status') VisitStatus? visitStatus,
     @JsonKey(name: 'visit_notes') CreatedBy? visitNotes,
-    @JsonKey(name: 'visit_photo_url') VisitPhotoUrl? visitPhotoUrl,
     @JsonKey(name: 'location') Location? location,
+    @JsonKey(name: 'visit_photo_url') CreatedBy? visitPhotoUrl,
   }) = _PurpleFields;
 
   factory PurpleFields.fromJson(Map<String, dynamic> json) =>
@@ -118,8 +117,8 @@ class LocationMapValue with _$LocationMapValue {
 @freezed
 class FluffyFields with _$FluffyFields {
   const factory FluffyFields({
-    @JsonKey(name: 'latitude') Itude? latitude,
-    @JsonKey(name: 'longitude') Itude? longitude,
+    @JsonKey(name: 'latitude') Accuracy? latitude,
+    @JsonKey(name: 'longitude') Accuracy? longitude,
     @JsonKey(name: 'accuracy') Accuracy? accuracy,
   }) = _FluffyFields;
 
@@ -129,29 +128,11 @@ class FluffyFields with _$FluffyFields {
 
 @freezed
 class Accuracy with _$Accuracy {
-  const factory Accuracy({@JsonKey(name: 'doubleValue') int? doubleValue}) =
+  const factory Accuracy({@JsonKey(name: 'doubleValue') double? doubleValue}) =
       _Accuracy;
 
   factory Accuracy.fromJson(Map<String, dynamic> json) =>
       _$AccuracyFromJson(json);
-}
-
-@freezed
-class Itude with _$Itude {
-  const factory Itude({@JsonKey(name: 'doubleValue') double? doubleValue}) =
-      _Itude;
-
-  factory Itude.fromJson(Map<String, dynamic> json) => _$ItudeFromJson(json);
-}
-
-@freezed
-class VisitPhotoUrl with _$VisitPhotoUrl {
-  const factory VisitPhotoUrl({
-    @JsonKey(name: 'stringValue') String? stringValue,
-  }) = _VisitPhotoUrl;
-
-  factory VisitPhotoUrl.fromJson(Map<String, dynamic> json) =>
-      _$VisitPhotoUrlFromJson(json);
 }
 
 @freezed
