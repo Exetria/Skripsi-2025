@@ -1,7 +1,12 @@
-import 'package:common_components/utils/api_exception.dart';
+// ignore_for_file: avoid_print, unused_local_variable
+
+import 'package:common_components/common_components.dart';
+import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:windows_app/customer_module/page/controller/customer_list_controller.dart';
 import 'package:windows_app/user_module/page/controller/user_list_controller.dart';
+import 'package:windows_app/utils/functions.dart';
 import 'package:windows_app/visit_module/domain/entities/visit_domain.dart';
 import 'package:windows_app/visit_module/domain/repository/visit_repository.dart';
 
@@ -20,7 +25,7 @@ class VisitListController extends _$VisitListController {
   }) async {
     List<String> salesIdList =
         await ref.read(userListControllerProvider.notifier).getAllSalesId();
-    String dateString = _generateVisitIdFromDate(date);
+    String dateString = _generateFormattedDate(date);
 
     // Save previous datas
     final previousMap = Map<String, Either<ApiException, VisitDomain?>>.from(
@@ -55,7 +60,7 @@ class VisitListController extends _$VisitListController {
     required DateTime date,
     bool forceFetch = false,
   }) async {
-    String dateString = _generateVisitIdFromDate(date);
+    String dateString = _generateFormattedDate(date);
 
     // Save previous datas
     final previousMap = Map<String, Either<ApiException, VisitDomain?>>.from(
@@ -83,7 +88,156 @@ class VisitListController extends _$VisitListController {
     state = AsyncData(previousMap);
   }
 
-  String _generateVisitIdFromDate(DateTime date) {
+  Future<String> exportVisitData(DateTimeRange dateRange) async {
+    if (state.isLoading) {
+      return 'Sedang memuat data, silahkan tunggu dan coba lagi';
+    } else if (state.hasError) {
+      return 'Terjadi kesalahan saat memuat data: ${state.error}';
+    } else if (ref.read(userListControllerProvider).isLoading) {
+      return 'Sedang memuat data pengguna, silahkan tunggu dan coba lagi';
+    } else if (ref.read(customerListControllerProvider).isLoading) {
+      return 'Sedang memuat data pelanggan, silahkan tunggu dan coba lagi';
+    } else if (dateRange.start.isAfter(dateRange.end)) {
+      return 'Tanggal awal tidak boleh setelah tanggal akhir';
+    }
+
+    List<String> salesIdList =
+        await ref.read(userListControllerProvider.notifier).getAllSalesId();
+
+    Map<String, List<List<dynamic>>> exportData = {};
+
+    // Loop for all dates in the range
+    for (DateTime date in dateRange.toDateTimeList()) {
+      // Fetch all data in a date (won't fetch if already fetched)
+      await fetchAllSalesVisitsForDate(date: date);
+
+      // Get current date visit data
+      final currentDateVisits = state.value ?? {};
+
+      // If visit in this date is empty, skip
+      if (currentDateVisits.isEmpty) {
+        exportData[_generateFormattedDate(date)] = [];
+        continue;
+      }
+
+      // Insert header to sheetData
+      // First List is header, second and so on is data
+      List<List<dynamic>> sheetData = [
+        ['Sales', 'Customer', 'Status', 'Catatan', 'Link Foto', 'Link Maps'],
+      ];
+
+      // Loop for all salesId
+      for (String salesId in salesIdList) {
+        String dataId = '$salesId-${_generateFormattedDate(date)}';
+
+        // get sales' visits data (in Either<ApiException, VisitDomain?>)
+        final visitList = currentDateVisits[dataId];
+
+        if (visitList == null || visitList.isLeft()) {
+          continue;
+        }
+
+        // get sales' visits data (in VisitDomain)
+        final VisitDomain? salesVisitData = visitList.getOrElse(
+          (error) => null,
+        );
+
+        if (salesVisitData == null) {
+          continue;
+        }
+
+        // get sales' visits data (in List<Value>)
+        List<Value> visits = List<Value>.from(
+          salesVisitData.fields?.visits?.arrayValue?.values ?? [],
+        );
+
+        // Loop for each visit in visit list and add to exportData
+        for (Value visit in visits) {
+          // Get visit data
+          String salesName = ref
+              .read(userListControllerProvider.notifier)
+              .getUserName(id: salesId);
+          String customerName = ref
+              .read(customerListControllerProvider.notifier)
+              .getCustomerName(
+                id: visit.mapValue?.fields?.customerId?.stringValue ?? '',
+              );
+          String statusNumber =
+              visit.mapValue?.fields?.visitStatus?.integerValue ?? '';
+          String status =
+              statusNumber == '1'
+                  ? 'Direncanakan'
+                  : statusNumber == '2'
+                  ? 'Selesai'
+                  : statusNumber == '3'
+                  ? 'Dibatalkan'
+                  : 'Tidak Diketahui';
+          String notes = visit.mapValue?.fields?.visitNotes?.stringValue ?? '';
+          String photoUrl =
+              visit.mapValue?.fields?.visitPhotoUrl?.stringValue ?? '';
+          double latitude =
+              visit
+                  .mapValue
+                  ?.fields
+                  ?.location
+                  ?.mapValue
+                  ?.fields
+                  ?.latitude
+                  ?.doubleValue ??
+              0;
+          double longitude =
+              visit
+                  .mapValue
+                  ?.fields
+                  ?.location
+                  ?.mapValue
+                  ?.fields
+                  ?.longitude
+                  ?.doubleValue ??
+              0;
+          String mapsLink = generateGoogleMapsUri(
+            latitude: latitude,
+            longitude: longitude,
+          );
+
+          // ['Sales', 'Customer', 'Status', 'Catatan', 'Link Foto', 'Link Maps'],
+
+          // Add to sheetData
+          List<dynamic> rowData = [
+            salesName,
+            customerName,
+            status,
+            notes,
+            photoUrl,
+            mapsLink,
+          ];
+          sheetData.add(rowData);
+        }
+      }
+
+      // Add to exportData
+      exportData[_generateFormattedDate(date)] = sheetData;
+    }
+
+    // Generate file
+    try {
+      String fileName =
+          '${dateRange.start.year}-${dateRange.start.month}-${dateRange.start.day}_'
+          '${dateRange.end.year}-${dateRange.end.month}-${dateRange.end.day}';
+
+      // Generate Excel file
+      await generateExcelFile(sheetsData: exportData, fileName: fileName);
+
+      return 'File berhasil diekspor dalam folder Downloads: $fileName.xlsx';
+    }
+    //
+    catch (e) {
+      print('asds $e');
+      return 'Terjadi kesalahan saat mengekspor file: $e';
+    }
+  }
+
+  String _generateFormattedDate(DateTime date) {
     final formattedDate =
         '${date.day.toString().padLeft(2, '0')}${date.month.toString().padLeft(2, '0')}${date.year}';
     return formattedDate;

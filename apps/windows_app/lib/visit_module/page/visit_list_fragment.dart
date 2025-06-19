@@ -180,6 +180,41 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
         ),
         Row(
           children: [
+            IconButton(
+              onPressed: () async {
+                final DateTimeRange? pickedRange = await showDateRangePicker(
+                  context: context,
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime.now(),
+                  currentDate: DateTime.now(),
+                  initialDateRange: DateTimeRange(
+                    start: DateTime.now().subtract(const Duration(days: 7)),
+                    end: DateTime.now(),
+                  ),
+                  helpText: 'Pilih Jangka Waktu',
+                  cancelText: 'Tutup',
+                  confirmText: 'Pilih',
+                  saveText: 'Pilih',
+                );
+
+                if (pickedRange != null) {
+                  // TODO: get data and export
+
+                  final String message = await ref
+                      .read(visitListControllerProvider.notifier)
+                      .exportVisitData(pickedRange);
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(message, style: bodyStyle)),
+                  );
+                }
+              },
+              icon: const Icon(Icons.download),
+              tooltip: 'Ekspor',
+            ),
+
+            const SizedBox(width: 16),
+
             SizedBox(
               width: ScreenUtil().screenWidth * 0.25,
               child: _buildDateSelector(),
