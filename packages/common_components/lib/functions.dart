@@ -215,3 +215,11 @@ BoxDecoration photoCircleDecoration(BuildContext context) {
     border: Border.all(color: Theme.of(context).colorScheme.outline),
   );
 }
+
+// GENERATE LINK MAPS
+String generateGoogleMapsUri({
+  required double latitude,
+  required double longitude,
+}) {
+  return 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+}
