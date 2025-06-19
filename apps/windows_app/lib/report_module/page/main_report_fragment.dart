@@ -427,15 +427,9 @@ class _MainReportFragmentState extends ConsumerState<MainReportFragment> {
     );
   }
 
-  void _refreshData() {
-    // TODO: reload providers or API calls
-  }
+  void _refreshData() {}
 
-  void _exportReport() {
-    // TODO: export report to Excel/PDF
-  }
+  void _exportReport() {}
 
-  void _centerMapOnVisit(int index) {
-    // TODO: center map on the selected visit
-  }
+  void _centerMapOnVisit(int index) {}
 }
