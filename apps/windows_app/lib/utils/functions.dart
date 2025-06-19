@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:common_components/common_components.dart';
+import 'package:excel/excel.dart' as xlsx;
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:windows_app/order_module/domain/entities/order_domain.dart';
 
 // COLUMN COUNT
@@ -226,5 +230,77 @@ String getOrderStatusText(String orderStatus) {
     return 'Dibatalkan';
   } else {
     return 'Tidak Tersedia';
+  }
+}
+
+// GENERATE EXCEL FILE
+Future<void> generateExcelFile({
+  required Map<String, List<List<dynamic>>> sheetsData,
+  String fileName = 'report.xlsx',
+}) async {
+  // Create a new Excel workbook
+  final xlsx.Excel excelFile = xlsx.Excel.createExcel();
+
+  // Remove the default sheet if it's not in sheetsData
+  final defaultSheetName = excelFile.getDefaultSheet();
+  if (defaultSheetName != null && !sheetsData.containsKey(defaultSheetName)) {
+    excelFile.delete(defaultSheetName);
+  }
+
+  // Populate each sheet
+  for (final entry in sheetsData.entries) {
+    final sheetName = entry.key;
+    final data = entry.value;
+
+    // Access (auto-creates) the sheet
+    final xlsx.Sheet sheet = excelFile[sheetName];
+
+    // Fill rows and columns
+    for (var rowIndex = 0; rowIndex < data.length; rowIndex++) {
+      for (var colIndex = 0; colIndex < data[rowIndex].length; colIndex++) {
+        sheet
+            .cell(
+              xlsx.CellIndex.indexByColumnRow(
+                columnIndex: colIndex,
+                rowIndex: rowIndex,
+              ),
+            )
+            .value = data[rowIndex][colIndex];
+      }
+    }
+  }
+
+  // Encode to bytes
+  final bytes = excelFile.encode();
+  if (bytes == null) {
+    return;
+  }
+
+  // Determine save directory (Downloads on desktop, fallback to app support)
+  Directory? dir = await getDownloadsDirectory();
+  dir ??= await getApplicationSupportDirectory();
+
+  // Ensure directory exists
+  if (!await dir.exists()) {
+    await dir.create(recursive: true);
+  }
+
+  final path = '${dir.path}/$fileName.xlsx';
+  final File file = File(path);
+
+  // Ensure file (and parent directories) exist before writing
+  await file.create(recursive: true);
+  await file.writeAsBytes(bytes, flush: true);
+}
+
+// EXTENSION METHOD FOR DATE RANGE
+extension DateTimeRangeExtension on DateTimeRange {
+  /// Returns a list of DateTimes from start to end, inclusive, stepping by one day.
+  List<DateTime> toDateTimeList() {
+    final days = end.difference(start).inDays;
+    return List.generate(
+      days + 1,
+      (i) => DateTime(start.year, start.month, start.day + i),
+    );
   }
 }
