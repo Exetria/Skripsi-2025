@@ -1,8 +1,7 @@
-// ignore_for_file: avoid_print, unused_local_variable
-
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:windows_app/customer_module/page/controller/customer_list_controller.dart';
 import 'package:windows_app/user_module/page/controller/user_list_controller.dart';
@@ -174,7 +173,7 @@ class VisitListController extends _$VisitListController {
                   : 'Tidak Diketahui';
           String notes = visit.mapValue?.fields?.visitNotes?.stringValue ?? '';
           String photoUrl =
-              visit.mapValue?.fields?.visitPhotoUrl?.stringValue ?? '';
+              visit.mapValue?.fields?.visitPhotoUrl?.stringValue ?? '-';
           double latitude =
               visit
                   .mapValue
@@ -200,8 +199,6 @@ class VisitListController extends _$VisitListController {
             longitude: longitude,
           );
 
-          // ['Sales', 'Customer', 'Status', 'Catatan', 'Link Foto', 'Link Maps'],
-
           // Add to sheetData
           List<dynamic> rowData = [
             salesName,
@@ -216,30 +213,24 @@ class VisitListController extends _$VisitListController {
       }
 
       // Add to exportData
-      exportData[_generateFormattedDate(date)] = sheetData;
+      exportData[DateFormat.yMMMMd().format(date)] = sheetData;
     }
 
     // Generate file
     try {
       String fileName =
-          '${dateRange.start.year}-${dateRange.start.month}-${dateRange.start.day}_'
-          '${dateRange.end.year}-${dateRange.end.month}-${dateRange.end.day}';
+          'Visit - ${dateRange.start.year}-${dateRange.start.month}-${dateRange.start.day}_${dateRange.end.year}-${dateRange.end.month}-${dateRange.end.day}';
 
       // Generate Excel file
       await generateExcelFile(sheetsData: exportData, fileName: fileName);
 
       return 'File berhasil diekspor dalam folder Downloads: $fileName.xlsx';
-    }
-    //
-    catch (e) {
-      print('asds $e');
+    } catch (e) {
       return 'Terjadi kesalahan saat mengekspor file: $e';
     }
   }
 
   String _generateFormattedDate(DateTime date) {
-    final formattedDate =
-        '${date.day.toString().padLeft(2, '0')}${date.month.toString().padLeft(2, '0')}${date.year}';
-    return formattedDate;
+    return '${date.day.toString().padLeft(2, '0')}${date.month.toString().padLeft(2, '0')}${date.year}';
   }
 }
