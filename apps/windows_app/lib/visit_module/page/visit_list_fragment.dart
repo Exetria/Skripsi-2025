@@ -1,5 +1,3 @@
-// ignore_for_file: unused_local_variable
-
 import 'dart:io';
 
 import 'package:common_components/common_components.dart';
@@ -198,8 +196,6 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                 );
 
                 if (pickedRange != null) {
-                  // TODO: get data and export
-
                   final String message = await ref
                       .read(visitListControllerProvider.notifier)
                       .exportVisitData(pickedRange);
