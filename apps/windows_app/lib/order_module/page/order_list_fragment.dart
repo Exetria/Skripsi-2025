@@ -142,10 +142,46 @@ class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
             },
           ),
         ),
-        IconButton(
-          onPressed: _refreshOrderList,
-          icon: const Icon(Icons.refresh),
-          tooltip: 'Segarkan',
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            IconButton(
+              onPressed: () async {
+                final DateTimeRange? pickedRange = await showDateRangePicker(
+                  context: context,
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime.now(),
+                  currentDate: DateTime.now(),
+                  initialDateRange: DateTimeRange(
+                    start: DateTime.now().subtract(const Duration(days: 7)),
+                    end: DateTime.now(),
+                  ),
+                  helpText: 'Pilih Jangka Waktu',
+                  cancelText: 'Tutup',
+                  confirmText: 'Pilih',
+                  saveText: 'Pilih',
+                );
+
+                if (pickedRange != null) {
+                  final String message = await ref
+                      .read(orderListControllerProvider.notifier)
+                      .exportOrderData(pickedRange);
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(message, style: bodyStyle)),
+                  );
+                }
+              },
+              icon: const Icon(Icons.download),
+              tooltip: 'Ekspor',
+            ),
+            const SizedBox(width: 16),
+            IconButton(
+              onPressed: _refreshOrderList,
+              icon: const Icon(Icons.refresh),
+              tooltip: 'Segarkan',
+            ),
+          ],
         ),
       ],
     );
