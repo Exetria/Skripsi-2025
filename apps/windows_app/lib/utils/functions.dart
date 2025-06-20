@@ -239,13 +239,13 @@ Future<void> generateExcelFile({
   String fileName = 'report.xlsx',
 }) async {
   // Create a new Excel workbook
-  final xlsx.Excel excelFile = xlsx.Excel.createExcel();
+  final xlsx.Excel book = xlsx.Excel.createExcel();
 
-  // Remove the default sheet if it's not in sheetsData
-  final defaultSheetName = excelFile.getDefaultSheet();
-  if (defaultSheetName != null && !sheetsData.containsKey(defaultSheetName)) {
-    excelFile.delete(defaultSheetName);
-  }
+  // Rename first sheet so it'll be renamed and remove "Sheet1" (FAILED)
+  // final defaultSheetName = excelFile.getDefaultSheet();
+  // if (defaultSheetName != null && !sheetsData.containsKey(defaultSheetName)) {
+  //   excelFile.rename(defaultSheetName, sheetsData.keys.toList().first);
+  // }
 
   // Populate each sheet
   for (final entry in sheetsData.entries) {
@@ -253,7 +253,7 @@ Future<void> generateExcelFile({
     final data = entry.value;
 
     // Access (auto-creates) the sheet
-    final xlsx.Sheet sheet = excelFile[sheetName];
+    final xlsx.Sheet sheet = book[sheetName];
 
     // Fill rows and columns
     for (var rowIndex = 0; rowIndex < data.length; rowIndex++) {
@@ -271,7 +271,7 @@ Future<void> generateExcelFile({
   }
 
   // Encode to bytes
-  final bytes = excelFile.encode();
+  final bytes = book.encode();
   if (bytes == null) {
     return;
   }
