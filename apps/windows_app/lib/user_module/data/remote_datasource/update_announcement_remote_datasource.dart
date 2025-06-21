@@ -40,26 +40,31 @@ class UpdateAnnouncementRemoteDatasourceImpl
     // Create a notification campign
     final token = await getAccessToken();
 
-    // TODO: Maybe use bacth await
+    List<Future<void>> fcmApiCalls = [];
+
     for (String fcmToken in fcmTokens) {
-      await apiCallPost(
-        url:
-            'https://fcm.googleapis.com/v1/projects/${dotenv.env['PROJECT_ID']}/messages:send',
-        headers: {
-          'Authorization': 'Bearer $token',
-          'Content-Type': 'application/json',
-        },
-        body: {
-          'message': {
-            'token': fcmToken,
-            'notification': {'title': title, 'body': content},
-            'data': {
-              'custom_payload': getIdFromName(name: announcementData.name),
+      fcmApiCalls.add(
+        apiCallPost(
+          url:
+              'https://fcm.googleapis.com/v1/projects/${dotenv.env['PROJECT_ID']}/messages:send',
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+          body: {
+            'message': {
+              'token': fcmToken,
+              'notification': {'title': title, 'body': content},
+              'data': {
+                'custom_payload': getIdFromName(name: announcementData.name),
+              },
             },
           },
-        },
+        ),
       );
     }
+
+    await Future.wait(fcmApiCalls);
 
     return announcementData;
   }
