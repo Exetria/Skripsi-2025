@@ -1,8 +1,8 @@
 import 'package:common_components/common_components.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:windows_app/user_module/data/remote_datasource/update_announcement_remote_datasource.dart';
-import 'package:windows_app/user_module/domain/entities/announcement_domain.dart';
-import 'package:windows_app/user_module/domain/repository/announcement_repository.dart';
+import 'package:windows_app/announcement_module/data/remote_datasource/update_announcement_remote_datasource.dart';
+import 'package:windows_app/announcement_module/domain/entities/announcement_domain.dart';
+import 'package:windows_app/announcement_module/domain/repository/announcement_repository.dart';
 
 class UpdateAnnouncementRepositoryImpl implements AnnouncementRepository {
   final remoteDataSource = UpdateAnnouncementRemoteDatasourceImpl();

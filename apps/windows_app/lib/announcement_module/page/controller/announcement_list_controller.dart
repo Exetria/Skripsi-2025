@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:windows_app/user_module/domain/entities/announcement_domain.dart';
-import 'package:windows_app/user_module/domain/repository/announcement_repository.dart';
+import 'package:windows_app/announcement_module/domain/entities/announcement_domain.dart';
+import 'package:windows_app/announcement_module/domain/repository/announcement_repository.dart';
 
 part 'announcement_list_controller.g.dart';
 

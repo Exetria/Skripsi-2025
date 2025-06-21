@@ -1,6 +1,6 @@
 import 'package:common_components/common_components.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:windows_app/user_module/domain/entities/announcement_domain.dart';
+import 'package:windows_app/announcement_module/domain/entities/announcement_domain.dart';
 import 'package:windows_app/utils/service_account.dart';
 
 abstract class UpdateAnnouncementRemoteDatasource {
