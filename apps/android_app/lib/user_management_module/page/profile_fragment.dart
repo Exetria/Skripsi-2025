@@ -1,4 +1,6 @@
+import 'package:android_app/announcement_module/page/announcement_page.dart';
 import 'package:android_app/customer_module/page/customer_request_list_page.dart';
+import 'package:android_app/order_module/page/order_summary_page.dart';
 import 'package:android_app/user_management_module/domain/entities/attendance_domain.dart';
 import 'package:android_app/user_management_module/page/controller/get_attendance_data_controller.dart';
 import 'package:android_app/user_management_module/page/controller/update_attendance_controller.dart';
@@ -78,20 +80,47 @@ class _ProfileFragment extends ConsumerState<ProfileFragment> {
 
           SizedBox(height: 16.h),
 
-          Material(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            child: customListItem(
-              context: context,
-              onTap:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const CustomerRequestListPage(),
-                    ),
+          customListItem(
+            context: context,
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CustomerRequestListPage(),
                   ),
-              title: 'Lihat Daftar Ajuan Pelanggan Anda',
-              trailIcon: Icons.arrow_forward_ios,
-            ),
+                ),
+            title: 'Lihat Daftar Ajuan Pelanggan Anda',
+            trailIcon: Icons.arrow_forward_ios,
+          ),
+
+          SizedBox(height: 16.h),
+
+          customListItem(
+            context: context,
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const OrderSummaryPage(),
+                  ),
+                ),
+            title: 'Lihat Laporan Penjualan Anda',
+            trailIcon: Icons.arrow_forward_ios,
+          ),
+
+          SizedBox(height: 16.h),
+
+          customListItem(
+            context: context,
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AnnouncementPage(),
+                  ),
+                ),
+            title: 'Lihat Pengumuman',
+            trailIcon: Icons.arrow_forward_ios,
           ),
 
           const Spacer(),
