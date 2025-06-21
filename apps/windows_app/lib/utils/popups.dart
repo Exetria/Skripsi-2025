@@ -948,7 +948,7 @@ Future<void> showCreateAnnouncementPopup({
   );
 }
 
-Future<void> showAnnouncementDataPopup({
+Future<void> showAnnouncementDetailsPopup({
   required BuildContext context,
   required String title,
   required String content,
