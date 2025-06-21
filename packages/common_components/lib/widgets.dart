@@ -9,6 +9,7 @@ Widget customSearchBar({
   required BuildContext context,
   TextEditingController? controller,
   String? hint,
+  bool enabled = true,
   void Function(String)? onChanged,
 }) {
   return SizedBox(
@@ -16,6 +17,7 @@ Widget customSearchBar({
     child: TextField(
       controller: controller,
       decoration: InputDecoration(
+        enabled: enabled,
         labelText: hint ?? '',
         contentPadding: EdgeInsets.symmetric(
           vertical: Platform.isWindows ? 14 : 14.h,
