@@ -175,7 +175,7 @@ class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
               icon: const Icon(Icons.download),
               tooltip: 'Ekspor',
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: 8),
             IconButton(
               onPressed: _refreshOrderList,
               icon: const Icon(Icons.refresh),

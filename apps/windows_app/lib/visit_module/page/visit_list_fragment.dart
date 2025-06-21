@@ -178,6 +178,13 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
         ),
         Row(
           children: [
+            SizedBox(
+              width: ScreenUtil().screenWidth * 0.25,
+              child: _buildDateSelector(),
+            ),
+
+            const SizedBox(width: 16),
+
             IconButton(
               onPressed: () async {
                 final DateTimeRange? pickedRange = await showDateRangePicker(
@@ -209,14 +216,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
               tooltip: 'Ekspor',
             ),
 
-            const SizedBox(width: 16),
-
-            SizedBox(
-              width: ScreenUtil().screenWidth * 0.25,
-              child: _buildDateSelector(),
-            ),
-
-            const SizedBox(width: 16),
+            const SizedBox(width: 8),
 
             IconButton(
               onPressed: _refreshVisitList,
