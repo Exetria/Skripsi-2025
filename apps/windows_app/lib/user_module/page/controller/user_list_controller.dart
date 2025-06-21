@@ -122,4 +122,23 @@ class UserListController extends _$UserListController {
 
     return salesIdList;
   }
+
+  Future<List<String>> getAllSalesFcmToken() async {
+    while (state is! AsyncData) {
+      await Future.delayed(const Duration(milliseconds: 100));
+    }
+
+    List<String> fcmTokenList = [];
+
+    for (UserDomain user in _userList ?? []) {
+      if (user.fields?.role?.stringValue == 'sales') {
+        String fcmToken = user.fields?.fcmToken?.stringValue ?? '';
+        if (fcmToken.isNotEmpty) {
+          fcmTokenList.add(fcmToken);
+        }
+      }
+    }
+
+    return fcmTokenList;
+  }
 }

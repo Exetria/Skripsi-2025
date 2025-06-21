@@ -202,12 +202,24 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
           children: [
             IconButton(
               onPressed: () async {
+                showCreateAnnouncementPopup(ref: ref, context: context);
+              },
+              icon: const Icon(Icons.campaign),
+              tooltip: 'Buat Pengumuman Baru',
+            ),
+
+            const SizedBox(width: 8),
+
+            IconButton(
+              onPressed: () async {
                 showUserDataPopup(ref: ref, context: context);
               },
               icon: const Icon(Icons.add),
               tooltip: 'Tambah Pengguna Baru',
             ),
+
             const SizedBox(width: 8),
+
             IconButton(
               onPressed: _refreshUserList,
               icon: const Icon(Icons.refresh),

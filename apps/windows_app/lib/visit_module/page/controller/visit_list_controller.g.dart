@@ -7,7 +7,7 @@ part of 'visit_list_controller.dart';
 // **************************************************************************
 
 String _$visitListControllerHash() =>
-    r'a73368fa1b394170791c490770dbaa34fc9e6d28';
+    r'88950b399a902683424c1e2e0c63783d48f7d134';
 
 /// See also [VisitListController].
 @ProviderFor(VisitListController)

@@ -12,7 +12,7 @@ Future<String> getAccessToken() async {
 
   final scopes = [
     'https://www.googleapis.com/auth/identitytoolkit',
-    'https://www.googleapis.com/auth/firebase',
+    'https://www.googleapis.com/auth/firebase.messaging',
   ];
 
   final authClient = await clientViaServiceAccount(credentials, scopes);
