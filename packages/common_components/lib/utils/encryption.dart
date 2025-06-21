@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:common_components/global/encryption_helper.dart';
+import 'package:crypto/crypto.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 
 // Encrypt data
@@ -17,25 +20,10 @@ String decryptData({required String encryptedData}) {
   return decrypted;
 }
 
-// Encrypt password
+// Encrypt password (1 way using SHA-256)
 String encryptPassword({required String password}) {
-  if (password == '') return '';
-
-  final encrypter = encrypt.Encrypter(
-    encrypt.AES(PasswordEncryptionHelper.key),
-  );
-  final encrypted = encrypter.encrypt(password, iv: EncryptionHelper.iv);
-  return encrypted.base64;
-}
-
-// Decrypt password
-String decryptPassword({required String encryptedPassword}) {
-  final encrypter = encrypt.Encrypter(
-    encrypt.AES(PasswordEncryptionHelper.key),
-  );
-  final decryptedPassword = encrypter.decrypt64(
-    encryptedPassword,
-    iv: EncryptionHelper.iv,
-  );
-  return decryptedPassword;
+  final String data = "${PasswordEncryptionHelper.secretKey}::$password";
+  final bytes = utf8.encode(data);
+  final digest = sha256.convert(bytes);
+  return digest.toString();
 }

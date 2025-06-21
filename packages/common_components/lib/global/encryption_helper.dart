@@ -7,6 +7,5 @@ class EncryptionHelper {
 }
 
 class PasswordEncryptionHelper {
-  static final Key key = Key.fromUtf8(dotenv.env['PASSWORD_AES_SEED'] ?? '');
-  static final IV iv = IV.fromUtf8(dotenv.env['PASSWORD_IV_SEED'] ?? '');
+  static final secretKey = dotenv.env['SECRET_KEY'] ?? '';
 }
