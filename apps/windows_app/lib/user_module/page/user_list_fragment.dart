@@ -310,7 +310,13 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                   title: title,
                   subtitle: content,
                   rightBottomText: creationDate.toString(),
-                  onTap: () {},
+                  onTap: () {
+                    showAnnouncementDataPopup(
+                      context: context,
+                      title: title,
+                      content: content,
+                    );
+                  },
                 );
               },
             );

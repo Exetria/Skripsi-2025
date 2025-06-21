@@ -948,6 +948,41 @@ Future<void> showCreateAnnouncementPopup({
   );
 }
 
+Future<void> showAnnouncementDataPopup({
+  required BuildContext context,
+  required String title,
+  required String content,
+}) async {
+  showDialog(
+    context: context,
+    builder: (dialogContext) {
+      return AlertDialog(
+        title: Center(child: Text(title, style: subtitleStyle)),
+        content: SizedBox(
+          width: ScreenUtil().screenWidth * 0.4,
+          child: SingleChildScrollView(child: Text(content, style: bodyStyle)),
+        ),
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(
+                style: TextButton.styleFrom(
+                  foregroundColor: Theme.of(context).colorScheme.onSurface,
+                ),
+                onPressed: () {
+                  Navigator.pop(dialogContext);
+                },
+                child: const Text('Tutup'),
+              ),
+            ],
+          ),
+        ],
+      );
+    },
+  );
+}
+
 // SHOW CUSTOMER DATA POPUP
 Future<void> showCustomerDataPopup({
   required WidgetRef ref,
