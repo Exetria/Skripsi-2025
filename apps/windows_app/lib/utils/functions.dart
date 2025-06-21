@@ -100,7 +100,7 @@ Widget itemCard({
             overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: 4),
-          Text(subtitle, style: captionStyle),
+          Text(subtitle, style: captionStyle, overflow: TextOverflow.ellipsis),
           secondarySubtitle != null
               ? const SizedBox(height: 4)
               : const SizedBox.shrink(),
