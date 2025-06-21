@@ -1,5 +1,6 @@
 import 'package:android_app/user_management_module/domain/entities/sign_in_domain.dart';
 import 'package:common_components/common_components.dart';
+import 'package:common_components/utils/encryption.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 abstract class SignInRemoteDatasource {
@@ -19,9 +20,12 @@ class SignInRemoteDatasourceImpl implements SignInRemoteDatasource {
       url:
           'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${dotenv.env['API_KEY']}',
       headers: {},
-      body: {'email': email, 'password': password, 'returnSecureToken': true},
+      body: {
+        'email': email,
+        'password': encryptPassword(password: password),
+        'returnSecureToken': true,
+      },
     );
-
     return SignInDomain.fromJson(result);
   }
 }

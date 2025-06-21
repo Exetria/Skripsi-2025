@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:common_components/common_components.dart';
+import 'package:common_components/utils/encryption.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:windows_app/user_module/domain/entities/user_domain.dart';
 import 'package:windows_app/utils/service_account.dart';
@@ -80,7 +81,7 @@ class UpdateUserRemoteDatasourceImpl implements UpdateUserRemoteDatasource {
       url:
           'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${dotenv.env['API_KEY']}',
       headers: {},
-      body: {'email': email, 'password': password},
+      body: {'email': email, 'password': encryptPassword(password: password)},
     );
 
     newUserId = registerResult['localId'] ?? '';
@@ -255,7 +256,10 @@ class UpdateUserRemoteDatasourceImpl implements UpdateUserRemoteDatasource {
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json',
       },
-      body: {'localId': uid, 'password': newPassword},
+      body: {
+        'localId': uid,
+        'password': encryptPassword(password: newPassword),
+      },
     );
   }
 
