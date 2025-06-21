@@ -298,9 +298,9 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
               itemBuilder: (context, index) {
                 final data = announcementList[index];
 
-                final title = data.fields?.title?.stringValue ?? '-';
-                final content = data.fields?.content?.stringValue ?? '-';
-                final creationDate = DateFormat(
+                final String title = data.fields?.title?.stringValue ?? '-';
+                final String content = data.fields?.content?.stringValue ?? '-';
+                final String creationDate = DateFormat(
                   'd MMM yyyy',
                 ).format(DateTime.parse(data.createTime ?? ''));
 
@@ -315,6 +315,7 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                       context: context,
                       title: title,
                       content: content,
+                      creationDate: creationDate,
                     );
                   },
                 );

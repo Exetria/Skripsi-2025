@@ -952,6 +952,7 @@ Future<void> showAnnouncementDetailsPopup({
   required BuildContext context,
   required String title,
   required String content,
+  required String creationDate,
 }) async {
   showDialog(
     context: context,
@@ -964,8 +965,9 @@ Future<void> showAnnouncementDetailsPopup({
         ),
         actions: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              Text(creationDate),
               TextButton(
                 style: TextButton.styleFrom(
                   foregroundColor: Theme.of(context).colorScheme.onSurface,
