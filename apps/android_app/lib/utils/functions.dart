@@ -68,7 +68,12 @@ PreferredSizeWidget customAppBar({
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(title, style: sectionTitleStyle),
+                Text(
+                  title,
+                  style: sectionTitleStyle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
                 if (subtitle != null) Text(subtitle, style: captionStyle),
               ],
             ),
@@ -137,7 +142,12 @@ InkWell customListItem({
                     ? SizedBox(height: 4.h)
                     : const SizedBox.shrink(),
                 subtitle != null
-                    ? Text(subtitle, style: captionStyle)
+                    ? Text(
+                      subtitle,
+                      style: captionStyle,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    )
                     : const SizedBox.shrink(),
               ],
             ),
