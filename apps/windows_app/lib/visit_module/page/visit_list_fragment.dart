@@ -53,11 +53,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
 
   @override
   Widget build(BuildContext context) {
-    final customerListState = ref.watch(customerListControllerProvider);
     final userListState = ref.watch(userListControllerProvider);
-
-    void Function()? _addButtonFunction;
-    void Function()? _navigateButtonFunction;
 
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -305,7 +301,6 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
   }
 
   Widget _buildMapSection() {
-    final cs = Theme.of(context).colorScheme;
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -801,16 +796,38 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                     visitDataList: visitDataList,
                   );
 
-              // Refresh visit list
-              await ref
-                  .read(visitListControllerProvider.notifier)
-                  .fetchSalesVisitsForDate(
-                    salesId: salesId,
-                    date: selectedDate,
-                    forceFetch: true,
-                  );
-              Navigator.pop(statefulBuilderContext);
-
+              if (submitState is AsyncData) {
+                showFeedbackDialog(
+                  context: context,
+                  type: 1,
+                  message: 'Kunjungan berhasil ditambahkan',
+                  onClose: () {
+                    // Refresh visit list
+                    ref
+                        .read(visitListControllerProvider.notifier)
+                        .fetchSalesVisitsForDate(
+                          salesId: salesId,
+                          date: selectedDate,
+                          forceFetch: true,
+                        );
+                    Navigator.pop(statefulBuilderContext);
+                  },
+                );
+              } else if (submitState is AsyncError) {
+                final apiException = submitState.error as ApiException;
+                showFeedbackDialog(
+                  context: context,
+                  type: 0,
+                  message:
+                      'Gagal menambahkan kunjungan: ${apiException.message}',
+                );
+              } else {
+                showFeedbackDialog(
+                  context: context,
+                  type: 0,
+                  message: 'Gagal menambahkan kunjungan',
+                );
+              }
               setDialogState(() {
                 dialogActionButtonEnabled = true;
               });
@@ -943,8 +960,6 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
     required int index,
     required List<Map<String, dynamic>> visitDataList,
   }) async {
-    final customerListState = ref.watch(customerListControllerProvider);
-
     final _updateVisitFormKey = GlobalKey<FormState>();
 
     final Map<int, String> _statusOptions = {
@@ -956,7 +971,6 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
     File? _visitPhoto;
     String? _visitPhotoLink;
     String? _visitImageError;
-    bool _isOldPhotoFound = true;
 
     TextEditingController _notesController = TextEditingController();
     int? _selectedStatus;
@@ -1127,7 +1141,6 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                                               );
                                             },
                                             errorBuilder: (_, __, ___) {
-                                              _isOldPhotoFound = false;
                                               return imageErrorWidget(
                                                 context: context,
                                               );
