@@ -847,7 +847,7 @@ Future<void> showCreateAnnouncementPopup({
                 showFeedbackDialog(
                   context: context,
                   type: 0,
-                  message: 'Gagal membuat pengumuman:',
+                  message: 'Gagal membuat pengumuman',
                 );
               }
             }
