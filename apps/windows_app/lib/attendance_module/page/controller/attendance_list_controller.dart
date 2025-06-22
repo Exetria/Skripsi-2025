@@ -4,8 +4,8 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:windows_app/report_module/domain/entities/attendance_domain.dart';
-import 'package:windows_app/report_module/domain/repository/attendance_list_repository.dart';
+import 'package:windows_app/attendance_module/domain/entities/attendance_domain.dart';
+import 'package:windows_app/attendance_module/domain/repository/attendance_list_repository.dart';
 
 part 'attendance_list_controller.g.dart';
 

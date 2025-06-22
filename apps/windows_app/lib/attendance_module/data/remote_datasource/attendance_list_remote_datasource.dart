@@ -1,6 +1,6 @@
 import 'package:common_components/common_components.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:windows_app/report_module/domain/entities/attendance_domain.dart';
+import 'package:windows_app/attendance_module/domain/entities/attendance_domain.dart';
 
 abstract class AttendanceListRemoteDatasource {
   Future<List<AttendanceDomain>> getAttendanceList();

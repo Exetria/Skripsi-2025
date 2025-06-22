@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:windows_app/report_module/page/controller/attendance_list_controller.dart';
+import 'package:windows_app/attendance_module/page/controller/attendance_list_controller.dart';
 import 'package:windows_app/user_module/domain/entities/user_domain.dart';
 import 'package:windows_app/user_module/page/controller/user_list_controller.dart';
 import 'package:windows_app/utils/functions.dart';
