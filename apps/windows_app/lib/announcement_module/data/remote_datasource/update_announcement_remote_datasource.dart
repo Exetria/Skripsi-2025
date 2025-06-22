@@ -56,7 +56,7 @@ class UpdateAnnouncementRemoteDatasourceImpl
               'token': fcmToken,
               'notification': {'title': title, 'body': content},
               'data': {
-                'custom_payload': getIdFromName(name: announcementData.name),
+                'announcement_id': getIdFromName(name: announcementData.name),
               },
             },
           },
