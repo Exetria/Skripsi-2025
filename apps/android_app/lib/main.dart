@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:android_app/splash_screen.dart';
 import 'package:android_app/utils/connection_status_controller.dart';
 import 'package:android_app/utils/foreground_notification_listener.dart';
 import 'package:android_app/utils/theme_controller.dart';
 import 'package:common_components/common_components.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,6 +23,49 @@ void main() async {
 
   // Init Firebase
   await Firebase.initializeApp();
+
+  // Handle notification flag (to prevent double announcement dialog)
+  bool isNotificationHandled = false;
+
+  // Handle notification when app is in background
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    if (isNotificationHandled) return;
+    isNotificationHandled = true;
+
+    final title = message.notification?.title ?? '';
+    final body = message.notification?.body ?? '';
+
+    onNotificationTap(
+      json.encode({
+        'title': title,
+        'body': body,
+        'date': DateTime.now().toIso8601String(),
+      }),
+    );
+  });
+
+  // Handle notification when app is terminated
+  addCallBackAfterBuild(
+    callback: () async {
+      RemoteMessage? initialMessage =
+          await FirebaseMessaging.instance.getInitialMessage();
+      if (initialMessage != null) {
+        if (isNotificationHandled) return;
+        isNotificationHandled = true;
+
+        final title = initialMessage.notification?.title ?? '';
+        final body = initialMessage.notification?.body ?? '';
+
+        onNotificationTap(
+          json.encode({
+            'title': title,
+            'body': body,
+            'date': DateTime.now().toIso8601String(),
+          }),
+        );
+      }
+    },
+  );
 
   // Init foreground notification listener
   initializeLocalNotifications();
