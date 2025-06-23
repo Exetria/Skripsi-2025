@@ -312,10 +312,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
             Expanded(
               child: FlutterMap(
                 options: const MapOptions(
-                  initialCenter: LatLng(
-                    -7.2960801,
-                    112.738667,
-                  ), // Default to Surabaya
+                  initialCenter: LatLng(-7.2960801, 112.738667),
                   initialZoom: 13,
                 ),
                 children: [
