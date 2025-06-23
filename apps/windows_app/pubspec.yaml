@@ -61,4 +61,26 @@ flutter:
   uses-material-design: true
   assets:
     - assets/logo.png
+    # MADURA
+    - assets/bangkalan.geojson
+    - assets/sampang.geojson
+    - assets/pamekasan.geojson
+    - assets/sumenep.geojson
+
+    - assets/tuban.geojson
+    - assets/lamongan.geojson
+    - assets/gresik.geojson
+
+    - assets/surabaya_kota.geojson
+    - assets/sidoarjo.geojson
+    
+    - assets/mojokerto.geojson
+    - assets/mojokerto_kota.geojson
+    - assets/malang.geojson
+    - assets/malang_kota.geojson
+
+    - assets/pasuruan.geojson
+    - assets/pasuruan_kota.geojson
+    - assets/probolinggo.geojson
+    - assets/probolinggo_kota.geojson
     - .env
