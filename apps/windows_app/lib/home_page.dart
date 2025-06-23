@@ -5,6 +5,7 @@ import 'package:windows_app/attendance_module/page/attendance_list_fragment.dart
 import 'package:windows_app/customer_module/page/customer_list_fragment.dart';
 import 'package:windows_app/order_module/page/order_list_fragment.dart';
 import 'package:windows_app/product_module/page/product_list_fragment.dart';
+import 'package:windows_app/report_module/page/report_fragment.dart';
 import 'package:windows_app/user_management_module/page/login_page.dart';
 import 'package:windows_app/user_management_module/page/profile_fragment.dart';
 import 'package:windows_app/user_module/page/user_list_fragment.dart';
@@ -27,6 +28,7 @@ class _HomePage extends ConsumerState<HomePage> {
     const OrderListFragment(),
     const VisitListFragment(),
     const AttendanceListFragment(),
+    const ReportFragment(),
     const ProfileFragment(),
   ];
 
@@ -54,6 +56,10 @@ class _HomePage extends ConsumerState<HomePage> {
     const NavigationRailDestination(
       icon: Icon(Icons.how_to_reg),
       label: Text('Kehadiran'),
+    ),
+    const NavigationRailDestination(
+      icon: Icon(Icons.dashboard),
+      label: Text('Laporan'),
     ),
     const NavigationRailDestination(
       icon: Icon(Icons.person),

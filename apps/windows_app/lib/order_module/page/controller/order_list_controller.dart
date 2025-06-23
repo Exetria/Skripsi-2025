@@ -1,6 +1,8 @@
 import 'package:common_components/common_components.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:windows_app/customer_module/page/controller/customer_list_controller.dart';
 import 'package:windows_app/order_module/domain/entities/order_domain.dart';
@@ -333,5 +335,33 @@ class OrderListController extends _$OrderListController {
     });
 
     return orderList;
+  }
+
+  Future<List<LatLng>> getFilteredOrderLocations() async {
+    while (state is! AsyncData) {
+      await Future.delayed(const Duration(milliseconds: 100));
+    }
+
+    if (state.hasError || state.value == null) {
+      return [];
+    }
+
+    final orders = state.value!;
+    final locations = <LatLng>[];
+
+    for (final order in orders) {
+      final Position? customerPosition = await ref
+          .read(customerListControllerProvider.notifier)
+          .getCustomerLocation(id: order.fields?.customerId?.stringValue ?? '');
+
+      final lat = customerPosition?.latitude;
+      final lng = customerPosition?.longitude;
+
+      if (lat != null && lng != null) {
+        locations.add(LatLng(lat, lng));
+      }
+    }
+
+    return locations;
   }
 }
