@@ -293,12 +293,41 @@ class _LoginPage extends ConsumerState<LoginPage> {
     required SignInDomain? result,
     required String password,
   }) async {
-    final userValue = await ref
-        .read(checkUserDataControllerProvider.notifier)
-        .checkUserData(
-          idToken: result?.idToken ?? '',
-          uid: result?.localId ?? '',
+    CheckUserDataDomain? userValue;
+    try {
+      userValue = await ref
+          .read(checkUserDataControllerProvider.notifier)
+          .checkUserData(
+            idToken: result?.idToken ?? '',
+            uid: result?.localId ?? '',
+          );
+    } catch (e) {
+      final apiException = e as ApiException;
+      if (apiException.statusCode == 429) {
+        showFeedbackDialog(
+          context: context,
+          type: 3,
+          message: 'Terlalu Banyak Permintaan, Silakan Coba Lagi Nanti',
+          onClose: () {
+            setState(() {
+              _signInButtonEnabled = true;
+            });
+          },
         );
+      } else {
+        showFeedbackDialog(
+          context: context,
+          type: 3,
+          message: 'Terjadi Kesalahan',
+          onClose: () {
+            setState(() {
+              _signInButtonEnabled = true;
+            });
+          },
+        );
+      }
+      return;
+    }
 
     if (userValue?.fields?.role?.stringValue == 'sales' &&
         userValue?.fields?.isActive?.booleanValue == true) {

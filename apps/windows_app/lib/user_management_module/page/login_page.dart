@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:windows_app/home_page.dart';
+import 'package:windows_app/user_management_module/domain/entities/check_user_data_domain.dart';
 import 'package:windows_app/user_management_module/domain/entities/sign_in_domain.dart';
 import 'package:windows_app/user_management_module/page/controller/check_user_data_controller.dart';
 import 'package:windows_app/user_management_module/page/controller/refresh_token_controller.dart';
@@ -186,12 +187,41 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     required SignInDomain? result,
     required String password,
   }) async {
-    final userValue = await ref
-        .read(checkUserDataControllerProvider.notifier)
-        .checkUserData(
-          idToken: result?.idToken ?? '',
-          uid: result?.localId ?? '',
+    CheckUserDataDomain? userValue;
+    try {
+      userValue = await ref
+          .read(checkUserDataControllerProvider.notifier)
+          .checkUserData(
+            idToken: result?.idToken ?? '',
+            uid: result?.localId ?? '',
+          );
+    } catch (e) {
+      final apiException = e as ApiException;
+      if (apiException.statusCode == 429) {
+        showFeedbackDialog(
+          context: context,
+          type: 3,
+          message: 'Terlalu Banyak Permintaan, Silakan Coba Lagi Nanti',
+          onClose: () {
+            setState(() {
+              _buttonEnabled = true;
+            });
+          },
         );
+      } else {
+        showFeedbackDialog(
+          context: context,
+          type: 3,
+          message: 'Terjadi Kesalahan',
+          onClose: () {
+            setState(() {
+              _buttonEnabled = true;
+            });
+          },
+        );
+      }
+      return;
+    }
 
     if (userValue?.fields?.role?.stringValue == 'admin') {
       userDataHelper = UserDataHelper(
