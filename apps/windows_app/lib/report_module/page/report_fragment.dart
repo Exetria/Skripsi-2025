@@ -40,7 +40,7 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
   String popupText = '';
 
   bool reportView = true;
-  GeoJsonPolygonLoader? geoJsonPolygonLoader;
+  GeoJsonPolygonLoader? geoJsonPolygonLoader = polygonDataLoader;
 
   List<Polygon> mapPolygons = [];
   List<int> orderPerPolygon = [];
@@ -50,9 +50,8 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
     super.initState();
     addCallBackAfterBuild(
       callback: () async {
-        geoJsonPolygonLoader = await GeoJsonPolygonLoader.create(
-          context: context,
-        );
+        if (geoJsonPolygonLoader != null) return;
+        polygonDataLoader = await GeoJsonPolygonLoader.create(context: context);
       },
     );
   }
@@ -116,6 +115,10 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
                 setState(() {
                   reportView = !reportView;
                   selectedRegion = null;
+                  popupOffset = null;
+                  popupText = '';
+                  mapPolygons = [];
+                  orderPerPolygon = [];
                 });
               },
               icon: const Icon(Icons.rotate_90_degrees_ccw),
