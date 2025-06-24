@@ -230,6 +230,42 @@ class VisitListController extends _$VisitListController {
     }
   }
 
+  Future<List<int>> getMonthlyVisitCount(DateTime month) async {
+    List<String> salesIdList =
+        await ref.read(userListControllerProvider.notifier).getAllSalesId();
+
+    final targetMonth = DateTime(month.year, month.month);
+
+    final monthlyCounts = List<int>.filled(31, 0);
+
+    // Fetch all sales visits everyday in targeted month
+    for (int day = 1; day <= 31; day++) {
+      final date = DateTime(targetMonth.year, targetMonth.month, day);
+
+      // Fetch visit
+      await fetchAllSalesVisitsForDate(date: date);
+
+      // Get the visit count
+      int visitCount = 0;
+      for (String salesId in salesIdList) {
+        final visitData =
+            state.value?['$salesId-${_generateFormattedDate(date)}'];
+        if (visitData != null && visitData.isRight()) {
+          final visitDomain = visitData.getOrElse((error) => null);
+          if (visitDomain != null) {
+            visitCount +=
+                visitDomain.fields?.visits?.arrayValue?.values?.length ?? 0;
+          }
+        }
+      }
+
+      // Store the count for the day
+      monthlyCounts[day - 1] = visitCount;
+    }
+
+    return monthlyCounts;
+  }
+
   String _generateFormattedDate(DateTime date) {
     return '${date.day.toString().padLeft(2, '0')}${date.month.toString().padLeft(2, '0')}${date.year}';
   }

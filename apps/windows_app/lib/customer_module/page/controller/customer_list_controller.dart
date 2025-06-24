@@ -64,6 +64,26 @@ class CustomerListController extends _$CustomerListController {
     state = AsyncData(_customerList);
   }
 
+  int getNewCustomerCount({required DateTime month}) {
+    if (_customerList == null) return 0;
+
+    final targetMonth = DateTime(month.year, month.month);
+
+    int monthlyCounts = 0;
+
+    for (final customer in _customerList!) {
+      final createDate = DateTime.tryParse(customer.createTime ?? '');
+      if (createDate == null) continue;
+
+      final customerAddDate = DateTime(createDate.year, createDate.month);
+      if (customerAddDate == targetMonth) {
+        monthlyCounts++;
+      }
+    }
+
+    return monthlyCounts;
+  }
+
   String getCustomerName({required String id}) {
     if (state is! AsyncData) {
       return 'Memuat...';
