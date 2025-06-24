@@ -101,4 +101,50 @@ class OrderListController extends _$OrderListController {
 
     state = AsyncData(_orderList);
   }
+
+  List<int> getMonthlyOrderCount(DateTime month) {
+    if (_orderList == null) return List<int>.filled(31, 0);
+
+    final targetMonth = DateTime(month.year, month.month);
+
+    final monthlyCounts = List<int>.filled(31, 0);
+
+    for (final order in _orderList!) {
+      final createDate = DateTime.tryParse(order.createTime ?? '');
+      if (createDate == null) continue;
+
+      final orderDate = DateTime(createDate.year, createDate.month);
+      if (orderDate == targetMonth) {
+        // Adjust index starting from 0
+        final day = createDate.day - 1;
+        monthlyCounts[day]++;
+      }
+    }
+
+    return monthlyCounts;
+  }
+
+  List<int> getMonthlyOrderTotalPrice(DateTime month) {
+    if (_orderList == null) return List<int>.filled(31, 0);
+
+    final targetMonth = DateTime(month.year, month.month);
+
+    final monthlyTotals = List<int>.filled(31, 0);
+
+    for (final order in _orderList!) {
+      final createDate = DateTime.tryParse(order.createTime ?? '');
+      if (createDate == null) continue;
+
+      final orderDate = DateTime(createDate.year, createDate.month);
+      if (orderDate == targetMonth) {
+        // Adjust index starting from 0
+        final day = createDate.day - 1;
+        final price =
+            int.tryParse(order.fields?.totalPrice?.integerValue ?? '0') ?? 0;
+        monthlyTotals[day] += price;
+      }
+    }
+
+    return monthlyTotals;
+  }
 }
