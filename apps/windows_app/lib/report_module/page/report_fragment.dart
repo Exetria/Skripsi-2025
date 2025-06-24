@@ -51,6 +51,39 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
     31,
     (i) => BarChartGroupData(x: i, barRods: [BarChartRodData(toY: 0)]),
   );
+  List<String> barGroupLabels = [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    '11',
+    '12',
+    '13',
+    '14',
+    '15',
+    '16',
+    '17',
+    '18',
+    '19',
+    '20',
+    '21',
+    '22',
+    '23',
+    '24',
+    '25',
+    '26',
+    '27',
+    '28',
+    '29',
+    '30',
+    '31',
+  ];
   int totalVisitCount = 0;
   int totalOrderCount = 0;
   int totalOrderPrice = 0;
@@ -390,40 +423,6 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
     return visitListState.when(
       loading: () => const Center(child: CircularProgressIndicator()),
       data: (visitList) {
-        List<String> barGroupLabels = [
-          '1',
-          '2',
-          '3',
-          '4',
-          '5',
-          '6',
-          '7',
-          '8',
-          '9',
-          '10',
-          '11',
-          '12',
-          '13',
-          '14',
-          '15',
-          '16',
-          '17',
-          '18',
-          '19',
-          '20',
-          '21',
-          '22',
-          '23',
-          '24',
-          '25',
-          '26',
-          '27',
-          '28',
-          '29',
-          '30',
-          '31',
-        ];
-
         if (barGroup.length < 31) {
           return const Center(child: Text('Data Kunjungan Tidak Lengkap'));
         }
