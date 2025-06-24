@@ -41,6 +41,7 @@ dependencies:
   bitsdojo_window: ^0.1.6
   googleapis_auth: ^2.0.0
   flutter_screenutil: ^5.9.3
+  month_picker_dialog: ^6.2.3
 
 dev_dependencies:
   flutter_test:
