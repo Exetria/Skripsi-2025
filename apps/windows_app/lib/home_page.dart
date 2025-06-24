@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:windows_app/attendance_module/page/attendance_list_fragment.dart';
 import 'package:windows_app/customer_module/page/customer_list_fragment.dart';
+import 'package:windows_app/live_location_module/page/live_location_fragment.dart';
 import 'package:windows_app/order_module/page/order_list_fragment.dart';
 import 'package:windows_app/product_module/page/product_list_fragment.dart';
 import 'package:windows_app/report_module/page/report_fragment.dart';
@@ -28,6 +29,7 @@ class _HomePage extends ConsumerState<HomePage> {
     const OrderListFragment(),
     const VisitListFragment(),
     const AttendanceListFragment(),
+    const LiveLocationFragment(),
     const ReportFragment(),
     const ProfileFragment(),
   ];
@@ -56,6 +58,10 @@ class _HomePage extends ConsumerState<HomePage> {
     const NavigationRailDestination(
       icon: Icon(Icons.how_to_reg),
       label: Text('Kehadiran'),
+    ),
+    const NavigationRailDestination(
+      icon: Icon(Icons.location_on),
+      label: Text('Lokasi'),
     ),
     const NavigationRailDestination(
       icon: Icon(Icons.dashboard),
@@ -94,26 +100,42 @@ class _HomePage extends ConsumerState<HomePage> {
         children: [
           // SIDE NAVBAR
           Container(
-            constraints: const BoxConstraints(maxWidth: 105),
+            width: 105,
             decoration: BoxDecoration(
               border: Border(
-                right: BorderSide(color: dividerColor, width: 0.5),
-              ),
-            ),
-            child: NavigationRail(
-              selectedIndex: selectedIndex,
-              onDestinationSelected:
-                  (index) =>
-                      ref.read(selectedIndexProvider.notifier).state = index,
-              labelType: NavigationRailLabelType.all,
-              leading: Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Center(
-                  child: Image.asset('assets/logo.png', height: 40),
+                right: BorderSide(
+                  color: Theme.of(context).colorScheme.outline,
+                  width: 0.5,
                 ),
               ),
-
-              destinations: navRailItems,
+            ),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight,
+                    ),
+                    child: IntrinsicHeight(
+                      child: NavigationRail(
+                        selectedIndex: selectedIndex,
+                        onDestinationSelected:
+                            (index) =>
+                                ref.read(selectedIndexProvider.notifier).state =
+                                    index,
+                        labelType: NavigationRailLabelType.all,
+                        leading: Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: Center(
+                            child: Image.asset('assets/logo.png', height: 40),
+                          ),
+                        ),
+                        destinations: navRailItems,
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
           ),
 
