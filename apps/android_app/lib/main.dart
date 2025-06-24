@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:android_app/live_location_module/page/controller/live_location_controller.dart';
 import 'package:android_app/splash_screen.dart';
 import 'package:android_app/utils/connection_status_controller.dart';
 import 'package:android_app/utils/foreground_notification_listener.dart';
@@ -98,6 +99,7 @@ class _MainApp extends ConsumerState<Main> {
     addCallBackAfterBuild(
       callback: () {
         startConnectionChecker(ref);
+        startLiveLocationUpdater(ref);
       },
     );
   }
