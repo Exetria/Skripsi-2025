@@ -189,7 +189,29 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
             const SizedBox(width: 8),
 
             IconButton(
-              onPressed: () async {},
+              onPressed: () {
+                setState(() {
+                  selectedMonth = null;
+                  selectedRegion = null;
+                  popupOffset = null;
+                  popupText = '';
+                  mapPolygons = [];
+                  orderPerPolygon = [];
+                  barGroup = List.generate(
+                    31,
+                    (i) => BarChartGroupData(
+                      x: i,
+                      barRods: [BarChartRodData(toY: 0)],
+                    ),
+                  );
+                  totalVisitCount = 0;
+                  totalOrderCount = 0;
+                  totalOrderPrice = 0;
+                });
+                generateBarChartData();
+                ref.invalidate(visitListControllerProvider);
+                ref.invalidate(orderListControllerProvider);
+              },
               icon: const Icon(Icons.refresh),
               tooltip: 'Segarkan',
             ),
@@ -420,42 +442,43 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
 
   Widget buildVisitBarChart() {
     final visitListState = ref.watch(visitListControllerProvider);
-    return visitListState.when(
-      loading: () => const Center(child: CircularProgressIndicator()),
-      data: (visitList) {
-        if (barGroup.length < 31) {
-          return const Center(child: Text('Data Kunjungan Tidak Lengkap'));
-        }
+    final onHoverBackgroundColor =
+        Theme.of(context).brightness == Brightness.light
+            ? tertiaryColor
+            : darkModeTertiaryColor;
+    final onHoverTextColor = Theme.of(context).colorScheme.onSurface;
 
-        return Card(
-          elevation: 4,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              children: [
-                Text('Grafik Kunjungan Harian', style: subtitleStyle),
-                const SizedBox(height: 16),
-                Expanded(
-                  child: BarChart(
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          children: [
+            Text('Grafik Kunjungan Harian', style: subtitleStyle),
+            const SizedBox(height: 16),
+            Expanded(
+              child: visitListState.when(
+                loading: () => const Center(child: CircularProgressIndicator()),
+                data: (visitList) {
+                  if (barGroup.length < 31) {
+                    return const Center(
+                      child: Text('Data Kunjungan Tidak Lengkap'),
+                    );
+                  }
+
+                  return BarChart(
                     BarChartData(
                       alignment: BarChartAlignment.spaceAround,
                       barTouchData: BarTouchData(
                         enabled: true,
                         touchTooltipData: BarTouchTooltipData(
-                          getTooltipColor:
-                              (barChart) =>
-                                  Theme.of(context).brightness ==
-                                          Brightness.light
-                                      ? tertiaryColor
-                                      : darkModeTertiaryColor,
+                          getTooltipColor: (barChart) => onHoverBackgroundColor,
                           getTooltipItem: (group, groupIndex, rod, rodIndex) {
                             return BarTooltipItem(
                               rod.toY.toString(),
                               TextStyle(
-                                color: Theme.of(context).colorScheme.onSurface,
+                                color: onHoverTextColor,
                                 fontWeight: FontWeight.bold,
                               ),
                             );
@@ -484,22 +507,22 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
                       borderData: FlBorderData(show: false),
                       barGroups: barGroup,
                     ),
-                  ),
-                ),
-              ],
+                  );
+                },
+                error: (error, _) {
+                  final exception = error as ApiException;
+                  return Center(
+                    child: Text(
+                      'Gagal Memuat Data Sales: ${exception.message}',
+                      style: errorStyle,
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
-        );
-      },
-      error: (error, _) {
-        final exception = error as ApiException;
-        return Center(
-          child: Text(
-            'Gagal Memuat Data Sales: ${exception.message}',
-            style: errorStyle,
-          ),
-        );
-      },
+          ],
+        ),
+      ),
     );
   }
 
@@ -665,7 +688,7 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
                 buildStatCard(
                   context,
                   'Total Harga Order',
-                  totalOrderPrice.toString(),
+                  rupiahFormat(totalOrderPrice),
                 ),
                 buildStatCard(
                   context,
@@ -794,10 +817,15 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
   }
 
   Future<void> generateBarChartData() async {
-    List<int> visitAmountPerDay = await ref
+    if (!mounted) return;
+
+    final rodColor = Theme.of(context).colorScheme.tertiary;
+    List<int> visitAmountPerDay = List.generate(31, (index) => 0);
+    visitAmountPerDay = await ref
         .read(visitListControllerProvider.notifier)
         .getMonthlyVisitCount(selectedMonth ?? DateTime.now());
 
+    if (!mounted) return;
     int newTotalVisitCount = 0;
 
     final newBarGroup = <BarChartGroupData>[];
@@ -808,16 +836,13 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
         BarChartGroupData(
           x: i,
           barRods: [
-            BarChartRodData(
-              toY: visitInDay.toDouble(),
-              color: Theme.of(context).colorScheme.tertiary,
-            ),
+            BarChartRodData(toY: visitInDay.toDouble(), color: rodColor),
           ],
         ),
       );
     }
 
-    if (newBarGroup.isNotEmpty) {
+    if (newBarGroup.isNotEmpty && mounted) {
       setState(() {
         barGroup = newBarGroup;
         newTotalVisitCount = newTotalVisitCount;
