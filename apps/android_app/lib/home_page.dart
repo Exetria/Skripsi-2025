@@ -2,9 +2,11 @@ import 'package:android_app/customer_module/page/add_customer_page.dart';
 import 'package:android_app/customer_module/page/customer_list_fragment.dart';
 import 'package:android_app/order_module/page/add_order_page.dart';
 import 'package:android_app/order_module/page/order_list_fragment.dart';
+import 'package:android_app/product_module/page/product_list_fragment.dart';
 import 'package:android_app/user_management_module/page/controller/get_attendance_data_controller.dart';
 import 'package:android_app/user_management_module/page/login_page.dart';
 import 'package:android_app/user_management_module/page/profile_fragment.dart';
+import 'package:android_app/utils/connection_status_controller.dart';
 import 'package:android_app/utils/functions.dart';
 import 'package:android_app/visit_module/page/visit_list_fragment.dart';
 import 'package:common_components/common_components.dart';
@@ -29,9 +31,9 @@ class _HomePage extends ConsumerState<HomePage> {
 
   final List<Widget> pages = [
     const VisitListFragment(),
-    // const OrderListFragment(),
+    const OrderListFragment(),
     const CustomerListFragment(),
-    // const ProductListFragment(),
+    const ProductListFragment(),
     const ProfileFragment(),
   ];
 
@@ -40,9 +42,12 @@ class _HomePage extends ConsumerState<HomePage> {
       icon: Icon(Icons.directions_walk),
       label: 'Kunjungan',
     ),
-    // const BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Pesanan',),
+    const BottomNavigationBarItem(
+      icon: Icon(Icons.shopping_cart),
+      label: 'Pesanan',
+    ),
     const BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Pelanggan'),
-    // const BottomNavigationBarItem(icon: Icon(Icons.widgets), label: 'Produk'),
+    const BottomNavigationBarItem(icon: Icon(Icons.widgets), label: 'Produk'),
     const BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
   ];
 
@@ -91,7 +96,14 @@ class _HomePage extends ConsumerState<HomePage> {
           context: context,
           title: 'Salesku App',
           showLeftButton: true,
-          leftButtonWidget: Image.asset('assets/logo.png', height: 60.h),
+          // leftButtonWidget: Image.asset('assets/logo.png', height: 60.h),
+          leftButtonWidget: Icon(
+            ref.watch(connectionStatusProvider) ? Icons.wifi : Icons.wifi_off,
+            color:
+                ref.watch(connectionStatusProvider)
+                    ? Theme.of(context).colorScheme.tertiary
+                    : Theme.of(context).colorScheme.error,
+          ),
           rightButtonIcon: rightButtonIcon,
           onRightPressed: onRightPressed,
         ),
