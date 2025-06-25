@@ -642,95 +642,89 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
     );
 
     final customerListstate = ref.watch(customerListControllerProvider);
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                buildStatCard(
-                  context,
-                  'Total Kunjungan',
-                  totalVisitCount.toString(),
+    return Padding(
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              buildStatCard(
+                context,
+                'Total Kunjungan',
+                totalVisitCount.toString(),
+              ),
+              buildStatCard(
+                context,
+                'Pelanggan Baru',
+                customerListstate.when(
+                  loading: () => 'Memuat...',
+                  data: (data) {
+                    final newCustomerCount = ref
+                        .read(customerListControllerProvider.notifier)
+                        .getNewCustomerCount(
+                          month: selectedMonth ?? DateTime.now(),
+                        );
+                    return newCustomerCount.toString();
+                  },
+                  error: (e, _) => 'Error: \$e',
                 ),
-                buildStatCard(
-                  context,
-                  'Pelanggan Baru',
-                  customerListstate.when(
-                    loading: () => 'Memuat...',
-                    data: (data) {
-                      final newCustomerCount = ref
-                          .read(customerListControllerProvider.notifier)
-                          .getNewCustomerCount(
-                            month: selectedMonth ?? DateTime.now(),
-                          );
-                      return newCustomerCount.toString();
-                    },
-                    error: (e, _) => 'Error: \$e',
-                  ),
-                ),
-                buildStatCard(
-                  context,
-                  'Total Order',
-                  totalOrderCount.toString(),
-                ),
-                buildStatCard(
-                  context,
-                  'Total Harga Order',
-                  rupiahFormat(totalOrderPrice),
-                ),
-                Container(
-                  height: ScreenUtil().screenHeight * 0.07,
-                  width: 400,
-                  padding: const EdgeInsets.all(12),
-                  decoration: itemCardDecoration(context),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Perkiraan Kebutuhan Tenaga Sales',
-                            style: captionStyle,
+              ),
+              buildStatCard(context, 'Total Order', totalOrderCount.toString()),
+              buildStatCard(
+                context,
+                'Total Harga Order',
+                rupiahFormat(totalOrderPrice),
+              ),
+              Container(
+                height: ScreenUtil().screenHeight * 0.07,
+                width: 400,
+                padding: const EdgeInsets.all(12),
+                decoration: itemCardDecoration(context),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Perkiraan Kebutuhan Tenaga Sales',
+                          style: captionStyle,
+                        ),
+                        Text(
+                          filteredVisitListState.when(
+                            loading: () => 'Memuat...',
+                            data: (data) {
+                              final count =
+                                  ref
+                                      .read(
+                                        filteredVisitControllerProvider(
+                                          salesForceCountStartDate,
+                                        ).notifier,
+                                      )
+                                      .calculateSalesForce();
+                              return '$count Orang Sales';
+                            },
+                            error: (e, _) => 'Error: \$e',
                           ),
-                          Text(
-                            filteredVisitListState.when(
-                              loading: () => 'Memuat...',
-                              data: (data) {
-                                final count =
-                                    ref
-                                        .read(
-                                          filteredVisitControllerProvider(
-                                            salesForceCountStartDate,
-                                          ).notifier,
-                                        )
-                                        .calculateSalesForce();
-                                return '$count Orang Sales';
-                              },
-                              error: (e, _) => 'Error: \$e',
-                            ),
-                            style: footnoteStyle,
-                          ),
-                        ],
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.info_outline),
-                        onPressed: () {},
-                        tooltip:
-                            'Tenaga sales dihitung berdasarkan jumlah kunjungan selama 3 bulan terakhir',
-                      ),
-                    ],
-                  ),
+                          style: footnoteStyle,
+                        ),
+                      ],
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.info_outline),
+                      onPressed: () {},
+                      tooltip:
+                          'Tenaga sales dihitung berdasarkan jumlah kunjungan selama 3 bulan terakhir',
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
