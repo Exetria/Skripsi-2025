@@ -156,20 +156,6 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                 },
               ),
             ),
-            const SizedBox(width: 16),
-            !listViewEnabled
-                ? IconButton(
-                  onPressed: () {
-                    // Reset viewed sales and visit data
-                    viewedSalesId = '';
-                    viewedsalesName = '';
-                    viewedMarkers = [];
-                    _switchPageView();
-                  },
-                  icon: const Icon(Icons.list),
-                  tooltip: 'Kembali ke Daftar Kunjungan Sales',
-                )
-                : const SizedBox.shrink(),
           ],
         ),
         Row(
@@ -367,6 +353,20 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
+                      const Spacer(),
+                      !listViewEnabled
+                          ? IconButton(
+                            onPressed: () {
+                              // Reset viewed sales and visit data
+                              viewedSalesId = '';
+                              viewedsalesName = '';
+                              viewedMarkers = [];
+                              _switchPageView();
+                            },
+                            icon: const Icon(Icons.close),
+                            tooltip: 'Kembali ke Daftar Kunjungan Sales',
+                          )
+                          : const SizedBox.shrink(),
                     ],
                   ),
                   const SizedBox(height: 12),
