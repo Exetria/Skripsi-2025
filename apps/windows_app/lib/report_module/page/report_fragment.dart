@@ -690,23 +690,49 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
                   'Total Harga Order',
                   rupiahFormat(totalOrderPrice),
                 ),
-                buildStatCard(
-                  context,
-                  'Perkiraan Sales Force',
-                  filteredVisitListState.when(
-                    loading: () => 'Memuat...',
-                    data: (data) {
-                      final count =
-                          ref
-                              .read(
-                                filteredVisitControllerProvider(
-                                  salesForceCountStartDate,
-                                ).notifier,
-                              )
-                              .calculateSalesForce();
-                      return '$count Orang Sales';
-                    },
-                    error: (e, _) => 'Error: \$e',
+                Container(
+                  height: ScreenUtil().screenHeight * 0.07,
+                  width: 400,
+                  padding: const EdgeInsets.all(12),
+                  decoration: itemCardDecoration(context),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Perkiraan Kebutuhan Tenaga Sales',
+                            style: captionStyle,
+                          ),
+                          Text(
+                            filteredVisitListState.when(
+                              loading: () => 'Memuat...',
+                              data: (data) {
+                                final count =
+                                    ref
+                                        .read(
+                                          filteredVisitControllerProvider(
+                                            salesForceCountStartDate,
+                                          ).notifier,
+                                        )
+                                        .calculateSalesForce();
+                                return '$count Orang Sales';
+                              },
+                              error: (e, _) => 'Error: \$e',
+                            ),
+                            style: footnoteStyle,
+                          ),
+                        ],
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.info_outline),
+                        onPressed: () {},
+                        tooltip:
+                            'Tenaga sales dihitung berdasarkan jumlah kunjungan selama 3 bulan terakhir',
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -845,7 +871,7 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
     if (newBarGroup.isNotEmpty && mounted) {
       setState(() {
         barGroup = newBarGroup;
-        newTotalVisitCount = newTotalVisitCount;
+        totalVisitCount = newTotalVisitCount;
       });
     }
   }
