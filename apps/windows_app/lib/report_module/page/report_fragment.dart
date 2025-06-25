@@ -27,14 +27,11 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
     RegionFilter.pamekasan,
     RegionFilter.sumenep,
     RegionFilter.sampang,
-
     RegionFilter.surabaya,
     RegionFilter.sidoarjo,
-
     RegionFilter.gresik,
     RegionFilter.lamongan,
     RegionFilter.tuban,
-
     RegionFilter.malang,
     RegionFilter.pasuruan,
     RegionFilter.mojokerto,
@@ -123,10 +120,8 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
               const SizedBox(height: 10),
               Text('Laporan', style: titleStyle),
               const SizedBox(height: 10),
-
               _buildHeader(),
               const SizedBox(height: 12),
-
               Expanded(
                 child:
                     reportView
@@ -164,7 +159,6 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
               width: ScreenUtil().screenWidth * 0.25,
               child: _buildMonthSelector(),
             ),
-
             if (!reportView) const SizedBox(width: 16),
             if (!reportView) _createSingleSelectDropdown(),
           ],
@@ -185,9 +179,7 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
               icon: const Icon(Icons.rotate_90_degrees_ccw),
               tooltip: 'Ganti Tampilan',
             ),
-
             const SizedBox(width: 8),
-
             IconButton(
               onPressed: () {
                 setState(() {
