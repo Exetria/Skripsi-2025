@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:common_components/common_components.dart';
 import 'package:excel/excel.dart' as xlsx;
 import 'package:flutter/material.dart';
@@ -303,4 +304,24 @@ extension DateTimeRangeExtension on DateTimeRange {
       (i) => DateTime(start.year, start.month, start.day + i),
     );
   }
+}
+
+// APPLY WINDOW SETTINGS
+void applyWindowSettings() {
+  doWhenWindowReady(() {
+    const initialSize = Size(1380, 960);
+
+    appWindow.minSize = initialSize;
+    appWindow.size = initialSize;
+    appWindow.alignment = Alignment.center;
+    appWindow.show();
+
+    appWindow.minSize = initialSize;
+  });
+}
+
+void maximizeWindow() {
+  doWhenWindowReady(() {
+    appWindow.maximize();
+  });
 }

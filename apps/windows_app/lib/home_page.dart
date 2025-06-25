@@ -10,6 +10,7 @@ import 'package:windows_app/report_module/page/report_fragment.dart';
 import 'package:windows_app/user_management_module/page/login_page.dart';
 import 'package:windows_app/user_management_module/page/profile_fragment.dart';
 import 'package:windows_app/user_module/page/user_list_fragment.dart';
+import 'package:windows_app/utils/functions.dart';
 import 'package:windows_app/visit_module/page/visit_list_fragment.dart';
 
 final selectedIndexProvider = StateProvider<int>((ref) => 0);
@@ -89,6 +90,9 @@ class _HomePage extends ConsumerState<HomePage> {
         );
       }
     });
+
+    // Apply window settings
+    applyWindowSettings();
   }
 
   @override

@@ -8,6 +8,7 @@ import 'package:windows_app/user_management_module/domain/entities/sign_in_domai
 import 'package:windows_app/user_management_module/page/controller/check_user_data_controller.dart';
 import 'package:windows_app/user_management_module/page/controller/refresh_token_controller.dart';
 import 'package:windows_app/user_management_module/page/controller/sign_in_controller.dart';
+import 'package:windows_app/utils/functions.dart';
 
 // ignore: must_be_immutable
 class LoginPage extends StatefulHookConsumerWidget {
@@ -34,11 +35,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       });
     }
 
-    // doWhenWindowReady(() {
-    //   final window = appWindow;
-    //   window.maximize();
-    //   window.show();
-    // });
+    // Apply window settings
+    applyWindowSettings();
   }
 
   @override
