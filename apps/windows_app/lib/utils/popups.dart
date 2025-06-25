@@ -2826,7 +2826,10 @@ Future<void> showOrderDataPopup({
                             orderStatuses.map((item) {
                               return DropdownMenuItem<String>(
                                 value: item != '' ? item : null,
-                                child: Text(item, style: captionStyle),
+                                child: Text(
+                                  getOrderStatusText(item),
+                                  style: captionStyle,
+                                ),
                               );
                             }).toList(),
                         onChanged: (val) {
