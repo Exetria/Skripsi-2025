@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:windows_app/live_location_module/page/controller/live_location_controller.dart';
 import 'package:windows_app/user_module/page/controller/user_list_controller.dart';
@@ -55,7 +56,7 @@ class _LiveLocationFragment extends ConsumerState<LiveLocationFragment> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 10),
-          Text('Daftar Kehadiran', style: titleStyle),
+          Text('Lokasi Langsung', style: titleStyle),
           const SizedBox(height: 10),
 
           _buildHeader(),
@@ -152,10 +153,7 @@ class _LiveLocationFragment extends ConsumerState<LiveLocationFragment> {
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Center(
-            child: Text(
-              'Pilih Sales untuk melihat lokasi mereka',
-              style: bodyStyle,
-            ),
+            child: Text('Pilih Sales untuk melacak lokasi', style: bodyStyle),
           ),
         ),
       );
@@ -224,7 +222,9 @@ class _LiveLocationFragment extends ConsumerState<LiveLocationFragment> {
                               color: Theme.of(context).colorScheme.primary,
                               onPressed: () {},
                               tooltip:
-                                  "Terakhir Diperbarui: ${DateTime.tryParse(liveLocation?.updateTime ?? '')?.toLocal().toString() ?? 'Tidak Tersedia'}",
+                                  liveLocation?.updateTime != null
+                                      ? 'Terakhir Diperbarui: ${DateFormat().format(DateTime.tryParse(liveLocation!.updateTime!)!.toLocal())}'
+                                      : 'Lokasi Tidak Tersedia',
                             ),
                           ),
                         ],

@@ -62,7 +62,7 @@ class _HomePage extends ConsumerState<HomePage> {
     ),
     const NavigationRailDestination(
       icon: Icon(Icons.location_on),
-      label: Text('Lokasi'),
+      label: Text('Pelacakan'),
     ),
     const NavigationRailDestination(
       icon: Icon(Icons.dashboard),
