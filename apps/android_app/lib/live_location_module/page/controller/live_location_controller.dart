@@ -5,14 +5,21 @@ import 'package:android_app/utils/functions.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void startLiveLocationUpdater(WidgetRef ref) {
-  final repository = ref.watch(UpdateLocationRepositoryProvider);
+  // Initial update
+  updateLiveLocation(ref);
 
-  Timer.periodic(const Duration(seconds: 180), (_) async {
-    final currentLocation = await getCurrentPosition();
-    try {
-      await repository.updateLocation(currentLocation: currentLocation);
-    } catch (e) {
-      // pass
-    }
+  // Loop to update live location
+  Timer.periodic(const Duration(seconds: 60), (_) async {
+    updateLiveLocation(ref);
   });
+}
+
+void updateLiveLocation(WidgetRef ref) async {
+  final repository = ref.watch(UpdateLocationRepositoryProvider);
+  final currentLocation = await getCurrentPosition();
+  try {
+    await repository.updateLocation(currentLocation: currentLocation);
+  } catch (e) {
+    // pass
+  }
 }
