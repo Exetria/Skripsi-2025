@@ -6,6 +6,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final connectionStatusProvider = StateProvider<bool>((ref) => false);
 
 void startConnectionChecker(WidgetRef ref) {
+  // Initial connection check
+  _checkConnection();
+
+  // Loop to check connection status
   Timer.periodic(const Duration(seconds: 10), (_) async {
     final isConnected = await _checkConnection();
     ref.read(connectionStatusProvider.notifier).state = isConnected;
