@@ -35,7 +35,7 @@ class _LiveLocationFragment extends ConsumerState<LiveLocationFragment> {
             .read(userListControllerProvider.notifier)
             .changeRoleFilter(RoleFilter.sales);
 
-        _locationTimer = Timer.periodic(const Duration(seconds: 10), (_) async {
+        _locationTimer = Timer.periodic(const Duration(seconds: 60), (_) async {
           _refreshLiveLocation();
         });
       },
@@ -198,7 +198,7 @@ class _LiveLocationFragment extends ConsumerState<LiveLocationFragment> {
                                 liveLocation.fields?.longitude?.doubleValue ??
                                     0.0,
                               ),
-                      initialZoom: 13,
+                      initialZoom: 19,
                     ),
                     children: [
                       TileLayer(
