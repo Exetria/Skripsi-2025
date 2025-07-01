@@ -79,7 +79,13 @@ Widget itemCard({
   String? secondarySubtitle,
   String? tertiarySubtitle,
   String? leftBottomText,
+  Color? leftBottomTextColor,
+  String? secondaryLeftBottomText,
+  Color? secondaryLeftBottomTextColor,
   String? rightBottomText,
+  Color? rightBottomTextColor,
+  String? secondaryRightBottomText,
+  Color? secondaryRightBottomTextColor,
   required VoidCallback? onTap,
 }) {
   final cs = Theme.of(context).colorScheme;
@@ -118,13 +124,48 @@ Widget itemCard({
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              leftBottomText != null
-                  ? Text(leftBottomText, style: bodyStyle)
-                  : const SizedBox.shrink(),
-
-              rightBottomText != null
-                  ? Text(rightBottomText, style: bodyStyle)
-                  : const SizedBox.shrink(),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  leftBottomText != null
+                      ? Text(
+                        leftBottomText,
+                        style: bodyStyle.copyWith(
+                          color: leftBottomTextColor ?? cs.onSurface,
+                        ),
+                      )
+                      : const SizedBox.shrink(),
+                  secondaryLeftBottomText != null
+                      ? Text(
+                        secondaryLeftBottomText,
+                        style: bodyStyle.copyWith(
+                          color: secondaryLeftBottomTextColor ?? cs.onSurface,
+                        ),
+                      )
+                      : const SizedBox.shrink(),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  rightBottomText != null
+                      ? Text(
+                        rightBottomText,
+                        style: bodyStyle.copyWith(
+                          color: rightBottomTextColor ?? cs.onSurface,
+                        ),
+                      )
+                      : const SizedBox.shrink(),
+                  secondaryRightBottomText != null
+                      ? Text(
+                        secondaryRightBottomText,
+                        style: bodyStyle.copyWith(
+                          color: secondaryRightBottomTextColor ?? cs.onSurface,
+                        ),
+                      )
+                      : const SizedBox.shrink(),
+                ],
+              ),
             ],
           ),
         ],
@@ -213,25 +254,6 @@ List<Map<String, dynamic>> createProductDataList({
     result.add(newMap);
   }
   return result;
-}
-
-// GET ORDER STATUS TEXT
-String getOrderStatusText(String orderStatus) {
-  if (orderStatus == 'pending') {
-    return 'Menunggu Konfirmasi';
-  } else if (orderStatus == 'processed') {
-    return 'Dikonfirmasi Admin';
-  } else if (orderStatus == 'in_transit') {
-    return 'Sedang Dikirim';
-  } else if (orderStatus == 'delivered') {
-    return 'Sudah Diterima';
-  } else if (orderStatus == 'finished') {
-    return 'Selesai';
-  } else if (orderStatus == 'cancelled') {
-    return 'Dibatalkan';
-  } else {
-    return 'Tidak Tersedia';
-  }
 }
 
 // GENERATE EXCEL FILE

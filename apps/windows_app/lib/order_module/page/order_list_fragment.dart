@@ -90,13 +90,21 @@ class _OrderListFragmentState extends ConsumerState<OrderListFragment> {
                             },
                           ),
                           subtitle: getIdFromName(name: data.name),
-                          leftBottomText:
-                              "Total: \n${rupiahFormat(int.tryParse(data.fields?.totalPrice?.integerValue ?? '') ?? 0)}",
-                          rightBottomText:
-                              createDate +
-                              '\n' +
-                              (data.fields?.orderStatus?.stringValue ??
-                                  'Unknown'),
+                          leftBottomText: 'Total:',
+                          secondaryLeftBottomText: rupiahFormat(
+                            int.tryParse(
+                                  data.fields?.totalPrice?.integerValue ?? '',
+                                ) ??
+                                0,
+                          ),
+                          rightBottomText: createDate,
+                          secondaryRightBottomText: getOrderStatusText(
+                            orderStatus: data.fields?.orderStatus?.stringValue,
+                          ),
+                          secondaryRightBottomTextColor: getOrderStatusColor(
+                            context: context,
+                            orderStatus: data.fields?.orderStatus?.stringValue,
+                          ),
                           onTap: () {
                             showOrderDataPopup(
                               ref: ref,

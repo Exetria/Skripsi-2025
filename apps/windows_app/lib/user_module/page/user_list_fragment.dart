@@ -245,6 +245,10 @@ class _UserListFragment extends ConsumerState<UserListFragment> {
                           )
                           : null,
                   leftBottomText: role[0].toUpperCase() + role.substring(1),
+                  leftBottomTextColor: getUserRoleColor(
+                    context: context,
+                    userRole: role,
+                  ),
                   rightBottomText: registerDate.toString(),
                   onTap: () {
                     showUserDataPopup(
