@@ -106,6 +106,8 @@ InkWell customListItem({
   IconData? leadIcon,
   required String title,
   String? subtitle,
+  String? bodyText,
+  Color? bodyColor,
   IconData? trailIcon,
 }) {
   return InkWell(
@@ -145,6 +147,21 @@ InkWell customListItem({
                     ? Text(
                       subtitle,
                       style: captionStyle,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    )
+                    : const SizedBox.shrink(),
+                bodyText != null
+                    ? SizedBox(height: 4.h)
+                    : const SizedBox.shrink(),
+                bodyText != null
+                    ? Text(
+                      bodyText,
+                      style: captionStyle.copyWith(
+                        color:
+                            bodyColor ??
+                            Theme.of(context).colorScheme.onSurface,
+                      ),
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                     )
@@ -574,25 +591,6 @@ Future<void> launchGoogleMapsRouteNavigation({
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(const SnackBar(content: Text('Tidak Dapat Membuka Peta')));
-  }
-}
-
-// GET ORDER STATUS TEXT
-String getOrderStatusText(String orderStatus) {
-  if (orderStatus == 'pending') {
-    return 'Menunggu Konfirmasi';
-  } else if (orderStatus == 'processed') {
-    return 'Dikonfirmasi Admin';
-  } else if (orderStatus == 'in_transit') {
-    return 'Sedang Dikirim';
-  } else if (orderStatus == 'delivered') {
-    return 'Sudah Diterima';
-  } else if (orderStatus == 'finished') {
-    return 'Selesai';
-  } else if (orderStatus == 'cancelled') {
-    return 'Dibatalkan';
-  } else {
-    return 'Tidak Tersedia';
   }
 }
 

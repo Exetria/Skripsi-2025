@@ -143,7 +143,18 @@ class _OrderListFragment extends ConsumerState<OrderListFragment> {
                           },
                         ),
                         subtitle:
-                            '${(data.createTime != null && data.createTime != '') ? DateFormat.yMMMMd().format(DateTime.parse(data.createTime!)) : "Gagal Memuat Tanggal"}\nStatus: ${getOrderStatusText(data.fields?.orderStatus?.stringValue ?? "-")}',
+                            (data.createTime != null && data.createTime != '')
+                                ? DateFormat.yMMMMd().format(
+                                  DateTime.parse(data.createTime!),
+                                )
+                                : 'Gagal Memuat Tanggal',
+                        bodyText: getOrderStatusText(
+                          orderStatus: data.fields?.orderStatus?.stringValue,
+                        ),
+                        bodyColor: getOrderStatusColor(
+                          context: context,
+                          orderStatus: data.fields?.orderStatus?.stringValue,
+                        ),
                         trailIcon: Icons.arrow_forward_ios,
                         onTap: () {
                           Navigator.push(

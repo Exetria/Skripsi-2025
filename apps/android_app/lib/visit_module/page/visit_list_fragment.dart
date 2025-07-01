@@ -228,8 +228,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                             (context, index) => SizedBox(height: 12.h),
                         itemBuilder: (context, index) {
                           String visitStatus =
-                              visitDataList[index]['mapValue']?['fields']?['visit_status']?['integerValue'] ??
-                              '0';
+                              visitDataList[index]['mapValue']?['fields']?['visit_status']?['integerValue'];
 
                           return customListItem(
                             context: context,
@@ -252,14 +251,13 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                                 return 'Gagal Memuat Nama';
                               },
                             ),
-                            subtitle:
-                                visitStatus == '1'
-                                    ? 'Direncanakan'
-                                    : visitStatus == '2'
-                                    ? 'Selesai'
-                                    : visitStatus == '3'
-                                    ? 'Dibatalkan'
-                                    : 'Tidak Tersedia',
+                            bodyText: getVisitStatusText(
+                              visitStatus: visitStatus,
+                            ),
+                            bodyColor: getVisitStatusColor(
+                              context: context,
+                              visitStatus: visitStatus,
+                            ),
                             trailIcon: Icons.arrow_forward_ios,
                             onTap: () {
                               Navigator.push(

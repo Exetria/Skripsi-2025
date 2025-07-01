@@ -65,7 +65,7 @@ class _OrderDetailPage extends ConsumerState<OrderDetailPage> {
     final customerListState = ref.watch(customerListControllerProvider);
 
     String displayedOrderStatus = getOrderStatusText(
-      widget.orderData.fields?.orderStatus?.stringValue ?? '',
+      orderStatus: widget.orderData.fields?.orderStatus?.stringValue ?? '',
     );
 
     return Scaffold(
