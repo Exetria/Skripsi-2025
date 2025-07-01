@@ -19,6 +19,7 @@ final Color dividerColor = const Color.fromRGBO(204, 204, 204, 1);
 final Color selectedItemColor = primaryColor;
 final Color unselectedItemColor = textColor.withAlpha(150);
 final Color transparentColor = Colors.transparent;
+final Color amberColor = const Color.fromRGBO(255, 193, 7, 1);
 
 // DARK MODE COLORS
 final Color darkModePrimaryColor = const Color.fromRGBO(0, 150, 136, 1);
@@ -36,6 +37,7 @@ final Color darkModeDividerColor = const Color.fromRGBO(30, 30, 30, 1);
 final Color darkModeSelectedItemColor = darkModePrimaryColor;
 final Color darkModeUnselectedItemColor = darkModeTextColor.withAlpha(150);
 final Color darkModeTransparentColor = Colors.transparent;
+final Color darkModeAmberColor = const Color.fromRGBO(255, 179, 0, 1);
 
 // TEXT STYLES
 final TextStyle titleStyle = TextStyle(

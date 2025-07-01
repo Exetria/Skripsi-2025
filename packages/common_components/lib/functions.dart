@@ -223,3 +223,83 @@ String generateGoogleMapsUri({
 }) {
   return 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
 }
+
+// USER ROLE FUNCTIONS
+// GET USER ROLE COlOR
+Color? getUserRoleColor({
+  required BuildContext context,
+  required String? userRole,
+}) {
+  return userRole == 'admin'
+      ? Theme.of(context).colorScheme.primary
+      : userRole == 'sales'
+      ? Theme.of(context).colorScheme.tertiary
+      : Theme.of(context).colorScheme.outline;
+}
+
+// VISIT STATUS FUNCTIONS
+// GET VISIT STATUS TEXT
+String getVisitStatusText({required String? visitStatus}) {
+  return visitStatus == '1'
+      ? 'Direncanakan'
+      : visitStatus == '2'
+      ? 'Selesai'
+      : visitStatus == '3'
+      ? 'Dibatalkan'
+      : 'Tidak Tersedia';
+}
+
+// GET ORDER STATUS COLOR (still hardcoded)
+Color? getVisitStatusColor({
+  required BuildContext context,
+  required String? visitStatus,
+}) {
+  return visitStatus == '1'
+      ? Theme.of(context).colorScheme.tertiaryContainer
+      : visitStatus == '2'
+      ? Theme.of(context).colorScheme.tertiary
+      : visitStatus == '3'
+      ? Theme.of(context).colorScheme.error
+      : Theme.of(context).colorScheme.outline;
+}
+
+// ORDER STATUS FUNCTIONS
+// GET ORDER STATUS TEXT
+String getOrderStatusText({required String? orderStatus}) {
+  return orderStatus == 'pending'
+      ? 'Menunggu Konfirmasi'
+      : orderStatus == 'processed'
+      ? 'Dikonfirmasi Admin'
+      : orderStatus == 'in_transit'
+      ? 'Sedang Dikirim'
+      : orderStatus == 'delivered'
+      ? 'Sudah Diterima'
+      : orderStatus == 'finished'
+      ? 'Selesai'
+      : orderStatus == 'cancelled'
+      ? 'Dibatalkan'
+      : 'Tidak Tersedia';
+}
+
+// GET ORDER STATUS COLOR (still hardcoded)
+Color? getOrderStatusColor({
+  required BuildContext context,
+  required String? orderStatus,
+}) {
+  if (orderStatus == 'pending') {
+    return Theme.of(context).colorScheme.brightness == Brightness.light
+        ? amberColor
+        : darkModeAmberColor;
+  } else if (orderStatus == 'processed') {
+    return Theme.of(context).colorScheme.tertiaryContainer;
+  } else if (orderStatus == 'in_transit') {
+    return Theme.of(context).colorScheme.tertiaryContainer;
+  } else if (orderStatus == 'delivered') {
+    return Theme.of(context).colorScheme.secondary;
+  } else if (orderStatus == 'finished') {
+    return Theme.of(context).colorScheme.tertiary;
+  } else if (orderStatus == 'cancelled') {
+    return Theme.of(context).colorScheme.error;
+  }
+  return Theme.of(context).colorScheme.outline;
+}
