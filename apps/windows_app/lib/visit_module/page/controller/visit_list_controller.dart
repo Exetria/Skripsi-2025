@@ -252,9 +252,14 @@ class VisitListController extends _$VisitListController {
             state.value?['$salesId-${_generateFormattedDate(date)}'];
         if (visitData != null && visitData.isRight()) {
           final visitDomain = visitData.getOrElse((error) => null);
-          if (visitDomain != null) {
-            visitCount +=
-                visitDomain.fields?.visits?.arrayValue?.values?.length ?? 0;
+          List<Value>? visitList =
+              visitDomain?.fields?.visits?.arrayValue?.values;
+          if (visitList != null) {
+            for (var value in visitList) {
+              if (value.mapValue?.fields?.visitStatus?.integerValue == '2') {
+                visitCount++;
+              }
+            }
           }
         }
       }
