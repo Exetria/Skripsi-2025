@@ -2471,6 +2471,8 @@ Future<void> showOrderDataPopup({
   required BuildContext context,
   required OrderDomain orderData,
 }) async {
+  final orderDataFormKey = GlobalKey<FormState>();
+
   List<String> orderStatuses = [
     '',
     'pending',
@@ -2752,7 +2754,8 @@ Future<void> showOrderDataPopup({
               dialogActionButtonEnabled = false;
             });
 
-            if (productDataList.isNotEmpty && selectedOrderStatus != null) {
+            if ((orderDataFormKey.currentState?.validate() ?? false) &&
+                productDataList.isNotEmpty) {
               final submitState = await ref
                   .read(updateOrderControllerProvider.notifier)
                   .updateOrder(
@@ -2803,6 +2806,7 @@ Future<void> showOrderDataPopup({
               width: ScreenUtil().screenWidth * 0.4,
               child: SingleChildScrollView(
                 child: Form(
+                  key: orderDataFormKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -2823,12 +2827,21 @@ Future<void> showOrderDataPopup({
                           ),
                         ),
                         items:
-                            orderStatuses.map((item) {
+                            orderStatuses.map((orderStatus) {
                               return DropdownMenuItem<String>(
-                                value: item != '' ? item : null,
+                                value: orderStatus != '' ? orderStatus : null,
                                 child: Text(
-                                  getOrderStatusText(item),
-                                  style: captionStyle,
+                                  orderStatus != ''
+                                      ? getOrderStatusText(
+                                        orderStatus: orderStatus,
+                                      )
+                                      : orderStatus,
+                                  style: captionStyle.copyWith(
+                                    color: getOrderStatusColor(
+                                      context: context,
+                                      orderStatus: orderStatus,
+                                    ),
+                                  ),
                                 ),
                               );
                             }).toList(),
@@ -2838,7 +2851,9 @@ Future<void> showOrderDataPopup({
                           });
                         },
                         validator: (value) {
-                          return value == null ? 'Tidak Boleh Kosong' : null;
+                          return value == null || value == ''
+                              ? 'Tidak Boleh Kosong'
+                              : null;
                         },
                       ),
                       const SizedBox(height: 32),
