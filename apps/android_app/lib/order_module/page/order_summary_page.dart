@@ -182,35 +182,4 @@ class _OrderSummaryPage extends ConsumerState<OrderSummaryPage> {
       },
     );
   }
-
-  Widget _buildInfoCard({
-    required BuildContext context,
-    required String label,
-    required String value,
-  }) {
-    return Expanded(
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          borderRadius: BorderRadius.circular(12.r),
-          boxShadow: [
-            BoxShadow(
-              color: Theme.of(context).colorScheme.shadow,
-              blurRadius: 4,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(label, style: captionStyle),
-            SizedBox(height: 4.h),
-            Text(value, style: footnoteStyle),
-          ],
-        ),
-      ),
-    );
-  }
 }
