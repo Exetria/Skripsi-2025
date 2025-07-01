@@ -541,7 +541,7 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
           newTotalOrderPrice += dailyTotal;
           lineSpots.add(
             FlSpot(
-              i.toDouble(), // Correct index
+              i.toDouble() + 1, // Correct index
               dailyTotal.toDouble(), // Y value
             ),
           );
