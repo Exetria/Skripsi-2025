@@ -1237,10 +1237,8 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
         focusedSalesName == null ||
         currentMonthSalesVisitList != null ||
         selectedView != 1) {
-      print('asds gajadi ambil visit list');
       return;
     }
-    print('asds JADI ambil visit list');
 
     final visitList = await ref
         .read(visitListControllerProvider.notifier)
