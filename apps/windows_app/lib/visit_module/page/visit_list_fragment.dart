@@ -44,9 +44,15 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
   void initState() {
     super.initState();
     Future.microtask(() {
+      // Fetch today's visits
+      // ref
+      //     .read(visitListControllerProvider.notifier)
+      //     .fetchAllSalesVisitsForDate(date: DateTime.now());
+
+      // Fetch month's visits
       ref
           .read(visitListControllerProvider.notifier)
-          .fetchAllSalesVisitsForDate(date: DateTime.now());
+          .fetchAllSalesVisitInMonth(month: DateTime.now());
     });
 
     addCallBackAfterBuild(
@@ -831,11 +837,32 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                                 : null;
                           },
                           onTap: () async {
+                            // Fetch month's visits
+                            // *Should've been done in initState, just in case
+                            final currentMonthVisitList = await ref
+                                .read(visitListControllerProvider.notifier)
+                                .getMonthlyVisitList(month: DateTime.now());
+
+                            // Get sales' assigned customers
+                            final assignedCustomers =
+                                ref
+                                    .read(userListControllerProvider.notifier)
+                                    .getUserById(id: salesId)
+                                    ?.fields
+                                    ?.assignedCustomers
+                                    ?.arrayValue
+                                    ?.values;
+
                             // get selected customer Id
                             final newSelectedId =
-                                await showCustomerSelectorPopup(
+                                await showUnvisitedCustomerSelectorPopup(
                                   ref: ref,
                                   context: context,
+                                  salesId: salesId,
+                                  currentDate: selectedDate,
+                                  salesAssignedCustomers:
+                                      assignedCustomers ?? [],
+                                  currentMonthVisitList: currentMonthVisitList,
                                 );
 
                             // if selected id exist, update

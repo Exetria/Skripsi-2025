@@ -22,6 +22,8 @@ import 'package:windows_app/user_module/domain/entities/user_domain.dart';
 import 'package:windows_app/user_module/page/controller/update_user_controller.dart';
 import 'package:windows_app/user_module/page/controller/user_list_controller.dart';
 import 'package:windows_app/utils/functions.dart';
+import 'package:windows_app/visit_module/domain/entities/visit_domain.dart'
+    as visit_domain;
 
 // SHOW USER DATA POPUP
 Future<void> showUserDataPopup({
@@ -485,251 +487,266 @@ Future<void> showUserDataPopup({
                       const SizedBox(height: 32),
 
                       // Assigned customers
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color:
-                                Theme.of(
-                                  statefulBuilderContext,
-                                ).colorScheme.outline,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Pelanggan yang ditugaskan',
-                                  style: bodyStyle,
-                                ),
-                                IconButton(
-                                  onPressed: () async {
-                                    final newCustomerId =
-                                        await showCustomerSelectorPopup(
-                                          ref: ref,
-                                          context: context,
-                                        );
-
-                                    if (newCustomerId != null &&
-                                        newCustomerId.isNotEmpty &&
-                                        !assignedCustomers.contains(
-                                          newCustomerId,
-                                        )) {
-                                      setDialogState(() {
-                                        assignedCustomers.add(newCustomerId);
-                                      });
-                                    }
-                                  },
-                                  icon: const Icon(Icons.add),
-                                ),
-                              ],
+                      if (userData?.fields?.role?.stringValue == 'sales')
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color:
+                                  Theme.of(
+                                    statefulBuilderContext,
+                                  ).colorScheme.outline,
+                              width: 2,
                             ),
-                            const SizedBox(height: 8),
-                            ConstrainedBox(
-                              constraints: BoxConstraints(
-                                minHeight: ScreenUtil().screenHeight * 0.05,
-                                maxHeight: ScreenUtil().screenHeight * 0.3,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Pelanggan yang ditugaskan',
+                                    style: bodyStyle,
+                                  ),
+                                  IconButton(
+                                    onPressed: () async {
+                                      final newCustomerId =
+                                          await showUnassignedCustomerSelectorPopup(
+                                            ref: ref,
+                                            context: context,
+                                            userAssignedCustomers:
+                                                assignedCustomers,
+                                          );
+
+                                      if (newCustomerId != null &&
+                                          newCustomerId.isNotEmpty &&
+                                          !assignedCustomers.contains(
+                                            newCustomerId,
+                                          )) {
+                                        setDialogState(() {
+                                          assignedCustomers.add(newCustomerId);
+                                        });
+                                      }
+                                    },
+                                    icon: const Icon(Icons.add),
+                                  ),
+                                ],
                               ),
-                              child:
-                                  assignedCustomers.isNotEmpty
-                                      ? ListView.separated(
-                                        itemCount: assignedCustomers.length,
-                                        separatorBuilder:
-                                            (context, index) => Divider(
-                                              color:
-                                                  Theme.of(
-                                                    context,
-                                                  ).colorScheme.onSurface,
-                                              thickness: 1,
-                                              height: 1,
-                                            ),
-                                        itemBuilder: (context, index) {
-                                          return ListTile(
-                                            title: Text(
-                                              ref
-                                                  .watch(
-                                                    customerListControllerProvider,
-                                                  )
-                                                  .when(
-                                                    loading: () => 'Memuat...',
-                                                    data: (customerList) {
-                                                      return ref
-                                                          .read(
-                                                            customerListControllerProvider
-                                                                .notifier,
-                                                          )
-                                                          .getCustomerName(
-                                                            id:
-                                                                assignedCustomers[index],
-                                                          );
-                                                    },
-                                                    error: (error, stackTrace) {
-                                                      ref.invalidate(
-                                                        customerListControllerProvider,
-                                                      );
-                                                      return 'Gagal Memuat Nama';
-                                                    },
-                                                  ),
-                                            ),
-                                            trailing: IconButton(
-                                              icon: Icon(
-                                                Icons.delete,
+                              const SizedBox(height: 8),
+                              ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  minHeight: ScreenUtil().screenHeight * 0.05,
+                                  maxHeight: ScreenUtil().screenHeight * 0.3,
+                                ),
+                                child:
+                                    assignedCustomers.isNotEmpty
+                                        ? ListView.separated(
+                                          itemCount: assignedCustomers.length,
+                                          separatorBuilder:
+                                              (context, index) => Divider(
                                                 color:
                                                     Theme.of(
                                                       context,
-                                                    ).colorScheme.error,
+                                                    ).colorScheme.onSurface,
+                                                thickness: 1,
+                                                height: 1,
                                               ),
-                                              onPressed: () {
-                                                setDialogState(() {
-                                                  assignedCustomers.removeAt(
-                                                    index,
-                                                  );
-                                                });
-                                              },
-                                            ),
-                                          );
-                                        },
-                                      )
-                                      : Center(
-                                        child: Text(
-                                          'Belum ada pelanggan',
-                                          style: captionStyle,
+                                          itemBuilder: (context, index) {
+                                            return ListTile(
+                                              title: Text(
+                                                ref
+                                                    .watch(
+                                                      customerListControllerProvider,
+                                                    )
+                                                    .when(
+                                                      loading:
+                                                          () => 'Memuat...',
+                                                      data: (customerList) {
+                                                        return ref
+                                                            .read(
+                                                              customerListControllerProvider
+                                                                  .notifier,
+                                                            )
+                                                            .getCustomerName(
+                                                              id:
+                                                                  assignedCustomers[index],
+                                                            );
+                                                      },
+                                                      error: (
+                                                        error,
+                                                        stackTrace,
+                                                      ) {
+                                                        ref.invalidate(
+                                                          customerListControllerProvider,
+                                                        );
+                                                        return 'Gagal Memuat Nama';
+                                                      },
+                                                    ),
+                                              ),
+                                              trailing: IconButton(
+                                                icon: Icon(
+                                                  Icons.delete,
+                                                  color:
+                                                      Theme.of(
+                                                        context,
+                                                      ).colorScheme.error,
+                                                ),
+                                                onPressed: () {
+                                                  setDialogState(() {
+                                                    assignedCustomers.removeAt(
+                                                      index,
+                                                    );
+                                                  });
+                                                },
+                                              ),
+                                            );
+                                          },
+                                        )
+                                        : Center(
+                                          child: Text(
+                                            'Belum ada pelanggan',
+                                            style: captionStyle,
+                                          ),
                                         ),
-                                      ),
-                            ),
-                            const SizedBox(height: 12),
-                          ],
+                              ),
+                              const SizedBox(height: 12),
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 16),
+                      if (userData?.fields?.role?.stringValue == 'sales')
+                        const SizedBox(height: 16),
 
                       // Assigned products
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color:
-                                Theme.of(
-                                  statefulBuilderContext,
-                                ).colorScheme.outline,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Produk yang ditugaskan',
-                                  style: bodyStyle,
-                                ),
-                                IconButton(
-                                  onPressed: () async {
-                                    final newProductId =
-                                        await showProductSelectorPopup(
-                                          ref: ref,
-                                          context: context,
-                                        );
-
-                                    if (newProductId != null &&
-                                        newProductId.isNotEmpty &&
-                                        !assignedProducts.contains(
-                                          newProductId,
-                                        )) {
-                                      setDialogState(() {
-                                        assignedProducts.add(newProductId);
-                                      });
-                                    }
-                                  },
-                                  icon: const Icon(Icons.add),
-                                ),
-                              ],
+                      if (userData?.fields?.role?.stringValue == 'sales')
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color:
+                                  Theme.of(
+                                    statefulBuilderContext,
+                                  ).colorScheme.outline,
+                              width: 2,
                             ),
-                            const SizedBox(height: 8),
-                            ConstrainedBox(
-                              constraints: BoxConstraints(
-                                minHeight: ScreenUtil().screenHeight * 0.05,
-                                maxHeight: ScreenUtil().screenHeight * 0.3,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Produk yang ditugaskan',
+                                    style: bodyStyle,
+                                  ),
+                                  IconButton(
+                                    onPressed: () async {
+                                      final newProductId =
+                                          await showProductSelectorPopup(
+                                            ref: ref,
+                                            context: context,
+                                          );
+
+                                      if (newProductId != null &&
+                                          newProductId.isNotEmpty &&
+                                          !assignedProducts.contains(
+                                            newProductId,
+                                          )) {
+                                        setDialogState(() {
+                                          assignedProducts.add(newProductId);
+                                        });
+                                      }
+                                    },
+                                    icon: const Icon(Icons.add),
+                                  ),
+                                ],
                               ),
-                              child:
-                                  assignedProducts.isNotEmpty
-                                      ? ListView.separated(
-                                        itemCount: assignedProducts.length,
-                                        separatorBuilder:
-                                            (context, index) => Divider(
-                                              color:
-                                                  Theme.of(
-                                                    context,
-                                                  ).colorScheme.onSurface,
-                                              thickness: 1,
-                                              height: 1,
-                                            ),
-                                        itemBuilder: (context, index) {
-                                          return ListTile(
-                                            title: Text(
-                                              ref
-                                                  .watch(
-                                                    productListControllerProvider,
-                                                  )
-                                                  .when(
-                                                    loading: () => 'Memuat...',
-                                                    data: (customerList) {
-                                                      return ref
-                                                          .read(
-                                                            productListControllerProvider
-                                                                .notifier,
-                                                          )
-                                                          .getProductName(
-                                                            id:
-                                                                assignedProducts[index],
-                                                          );
-                                                    },
-                                                    error: (error, stackTrace) {
-                                                      ref.invalidate(
-                                                        customerListControllerProvider,
-                                                      );
-                                                      return 'Gagal Memuat Nama';
-                                                    },
-                                                  ),
-                                            ),
-                                            trailing: IconButton(
-                                              icon: Icon(
-                                                Icons.delete,
+                              const SizedBox(height: 8),
+                              ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  minHeight: ScreenUtil().screenHeight * 0.05,
+                                  maxHeight: ScreenUtil().screenHeight * 0.3,
+                                ),
+                                child:
+                                    assignedProducts.isNotEmpty
+                                        ? ListView.separated(
+                                          itemCount: assignedProducts.length,
+                                          separatorBuilder:
+                                              (context, index) => Divider(
                                                 color:
                                                     Theme.of(
                                                       context,
-                                                    ).colorScheme.error,
+                                                    ).colorScheme.onSurface,
+                                                thickness: 1,
+                                                height: 1,
                                               ),
-                                              onPressed: () {
-                                                setDialogState(() {
-                                                  assignedProducts.removeAt(
-                                                    index,
-                                                  );
-                                                });
-                                              },
-                                            ),
-                                          );
-                                        },
-                                      )
-                                      : Center(
-                                        child: Text(
-                                          'Belum ada produk',
-                                          style: captionStyle,
+                                          itemBuilder: (context, index) {
+                                            return ListTile(
+                                              title: Text(
+                                                ref
+                                                    .watch(
+                                                      productListControllerProvider,
+                                                    )
+                                                    .when(
+                                                      loading:
+                                                          () => 'Memuat...',
+                                                      data: (customerList) {
+                                                        return ref
+                                                            .read(
+                                                              productListControllerProvider
+                                                                  .notifier,
+                                                            )
+                                                            .getProductName(
+                                                              id:
+                                                                  assignedProducts[index],
+                                                            );
+                                                      },
+                                                      error: (
+                                                        error,
+                                                        stackTrace,
+                                                      ) {
+                                                        ref.invalidate(
+                                                          customerListControllerProvider,
+                                                        );
+                                                        return 'Gagal Memuat Nama';
+                                                      },
+                                                    ),
+                                              ),
+                                              trailing: IconButton(
+                                                icon: Icon(
+                                                  Icons.delete,
+                                                  color:
+                                                      Theme.of(
+                                                        context,
+                                                      ).colorScheme.error,
+                                                ),
+                                                onPressed: () {
+                                                  setDialogState(() {
+                                                    assignedProducts.removeAt(
+                                                      index,
+                                                    );
+                                                  });
+                                                },
+                                              ),
+                                            );
+                                          },
+                                        )
+                                        : Center(
+                                          child: Text(
+                                            'Belum ada produk',
+                                            style: captionStyle,
+                                          ),
                                         ),
-                                      ),
-                            ),
-                            const SizedBox(height: 12),
-                          ],
+                              ),
+                              const SizedBox(height: 12),
+                            ],
+                          ),
                         ),
-                      ),
                     ],
                   ),
                 ),
@@ -2947,10 +2964,12 @@ Future<void> showOrderDataPopup({
   );
 }
 
-// CUSTOMER SELECTOR POPUP
-Future<String?> showCustomerSelectorPopup({
+// UNASSIGNED CUSTOMER SELECTOR POPUP
+// *Consumer is needed for live updates of list
+Future<String?> showUnassignedCustomerSelectorPopup({
   required WidgetRef ref,
   required BuildContext context,
+  required List<String> userAssignedCustomers,
 }) async {
   ref.read(customerListControllerProvider.notifier).resetSearch();
   return showDialog<String>(
@@ -2982,60 +3001,372 @@ Future<String?> showCustomerSelectorPopup({
         ),
         content: SizedBox(
           width: ScreenUtil().screenWidth * 0.3,
-          child: ref
-              .watch(customerListControllerProvider)
-              .when(
-                loading: () => const Center(child: CircularProgressIndicator()),
-                data: (productList) {
-                  if (productList == null || productList.isEmpty) {
-                    return const Center(
-                      child: Text('Data Pelanggan Tidak Ditemukan'),
-                    );
-                  }
+          child: Consumer(
+            builder: (context, ref, _) {
+              return ref
+                  .watch(customerListControllerProvider)
+                  .when(
+                    loading:
+                        () => const Center(child: CircularProgressIndicator()),
+                    data: (customerList) {
+                      if (customerList == null || customerList.isEmpty) {
+                        return const Center(
+                          child: Text('Data Pelanggan Tidak Ditemukan'),
+                        );
+                      }
 
-                  return ListView.separated(
-                    itemCount: productList.length,
-                    separatorBuilder:
-                        (context, index) => const SizedBox(height: 8),
-                    itemBuilder: (context, index) {
-                      final data = productList[index];
+                      return ref
+                          .watch(userListControllerProvider)
+                          .when(
+                            loading:
+                                () => const Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                            data: (userList) {
+                              userList ??= [];
 
-                      return hoverableCard(
-                        context: context,
-                        shadow: false,
-                        child: InkWell(
-                          onTap:
-                              () => Navigator.pop(
-                                context,
-                                getIdFromName(name: data.name),
-                              ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                data.fields?.companyName?.stringValue ?? '-',
-                              ),
-                              Text(
-                                data.fields?.companyAddress?.stringValue ?? '-',
-                              ),
-                            ],
-                          ),
+                              final assignedCustomerList = [];
+
+                              for (UserDomain user in userList) {
+                                assignedCustomerList.addAll(
+                                  generateListFromFirebaseList(
+                                    user
+                                            .fields
+                                            ?.assignedCustomers
+                                            ?.arrayValue
+                                            ?.values ??
+                                        [],
+                                  ),
+                                );
+                              }
+
+                              final displayedCustomerList = [];
+
+                              // Only add unassigned customers
+                              for (CustomerDomain customer in customerList) {
+                                final customerId = getIdFromName(
+                                  name: customer.name,
+                                );
+
+                                if (userAssignedCustomers.contains(
+                                      customerId,
+                                    ) ||
+                                    assignedCustomerList.contains(customerId)) {
+                                  continue;
+                                }
+
+                                displayedCustomerList.add(customer);
+                              }
+
+                              if (displayedCustomerList.isEmpty) {
+                                return const Center(
+                                  child: Text(
+                                    'Semua Pelanggan Sudah Ditugaskan',
+                                  ),
+                                );
+                              }
+                              return ListView.separated(
+                                itemCount: displayedCustomerList.length,
+                                separatorBuilder:
+                                    (context, index) =>
+                                        const SizedBox(height: 8),
+                                itemBuilder: (context, index) {
+                                  final data = displayedCustomerList[index];
+                                  return hoverableCard(
+                                    context: context,
+                                    shadow: false,
+                                    child: InkWell(
+                                      onTap:
+                                          () => Navigator.pop(
+                                            context,
+                                            getIdFromName(name: data.name),
+                                          ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            data
+                                                    .fields
+                                                    ?.companyName
+                                                    ?.stringValue ??
+                                                '-',
+                                          ),
+                                          Text(
+                                            data
+                                                    .fields
+                                                    ?.companyAddress
+                                                    ?.stringValue ??
+                                                '-',
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            error: (error, _) {
+                              return ListView.separated(
+                                itemCount: customerList.length,
+                                separatorBuilder:
+                                    (context, index) =>
+                                        const SizedBox(height: 8),
+                                itemBuilder: (context, index) {
+                                  final data = customerList[index];
+
+                                  return hoverableCard(
+                                    context: context,
+                                    shadow: false,
+                                    child: InkWell(
+                                      onTap:
+                                          () => Navigator.pop(
+                                            context,
+                                            getIdFromName(name: data.name),
+                                          ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            data
+                                                    .fields
+                                                    ?.companyName
+                                                    ?.stringValue ??
+                                                '-',
+                                          ),
+                                          Text(
+                                            data
+                                                    .fields
+                                                    ?.companyAddress
+                                                    ?.stringValue ??
+                                                '-',
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          );
+                    },
+                    error: (error, _) {
+                      final exception = error as ApiException;
+
+                      return Center(
+                        child: Text(
+                          'Gagal Memuat Data Pelanggan: ${exception.message}',
+                          style: errorStyle,
                         ),
                       );
                     },
                   );
-                },
-                error: (error, _) {
-                  final exception = error as ApiException;
+            },
+          ),
+        ),
+      );
+    },
+  );
+}
 
-                  return Center(
-                    child: Text(
-                      'Gagal Memuat Data Pelanggan: ${exception.message}',
-                      style: errorStyle,
-                    ),
-                  );
+// UNVISITED CUSTOMER SELECTOR POPUP
+Future<String?> showUnvisitedCustomerSelectorPopup({
+  required WidgetRef ref,
+  required BuildContext context,
+  required String salesId,
+  required DateTime currentDate,
+  required List<Email> salesAssignedCustomers,
+  required List<visit_domain.VisitDomain> currentMonthVisitList,
+}) async {
+  ref.read(customerListControllerProvider.notifier).resetSearch();
+
+  final List<String> visitedCustomerIds = [];
+  final convertedSalesAssignedCustomers = generateListFromFirebaseList(
+    salesAssignedCustomers,
+  );
+
+  // Get all visited customer id
+  for (visit_domain.VisitDomain visit in currentMonthVisitList) {
+    final List<visit_domain.Value> visitDataList =
+        visit.fields?.visits?.arrayValue?.values ?? [];
+
+    for (visit_domain.Value visitData in visitDataList) {
+      final String? visitedCustomerId =
+          visitData.mapValue?.fields?.customerId?.stringValue;
+
+      // If visitedCustomerId not empty, add to list
+      if (visitedCustomerId != null &&
+          visitedCustomerId.isNotEmpty &&
+          visitData.mapValue?.fields?.visitStatus?.integerValue == '2') {
+        visitedCustomerIds.add(visitedCustomerId);
+      }
+    }
+  }
+
+  final List<String> todayVisitedCustomerIds = [];
+  // Get all visited customer today (will be skipped later)
+  for (visit_domain.VisitDomain visit in currentMonthVisitList) {
+    if (getIdFromName(name: visit.name) ==
+        '$salesId-${generateFormattedDate(currentDate)}') {
+      final List<visit_domain.Value> visitDataList =
+          visit.fields?.visits?.arrayValue?.values ?? [];
+
+      for (visit_domain.Value visitData in visitDataList) {
+        final String? visitedCustomerId =
+            visitData.mapValue?.fields?.customerId?.stringValue;
+
+        // If visitedCustomerId not empty, add to list
+        if (visitedCustomerId != null && visitedCustomerId.isNotEmpty) {
+          todayVisitedCustomerIds.add(visitedCustomerId);
+        }
+      }
+      break;
+    }
+  }
+
+  return showDialog<String>(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Row(
+          children: [
+            Expanded(
+              child: customSearchBar(
+                context: context,
+                hint: 'Cari Pelanggan...',
+                onChanged: (query) {
+                  ref
+                      .read(customerListControllerProvider.notifier)
+                      .searchCustomer(query);
                 },
               ),
+            ),
+            const SizedBox(width: 8),
+            IconButton(
+              icon: const Icon(Icons.refresh),
+              tooltip: 'Segarkan Daftar Pelanggan',
+              onPressed: () {
+                ref.invalidate(customerListControllerProvider);
+              },
+            ),
+          ],
+        ),
+        content: SizedBox(
+          width: ScreenUtil().screenWidth * 0.3,
+          child: Consumer(
+            builder: (context, ref, child) {
+              return ref
+                  .watch(customerListControllerProvider)
+                  .when(
+                    loading:
+                        () => const Center(child: CircularProgressIndicator()),
+                    data: (customerList) {
+                      if (customerList == null || customerList.isEmpty) {
+                        return const Center(
+                          child: Text('Data Pelanggan Tidak Ditemukan'),
+                        );
+                      }
+
+                      final displayedCustomerList = [];
+                      // Only add assigned customers
+                      for (CustomerDomain customer in customerList) {
+                        final customerId = getIdFromName(name: customer.name);
+
+                        // If customer not assigned or already visited today, skip
+                        if (!convertedSalesAssignedCustomers.contains(
+                              customerId,
+                            ) ||
+                            todayVisitedCustomerIds.contains(customerId)) {
+                          continue;
+                        }
+
+                        displayedCustomerList.add(customer);
+                      }
+
+                      if (displayedCustomerList.isEmpty) {
+                        return const Center(
+                          child: Text(
+                            'Tidak Ada Pelanggan Yang Ditugaskan Untuk Sales Ini',
+                          ),
+                        );
+                      }
+
+                      return ListView.separated(
+                        itemCount: displayedCustomerList.length,
+                        separatorBuilder:
+                            (context, index) => const SizedBox(height: 8),
+                        itemBuilder: (context, index) {
+                          final data = displayedCustomerList[index];
+                          final bool visited = visitedCustomerIds.contains(
+                            getIdFromName(name: data.name),
+                          );
+
+                          return hoverableCard(
+                            context: context,
+                            shadow: false,
+                            child: InkWell(
+                              onTap:
+                                  () => Navigator.pop(
+                                    context,
+                                    getIdFromName(name: data.name),
+                                  ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        data.fields?.companyName?.stringValue ??
+                                            '-',
+                                      ),
+                                      Text(
+                                        data
+                                                .fields
+                                                ?.companyAddress
+                                                ?.stringValue ??
+                                            '-',
+                                      ),
+                                    ],
+                                  ),
+                                  Text(
+                                    visited
+                                        ? 'Sudah Dikunjungi'
+                                        : 'Belum Dikunjungi',
+                                    style: TextStyle(
+                                      color:
+                                          visited
+                                              ? Theme.of(
+                                                context,
+                                              ).colorScheme.tertiary
+                                              : Theme.of(
+                                                context,
+                                              ).colorScheme.error,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    error: (error, _) {
+                      final exception = error as ApiException;
+
+                      return Center(
+                        child: Text(
+                          'Gagal Memuat Data Pelanggan: ${exception.message}',
+                          style: errorStyle,
+                        ),
+                      );
+                    },
+                  );
+            },
+          ),
         ),
       );
     },
@@ -3077,58 +3408,64 @@ Future<String?> showProductSelectorPopup({
         ),
         content: SizedBox(
           width: ScreenUtil().screenWidth * 0.3,
-          child: ref
-              .watch(productListControllerProvider)
-              .when(
-                loading: () => const Center(child: CircularProgressIndicator()),
-                data: (productList) {
-                  if (productList == null || productList.isEmpty) {
-                    return const Center(
-                      child: Text('Data Produk Tidak Ditemukan'),
-                    );
-                  }
+          child: Consumer(
+            builder: (context, ref, child) {
+              return ref
+                  .watch(productListControllerProvider)
+                  .when(
+                    loading:
+                        () => const Center(child: CircularProgressIndicator()),
+                    data: (productList) {
+                      if (productList == null || productList.isEmpty) {
+                        return const Center(
+                          child: Text('Data Produk Tidak Ditemukan'),
+                        );
+                      }
 
-                  return ListView.separated(
-                    itemCount: productList.length,
-                    separatorBuilder:
-                        (context, index) => const SizedBox(height: 8),
-                    itemBuilder: (context, index) {
-                      final data = productList[index];
+                      return ListView.separated(
+                        itemCount: productList.length,
+                        separatorBuilder:
+                            (context, index) => const SizedBox(height: 8),
+                        itemBuilder: (context, index) {
+                          final data = productList[index];
 
-                      return hoverableCard(
-                        context: context,
-                        shadow: false,
-                        child: InkWell(
-                          onTap:
-                              () => Navigator.pop(
-                                context,
-                                getIdFromName(name: data.name),
+                          return hoverableCard(
+                            context: context,
+                            shadow: false,
+                            child: InkWell(
+                              onTap:
+                                  () => Navigator.pop(
+                                    context,
+                                    getIdFromName(name: data.name),
+                                  ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    data.fields?.productName?.stringValue ??
+                                        '-',
+                                  ),
+                                  Text(data.fields?.brand?.stringValue ?? '-'),
+                                ],
                               ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                data.fields?.productName?.stringValue ?? '-',
-                              ),
-                              Text(data.fields?.brand?.stringValue ?? '-'),
-                            ],
-                          ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    error: (error, _) {
+                      final exception = error as ApiException;
+
+                      return Center(
+                        child: Text(
+                          'Gagal Memuat Data Produk: ${exception.message}',
+                          style: errorStyle,
                         ),
                       );
                     },
                   );
-                },
-                error: (error, _) {
-                  final exception = error as ApiException;
-
-                  return Center(
-                    child: Text(
-                      'Gagal Memuat Data Produk: ${exception.message}',
-                      style: errorStyle,
-                    ),
-                  );
-                },
-              ),
+            },
+          ),
         ),
       );
     },
@@ -3185,4 +3522,9 @@ List<String> generateListFromFirebaseList(List<Email> listData) {
     }
   }
   return result;
+}
+
+// GENERATE FORMATTED DATE FOR VISIT ID
+String generateFormattedDate(DateTime date) {
+  return '${date.day.toString().padLeft(2, '0')}${date.month.toString().padLeft(2, '0')}${date.year}';
 }

@@ -22,17 +22,18 @@ class VisitListController extends _$VisitListController {
     required DateTime date,
     bool forceFetch = false,
   }) async {
-    List<String> salesIdList =
-        await ref.read(userListControllerProvider.notifier).getAllSalesId();
-    String dateString = _generateFormattedDate(date);
-
     // Save previous datas
     final previousMap = Map<String, Either<ApiException, VisitDomain?>>.from(
       state.value ?? {},
     );
 
-    // set state to loading
+    // Set state to loading
     state = const AsyncLoading();
+
+    // Get sales id list
+    List<String> salesIdList =
+        await ref.read(userListControllerProvider.notifier).getAllSalesId();
+    String dateString = _generateFormattedDate(date);
 
     // call api
     List<Future<void>> visitDataApiCalls = [];
@@ -45,7 +46,6 @@ class VisitListController extends _$VisitListController {
       // Call API
       visitDataApiCalls.add(() async {
         final repository = ref.watch(visitListRepositoryProvider);
-        state = const AsyncLoading();
         final result = await repository.getSalesVisitList(
           salesId: salesId,
           date: date,
@@ -90,6 +90,51 @@ class VisitListController extends _$VisitListController {
 
     // Add result to map
     previousMap['$salesId-$dateString'] = result;
+
+    // Reassign data
+    state = AsyncData(previousMap);
+  }
+
+  Future<void> fetchAllSalesVisitInMonth({required DateTime month}) async {
+    // Save previous datas
+    final previousMap = Map<String, Either<ApiException, VisitDomain?>>.from(
+      state.value ?? {},
+    );
+
+    // Set state to loading
+    state = const AsyncLoading();
+
+    // Get sales id list
+    List<String> salesIdList =
+        await ref.read(userListControllerProvider.notifier).getAllSalesId();
+
+    // call api
+    List<Future<void>> visitDataApiCalls = [];
+    for (int i = 1; i <= 31; i++) {
+      DateTime date = DateTime(month.year, month.month, i);
+      String dateString = _generateFormattedDate(date);
+
+      for (var salesId in salesIdList) {
+        // If data exist cancel API call
+        if (previousMap['$salesId-$dateString'] != null) {
+          continue;
+        }
+
+        // Call API
+        visitDataApiCalls.add(() async {
+          final repository = ref.watch(visitListRepositoryProvider);
+          final result = await repository.getSalesVisitList(
+            salesId: salesId,
+            date: date,
+          );
+
+          // Add result to map
+          previousMap['$salesId-$dateString'] = result;
+        }());
+      }
+    }
+
+    await Future.wait(visitDataApiCalls);
 
     // Reassign data
     state = AsyncData(previousMap);
@@ -285,6 +330,44 @@ class VisitListController extends _$VisitListController {
     }
 
     return monthlyCounts;
+  }
+
+  Future<List<VisitDomain>> getMonthlyVisitList({
+    required DateTime month,
+  }) async {
+    // Not needed since waiting is done in the caller
+    // while (state is! AsyncData) {
+    //   await Future.delayed(const Duration(milliseconds: 100));
+    // }
+
+    List<VisitDomain> monthlyVisitData = [];
+    final targetMonth = DateTime(month.year, month.month);
+
+    List<String> salesIdList =
+        await ref.read(userListControllerProvider.notifier).getAllSalesId();
+
+    // Count visits everyday in targeted month
+    for (int day = 1; day <= 31; day++) {
+      final date = DateTime(targetMonth.year, targetMonth.month, day);
+
+      // Fetch all sales visits for the date
+      await fetchAllSalesVisitsForDate(date: date);
+
+      // Loop for all sales id
+      for (String salesId in salesIdList) {
+        final visitData =
+            state.value?['$salesId-${_generateFormattedDate(date)}'];
+        if (visitData != null && visitData.isRight()) {
+          final visitDomain = visitData.getOrElse((error) => null);
+
+          if (visitDomain != null) {
+            // Add visit domain to the list
+            monthlyVisitData.add(visitDomain);
+          }
+        }
+      }
+    }
+    return monthlyVisitData;
   }
 
   Future<List<VisitDomain>> getSalesMonthlyVisitList({
