@@ -519,7 +519,6 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
     final visitListState = ref.watch(visitListControllerProvider);
 
     List<Map<String, dynamic>> visitDataList = [];
-    bool isHovered = false;
 
     return hoverableCard(
       context: context,
