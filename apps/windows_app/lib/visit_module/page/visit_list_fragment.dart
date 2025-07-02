@@ -521,179 +521,152 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
     List<Map<String, dynamic>> visitDataList = [];
     bool isHovered = false;
 
-    return StatefulBuilder(
-      builder: (context, setState) {
-        return MouseRegion(
-          onEnter: (_) => setState(() => isHovered = true),
-          onExit: (_) => setState(() => isHovered = false),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            transform:
-                isHovered
-                    ? Matrix4.translationValues(0, -6, 0)
-                    : Matrix4.identity(),
-            decoration: itemCardDecoration(context, isHovered: isHovered),
-            padding: const EdgeInsets.all(12),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(
-                        Icons.person,
-                        size: 32,
-                        color: Theme.of(context).colorScheme.primary,
+    return hoverableCard(
+      context: context,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(
+                  Icons.person,
+                  size: 32,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  salesName,
+                  style: subtitleStyle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Expanded(
+              child: visitListState.when(
+                loading: () => const Center(child: CircularProgressIndicator()),
+                data: (visitDayData) {
+                  final visitList =
+                      visitDayData['$salesId-${_generateVisitIdFromDate(selectedDate)}'];
+
+                  // If empty or null, show empty state
+                  if (visitList == null || visitList.isLeft()) {
+                    final error = visitList?.swap().getOrElse(
+                      (l) => ApiException(
+                        statusCode: -1,
+                        message: 'Terjadi Kesalahan',
                       ),
-                      const SizedBox(width: 12),
-                      Text(
-                        salesName,
-                        style: subtitleStyle,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  Expanded(
-                    child: visitListState.when(
-                      loading:
-                          () =>
-                              const Center(child: CircularProgressIndicator()),
-                      data: (visitDayData) {
-                        final visitList =
-                            visitDayData['$salesId-${_generateVisitIdFromDate(selectedDate)}'];
+                    );
 
-                        // If empty or null, show empty state
-                        if (visitList == null || visitList.isLeft()) {
-                          final error = visitList?.swap().getOrElse(
-                            (l) => ApiException(
-                              statusCode: -1,
-                              message: 'Terjadi Kesalahan',
-                            ),
-                          );
+                    return Center(
+                      child:
+                          error != null
+                              ? (error).statusCode == 404
+                                  ? const Text('Data Kunjungan Tidak Ditemukan')
+                                  : const Text('Gagal Memuat Data Kunjungan')
+                              : const Text('Gagal Memuat Data Kunjungan'),
+                    );
+                  }
 
-                          return Center(
-                            child:
-                                error != null
-                                    ? (error).statusCode == 404
-                                        ? const Text(
-                                          'Data Kunjungan Tidak Ditemukan',
-                                        )
-                                        : const Text(
-                                          'Gagal Memuat Data Kunjungan',
-                                        )
-                                    : const Text('Gagal Memuat Data Kunjungan'),
-                          );
-                        }
+                  // get the visit data
+                  final VisitDomain? data = visitList.getOrElse(
+                    (error) => null,
+                  );
 
-                        // get the visit data
-                        final VisitDomain? data = visitList.getOrElse(
-                          (error) => null,
-                        );
+                  if (data == null) {
+                    return const Center(
+                      child: Text('Data Visit Tidak Ditemukan'),
+                    );
+                  }
 
-                        if (data == null) {
-                          return const Center(
-                            child: Text('Data Visit Tidak Ditemukan'),
-                          );
-                        }
+                  // Get visit data (list of visit in a day)
+                  List<Value> visits = List<Value>.from(
+                    data.fields?.visits?.arrayValue?.values ?? [],
+                  );
 
-                        // Get visit data (list of visit in a day)
-                        List<Value> visits = List<Value>.from(
-                          data.fields?.visits?.arrayValue?.values ?? [],
-                        );
+                  // Convert into List<Map<String, dynamic>>
+                  visitDataList = _createVisitDataList(visits: visits);
 
-                        // Convert into List<Map<String, dynamic>>
-                        visitDataList = _createVisitDataList(visits: visits);
+                  if (visitDataList.isEmpty) {
+                    return const Center(
+                      child: Text('Data Visit Tidak Ditemukan'),
+                    );
+                  }
 
-                        if (visitDataList.isEmpty) {
-                          return const Center(
-                            child: Text('Data Visit Tidak Ditemukan'),
-                          );
-                        }
+                  return ListView.separated(
+                    itemCount: visitDataList.length,
+                    separatorBuilder:
+                        (context, index) => const SizedBox(height: 12),
+                    itemBuilder: (context, index) {
+                      final visitData = visitDataList[index];
+                      final customerId =
+                          visitData['mapValue']['fields']['customer_id']['stringValue'];
+                      final visitStatus =
+                          visitData['mapValue']['fields']['visit_status']['integerValue'];
 
-                        return ListView.separated(
-                          itemCount: visitDataList.length,
-                          separatorBuilder:
-                              (context, index) => const SizedBox(height: 12),
-                          itemBuilder: (context, index) {
-                            final visitData = visitDataList[index];
-                            final customerId =
-                                visitData['mapValue']['fields']['customer_id']['stringValue'];
-                            final visitStatus =
-                                visitData['mapValue']['fields']['visit_status']['integerValue'];
+                      return _createVisitTile(
+                        salesId: salesId,
+                        customerId: customerId,
+                        visitStatus: visitStatus,
+                        salesName: salesName,
+                        index: index,
+                        visitDataList: visitDataList,
+                      );
+                    },
+                  );
+                },
+                error: (error, _) {
+                  final exception = error as ApiException;
+                  return Center(
+                    child: Text(
+                      'Gagal Memuat Daftar Kunjungan: ${exception.message}',
+                      style: errorStyle,
+                    ),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    // Sales visit list set in the card builder
+                    viewedSalesId = salesId;
+                    viewedsalesName = salesName;
+                    _switchPageView();
+                  },
+                  icon: const Icon(Icons.map),
+                  tooltip: 'Lihat di Peta',
+                ),
 
-                            return _createVisitTile(
+                const SizedBox(width: 12),
+
+                IconButton(
+                  onPressed:
+                      selectedDate.isBefore(currentDate)
+                          ? null
+                          : () {
+                            showAddVisitPopup(
+                              context: context,
                               salesId: salesId,
-                              customerId: customerId,
-                              visitStatus:
-                                  visitStatus == '1'
-                                      ? 'Direncanakan'
-                                      : visitStatus == '2'
-                                      ? 'Selesai'
-                                      : visitStatus == '3'
-                                      ? 'Dibatalkan'
-                                      : 'Tidak Tersedia',
-                              salesName: salesName,
-                              index: index,
+                              salesName: viewedsalesName,
                               visitDataList: visitDataList,
                             );
                           },
-                        );
-                      },
-                      error: (error, _) {
-                        final exception = error as ApiException;
-                        return Center(
-                          child: Text(
-                            'Gagal Memuat Daftar Kunjungan: ${exception.message}',
-                            style: errorStyle,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          // Sales visit list set in the card builder
-                          viewedSalesId = salesId;
-                          viewedsalesName = salesName;
-                          _switchPageView();
-                        },
-                        icon: const Icon(Icons.map),
-                        tooltip: 'Lihat di Peta',
-                      ),
-
-                      const SizedBox(width: 12),
-
-                      IconButton(
-                        onPressed:
-                            selectedDate.isBefore(currentDate)
-                                ? null
-                                : () {
-                                  showAddVisitPopup(
-                                    context: context,
-                                    salesId: viewedSalesId,
-                                    salesName: viewedsalesName,
-                                    visitDataList: visitDataList,
-                                  );
-                                },
-                        icon: const Icon(Icons.add),
-                        tooltip: 'Tambah Kunjungan untuk Sales Ini',
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                  icon: const Icon(Icons.add),
+                  tooltip: 'Tambah Kunjungan untuk Sales Ini',
+                ),
+              ],
             ),
-          ),
-        );
-      },
+          ],
+        ),
+      ),
     );
   }
 
@@ -719,48 +692,35 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
         return 'Gagal Memuat Nama';
       },
     );
-    final cs = Theme.of(context).colorScheme;
-    bool isHovered = false;
-    return StatefulBuilder(
-      builder: (context, setState) {
-        return MouseRegion(
-          onEnter: (_) => setState(() => isHovered = true),
-          onExit: (_) => setState(() => isHovered = false),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            transform:
-                isHovered
-                    ? Matrix4.translationValues(0, -4, 0)
-                    : Matrix4.identity(),
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              // Give a slightly different fill color so the border shows
-              color: cs.surface,
-              border: Border.all(
-                color: isHovered ? cs.primary : cs.onSurface.withAlpha(128),
-                width: 1.5,
-              ),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: InkWell(
-              onTap: () {
-                showUpdateVisitDataPopup(
+    return hoverableCard(
+      context: context,
+      child: InkWell(
+        onTap: () {
+          showUpdateVisitDataPopup(
+            context: context,
+            salesId: salesId,
+            salesName: salesName,
+            customerName: customerName,
+            index: index,
+            visitDataList: visitDataList,
+          );
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(customerName),
+            Text(
+              getVisitStatusText(visitStatus: visitStatus),
+              style: bodyStyle.copyWith(
+                color: getVisitStatusColor(
                   context: context,
-                  salesId: salesId,
-                  salesName: salesName,
-                  customerName: customerName,
-                  index: index,
-                  visitDataList: visitDataList,
-                );
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [Text(customerName), Text(visitStatus)],
+                  visitStatus: visitStatus,
+                ),
               ),
             ),
-          ),
-        );
-      },
+          ],
+        ),
+      ),
     );
   }
 
@@ -973,12 +933,6 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
     required List<Map<String, dynamic>> visitDataList,
   }) async {
     final _updateVisitFormKey = GlobalKey<FormState>();
-
-    final Map<int, String> _statusOptions = {
-      1: 'Direncanakan',
-      2: 'Selesai',
-      3: 'Dibatalkan',
-    };
 
     File? _visitPhoto;
     String? _visitPhotoLink;
@@ -1213,13 +1167,44 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                               vertical: 14,
                             ),
                           ),
-                          items:
-                              _statusOptions.entries.map((entry) {
-                                return DropdownMenuItem(
-                                  value: entry.key,
-                                  child: Text(entry.value, style: bodyStyle),
-                                );
-                              }).toList(),
+                          items: [
+                            DropdownMenuItem(
+                              value: 1,
+                              child: Text(
+                                getVisitStatusText(visitStatus: '1'),
+                                style: bodyStyle.copyWith(
+                                  color: getVisitStatusColor(
+                                    context: context,
+                                    visitStatus: '1',
+                                  ),
+                                ),
+                              ),
+                            ),
+                            DropdownMenuItem(
+                              value: 2,
+                              child: Text(
+                                getVisitStatusText(visitStatus: '2'),
+                                style: bodyStyle.copyWith(
+                                  color: getVisitStatusColor(
+                                    context: context,
+                                    visitStatus: '2',
+                                  ),
+                                ),
+                              ),
+                            ),
+                            DropdownMenuItem(
+                              value: 3,
+                              child: Text(
+                                getVisitStatusText(visitStatus: '3'),
+                                style: bodyStyle.copyWith(
+                                  color: getVisitStatusColor(
+                                    context: context,
+                                    visitStatus: '3',
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                           onChanged: (val) {
                             setDialogState(() {
                               _selectedStatus = val;
