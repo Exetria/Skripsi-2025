@@ -401,6 +401,11 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
         ),
       );
     }
+    // Customer Id
+    final String customerId =
+        (focusedCustomerData?.name?.isNotEmpty == true)
+            ? getIdFromName(name: focusedCustomerData!.name!)
+            : '-';
 
     // Customer type and subscription type
     final String customerType =
@@ -681,6 +686,10 @@ class _CustomerListFragment extends ConsumerState<CustomerListFragment> {
                             thickness: 1,
                           ),
                           const SizedBox(height: 8),
+                          // Customer id
+                          buildDetailRow(label: 'ID', value: customerId),
+                          const SizedBox(height: 8),
+
                           // Customer type
                           buildDetailRow(label: 'Tipe', value: customerType),
                           const SizedBox(height: 8),
