@@ -2501,6 +2501,7 @@ Future<void> showOrderDataPopup({
   ];
 
   String orderId = getIdFromName(name: orderData.name);
+  String salesId = orderData.fields?.createdBy?.stringValue ?? '';
   String customerId = orderData.fields?.customerId?.stringValue ?? '';
   String paymentMethod = orderData.fields?.paymentMethod?.stringValue ?? '';
   String notes = orderData.fields?.notes?.stringValue ?? '';
@@ -2551,7 +2552,7 @@ Future<void> showOrderDataPopup({
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Icon(
-                        Icons.perm_identity,
+                        Icons.badge,
                         size: 20,
                         color: Theme.of(context).colorScheme.primary,
                       ),
@@ -2563,13 +2564,48 @@ Future<void> showOrderDataPopup({
                   ),
                   const SizedBox(height: 12),
 
+                  // Sales name
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.person,
+                        size: 20,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          ref
+                              .watch(userListControllerProvider)
+                              .when(
+                                loading: () => 'Memuat...',
+                                data: (data) {
+                                  final customerName = ref
+                                      .read(userListControllerProvider.notifier)
+                                      .getUserName(id: salesId);
+                                  return 'Sales:\n$customerName';
+                                },
+                                error: (error, stackTrace) {
+                                  ref.invalidate(userListControllerProvider);
+                                  return 'Gagal Memuat Nama';
+                                },
+                              ),
+                          style: bodyStyle,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+
                   // Customer name
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Icon(
-                        Icons.perm_identity,
+                        Icons.store,
                         size: 20,
                         color: Theme.of(context).colorScheme.primary,
                       ),
