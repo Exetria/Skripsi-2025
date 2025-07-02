@@ -24,7 +24,16 @@ class VisitListFragment extends StatefulHookConsumerWidget {
 }
 
 class _VisitListFragment extends ConsumerState<VisitListFragment> {
-  DateTime selectedDate = DateTime.now();
+  DateTime currentDate = DateTime(
+    DateTime.now().year,
+    DateTime.now().month,
+    DateTime.now().day,
+  );
+  DateTime selectedDate = DateTime(
+    DateTime.now().year,
+    DateTime.now().month,
+    DateTime.now().day,
+  );
 
   String viewedSalesId = '';
   String viewedsalesName = '';
@@ -478,14 +487,17 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       IconButton(
-                        onPressed: () {
-                          showAddVisitPopup(
-                            context: context,
-                            salesId: viewedSalesId,
-                            salesName: viewedsalesName,
-                            visitDataList: visitDataList,
-                          );
-                        },
+                        onPressed:
+                            selectedDate.isBefore(currentDate)
+                                ? null
+                                : () {
+                                  showAddVisitPopup(
+                                    context: context,
+                                    salesId: viewedSalesId,
+                                    salesName: viewedsalesName,
+                                    visitDataList: visitDataList,
+                                  );
+                                },
                         icon: const Icon(Icons.add),
                         tooltip: 'Tambah Kunjungan untuk Sales Ini',
                       ),
@@ -660,14 +672,17 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                       const SizedBox(width: 12),
 
                       IconButton(
-                        onPressed: () {
-                          showAddVisitPopup(
-                            context: context,
-                            salesId: salesId,
-                            salesName: salesName,
-                            visitDataList: visitDataList,
-                          );
-                        },
+                        onPressed:
+                            selectedDate.isBefore(currentDate)
+                                ? null
+                                : () {
+                                  showAddVisitPopup(
+                                    context: context,
+                                    salesId: viewedSalesId,
+                                    salesName: viewedsalesName,
+                                    visitDataList: visitDataList,
+                                  );
+                                },
                         icon: const Icon(Icons.add),
                         tooltip: 'Tambah Kunjungan untuk Sales Ini',
                       ),
