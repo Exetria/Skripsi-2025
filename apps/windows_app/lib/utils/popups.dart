@@ -2956,127 +2956,87 @@ Future<String?> showCustomerSelectorPopup({
   return showDialog<String>(
     context: context,
     builder: (context) {
-      return Consumer(
-        builder: (context, ref, _) {
-          return AlertDialog(
-            title: Row(
-              children: [
-                Expanded(
-                  child: customSearchBar(
-                    context: context,
-                    hint: 'Cari Pelanggan...',
-                    onChanged: (query) {
-                      ref
-                          .read(customerListControllerProvider.notifier)
-                          .searchCustomer(query);
-                    },
-                  ),
-                ),
-                const SizedBox(width: 8),
-                IconButton(
-                  icon: const Icon(Icons.refresh),
-                  tooltip: 'Segarkan Daftar Pelanggan',
-                  onPressed: () {
-                    ref.invalidate(customerListControllerProvider);
-                  },
-                ),
-              ],
+      return AlertDialog(
+        title: Row(
+          children: [
+            Expanded(
+              child: customSearchBar(
+                context: context,
+                hint: 'Cari Pelanggan...',
+                onChanged: (query) {
+                  ref
+                      .read(customerListControllerProvider.notifier)
+                      .searchCustomer(query);
+                },
+              ),
             ),
-            content: SizedBox(
-              width: ScreenUtil().screenWidth * 0.2,
-              height: ScreenUtil().screenHeight * 0.3,
-              child: ref
-                  .watch(customerListControllerProvider)
-                  .when(
-                    loading:
-                        () => const Center(child: CircularProgressIndicator()),
-                    data: (productList) {
-                      if (productList == null || productList.isEmpty) {
-                        return const Center(
-                          child: Text('Data Pelanggan Tidak Ditemukan'),
-                        );
-                      }
+            const SizedBox(width: 8),
+            IconButton(
+              icon: const Icon(Icons.refresh),
+              tooltip: 'Segarkan Daftar Pelanggan',
+              onPressed: () {
+                ref.invalidate(customerListControllerProvider);
+              },
+            ),
+          ],
+        ),
+        content: SizedBox(
+          width: ScreenUtil().screenWidth * 0.3,
+          child: ref
+              .watch(customerListControllerProvider)
+              .when(
+                loading: () => const Center(child: CircularProgressIndicator()),
+                data: (productList) {
+                  if (productList == null || productList.isEmpty) {
+                    return const Center(
+                      child: Text('Data Pelanggan Tidak Ditemukan'),
+                    );
+                  }
 
-                      return ListView.separated(
-                        itemCount: productList.length,
-                        separatorBuilder:
-                            (context, index) => const SizedBox(height: 8),
-                        itemBuilder: (context, index) {
-                          final data = productList[index];
-                          bool isHovered = false;
+                  return ListView.separated(
+                    itemCount: productList.length,
+                    separatorBuilder:
+                        (context, index) => const SizedBox(height: 8),
+                    itemBuilder: (context, index) {
+                      final data = productList[index];
 
-                          return StatefulBuilder(
-                            builder: (context, setState) {
-                              return MouseRegion(
-                                onEnter:
-                                    (_) => setState(() => isHovered = true),
-                                onExit:
-                                    (_) => setState(() => isHovered = false),
-                                child: AnimatedContainer(
-                                  duration: const Duration(milliseconds: 200),
-                                  transform:
-                                      isHovered
-                                          ? Matrix4.translationValues(0, -4, 0)
-                                          : Matrix4.identity(),
-                                  padding: const EdgeInsets.all(12),
-                                  decoration: BoxDecoration(
-                                    color:
-                                        Theme.of(context).colorScheme.surface,
-                                    border: Border.all(
-                                      color:
-                                          isHovered
-                                              ? Theme.of(
-                                                context,
-                                              ).colorScheme.primary
-                                              : Theme.of(context)
-                                                  .colorScheme
-                                                  .onSurface
-                                                  .withAlpha(128),
-                                      width: 1.5,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: InkWell(
-                                    onTap:
-                                        () => Navigator.pop(
-                                          context,
-                                          getIdFromName(name: data.name),
-                                        ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          data
-                                                  .fields
-                                                  ?.companyName
-                                                  ?.stringValue ??
-                                              '-',
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                      );
-                    },
-                    error: (error, _) {
-                      final exception = error as ApiException;
-
-                      return Center(
-                        child: Text(
-                          'Gagal Memuat Data Pelanggan: ${exception.message}',
-                          style: errorStyle,
+                      return hoverableCard(
+                        context: context,
+                        shadow: false,
+                        child: InkWell(
+                          onTap:
+                              () => Navigator.pop(
+                                context,
+                                getIdFromName(name: data.name),
+                              ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                data.fields?.companyName?.stringValue ?? '-',
+                              ),
+                              Text(
+                                data.fields?.companyAddress?.stringValue ?? '-',
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     },
-                  ),
-            ),
-          );
-        },
+                  );
+                },
+                error: (error, _) {
+                  final exception = error as ApiException;
+
+                  return Center(
+                    child: Text(
+                      'Gagal Memuat Data Pelanggan: ${exception.message}',
+                      style: errorStyle,
+                    ),
+                  );
+                },
+              ),
+        ),
       );
     },
   );
@@ -3091,127 +3051,85 @@ Future<String?> showProductSelectorPopup({
   return showDialog<String>(
     context: context,
     builder: (context) {
-      return Consumer(
-        builder: (context, ref, _) {
-          return AlertDialog(
-            title: Row(
-              children: [
-                Expanded(
-                  child: customSearchBar(
-                    context: context,
-                    hint: 'Cari Produk...',
-                    onChanged: (query) {
-                      ref
-                          .read(productListControllerProvider.notifier)
-                          .searchProduct(query);
-                    },
-                  ),
-                ),
-                const SizedBox(width: 8),
-                IconButton(
-                  icon: const Icon(Icons.refresh),
-                  tooltip: 'Segarkan Daftar Pelanggan',
-                  onPressed: () {
-                    ref.invalidate(productListControllerProvider);
-                  },
-                ),
-              ],
+      return AlertDialog(
+        title: Row(
+          children: [
+            Expanded(
+              child: customSearchBar(
+                context: context,
+                hint: 'Cari Produk...',
+                onChanged: (query) {
+                  ref
+                      .read(productListControllerProvider.notifier)
+                      .searchProduct(query);
+                },
+              ),
             ),
-            content: SizedBox(
-              width: ScreenUtil().screenWidth * 0.2,
-              height: ScreenUtil().screenHeight * 0.3,
-              child: ref
-                  .watch(productListControllerProvider)
-                  .when(
-                    loading:
-                        () => const Center(child: CircularProgressIndicator()),
-                    data: (productList) {
-                      if (productList == null || productList.isEmpty) {
-                        return const Center(
-                          child: Text('Data Produk Tidak Ditemukan'),
-                        );
-                      }
+            const SizedBox(width: 8),
+            IconButton(
+              icon: const Icon(Icons.refresh),
+              tooltip: 'Segarkan Daftar Pelanggan',
+              onPressed: () {
+                ref.invalidate(productListControllerProvider);
+              },
+            ),
+          ],
+        ),
+        content: SizedBox(
+          width: ScreenUtil().screenWidth * 0.3,
+          child: ref
+              .watch(productListControllerProvider)
+              .when(
+                loading: () => const Center(child: CircularProgressIndicator()),
+                data: (productList) {
+                  if (productList == null || productList.isEmpty) {
+                    return const Center(
+                      child: Text('Data Produk Tidak Ditemukan'),
+                    );
+                  }
 
-                      return ListView.separated(
-                        itemCount: productList.length,
-                        separatorBuilder:
-                            (context, index) => const SizedBox(height: 8),
-                        itemBuilder: (context, index) {
-                          final data = productList[index];
-                          bool isHovered = false;
+                  return ListView.separated(
+                    itemCount: productList.length,
+                    separatorBuilder:
+                        (context, index) => const SizedBox(height: 8),
+                    itemBuilder: (context, index) {
+                      final data = productList[index];
 
-                          return StatefulBuilder(
-                            builder: (context, setState) {
-                              return MouseRegion(
-                                onEnter:
-                                    (_) => setState(() => isHovered = true),
-                                onExit:
-                                    (_) => setState(() => isHovered = false),
-                                child: AnimatedContainer(
-                                  duration: const Duration(milliseconds: 200),
-                                  transform:
-                                      isHovered
-                                          ? Matrix4.translationValues(0, -4, 0)
-                                          : Matrix4.identity(),
-                                  padding: const EdgeInsets.all(12),
-                                  decoration: BoxDecoration(
-                                    color:
-                                        Theme.of(context).colorScheme.surface,
-                                    border: Border.all(
-                                      color:
-                                          isHovered
-                                              ? Theme.of(
-                                                context,
-                                              ).colorScheme.primary
-                                              : Theme.of(context)
-                                                  .colorScheme
-                                                  .onSurface
-                                                  .withAlpha(128),
-                                      width: 1.5,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: InkWell(
-                                    onTap:
-                                        () => Navigator.pop(
-                                          context,
-                                          getIdFromName(name: data.name),
-                                        ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          data
-                                                  .fields
-                                                  ?.productName
-                                                  ?.stringValue ??
-                                              '-',
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                      );
-                    },
-                    error: (error, _) {
-                      final exception = error as ApiException;
-
-                      return Center(
-                        child: Text(
-                          'Gagal Memuat Data Produk: ${exception.message}',
-                          style: errorStyle,
+                      return hoverableCard(
+                        context: context,
+                        shadow: false,
+                        child: InkWell(
+                          onTap:
+                              () => Navigator.pop(
+                                context,
+                                getIdFromName(name: data.name),
+                              ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                data.fields?.productName?.stringValue ?? '-',
+                              ),
+                              Text(data.fields?.brand?.stringValue ?? '-'),
+                            ],
+                          ),
                         ),
                       );
                     },
-                  ),
-            ),
-          );
-        },
+                  );
+                },
+                error: (error, _) {
+                  final exception = error as ApiException;
+
+                  return Center(
+                    child: Text(
+                      'Gagal Memuat Data Produk: ${exception.message}',
+                      style: errorStyle,
+                    ),
+                  );
+                },
+              ),
+        ),
       );
     },
   );
