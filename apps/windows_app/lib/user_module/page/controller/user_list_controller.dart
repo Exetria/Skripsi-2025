@@ -104,6 +104,22 @@ class UserListController extends _$UserListController {
     return null;
   }
 
+  int getUserSalesTarget({required String id}) {
+    if (state is! AsyncData) {
+      return 0;
+    }
+
+    final userList = _userList ?? [];
+
+    for (UserDomain user in userList) {
+      if (id == getIdFromName(name: user.name)) {
+        return int.tryParse(user.fields?.salesTarget?.integerValue ?? '0') ?? 0;
+      }
+    }
+
+    return 0;
+  }
+
   Future<List<String>> getAllSalesId() async {
     while (state is! AsyncData) {
       await Future.delayed(const Duration(milliseconds: 100));

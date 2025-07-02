@@ -8,9 +8,12 @@ import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:windows_app/customer_module/page/controller/customer_list_controller.dart';
+import 'package:windows_app/order_module/domain/entities/order_domain.dart';
 import 'package:windows_app/order_module/page/controller/order_list_controller.dart';
+import 'package:windows_app/user_module/page/controller/user_list_controller.dart';
 import 'package:windows_app/utils/functions.dart';
 import 'package:windows_app/utils/geoJsonPolygonLoader.dart';
+import 'package:windows_app/visit_module/domain/entities/visit_domain.dart';
 import 'package:windows_app/visit_module/page/controller/filtered_visit_controller.dart';
 import 'package:windows_app/visit_module/page/controller/visit_list_controller.dart';
 
@@ -37,13 +40,8 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
     RegionFilter.mojokerto,
     RegionFilter.probolinggo,
   ];
-  RegionFilter? selectedRegion;
-  DateTime? selectedMonth;
-  Offset? popupOffset;
-  String popupText = '';
-
-  bool reportView = true;
-
+  List<Polygon> mapPolygons = [];
+  List<int> orderPerPolygon = [];
   List<BarChartGroupData> barGroup = List.generate(
     31,
     (i) => BarChartGroupData(x: i, barRods: [BarChartRodData(toY: 0)]),
@@ -81,12 +79,22 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
     '30',
     '31',
   ];
+
+  DateTime selectedMonth = DateTime(DateTime.now().year, DateTime.now().month);
+
+  RegionFilter? selectedRegion;
+  Offset? popupOffset;
+  String popupText = '';
+
   int totalVisitCount = 0;
   int totalOrderCount = 0;
   int totalOrderPrice = 0;
 
-  List<Polygon> mapPolygons = [];
-  List<int> orderPerPolygon = [];
+  String? focusedSalesId;
+  String? focusedSalesName;
+  List<VisitDomain>? currentMonthSalesVisitList;
+
+  int selectedView = 0; // 0 for report view, 1 for detail view ,2 for map view
 
   @override
   void initState() {
@@ -110,6 +118,13 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
       DateTime.now().day,
     );
 
+    // Fill the current month sales visit data if sales is focused
+    addCallBackAfterBuild(
+      callback: () {
+        generateCurrentMonthSalesVisitList();
+      },
+    );
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Stack(
@@ -124,11 +139,13 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
               const SizedBox(height: 12),
               Expanded(
                 child:
-                    reportView
+                    selectedView == 0
                         ? buildReportView(
                           ref: ref,
                           salesForceCountStartDate: salesForceCountStartDate,
                         )
+                        : selectedView == 1
+                        ? buildSalesDetailView()
                         : buildMapView(),
               ),
             ],
@@ -159,8 +176,10 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
               width: ScreenUtil().screenWidth * 0.25,
               child: _buildMonthSelector(),
             ),
-            if (!reportView) const SizedBox(width: 16),
-            if (!reportView) _createSingleSelectDropdown(),
+            if (selectedView == 2) const SizedBox(width: 16),
+            if (selectedView == 2) _createSingleSelectDropdown(),
+
+            const SizedBox(width: 16),
           ],
         ),
         Row(
@@ -168,7 +187,11 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
             IconButton(
               onPressed: () async {
                 setState(() {
-                  reportView = !reportView;
+                  selectedView == 2 ? selectedView = 0 : selectedView++;
+                  focusedSalesId = null;
+                  focusedSalesName = null;
+                  currentMonthSalesVisitList = null;
+
                   selectedRegion = null;
                   popupOffset = null;
                   popupText = '';
@@ -183,7 +206,6 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
             IconButton(
               onPressed: () {
                 setState(() {
-                  selectedMonth = null;
                   selectedRegion = null;
                   popupOffset = null;
                   popupText = '';
@@ -233,7 +255,7 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
               context: context,
               firstDate: DateTime(2020),
               lastDate: DateTime.now(),
-              initialDate: selectedMonth ?? DateTime.now(),
+              initialDate: selectedMonth,
             ).then((value) {
               if (value != null) {
                 setState(() {
@@ -249,10 +271,7 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                DateFormat.yMMMM().format(selectedMonth ?? DateTime.now()),
-                style: bodyStyle,
-              ),
+              Text(DateFormat.yMMMM().format(selectedMonth), style: bodyStyle),
               Icon(
                 Icons.calendar_today,
                 color: Theme.of(context).colorScheme.onSurface,
@@ -376,6 +395,15 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
     );
   }
 
+  Widget buildSalesDetailView() {
+    return Row(
+      children: [
+        Expanded(flex: 7, child: _buildSalesDetailCard()),
+        Expanded(flex: 3, child: _buildSalesList()),
+      ],
+    );
+  }
+
   Widget buildMapView() {
     return Card(
       elevation: 4,
@@ -432,6 +460,346 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
     );
   }
 
+  Widget _buildSalesDetailCard() {
+    if (focusedSalesId == null || focusedSalesId!.isEmpty) {
+      return Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Center(
+            child: Text('Pilih Sales untuk melihat performa', style: bodyStyle),
+          ),
+        ),
+      );
+    }
+
+    final userListState = ref.watch(userListControllerProvider);
+    final orderListState = ref.watch(orderListControllerProvider);
+
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Performa $focusedSalesName Bulan ${DateFormat.MMMM().format(selectedMonth)} ${selectedMonth.year}',
+                  style: subtitleStyle,
+                ),
+                if (selectedView == 1 &&
+                    focusedSalesId != null &&
+                    focusedSalesId!.isNotEmpty &&
+                    focusedSalesName != null &&
+                    focusedSalesName!.isNotEmpty)
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        focusedSalesId = null;
+                        focusedSalesName = null;
+                        currentMonthSalesVisitList = null;
+                      });
+                    },
+                    icon: const Icon(Icons.close),
+                    tooltip: 'Batalkan Fokus Sales',
+                  ),
+              ],
+            ),
+            const SizedBox(height: 24),
+
+            Text('Pesanan', style: bodyStyle),
+            const SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                // Total order created
+                buildStatCard(
+                  context,
+                  'Total Pesanan',
+                  orderListState.when(
+                    loading: () => 'Memuat...',
+                    data: (orderList) {
+                      final List<OrderDomain> currentMonthOrderList = ref
+                          .read(orderListControllerProvider.notifier)
+                          .getSalesMonthlyOrderList(
+                            salesId: focusedSalesId!,
+                            selectedMonth: selectedMonth,
+                          );
+
+                      return currentMonthOrderList.length.toString();
+                    },
+                    error: (error, stackTrace) {
+                      return 'Gagal Memuat';
+                    },
+                  ),
+                ),
+
+                // Total order finished
+                buildStatCard(
+                  context,
+                  'Total Selesai',
+                  orderListState.when(
+                    loading: () => 'Memuat...',
+                    data: (orderList) {
+                      final List<OrderDomain> currentMonthOrderList = ref
+                          .read(orderListControllerProvider.notifier)
+                          .getSalesMonthlyOrderList(
+                            salesId: focusedSalesId!,
+                            selectedMonth: selectedMonth,
+                          );
+
+                      int finishedOrderCount = 0;
+                      for (OrderDomain order in currentMonthOrderList) {
+                        if (order.fields?.orderStatus?.stringValue ==
+                            'finished') {
+                          finishedOrderCount++;
+                        }
+                      }
+                      return finishedOrderCount.toString();
+                    },
+                    error: (error, stackTrace) {
+                      return 'Gagal Memuat';
+                    },
+                  ),
+                ),
+
+                // Sales target
+                buildStatCard(
+                  context,
+                  'Target Penjualan',
+                  userListState.when(
+                    loading: () => 'Memuat...',
+                    data: (salesList) {
+                      final int currentMonthTurnOver = ref
+                          .read(userListControllerProvider.notifier)
+                          .getUserSalesTarget(id: focusedSalesId!);
+                      return rupiahFormat(currentMonthTurnOver);
+                    },
+                    error: (error, stackTrace) {
+                      return 'Gagal Memuat';
+                    },
+                  ),
+                ),
+
+                // Total turnover
+                buildStatCard(
+                  context,
+                  'Total Omzet',
+                  orderListState.when(
+                    loading: () => 'Memuat...',
+                    data: (orderList) {
+                      final int currentMonthTurnOver = ref
+                          .read(orderListControllerProvider.notifier)
+                          .getSalesMonthlyTurnover(
+                            salesId: focusedSalesId!,
+                            selectedMonth: selectedMonth,
+                          );
+                      return rupiahFormat(currentMonthTurnOver);
+                    },
+                    error: (error, stackTrace) {
+                      return 'Gagal Memuat';
+                    },
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+
+            Text('Kunjungan', style: bodyStyle),
+            const SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                // Total visit created
+                buildStatCard(
+                  context,
+                  'Total Kunjungan',
+                  getMonthlySalesVisitCount(),
+                ),
+
+                // Total visit finished
+                buildStatCard(
+                  context,
+                  'Total Selesai',
+                  getMonthlySalesFinishedVisitCount(),
+                ),
+
+                // Total visit cancelled
+                buildStatCard(
+                  context,
+                  'Total Dibatalkan',
+                  getMonthlySalesCancelledVisitCount(),
+                ),
+
+                // Total visit still planned
+                buildStatCard(
+                  context,
+                  'Total Direncanakan',
+                  getMonthlySalesPlannedVisitCount(),
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+
+            const Text('tambahkan pelaporan kunjungan yang terpenuhi/sales,'),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSalesList() {
+    final userListState = ref.watch(userListControllerProvider);
+
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Daftar Sales',
+                        style: subtitleStyle,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Expanded(
+                    child: userListState.when(
+                      loading: () {
+                        return const Center(child: CircularProgressIndicator());
+                      },
+                      data: (salesList) {
+                        if (salesList == null || salesList.isEmpty) {
+                          return Center(
+                            child: Text(
+                              'Data Sales Tidak Ditemukan',
+                              style: bodyStyle,
+                            ),
+                          );
+                        }
+
+                        return ListView.separated(
+                          itemCount: salesList.length,
+                          separatorBuilder:
+                              (context, index) => const SizedBox(height: 12),
+                          itemBuilder: (context, index) {
+                            if (salesList[index].fields?.role?.stringValue !=
+                                'sales') {
+                              return const SizedBox.shrink();
+                            }
+
+                            String salesId = getIdFromName(
+                              name: salesList[index].name,
+                            );
+
+                            String salesName =
+                                salesList[index]
+                                    .fields
+                                    ?.userName
+                                    ?.stringValue ??
+                                '';
+
+                            int salesTarget = ref
+                                .read(userListControllerProvider.notifier)
+                                .getUserSalesTarget(id: salesId);
+
+                            return _createSalesTile(
+                              salesId: salesId,
+                              salesName: salesName,
+                              salesTarget: salesTarget,
+                            );
+                          },
+                        );
+                      },
+                      error: (error, _) {
+                        final exception = error as ApiException;
+                        return Center(
+                          child: Text(
+                            'Gagal Memuat Daftar Sales: ${exception.message}',
+                            style: errorStyle,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _createSalesTile({
+    required String salesId,
+    required String salesName,
+    required int salesTarget,
+  }) {
+    final orderListState = ref.watch(orderListControllerProvider);
+    final cs = Theme.of(context).colorScheme;
+
+    return hoverableCard(
+      context: context,
+      child: InkWell(
+        onTap: () {
+          setState(() {
+            focusedSalesId = salesId;
+            focusedSalesName = salesName;
+            currentMonthSalesVisitList = null;
+          });
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(salesName, style: bodyStyle),
+            orderListState.when(
+              loading: () => const CircularProgressIndicator(),
+              data: (orderList) {
+                final int currentMonthTurnOver = ref
+                    .read(orderListControllerProvider.notifier)
+                    .getSalesMonthlyTurnover(
+                      salesId: salesId,
+                      selectedMonth: selectedMonth,
+                    );
+
+                final bool targetStatus = currentMonthTurnOver >= salesTarget;
+
+                return Text(
+                  targetStatus ? 'Target Tercapai' : 'Target Belum Tercapai',
+                  style: bodyStyle.copyWith(
+                    color: targetStatus ? cs.tertiary : cs.error,
+                  ),
+                );
+              },
+              error: (error, stackTrace) {
+                return Text('Gagal Memuat Status Target', style: errorStyle);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget buildVisitBarChart() {
     final visitListState = ref.watch(visitListControllerProvider);
     final onHoverBackgroundColor =
@@ -447,7 +815,7 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
         padding: const EdgeInsets.all(12),
         child: Column(
           children: [
-            Text('Grafik Kunjungan Harian', style: subtitleStyle),
+            Text('Grafik Kunjungan Selesai Harian', style: subtitleStyle),
             const SizedBox(height: 16),
             Expanded(
               child: visitListState.when(
@@ -526,11 +894,11 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
         // Get the total price of orders for each day of the month
         List<int> currentMonthOrderTotalPrice = ref
             .read(orderListControllerProvider.notifier)
-            .getMonthlyOrderTotalPrice(selectedMonth ?? DateTime.now());
+            .getMonthlyOrderTotalPrice(selectedMonth);
 
-        List<int> currentMonthOrderCount = ref
+        List<int> currentMonthFinishedOrderCount = ref
             .read(orderListControllerProvider.notifier)
-            .getMonthlyOrderCount(selectedMonth ?? DateTime.now());
+            .getMonthlyFinishedOrderCount(selectedMonth);
 
         // Add spots & count total price for each day of the month
         List<FlSpot> lineSpots = [];
@@ -541,14 +909,14 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
           newTotalOrderPrice += dailyTotal;
           lineSpots.add(
             FlSpot(
-              i.toDouble() + 1, // Correct index
-              dailyTotal.toDouble(), // Y value
+              i.toDouble() + 1, // X
+              dailyTotal.toDouble(), // Y
             ),
           );
         }
 
         // Count total orders
-        for (int orderInDay in currentMonthOrderCount) {
+        for (int orderInDay in currentMonthFinishedOrderCount) {
           newTotalOrderCount += orderInDay;
         }
 
@@ -663,15 +1031,17 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
                   data: (data) {
                     final newCustomerCount = ref
                         .read(customerListControllerProvider.notifier)
-                        .getNewCustomerCount(
-                          month: selectedMonth ?? DateTime.now(),
-                        );
+                        .getNewCustomerCount(month: selectedMonth);
                     return newCustomerCount.toString();
                   },
                   error: (e, _) => 'Error: \$e',
                 ),
               ),
-              buildStatCard(context, 'Total Order', totalOrderCount.toString()),
+              buildStatCard(
+                context,
+                'Total Order Selesai',
+                totalOrderCount.toString(),
+              ),
               buildStatCard(
                 context,
                 'Total Harga Order',
@@ -835,9 +1205,8 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
     List<int> visitAmountPerDay = List.generate(31, (index) => 0);
     visitAmountPerDay = await ref
         .read(visitListControllerProvider.notifier)
-        .getMonthlyVisitCount(selectedMonth ?? DateTime.now());
+        .getMonthlyVisitCount(selectedMonth);
 
-    if (!mounted) return;
     int newTotalVisitCount = 0;
 
     final newBarGroup = <BarChartGroupData>[];
@@ -860,5 +1229,95 @@ class _ReportFragmentState extends ConsumerState<ReportFragment> {
         totalVisitCount = newTotalVisitCount;
       });
     }
+  }
+
+  Future<void> generateCurrentMonthSalesVisitList() async {
+    if (!mounted ||
+        focusedSalesId == null ||
+        focusedSalesName == null ||
+        currentMonthSalesVisitList != null ||
+        selectedView != 1) {
+      print('asds gajadi ambil visit list');
+      return;
+    }
+    print('asds JADI ambil visit list');
+
+    final visitList = await ref
+        .read(visitListControllerProvider.notifier)
+        .getSalesMonthlyVisitList(
+          salesId: focusedSalesId!,
+          month: selectedMonth,
+        );
+
+    if (mounted) {
+      setState(() {
+        currentMonthSalesVisitList = visitList;
+      });
+    }
+  }
+
+  String getMonthlySalesVisitCount() {
+    if (currentMonthSalesVisitList == null) return 'Memuat...';
+    return currentMonthSalesVisitList!.length.toString();
+  }
+
+  String getMonthlySalesFinishedVisitCount() {
+    if (currentMonthSalesVisitList == null) return 'Memuat...';
+    int finishedVisitCount = 0;
+    for (final visitDomain in currentMonthSalesVisitList!) {
+      // get visit list
+      final visitList = visitDomain.fields?.visits?.arrayValue?.values;
+
+      // count the visits with status '2' (finished)
+      if (visitList != null) {
+        for (var value in visitList) {
+          if (value.mapValue?.fields?.visitStatus?.integerValue == '2') {
+            finishedVisitCount++;
+          }
+        }
+      }
+    }
+
+    return finishedVisitCount.toString();
+  }
+
+  String getMonthlySalesCancelledVisitCount() {
+    if (currentMonthSalesVisitList == null) return 'Memuat...';
+    int finishedVisitCount = 0;
+    for (final visitDomain in currentMonthSalesVisitList!) {
+      // get visit list
+      final visitList = visitDomain.fields?.visits?.arrayValue?.values;
+
+      // count the visits with status '3' (cancelled)
+      if (visitList != null) {
+        for (var value in visitList) {
+          if (value.mapValue?.fields?.visitStatus?.integerValue == '3') {
+            finishedVisitCount++;
+          }
+        }
+      }
+    }
+
+    return finishedVisitCount.toString();
+  }
+
+  String getMonthlySalesPlannedVisitCount() {
+    if (currentMonthSalesVisitList == null) return 'Memuat...';
+    int finishedVisitCount = 0;
+    for (final visitDomain in currentMonthSalesVisitList!) {
+      // get visit list
+      final visitList = visitDomain.fields?.visits?.arrayValue?.values;
+
+      // count the visits with status '0' (planned)
+      if (visitList != null) {
+        for (var value in visitList) {
+          if (value.mapValue?.fields?.visitStatus?.integerValue == '0') {
+            finishedVisitCount++;
+          }
+        }
+      }
+    }
+
+    return finishedVisitCount.toString();
   }
 }

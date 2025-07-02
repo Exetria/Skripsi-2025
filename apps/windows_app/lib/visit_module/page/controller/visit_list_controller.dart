@@ -31,24 +31,32 @@ class VisitListController extends _$VisitListController {
       state.value ?? {},
     );
 
+    // set state to loading
+    state = const AsyncLoading();
+
+    // call api
+    List<Future<void>> visitDataApiCalls = [];
     for (var salesId in salesIdList) {
       // If data exist cancel API call
       if (previousMap['$salesId-$dateString'] != null && !forceFetch) {
-        state = AsyncData(previousMap);
-        return;
+        continue;
       }
 
       // Call API
-      final repository = ref.watch(visitListRepositoryProvider);
-      state = const AsyncLoading();
-      final result = await repository.getSalesVisitList(
-        salesId: salesId,
-        date: date,
-      );
+      visitDataApiCalls.add(() async {
+        final repository = ref.watch(visitListRepositoryProvider);
+        state = const AsyncLoading();
+        final result = await repository.getSalesVisitList(
+          salesId: salesId,
+          date: date,
+        );
 
-      // Add result to map
-      previousMap['$salesId-$dateString'] = result;
+        // Add result to map
+        previousMap['$salesId-$dateString'] = result;
+      }());
     }
+
+    await Future.wait(visitDataApiCalls);
 
     // Reassign data
     state = AsyncData(previousMap);
@@ -231,6 +239,10 @@ class VisitListController extends _$VisitListController {
   }
 
   Future<List<int>> getMonthlyVisitCount(DateTime month) async {
+    // Not needed since waiting is done in the caller
+    // while (state is! AsyncData) {
+    //   await Future.delayed(const Duration(milliseconds: 100));
+    // }
     List<String> salesIdList =
         await ref.read(userListControllerProvider.notifier).getAllSalesId();
 
@@ -238,22 +250,26 @@ class VisitListController extends _$VisitListController {
 
     final monthlyCounts = List<int>.filled(31, 0);
 
-    // Fetch all sales visits everyday in targeted month
+    // Count visits everyday in targeted month
     for (int day = 1; day <= 31; day++) {
       final date = DateTime(targetMonth.year, targetMonth.month, day);
 
-      // Fetch visit
+      // Fetch all sales visits for the date
       await fetchAllSalesVisitsForDate(date: date);
 
-      // Get the visit count
+      // Get the finished visit count
       int visitCount = 0;
       for (String salesId in salesIdList) {
         final visitData =
             state.value?['$salesId-${_generateFormattedDate(date)}'];
         if (visitData != null && visitData.isRight()) {
           final visitDomain = visitData.getOrElse((error) => null);
+
+          // get visit list
           List<Value>? visitList =
               visitDomain?.fields?.visits?.arrayValue?.values;
+
+          // count the visits with status '2' (finished)
           if (visitList != null) {
             for (var value in visitList) {
               if (value.mapValue?.fields?.visitStatus?.integerValue == '2') {
@@ -269,6 +285,37 @@ class VisitListController extends _$VisitListController {
     }
 
     return monthlyCounts;
+  }
+
+  Future<List<VisitDomain>> getSalesMonthlyVisitList({
+    required String salesId,
+    required DateTime month,
+  }) async {
+    // Not needed since waiting is done in the caller
+    // while (state is! AsyncData) {
+    //   await Future.delayed(const Duration(milliseconds: 100));
+    // }
+    final targetMonth = DateTime(month.year, month.month);
+
+    final List<VisitDomain> monthlyVisits = [];
+
+    for (int day = 1; day <= 31; day++) {
+      final date = DateTime(targetMonth.year, targetMonth.month, day);
+      await fetchSalesVisitsForDate(salesId: salesId, date: date);
+
+      final visitData =
+          state.value?['$salesId-${_generateFormattedDate(date)}'];
+
+      if (visitData != null && visitData.isRight()) {
+        final visitDomain = visitData.getOrElse((error) => null);
+
+        if (visitDomain != null) {
+          monthlyVisits.add(visitDomain);
+        }
+      }
+    }
+
+    return monthlyVisits;
   }
 
   String _generateFormattedDate(DateTime date) {

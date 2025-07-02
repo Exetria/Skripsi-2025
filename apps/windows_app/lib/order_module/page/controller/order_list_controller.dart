@@ -337,7 +337,7 @@ class OrderListController extends _$OrderListController {
     return orderList;
   }
 
-  List<int> getMonthlyOrderCount(DateTime month) {
+  List<int> getMonthlyFinishedOrderCount(DateTime month) {
     if (_orderList == null) return List<int>.filled(31, 0);
 
     final targetMonth = DateTime(month.year, month.month);
@@ -346,7 +346,10 @@ class OrderListController extends _$OrderListController {
 
     for (final order in _orderList!) {
       final createDate = DateTime.tryParse(order.createTime ?? '');
-      if (createDate == null) continue;
+      if (createDate == null ||
+          order.fields?.orderStatus?.stringValue != 'finished') {
+        continue;
+      }
 
       final orderDate = DateTime(createDate.year, createDate.month);
       if (orderDate == targetMonth) {
@@ -383,108 +386,71 @@ class OrderListController extends _$OrderListController {
     return monthlyTotals;
   }
 
-  int getOrderCountByDate(DateTime date) {
-    if (_orderList == null) return 0;
+  List<OrderDomain> getSalesMonthlyOrderList({
+    required String salesId,
+    required DateTime selectedMonth,
+  }) {
+    if (_orderList == null) return [];
+    List<OrderDomain> result = [];
 
-    final targetDate = DateTime(date.year, date.month, date.day);
+    // Get sales' orders in the specified month
+    for (OrderDomain order in _orderList!) {
+      // Check order creator
+      final orderCreatorId = order.fields?.createdBy?.stringValue ?? '';
+      if (orderCreatorId != salesId) continue;
 
-    return _orderList!.where((order) {
-      final createDate = DateTime.tryParse(order.createTime ?? '');
-      if (createDate == null) return false;
-
-      final orderDate = DateTime(
-        createDate.year,
-        createDate.month,
-        createDate.day,
-      );
-      return orderDate == targetDate;
-    }).length;
-  }
-
-  int getOrderCountByDateRange(DateTimeRange dateRange) {
-    if (_orderList == null) return 0;
-
-    final startDate = DateTime(
-      dateRange.start.year,
-      dateRange.start.month,
-      dateRange.start.day,
-    );
-    final endDate = DateTime(
-      dateRange.end.year,
-      dateRange.end.month,
-      dateRange.end.day,
-    );
-
-    return _orderList!.where((order) {
-      final createDate = DateTime.tryParse(order.createTime ?? '');
-      if (createDate == null) return false;
-
-      final orderDate = DateTime(
-        createDate.year,
-        createDate.month,
-        createDate.day,
-      );
-      return orderDate.isAtSameMomentAs(startDate) ||
-          orderDate.isAtSameMomentAs(endDate) ||
-          (orderDate.isAfter(startDate) && orderDate.isBefore(endDate));
-    }).length;
-  }
-
-  int getOrderTotalPriceByDate(DateTime date) {
-    if (_orderList == null) return 0;
-
-    final targetDate = DateTime(date.year, date.month, date.day);
-
-    return _orderList!.fold(0, (total, order) {
-      final createDate = DateTime.tryParse(order.createTime ?? '');
-      if (createDate == null) return total;
-
-      final orderDate = DateTime(
-        createDate.year,
-        createDate.month,
-        createDate.day,
-      );
-      if (orderDate == targetDate) {
-        final price =
-            int.tryParse(order.fields?.totalPrice?.integerValue ?? '0') ?? 0;
-        return total + price;
+      // Check order date
+      final orderDate = DateTime.tryParse(order.createTime ?? '');
+      if (orderDate == null ||
+          orderDate.year != selectedMonth.year ||
+          orderDate.month != selectedMonth.month) {
+        continue;
       }
-      return total;
-    });
+
+      // Add to result if created by sales and in the target month
+      result.add(order);
+    }
+
+    // Return the filtered list
+    return result;
   }
 
-  int getOrderTotalPriceByDateRange(DateTimeRange dateRange) {
+  int getSalesMonthlyTurnover({
+    required String salesId,
+    required DateTime selectedMonth,
+  }) {
     if (_orderList == null) return 0;
+    int result = 0;
 
-    final startDate = DateTime(
-      dateRange.start.year,
-      dateRange.start.month,
-      dateRange.start.day,
-    );
-    final endDate = DateTime(
-      dateRange.end.year,
-      dateRange.end.month,
-      dateRange.end.day,
-    );
+    // Get sales' orders in the specified month
+    for (OrderDomain order in _orderList!) {
+      // Check order creator
+      final orderCreatorId = order.fields?.createdBy?.stringValue ?? '';
+      if (orderCreatorId != salesId) continue;
 
-    return _orderList!.fold(0, (total, order) {
-      final createDate = DateTime.tryParse(order.createTime ?? '');
-      if (createDate == null) return total;
-
-      final orderDate = DateTime(
-        createDate.year,
-        createDate.month,
-        createDate.day,
-      );
-      if (orderDate.isAtSameMomentAs(startDate) ||
-          orderDate.isAtSameMomentAs(endDate) ||
-          (orderDate.isAfter(startDate) && orderDate.isBefore(endDate))) {
-        final price =
-            int.tryParse(order.fields?.totalPrice?.integerValue ?? '0') ?? 0;
-        return total + price;
+      // Check order date
+      final orderDate = DateTime.tryParse(order.createTime ?? '');
+      if (orderDate == null ||
+          orderDate.year != selectedMonth.year ||
+          orderDate.month != selectedMonth.month) {
+        continue;
       }
-      return total;
-    });
+
+      // Check order status
+      final orderStatus = order.fields?.orderStatus?.stringValue ?? '';
+      if (orderStatus != 'finished') {
+        continue;
+      }
+
+      // Add total price to result if created by sales and in the target month
+      result +=
+          order.fields?.totalPrice?.integerValue != null
+              ? int.tryParse(order.fields!.totalPrice!.integerValue ?? '') ?? 0
+              : 0;
+    }
+
+    // Return the filtered list
+    return result;
   }
 
   Future<List<LatLng>> getFilteredOrderLocations() async {
