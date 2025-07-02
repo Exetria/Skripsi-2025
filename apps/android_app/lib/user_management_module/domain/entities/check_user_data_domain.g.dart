@@ -28,64 +28,69 @@ Map<String, dynamic> _$$CheckUserDataDomainImplToJson(
 };
 
 _$FieldsImpl _$$FieldsImplFromJson(Map<String, dynamic> json) => _$FieldsImpl(
-  assignedProducts:
-      json['assigned_products'] == null
+  isActive:
+      json['is_active'] == null
           ? null
-          : Assigned.fromJson(
-            json['assigned_products'] as Map<String, dynamic>,
-          ),
+          : IsActive.fromJson(json['is_active'] as Map<String, dynamic>),
+  salesTarget:
+      json['sales_target'] == null
+          ? null
+          : SalesTarget.fromJson(json['sales_target'] as Map<String, dynamic>),
+  role:
+      json['role'] == null
+          ? null
+          : Email.fromJson(json['role'] as Map<String, dynamic>),
   assignedCustomers:
       json['assigned_customers'] == null
           ? null
           : Assigned.fromJson(
             json['assigned_customers'] as Map<String, dynamic>,
           ),
-  fcmToken:
-      json['fcm_token'] == null
+  assignedProducts:
+      json['assigned_products'] == null
           ? null
-          : Email.fromJson(json['fcm_token'] as Map<String, dynamic>),
-  phoneNumber:
-      json['phone_number'] == null
-          ? null
-          : Email.fromJson(json['phone_number'] as Map<String, dynamic>),
-  userName:
-      json['user_name'] == null
-          ? null
-          : Email.fromJson(json['user_name'] as Map<String, dynamic>),
+          : Assigned.fromJson(
+            json['assigned_products'] as Map<String, dynamic>,
+          ),
   email:
       json['email'] == null
           ? null
           : Email.fromJson(json['email'] as Map<String, dynamic>),
-  fullName:
-      json['full_name'] == null
+  phoneNumber:
+      json['phone_number'] == null
           ? null
-          : Email.fromJson(json['full_name'] as Map<String, dynamic>),
-  isActive:
-      json['is_active'] == null
+          : Email.fromJson(json['phone_number'] as Map<String, dynamic>),
+  fcmToken:
+      json['fcm_token'] == null
           ? null
-          : IsActive.fromJson(json['is_active'] as Map<String, dynamic>),
+          : Email.fromJson(json['fcm_token'] as Map<String, dynamic>),
+  userName:
+      json['user_name'] == null
+          ? null
+          : Email.fromJson(json['user_name'] as Map<String, dynamic>),
   photoUrl:
       json['photo_url'] == null
           ? null
           : Email.fromJson(json['photo_url'] as Map<String, dynamic>),
-  role:
-      json['role'] == null
+  fullName:
+      json['full_name'] == null
           ? null
-          : Email.fromJson(json['role'] as Map<String, dynamic>),
+          : Email.fromJson(json['full_name'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$$FieldsImplToJson(_$FieldsImpl instance) =>
     <String, dynamic>{
-      'assigned_products': instance.assignedProducts,
-      'assigned_customers': instance.assignedCustomers,
-      'fcm_token': instance.fcmToken,
-      'phone_number': instance.phoneNumber,
-      'user_name': instance.userName,
-      'email': instance.email,
-      'full_name': instance.fullName,
       'is_active': instance.isActive,
-      'photo_url': instance.photoUrl,
+      'sales_target': instance.salesTarget,
       'role': instance.role,
+      'assigned_customers': instance.assignedCustomers,
+      'assigned_products': instance.assignedProducts,
+      'email': instance.email,
+      'phone_number': instance.phoneNumber,
+      'fcm_token': instance.fcmToken,
+      'user_name': instance.userName,
+      'photo_url': instance.photoUrl,
+      'full_name': instance.fullName,
     };
 
 _$AssignedImpl _$$AssignedImplFromJson(Map<String, dynamic> json) =>
@@ -121,3 +126,9 @@ _$IsActiveImpl _$$IsActiveImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$IsActiveImplToJson(_$IsActiveImpl instance) =>
     <String, dynamic>{'booleanValue': instance.booleanValue};
+
+_$SalesTargetImpl _$$SalesTargetImplFromJson(Map<String, dynamic> json) =>
+    _$SalesTargetImpl(integerValue: json['integerValue'] as String?);
+
+Map<String, dynamic> _$$SalesTargetImplToJson(_$SalesTargetImpl instance) =>
+    <String, dynamic>{'integerValue': instance.integerValue};

@@ -19,16 +19,17 @@ class CheckUserDataDomain with _$CheckUserDataDomain {
 @freezed
 class Fields with _$Fields {
   const factory Fields({
-    @JsonKey(name: 'assigned_products') Assigned? assignedProducts,
-    @JsonKey(name: 'assigned_customers') Assigned? assignedCustomers,
-    @JsonKey(name: 'fcm_token') Email? fcmToken,
-    @JsonKey(name: 'phone_number') Email? phoneNumber,
-    @JsonKey(name: 'user_name') Email? userName,
-    @JsonKey(name: 'email') Email? email,
-    @JsonKey(name: 'full_name') Email? fullName,
     @JsonKey(name: 'is_active') IsActive? isActive,
-    @JsonKey(name: 'photo_url') Email? photoUrl,
+    @JsonKey(name: 'sales_target') SalesTarget? salesTarget,
     @JsonKey(name: 'role') Email? role,
+    @JsonKey(name: 'assigned_customers') Assigned? assignedCustomers,
+    @JsonKey(name: 'assigned_products') Assigned? assignedProducts,
+    @JsonKey(name: 'email') Email? email,
+    @JsonKey(name: 'phone_number') Email? phoneNumber,
+    @JsonKey(name: 'fcm_token') Email? fcmToken,
+    @JsonKey(name: 'user_name') Email? userName,
+    @JsonKey(name: 'photo_url') Email? photoUrl,
+    @JsonKey(name: 'full_name') Email? fullName,
   }) = _Fields;
 
   factory Fields.fromJson(Map<String, dynamic> json) => _$FieldsFromJson(json);
@@ -68,4 +69,14 @@ class IsActive with _$IsActive {
 
   factory IsActive.fromJson(Map<String, dynamic> json) =>
       _$IsActiveFromJson(json);
+}
+
+@freezed
+class SalesTarget with _$SalesTarget {
+  const factory SalesTarget({
+    @JsonKey(name: 'integerValue') String? integerValue,
+  }) = _SalesTarget;
+
+  factory SalesTarget.fromJson(Map<String, dynamic> json) =>
+      _$SalesTargetFromJson(json);
 }

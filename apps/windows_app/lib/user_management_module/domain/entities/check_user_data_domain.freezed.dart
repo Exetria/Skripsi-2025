@@ -289,24 +289,28 @@ Fields _$FieldsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Fields {
-  @JsonKey(name: 'role')
-  Email? get role => throw _privateConstructorUsedError;
-  @JsonKey(name: 'full_name')
-  Email? get fullName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'email')
-  Email? get email => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_active')
   IsActive? get isActive => throw _privateConstructorUsedError;
-  @JsonKey(name: 'phone_number')
-  Email? get phoneNumber => throw _privateConstructorUsedError;
-  @JsonKey(name: 'photo_url')
-  PhotoUrl? get photoUrl => throw _privateConstructorUsedError;
-  @JsonKey(name: 'assigned_products')
-  Assigned? get assignedProducts => throw _privateConstructorUsedError;
+  @JsonKey(name: 'sales_target')
+  SalesTarget? get salesTarget => throw _privateConstructorUsedError;
+  @JsonKey(name: 'role')
+  Email? get role => throw _privateConstructorUsedError;
   @JsonKey(name: 'assigned_customers')
   Assigned? get assignedCustomers => throw _privateConstructorUsedError;
+  @JsonKey(name: 'assigned_products')
+  Assigned? get assignedProducts => throw _privateConstructorUsedError;
+  @JsonKey(name: 'email')
+  Email? get email => throw _privateConstructorUsedError;
+  @JsonKey(name: 'phone_number')
+  Email? get phoneNumber => throw _privateConstructorUsedError;
+  @JsonKey(name: 'fcm_token')
+  Email? get fcmToken => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_name')
   Email? get userName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'photo_url')
+  Email? get photoUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: 'full_name')
+  Email? get fullName => throw _privateConstructorUsedError;
 
   /// Serializes this Fields to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -323,26 +327,30 @@ abstract class $FieldsCopyWith<$Res> {
       _$FieldsCopyWithImpl<$Res, Fields>;
   @useResult
   $Res call({
-    @JsonKey(name: 'role') Email? role,
-    @JsonKey(name: 'full_name') Email? fullName,
-    @JsonKey(name: 'email') Email? email,
     @JsonKey(name: 'is_active') IsActive? isActive,
-    @JsonKey(name: 'phone_number') Email? phoneNumber,
-    @JsonKey(name: 'photo_url') PhotoUrl? photoUrl,
-    @JsonKey(name: 'assigned_products') Assigned? assignedProducts,
+    @JsonKey(name: 'sales_target') SalesTarget? salesTarget,
+    @JsonKey(name: 'role') Email? role,
     @JsonKey(name: 'assigned_customers') Assigned? assignedCustomers,
+    @JsonKey(name: 'assigned_products') Assigned? assignedProducts,
+    @JsonKey(name: 'email') Email? email,
+    @JsonKey(name: 'phone_number') Email? phoneNumber,
+    @JsonKey(name: 'fcm_token') Email? fcmToken,
     @JsonKey(name: 'user_name') Email? userName,
+    @JsonKey(name: 'photo_url') Email? photoUrl,
+    @JsonKey(name: 'full_name') Email? fullName,
   });
 
-  $EmailCopyWith<$Res>? get role;
-  $EmailCopyWith<$Res>? get fullName;
-  $EmailCopyWith<$Res>? get email;
   $IsActiveCopyWith<$Res>? get isActive;
-  $EmailCopyWith<$Res>? get phoneNumber;
-  $PhotoUrlCopyWith<$Res>? get photoUrl;
-  $AssignedCopyWith<$Res>? get assignedProducts;
+  $SalesTargetCopyWith<$Res>? get salesTarget;
+  $EmailCopyWith<$Res>? get role;
   $AssignedCopyWith<$Res>? get assignedCustomers;
+  $AssignedCopyWith<$Res>? get assignedProducts;
+  $EmailCopyWith<$Res>? get email;
+  $EmailCopyWith<$Res>? get phoneNumber;
+  $EmailCopyWith<$Res>? get fcmToken;
   $EmailCopyWith<$Res>? get userName;
+  $EmailCopyWith<$Res>? get photoUrl;
+  $EmailCopyWith<$Res>? get fullName;
 }
 
 /// @nodoc
@@ -360,108 +368,78 @@ class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? role = freezed,
-    Object? fullName = freezed,
-    Object? email = freezed,
     Object? isActive = freezed,
-    Object? phoneNumber = freezed,
-    Object? photoUrl = freezed,
-    Object? assignedProducts = freezed,
+    Object? salesTarget = freezed,
+    Object? role = freezed,
     Object? assignedCustomers = freezed,
+    Object? assignedProducts = freezed,
+    Object? email = freezed,
+    Object? phoneNumber = freezed,
+    Object? fcmToken = freezed,
     Object? userName = freezed,
+    Object? photoUrl = freezed,
+    Object? fullName = freezed,
   }) {
     return _then(
       _value.copyWith(
+            isActive:
+                freezed == isActive
+                    ? _value.isActive
+                    : isActive // ignore: cast_nullable_to_non_nullable
+                        as IsActive?,
+            salesTarget:
+                freezed == salesTarget
+                    ? _value.salesTarget
+                    : salesTarget // ignore: cast_nullable_to_non_nullable
+                        as SalesTarget?,
             role:
                 freezed == role
                     ? _value.role
                     : role // ignore: cast_nullable_to_non_nullable
+                        as Email?,
+            assignedCustomers:
+                freezed == assignedCustomers
+                    ? _value.assignedCustomers
+                    : assignedCustomers // ignore: cast_nullable_to_non_nullable
+                        as Assigned?,
+            assignedProducts:
+                freezed == assignedProducts
+                    ? _value.assignedProducts
+                    : assignedProducts // ignore: cast_nullable_to_non_nullable
+                        as Assigned?,
+            email:
+                freezed == email
+                    ? _value.email
+                    : email // ignore: cast_nullable_to_non_nullable
+                        as Email?,
+            phoneNumber:
+                freezed == phoneNumber
+                    ? _value.phoneNumber
+                    : phoneNumber // ignore: cast_nullable_to_non_nullable
+                        as Email?,
+            fcmToken:
+                freezed == fcmToken
+                    ? _value.fcmToken
+                    : fcmToken // ignore: cast_nullable_to_non_nullable
+                        as Email?,
+            userName:
+                freezed == userName
+                    ? _value.userName
+                    : userName // ignore: cast_nullable_to_non_nullable
+                        as Email?,
+            photoUrl:
+                freezed == photoUrl
+                    ? _value.photoUrl
+                    : photoUrl // ignore: cast_nullable_to_non_nullable
                         as Email?,
             fullName:
                 freezed == fullName
                     ? _value.fullName
                     : fullName // ignore: cast_nullable_to_non_nullable
                         as Email?,
-            email:
-                freezed == email
-                    ? _value.email
-                    : email // ignore: cast_nullable_to_non_nullable
-                        as Email?,
-            isActive:
-                freezed == isActive
-                    ? _value.isActive
-                    : isActive // ignore: cast_nullable_to_non_nullable
-                        as IsActive?,
-            phoneNumber:
-                freezed == phoneNumber
-                    ? _value.phoneNumber
-                    : phoneNumber // ignore: cast_nullable_to_non_nullable
-                        as Email?,
-            photoUrl:
-                freezed == photoUrl
-                    ? _value.photoUrl
-                    : photoUrl // ignore: cast_nullable_to_non_nullable
-                        as PhotoUrl?,
-            assignedProducts:
-                freezed == assignedProducts
-                    ? _value.assignedProducts
-                    : assignedProducts // ignore: cast_nullable_to_non_nullable
-                        as Assigned?,
-            assignedCustomers:
-                freezed == assignedCustomers
-                    ? _value.assignedCustomers
-                    : assignedCustomers // ignore: cast_nullable_to_non_nullable
-                        as Assigned?,
-            userName:
-                freezed == userName
-                    ? _value.userName
-                    : userName // ignore: cast_nullable_to_non_nullable
-                        as Email?,
           )
           as $Val,
     );
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $EmailCopyWith<$Res>? get role {
-    if (_value.role == null) {
-      return null;
-    }
-
-    return $EmailCopyWith<$Res>(_value.role!, (value) {
-      return _then(_value.copyWith(role: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $EmailCopyWith<$Res>? get fullName {
-    if (_value.fullName == null) {
-      return null;
-    }
-
-    return $EmailCopyWith<$Res>(_value.fullName!, (value) {
-      return _then(_value.copyWith(fullName: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $EmailCopyWith<$Res>? get email {
-    if (_value.email == null) {
-      return null;
-    }
-
-    return $EmailCopyWith<$Res>(_value.email!, (value) {
-      return _then(_value.copyWith(email: value) as $Val);
-    });
   }
 
   /// Create a copy of Fields
@@ -482,13 +460,13 @@ class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $EmailCopyWith<$Res>? get phoneNumber {
-    if (_value.phoneNumber == null) {
+  $SalesTargetCopyWith<$Res>? get salesTarget {
+    if (_value.salesTarget == null) {
       return null;
     }
 
-    return $EmailCopyWith<$Res>(_value.phoneNumber!, (value) {
-      return _then(_value.copyWith(phoneNumber: value) as $Val);
+    return $SalesTargetCopyWith<$Res>(_value.salesTarget!, (value) {
+      return _then(_value.copyWith(salesTarget: value) as $Val);
     });
   }
 
@@ -496,27 +474,13 @@ class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $PhotoUrlCopyWith<$Res>? get photoUrl {
-    if (_value.photoUrl == null) {
+  $EmailCopyWith<$Res>? get role {
+    if (_value.role == null) {
       return null;
     }
 
-    return $PhotoUrlCopyWith<$Res>(_value.photoUrl!, (value) {
-      return _then(_value.copyWith(photoUrl: value) as $Val);
-    });
-  }
-
-  /// Create a copy of Fields
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $AssignedCopyWith<$Res>? get assignedProducts {
-    if (_value.assignedProducts == null) {
-      return null;
-    }
-
-    return $AssignedCopyWith<$Res>(_value.assignedProducts!, (value) {
-      return _then(_value.copyWith(assignedProducts: value) as $Val);
+    return $EmailCopyWith<$Res>(_value.role!, (value) {
+      return _then(_value.copyWith(role: value) as $Val);
     });
   }
 
@@ -538,6 +502,62 @@ class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
+  $AssignedCopyWith<$Res>? get assignedProducts {
+    if (_value.assignedProducts == null) {
+      return null;
+    }
+
+    return $AssignedCopyWith<$Res>(_value.assignedProducts!, (value) {
+      return _then(_value.copyWith(assignedProducts: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $EmailCopyWith<$Res>? get email {
+    if (_value.email == null) {
+      return null;
+    }
+
+    return $EmailCopyWith<$Res>(_value.email!, (value) {
+      return _then(_value.copyWith(email: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $EmailCopyWith<$Res>? get phoneNumber {
+    if (_value.phoneNumber == null) {
+      return null;
+    }
+
+    return $EmailCopyWith<$Res>(_value.phoneNumber!, (value) {
+      return _then(_value.copyWith(phoneNumber: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $EmailCopyWith<$Res>? get fcmToken {
+    if (_value.fcmToken == null) {
+      return null;
+    }
+
+    return $EmailCopyWith<$Res>(_value.fcmToken!, (value) {
+      return _then(_value.copyWith(fcmToken: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
   $EmailCopyWith<$Res>? get userName {
     if (_value.userName == null) {
       return null;
@@ -545,6 +565,34 @@ class _$FieldsCopyWithImpl<$Res, $Val extends Fields>
 
     return $EmailCopyWith<$Res>(_value.userName!, (value) {
       return _then(_value.copyWith(userName: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $EmailCopyWith<$Res>? get photoUrl {
+    if (_value.photoUrl == null) {
+      return null;
+    }
+
+    return $EmailCopyWith<$Res>(_value.photoUrl!, (value) {
+      return _then(_value.copyWith(photoUrl: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Fields
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $EmailCopyWith<$Res>? get fullName {
+    if (_value.fullName == null) {
+      return null;
+    }
+
+    return $EmailCopyWith<$Res>(_value.fullName!, (value) {
+      return _then(_value.copyWith(fullName: value) as $Val);
     });
   }
 }
@@ -558,35 +606,41 @@ abstract class _$$FieldsImplCopyWith<$Res> implements $FieldsCopyWith<$Res> {
   @override
   @useResult
   $Res call({
-    @JsonKey(name: 'role') Email? role,
-    @JsonKey(name: 'full_name') Email? fullName,
-    @JsonKey(name: 'email') Email? email,
     @JsonKey(name: 'is_active') IsActive? isActive,
-    @JsonKey(name: 'phone_number') Email? phoneNumber,
-    @JsonKey(name: 'photo_url') PhotoUrl? photoUrl,
-    @JsonKey(name: 'assigned_products') Assigned? assignedProducts,
+    @JsonKey(name: 'sales_target') SalesTarget? salesTarget,
+    @JsonKey(name: 'role') Email? role,
     @JsonKey(name: 'assigned_customers') Assigned? assignedCustomers,
+    @JsonKey(name: 'assigned_products') Assigned? assignedProducts,
+    @JsonKey(name: 'email') Email? email,
+    @JsonKey(name: 'phone_number') Email? phoneNumber,
+    @JsonKey(name: 'fcm_token') Email? fcmToken,
     @JsonKey(name: 'user_name') Email? userName,
+    @JsonKey(name: 'photo_url') Email? photoUrl,
+    @JsonKey(name: 'full_name') Email? fullName,
   });
 
   @override
-  $EmailCopyWith<$Res>? get role;
-  @override
-  $EmailCopyWith<$Res>? get fullName;
-  @override
-  $EmailCopyWith<$Res>? get email;
-  @override
   $IsActiveCopyWith<$Res>? get isActive;
   @override
-  $EmailCopyWith<$Res>? get phoneNumber;
+  $SalesTargetCopyWith<$Res>? get salesTarget;
   @override
-  $PhotoUrlCopyWith<$Res>? get photoUrl;
-  @override
-  $AssignedCopyWith<$Res>? get assignedProducts;
+  $EmailCopyWith<$Res>? get role;
   @override
   $AssignedCopyWith<$Res>? get assignedCustomers;
   @override
+  $AssignedCopyWith<$Res>? get assignedProducts;
+  @override
+  $EmailCopyWith<$Res>? get email;
+  @override
+  $EmailCopyWith<$Res>? get phoneNumber;
+  @override
+  $EmailCopyWith<$Res>? get fcmToken;
+  @override
   $EmailCopyWith<$Res>? get userName;
+  @override
+  $EmailCopyWith<$Res>? get photoUrl;
+  @override
+  $EmailCopyWith<$Res>? get fullName;
 }
 
 /// @nodoc
@@ -603,62 +657,74 @@ class __$$FieldsImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? role = freezed,
-    Object? fullName = freezed,
-    Object? email = freezed,
     Object? isActive = freezed,
-    Object? phoneNumber = freezed,
-    Object? photoUrl = freezed,
-    Object? assignedProducts = freezed,
+    Object? salesTarget = freezed,
+    Object? role = freezed,
     Object? assignedCustomers = freezed,
+    Object? assignedProducts = freezed,
+    Object? email = freezed,
+    Object? phoneNumber = freezed,
+    Object? fcmToken = freezed,
     Object? userName = freezed,
+    Object? photoUrl = freezed,
+    Object? fullName = freezed,
   }) {
     return _then(
       _$FieldsImpl(
-        role:
-            freezed == role
-                ? _value.role
-                : role // ignore: cast_nullable_to_non_nullable
-                    as Email?,
-        fullName:
-            freezed == fullName
-                ? _value.fullName
-                : fullName // ignore: cast_nullable_to_non_nullable
-                    as Email?,
-        email:
-            freezed == email
-                ? _value.email
-                : email // ignore: cast_nullable_to_non_nullable
-                    as Email?,
         isActive:
             freezed == isActive
                 ? _value.isActive
                 : isActive // ignore: cast_nullable_to_non_nullable
                     as IsActive?,
-        phoneNumber:
-            freezed == phoneNumber
-                ? _value.phoneNumber
-                : phoneNumber // ignore: cast_nullable_to_non_nullable
+        salesTarget:
+            freezed == salesTarget
+                ? _value.salesTarget
+                : salesTarget // ignore: cast_nullable_to_non_nullable
+                    as SalesTarget?,
+        role:
+            freezed == role
+                ? _value.role
+                : role // ignore: cast_nullable_to_non_nullable
                     as Email?,
-        photoUrl:
-            freezed == photoUrl
-                ? _value.photoUrl
-                : photoUrl // ignore: cast_nullable_to_non_nullable
-                    as PhotoUrl?,
-        assignedProducts:
-            freezed == assignedProducts
-                ? _value.assignedProducts
-                : assignedProducts // ignore: cast_nullable_to_non_nullable
-                    as Assigned?,
         assignedCustomers:
             freezed == assignedCustomers
                 ? _value.assignedCustomers
                 : assignedCustomers // ignore: cast_nullable_to_non_nullable
                     as Assigned?,
+        assignedProducts:
+            freezed == assignedProducts
+                ? _value.assignedProducts
+                : assignedProducts // ignore: cast_nullable_to_non_nullable
+                    as Assigned?,
+        email:
+            freezed == email
+                ? _value.email
+                : email // ignore: cast_nullable_to_non_nullable
+                    as Email?,
+        phoneNumber:
+            freezed == phoneNumber
+                ? _value.phoneNumber
+                : phoneNumber // ignore: cast_nullable_to_non_nullable
+                    as Email?,
+        fcmToken:
+            freezed == fcmToken
+                ? _value.fcmToken
+                : fcmToken // ignore: cast_nullable_to_non_nullable
+                    as Email?,
         userName:
             freezed == userName
                 ? _value.userName
                 : userName // ignore: cast_nullable_to_non_nullable
+                    as Email?,
+        photoUrl:
+            freezed == photoUrl
+                ? _value.photoUrl
+                : photoUrl // ignore: cast_nullable_to_non_nullable
+                    as Email?,
+        fullName:
+            freezed == fullName
+                ? _value.fullName
+                : fullName // ignore: cast_nullable_to_non_nullable
                     as Email?,
       ),
     );
@@ -669,51 +735,59 @@ class __$$FieldsImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$FieldsImpl implements _Fields {
   const _$FieldsImpl({
-    @JsonKey(name: 'role') this.role,
-    @JsonKey(name: 'full_name') this.fullName,
-    @JsonKey(name: 'email') this.email,
     @JsonKey(name: 'is_active') this.isActive,
-    @JsonKey(name: 'phone_number') this.phoneNumber,
-    @JsonKey(name: 'photo_url') this.photoUrl,
-    @JsonKey(name: 'assigned_products') this.assignedProducts,
+    @JsonKey(name: 'sales_target') this.salesTarget,
+    @JsonKey(name: 'role') this.role,
     @JsonKey(name: 'assigned_customers') this.assignedCustomers,
+    @JsonKey(name: 'assigned_products') this.assignedProducts,
+    @JsonKey(name: 'email') this.email,
+    @JsonKey(name: 'phone_number') this.phoneNumber,
+    @JsonKey(name: 'fcm_token') this.fcmToken,
     @JsonKey(name: 'user_name') this.userName,
+    @JsonKey(name: 'photo_url') this.photoUrl,
+    @JsonKey(name: 'full_name') this.fullName,
   });
 
   factory _$FieldsImpl.fromJson(Map<String, dynamic> json) =>
       _$$FieldsImplFromJson(json);
 
   @override
-  @JsonKey(name: 'role')
-  final Email? role;
-  @override
-  @JsonKey(name: 'full_name')
-  final Email? fullName;
-  @override
-  @JsonKey(name: 'email')
-  final Email? email;
-  @override
   @JsonKey(name: 'is_active')
   final IsActive? isActive;
   @override
-  @JsonKey(name: 'phone_number')
-  final Email? phoneNumber;
+  @JsonKey(name: 'sales_target')
+  final SalesTarget? salesTarget;
   @override
-  @JsonKey(name: 'photo_url')
-  final PhotoUrl? photoUrl;
-  @override
-  @JsonKey(name: 'assigned_products')
-  final Assigned? assignedProducts;
+  @JsonKey(name: 'role')
+  final Email? role;
   @override
   @JsonKey(name: 'assigned_customers')
   final Assigned? assignedCustomers;
   @override
+  @JsonKey(name: 'assigned_products')
+  final Assigned? assignedProducts;
+  @override
+  @JsonKey(name: 'email')
+  final Email? email;
+  @override
+  @JsonKey(name: 'phone_number')
+  final Email? phoneNumber;
+  @override
+  @JsonKey(name: 'fcm_token')
+  final Email? fcmToken;
+  @override
   @JsonKey(name: 'user_name')
   final Email? userName;
+  @override
+  @JsonKey(name: 'photo_url')
+  final Email? photoUrl;
+  @override
+  @JsonKey(name: 'full_name')
+  final Email? fullName;
 
   @override
   String toString() {
-    return 'Fields(role: $role, fullName: $fullName, email: $email, isActive: $isActive, phoneNumber: $phoneNumber, photoUrl: $photoUrl, assignedProducts: $assignedProducts, assignedCustomers: $assignedCustomers, userName: $userName)';
+    return 'Fields(isActive: $isActive, salesTarget: $salesTarget, role: $role, assignedCustomers: $assignedCustomers, assignedProducts: $assignedProducts, email: $email, phoneNumber: $phoneNumber, fcmToken: $fcmToken, userName: $userName, photoUrl: $photoUrl, fullName: $fullName)';
   }
 
   @override
@@ -721,37 +795,43 @@ class _$FieldsImpl implements _Fields {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FieldsImpl &&
-            (identical(other.role, role) || other.role == role) &&
-            (identical(other.fullName, fullName) ||
-                other.fullName == fullName) &&
-            (identical(other.email, email) || other.email == email) &&
             (identical(other.isActive, isActive) ||
                 other.isActive == isActive) &&
-            (identical(other.phoneNumber, phoneNumber) ||
-                other.phoneNumber == phoneNumber) &&
-            (identical(other.photoUrl, photoUrl) ||
-                other.photoUrl == photoUrl) &&
-            (identical(other.assignedProducts, assignedProducts) ||
-                other.assignedProducts == assignedProducts) &&
+            (identical(other.salesTarget, salesTarget) ||
+                other.salesTarget == salesTarget) &&
+            (identical(other.role, role) || other.role == role) &&
             (identical(other.assignedCustomers, assignedCustomers) ||
                 other.assignedCustomers == assignedCustomers) &&
+            (identical(other.assignedProducts, assignedProducts) ||
+                other.assignedProducts == assignedProducts) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.phoneNumber, phoneNumber) ||
+                other.phoneNumber == phoneNumber) &&
+            (identical(other.fcmToken, fcmToken) ||
+                other.fcmToken == fcmToken) &&
             (identical(other.userName, userName) ||
-                other.userName == userName));
+                other.userName == userName) &&
+            (identical(other.photoUrl, photoUrl) ||
+                other.photoUrl == photoUrl) &&
+            (identical(other.fullName, fullName) ||
+                other.fullName == fullName));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
     runtimeType,
-    role,
-    fullName,
-    email,
     isActive,
-    phoneNumber,
-    photoUrl,
-    assignedProducts,
+    salesTarget,
+    role,
     assignedCustomers,
+    assignedProducts,
+    email,
+    phoneNumber,
+    fcmToken,
     userName,
+    photoUrl,
+    fullName,
   );
 
   /// Create a copy of Fields
@@ -770,46 +850,54 @@ class _$FieldsImpl implements _Fields {
 
 abstract class _Fields implements Fields {
   const factory _Fields({
-    @JsonKey(name: 'role') final Email? role,
-    @JsonKey(name: 'full_name') final Email? fullName,
-    @JsonKey(name: 'email') final Email? email,
     @JsonKey(name: 'is_active') final IsActive? isActive,
-    @JsonKey(name: 'phone_number') final Email? phoneNumber,
-    @JsonKey(name: 'photo_url') final PhotoUrl? photoUrl,
-    @JsonKey(name: 'assigned_products') final Assigned? assignedProducts,
+    @JsonKey(name: 'sales_target') final SalesTarget? salesTarget,
+    @JsonKey(name: 'role') final Email? role,
     @JsonKey(name: 'assigned_customers') final Assigned? assignedCustomers,
+    @JsonKey(name: 'assigned_products') final Assigned? assignedProducts,
+    @JsonKey(name: 'email') final Email? email,
+    @JsonKey(name: 'phone_number') final Email? phoneNumber,
+    @JsonKey(name: 'fcm_token') final Email? fcmToken,
     @JsonKey(name: 'user_name') final Email? userName,
+    @JsonKey(name: 'photo_url') final Email? photoUrl,
+    @JsonKey(name: 'full_name') final Email? fullName,
   }) = _$FieldsImpl;
 
   factory _Fields.fromJson(Map<String, dynamic> json) = _$FieldsImpl.fromJson;
 
   @override
-  @JsonKey(name: 'role')
-  Email? get role;
-  @override
-  @JsonKey(name: 'full_name')
-  Email? get fullName;
-  @override
-  @JsonKey(name: 'email')
-  Email? get email;
-  @override
   @JsonKey(name: 'is_active')
   IsActive? get isActive;
   @override
-  @JsonKey(name: 'phone_number')
-  Email? get phoneNumber;
+  @JsonKey(name: 'sales_target')
+  SalesTarget? get salesTarget;
   @override
-  @JsonKey(name: 'photo_url')
-  PhotoUrl? get photoUrl;
-  @override
-  @JsonKey(name: 'assigned_products')
-  Assigned? get assignedProducts;
+  @JsonKey(name: 'role')
+  Email? get role;
   @override
   @JsonKey(name: 'assigned_customers')
   Assigned? get assignedCustomers;
   @override
+  @JsonKey(name: 'assigned_products')
+  Assigned? get assignedProducts;
+  @override
+  @JsonKey(name: 'email')
+  Email? get email;
+  @override
+  @JsonKey(name: 'phone_number')
+  Email? get phoneNumber;
+  @override
+  @JsonKey(name: 'fcm_token')
+  Email? get fcmToken;
+  @override
   @JsonKey(name: 'user_name')
   Email? get userName;
+  @override
+  @JsonKey(name: 'photo_url')
+  Email? get photoUrl;
+  @override
+  @JsonKey(name: 'full_name')
+  Email? get fullName;
 
   /// Create a copy of Fields
   /// with the given fields replaced by the non-null parameter values.
@@ -1473,54 +1561,56 @@ abstract class _IsActive implements IsActive {
       throw _privateConstructorUsedError;
 }
 
-PhotoUrl _$PhotoUrlFromJson(Map<String, dynamic> json) {
-  return _PhotoUrl.fromJson(json);
+SalesTarget _$SalesTargetFromJson(Map<String, dynamic> json) {
+  return _SalesTarget.fromJson(json);
 }
 
 /// @nodoc
-mixin _$PhotoUrl {
-  @JsonKey(name: 'stringValue')
-  String? get stringValue => throw _privateConstructorUsedError;
+mixin _$SalesTarget {
+  @JsonKey(name: 'integerValue')
+  String? get integerValue => throw _privateConstructorUsedError;
 
-  /// Serializes this PhotoUrl to a JSON map.
+  /// Serializes this SalesTarget to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of PhotoUrl
+  /// Create a copy of SalesTarget
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $PhotoUrlCopyWith<PhotoUrl> get copyWith =>
+  $SalesTargetCopyWith<SalesTarget> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $PhotoUrlCopyWith<$Res> {
-  factory $PhotoUrlCopyWith(PhotoUrl value, $Res Function(PhotoUrl) then) =
-      _$PhotoUrlCopyWithImpl<$Res, PhotoUrl>;
+abstract class $SalesTargetCopyWith<$Res> {
+  factory $SalesTargetCopyWith(
+    SalesTarget value,
+    $Res Function(SalesTarget) then,
+  ) = _$SalesTargetCopyWithImpl<$Res, SalesTarget>;
   @useResult
-  $Res call({@JsonKey(name: 'stringValue') String? stringValue});
+  $Res call({@JsonKey(name: 'integerValue') String? integerValue});
 }
 
 /// @nodoc
-class _$PhotoUrlCopyWithImpl<$Res, $Val extends PhotoUrl>
-    implements $PhotoUrlCopyWith<$Res> {
-  _$PhotoUrlCopyWithImpl(this._value, this._then);
+class _$SalesTargetCopyWithImpl<$Res, $Val extends SalesTarget>
+    implements $SalesTargetCopyWith<$Res> {
+  _$SalesTargetCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of PhotoUrl
+  /// Create a copy of SalesTarget
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? stringValue = freezed}) {
+  $Res call({Object? integerValue = freezed}) {
     return _then(
       _value.copyWith(
-            stringValue:
-                freezed == stringValue
-                    ? _value.stringValue
-                    : stringValue // ignore: cast_nullable_to_non_nullable
+            integerValue:
+                freezed == integerValue
+                    ? _value.integerValue
+                    : integerValue // ignore: cast_nullable_to_non_nullable
                         as String?,
           )
           as $Val,
@@ -1529,37 +1619,37 @@ class _$PhotoUrlCopyWithImpl<$Res, $Val extends PhotoUrl>
 }
 
 /// @nodoc
-abstract class _$$PhotoUrlImplCopyWith<$Res>
-    implements $PhotoUrlCopyWith<$Res> {
-  factory _$$PhotoUrlImplCopyWith(
-    _$PhotoUrlImpl value,
-    $Res Function(_$PhotoUrlImpl) then,
-  ) = __$$PhotoUrlImplCopyWithImpl<$Res>;
+abstract class _$$SalesTargetImplCopyWith<$Res>
+    implements $SalesTargetCopyWith<$Res> {
+  factory _$$SalesTargetImplCopyWith(
+    _$SalesTargetImpl value,
+    $Res Function(_$SalesTargetImpl) then,
+  ) = __$$SalesTargetImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@JsonKey(name: 'stringValue') String? stringValue});
+  $Res call({@JsonKey(name: 'integerValue') String? integerValue});
 }
 
 /// @nodoc
-class __$$PhotoUrlImplCopyWithImpl<$Res>
-    extends _$PhotoUrlCopyWithImpl<$Res, _$PhotoUrlImpl>
-    implements _$$PhotoUrlImplCopyWith<$Res> {
-  __$$PhotoUrlImplCopyWithImpl(
-    _$PhotoUrlImpl _value,
-    $Res Function(_$PhotoUrlImpl) _then,
+class __$$SalesTargetImplCopyWithImpl<$Res>
+    extends _$SalesTargetCopyWithImpl<$Res, _$SalesTargetImpl>
+    implements _$$SalesTargetImplCopyWith<$Res> {
+  __$$SalesTargetImplCopyWithImpl(
+    _$SalesTargetImpl _value,
+    $Res Function(_$SalesTargetImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of PhotoUrl
+  /// Create a copy of SalesTarget
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? stringValue = freezed}) {
+  $Res call({Object? integerValue = freezed}) {
     return _then(
-      _$PhotoUrlImpl(
-        stringValue:
-            freezed == stringValue
-                ? _value.stringValue
-                : stringValue // ignore: cast_nullable_to_non_nullable
+      _$SalesTargetImpl(
+        integerValue:
+            freezed == integerValue
+                ? _value.integerValue
+                : integerValue // ignore: cast_nullable_to_non_nullable
                     as String?,
       ),
     );
@@ -1568,64 +1658,64 @@ class __$$PhotoUrlImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$PhotoUrlImpl implements _PhotoUrl {
-  const _$PhotoUrlImpl({@JsonKey(name: 'stringValue') this.stringValue});
+class _$SalesTargetImpl implements _SalesTarget {
+  const _$SalesTargetImpl({@JsonKey(name: 'integerValue') this.integerValue});
 
-  factory _$PhotoUrlImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PhotoUrlImplFromJson(json);
+  factory _$SalesTargetImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SalesTargetImplFromJson(json);
 
   @override
-  @JsonKey(name: 'stringValue')
-  final String? stringValue;
+  @JsonKey(name: 'integerValue')
+  final String? integerValue;
 
   @override
   String toString() {
-    return 'PhotoUrl(stringValue: $stringValue)';
+    return 'SalesTarget(integerValue: $integerValue)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PhotoUrlImpl &&
-            (identical(other.stringValue, stringValue) ||
-                other.stringValue == stringValue));
+            other is _$SalesTargetImpl &&
+            (identical(other.integerValue, integerValue) ||
+                other.integerValue == integerValue));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, stringValue);
+  int get hashCode => Object.hash(runtimeType, integerValue);
 
-  /// Create a copy of PhotoUrl
+  /// Create a copy of SalesTarget
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$PhotoUrlImplCopyWith<_$PhotoUrlImpl> get copyWith =>
-      __$$PhotoUrlImplCopyWithImpl<_$PhotoUrlImpl>(this, _$identity);
+  _$$SalesTargetImplCopyWith<_$SalesTargetImpl> get copyWith =>
+      __$$SalesTargetImplCopyWithImpl<_$SalesTargetImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$PhotoUrlImplToJson(this);
+    return _$$SalesTargetImplToJson(this);
   }
 }
 
-abstract class _PhotoUrl implements PhotoUrl {
-  const factory _PhotoUrl({
-    @JsonKey(name: 'stringValue') final String? stringValue,
-  }) = _$PhotoUrlImpl;
+abstract class _SalesTarget implements SalesTarget {
+  const factory _SalesTarget({
+    @JsonKey(name: 'integerValue') final String? integerValue,
+  }) = _$SalesTargetImpl;
 
-  factory _PhotoUrl.fromJson(Map<String, dynamic> json) =
-      _$PhotoUrlImpl.fromJson;
+  factory _SalesTarget.fromJson(Map<String, dynamic> json) =
+      _$SalesTargetImpl.fromJson;
 
   @override
-  @JsonKey(name: 'stringValue')
-  String? get stringValue;
+  @JsonKey(name: 'integerValue')
+  String? get integerValue;
 
-  /// Create a copy of PhotoUrl
+  /// Create a copy of SalesTarget
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PhotoUrlImplCopyWith<_$PhotoUrlImpl> get copyWith =>
+  _$$SalesTargetImplCopyWith<_$SalesTargetImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
