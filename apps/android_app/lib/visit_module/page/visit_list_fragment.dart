@@ -18,7 +18,16 @@ class VisitListFragment extends StatefulHookConsumerWidget {
 }
 
 class _VisitListFragment extends ConsumerState<VisitListFragment> {
-  DateTime selectedDate = DateTime.now();
+  DateTime currentDate = DateTime(
+    DateTime.now().year,
+    DateTime.now().month,
+    DateTime.now().day,
+  );
+  DateTime selectedDate = DateTime(
+    DateTime.now().year,
+    DateTime.now().month,
+    DateTime.now().day,
+  );
 
   @override
   void initState() {
@@ -297,12 +306,15 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
           ),
 
           // Floating action button
-          _addButtonFunction != null
+          _addButtonFunction != null && !selectedDate.isBefore(currentDate)
               ? Align(
                 alignment: Alignment.bottomRight,
                 child: FloatingActionButton(
                   heroTag: 'add_button',
-                  onPressed: _addButtonFunction,
+                  onPressed:
+                      selectedDate.isBefore(currentDate)
+                          ? null
+                          : _addButtonFunction,
                   child: const Icon(Icons.add),
                 ),
               )
