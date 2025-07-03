@@ -40,6 +40,62 @@ class VisitListController extends _$VisitListController {
     state = AsyncData(previousMap);
   }
 
+  Future<void> fetchAllVisitInMonth({required DateTime month}) async {
+    // Save previous datas
+    final previousMap = Map<String, Either<ApiException, VisitDomain?>>.from(
+      state.value ?? {},
+    );
+
+    state = const AsyncLoading();
+
+    for (int i = 1; i <= 31; i++) {
+      DateTime date = DateTime(month.year, month.month, i);
+
+      // If data exist cancel API call
+      if (previousMap[_generateVisitIdFromDate(date)] != null) {
+        continue;
+      }
+
+      // Call API
+      final repository = ref.watch(getVisitListRepositoryProvider);
+      final result = await repository.getVisitList(date: date);
+
+      // Add result to map
+      previousMap[_generateVisitIdFromDate(date)] = result;
+    }
+
+    state = AsyncData(previousMap);
+  }
+
+  Future<List<VisitDomain>> getMonthlyVisitList({
+    required DateTime month,
+  }) async {
+    // Not needed since waiting is done in the caller
+    // while (state is! AsyncData) {
+    //   await Future.delayed(const Duration(milliseconds: 100));
+    // }
+    final targetMonth = DateTime(month.year, month.month);
+
+    final List<VisitDomain> monthlyVisits = [];
+
+    for (int day = 1; day <= 31; day++) {
+      final date = DateTime(targetMonth.year, targetMonth.month, day);
+      await fetchVisitsForDate(date: date);
+
+      final visitData = state.value?[_generateVisitIdFromDate(date)];
+
+      if (visitData != null && visitData.isRight()) {
+        final visitDomain = visitData.getOrElse((error) => null);
+
+        if (visitDomain != null) {
+          monthlyVisits.add(visitDomain);
+        }
+      }
+    }
+
+    return monthlyVisits;
+  }
+
   String _generateVisitIdFromDate(DateTime date) {
     final formattedDate =
         '${date.day.toString().padLeft(2, '0')}${date.month.toString().padLeft(2, '0')}${date.year}';

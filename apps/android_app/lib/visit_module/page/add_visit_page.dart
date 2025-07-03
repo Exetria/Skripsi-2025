@@ -1,5 +1,6 @@
 import 'package:android_app/customer_module/page/controller/customer_list_controller.dart';
 import 'package:android_app/utils/functions.dart';
+import 'package:android_app/visit_module/domain/entities/visit_domain.dart';
 import 'package:android_app/visit_module/page/controller/update_visit_controller.dart';
 import 'package:android_app/visit_module/page/controller/visit_list_controller.dart';
 import 'package:common_components/common_components.dart';
@@ -14,9 +15,17 @@ final markerListProvider = StateProvider<List<Marker>>((ref) => []);
 // ignore: must_be_immutable
 class AddVisitPage extends StatefulHookConsumerWidget {
   DateTime date;
+  VisitDomain? visitDomain;
+  List<VisitDomain> currentMonthVisitList;
   List<Map<String, dynamic>> visitDataList;
 
-  AddVisitPage({super.key, required this.date, required this.visitDataList});
+  AddVisitPage({
+    super.key,
+    required this.date,
+    required this.visitDomain,
+    required this.currentMonthVisitList,
+    required this.visitDataList,
+  });
 
   @override
   ConsumerState<AddVisitPage> createState() => _AddVisitPageState();
@@ -24,6 +33,9 @@ class AddVisitPage extends StatefulHookConsumerWidget {
 
 class _AddVisitPageState extends ConsumerState<AddVisitPage> {
   final _mapController = MapController();
+
+  final List<String> todayVisitedCustomerIds = [];
+  final List<String> visitedCustomerIds = [];
 
   @override
   void initState() {
@@ -33,6 +45,31 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
         ref.read(customerListControllerProvider.notifier).resetSearch();
       },
     );
+
+    // If visitDomain is not null, populate the visited customer IDs
+    if (widget.visitDomain != null) {
+      for (Value visitData
+          in widget.visitDomain?.fields?.visits?.arrayValue?.values ?? []) {
+        final customerId = visitData.mapValue?.fields?.customerId?.stringValue;
+
+        if (customerId != null) {
+          todayVisitedCustomerIds.add(customerId);
+        }
+      }
+    }
+
+    // Collect visited customer id in this month
+    for (final visit in widget.currentMonthVisitList) {
+      for (Value visitData in visit.fields?.visits?.arrayValue?.values ?? []) {
+        final visitStatus =
+            visitData.mapValue?.fields?.visitStatus?.integerValue;
+        final customerId = visitData.mapValue?.fields?.customerId?.stringValue;
+
+        if (customerId != null && visitStatus == '2') {
+          visitedCustomerIds.add(customerId);
+        }
+      }
+    }
   }
 
   @override
@@ -162,114 +199,158 @@ class _AddVisitPageState extends ConsumerState<AddVisitPage> {
                   itemCount: customerList.length,
                   separatorBuilder: (context, index) => SizedBox(height: 4.h),
                   itemBuilder: (context, index) {
+                    final customerData = customerList[index];
+
+                    final customerId = getIdFromName(name: customerData.name);
+                    final customerName =
+                        customerData.fields?.companyName?.stringValue ?? '-';
+                    final customerAddress =
+                        customerData.fields?.companyAddress?.stringValue ?? '-';
+                    final double customerLatitude =
+                        customerData
+                            .fields
+                            ?.companyLocation
+                            ?.mapValue
+                            ?.fields
+                            ?.latitude
+                            ?.doubleValue ??
+                        0;
+                    final double customerLongitude =
+                        customerData
+                            .fields
+                            ?.companyLocation
+                            ?.mapValue
+                            ?.fields
+                            ?.longitude
+                            ?.doubleValue ??
+                        0;
+
                     return Container(
                       padding: EdgeInsets.all(8.r),
                       decoration: androidBoxDecoration(context),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            customerList[index]
-                                    .fields
-                                    ?.companyName
-                                    ?.stringValue ??
-                                '-',
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(customerName, style: captionStyle),
+                              Text(customerAddress),
+                              Text(
+                                visitedCustomerIds.contains(customerId)
+                                    ? 'Sudah Dikunjungi Bulan Ini'
+                                    : 'Belum Dikunjungi Bulan Ini',
+                                style:
+                                    visitedCustomerIds.contains(customerId)
+                                        ? TextStyle(
+                                          color:
+                                              Theme.of(
+                                                context,
+                                              ).colorScheme.tertiary,
+                                        )
+                                        : TextStyle(
+                                          color:
+                                              Theme.of(
+                                                context,
+                                              ).colorScheme.error,
+                                        ),
+                              ),
+                            ],
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              GestureDetector(
-                                onTap: () async {
-                                  showConfirmationDialog(
-                                    context: context,
-                                    message:
-                                        'Apakah Anda yakin ingin menambahkan kunjungan ke \n${customerList[index].fields?.companyName?.stringValue ?? "-"}',
-                                    rightButtonBackgroundColor:
-                                        Theme.of(context).colorScheme.tertiary,
-                                    leftButtonBackgroundColor:
-                                        Theme.of(context).colorScheme.error,
-                                    onRightButtonTap: () async {
-                                      // Add new data to visit data list array
-                                      widget.visitDataList.add({
-                                        'mapValue': {
-                                          'fields': {
-                                            'customer_id': {
-                                              'stringValue': getIdFromName(
-                                                name: customerList[index].name,
-                                              ),
-                                            },
-                                            'visit_status': {
-                                              'integerValue': '1',
-                                            },
-                                            'visit_notes': {'stringValue': ''},
+                              if (!todayVisitedCustomerIds.contains(customerId))
+                                GestureDetector(
+                                  onTap:
+                                      todayVisitedCustomerIds.contains(
+                                            customerId,
+                                          )
+                                          ? null
+                                          : () async {
+                                            showConfirmationDialog(
+                                              context: context,
+                                              message:
+                                                  'Apakah Anda yakin ingin menambahkan kunjungan ke \n$customerName?',
+                                              rightButtonBackgroundColor:
+                                                  Theme.of(
+                                                    context,
+                                                  ).colorScheme.tertiary,
+                                              leftButtonBackgroundColor:
+                                                  Theme.of(
+                                                    context,
+                                                  ).colorScheme.error,
+                                              onRightButtonTap: () async {
+                                                // Add new data to visit data list array
+                                                widget.visitDataList.add({
+                                                  'mapValue': {
+                                                    'fields': {
+                                                      'customer_id': {
+                                                        'stringValue':
+                                                            customerId,
+                                                      },
+                                                      'visit_status': {
+                                                        'integerValue': '1',
+                                                      },
+                                                      'visit_notes': {
+                                                        'stringValue': '',
+                                                      },
+                                                    },
+                                                  },
+                                                });
+
+                                                // Submit new visit data
+                                                await ref
+                                                    .read(
+                                                      updateVisitControllerProvider
+                                                          .notifier,
+                                                    )
+                                                    .updateVisitData(
+                                                      date: widget.date,
+                                                      visitDataList:
+                                                          widget.visitDataList,
+                                                    );
+
+                                                // Refresh visit list
+                                                await ref
+                                                    .read(
+                                                      visitListControllerProvider
+                                                          .notifier,
+                                                    )
+                                                    .fetchVisitsForDate(
+                                                      date: widget.date,
+                                                      forceFetch: true,
+                                                    );
+                                                Navigator.pop(context);
+                                              },
+                                              onLeftButtonTap: () {},
+                                            );
                                           },
-                                        },
-                                      });
-
-                                      // Submit new visit data
-                                      await ref
-                                          .read(
-                                            updateVisitControllerProvider
-                                                .notifier,
-                                          )
-                                          .updateVisitData(
-                                            date: widget.date,
-                                            visitDataList: widget.visitDataList,
-                                          );
-
-                                      // Refresh visit list
-                                      await ref
-                                          .read(
-                                            visitListControllerProvider
-                                                .notifier,
-                                          )
-                                          .fetchVisitsForDate(
-                                            date: widget.date,
-                                            forceFetch: true,
-                                          );
-                                      Navigator.pop(context);
-                                    },
-                                    onLeftButtonTap: () {},
-                                  );
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(8.r),
-                                  decoration: BoxDecoration(
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                    shape: BoxShape.rectangle,
-                                    borderRadius: BorderRadius.circular(12.r),
-                                  ),
-                                  child: Icon(
-                                    Icons.add,
-                                    color:
-                                        Theme.of(context).colorScheme.onPrimary,
+                                  child: Container(
+                                    padding: EdgeInsets.all(8.r),
+                                    decoration: BoxDecoration(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      shape: BoxShape.rectangle,
+                                      borderRadius: BorderRadius.circular(12.r),
+                                    ),
+                                    child: Icon(
+                                      Icons.add,
+                                      color:
+                                          Theme.of(
+                                            context,
+                                          ).colorScheme.onPrimary,
+                                    ),
                                   ),
                                 ),
-                              ),
+
                               SizedBox(width: 8.w),
                               GestureDetector(
                                 onTap: () {
                                   moveCamera(
-                                    latitude:
-                                        customerList[index]
-                                            .fields
-                                            ?.companyLocation
-                                            ?.mapValue
-                                            ?.fields
-                                            ?.latitude
-                                            ?.doubleValue ??
-                                        0,
-                                    longitude:
-                                        customerList[index]
-                                            .fields
-                                            ?.companyLocation
-                                            ?.mapValue
-                                            ?.fields
-                                            ?.longitude
-                                            ?.doubleValue ??
-                                        0,
+                                    latitude: customerLatitude,
+                                    longitude: customerLongitude,
                                   );
                                 },
                                 child: Container(

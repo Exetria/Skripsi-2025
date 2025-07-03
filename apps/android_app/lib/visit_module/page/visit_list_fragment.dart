@@ -33,9 +33,15 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
   void initState() {
     super.initState();
     Future.microtask(() {
+      // Fetch today's visits
+      // ref
+      //     .read(visitListControllerProvider.notifier)
+      //     .fetchVisitsForDate(date: DateTime.now());
+
+      // Fetch month's visits
       ref
           .read(visitListControllerProvider.notifier)
-          .fetchVisitsForDate(date: DateTime.now());
+          .fetchAllVisitInMonth(month: DateTime.now());
     });
 
     addCallBackAfterBuild(
@@ -85,13 +91,20 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
 
                       if (error?.statusCode == 404) {
                         setState(() {
-                          _addButtonFunction = () {
+                          _addButtonFunction = () async {
+                            final currentMonthVisitList = await ref
+                                .read(visitListControllerProvider.notifier)
+                                .getMonthlyVisitList(month: selectedDate);
+
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder:
                                     (context) => AddVisitPage(
                                       date: selectedDate,
+                                      visitDomain: null,
+                                      currentMonthVisitList:
+                                          currentMonthVisitList,
                                       visitDataList: [],
                                     ),
                               ),
@@ -113,18 +126,25 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                     }
 
                     // Get visit data (visit document for a day)
-                    final VisitDomain? data = visitList.getOrElse(
+                    final VisitDomain? visitDomain = visitList.getOrElse(
                       (error) => null,
                     );
-                    if (data == null) {
+                    if (visitDomain == null) {
                       setState(() {
-                        _addButtonFunction = () {
+                        _addButtonFunction = () async {
+                          final currentMonthVisitList = await ref
+                              .read(visitListControllerProvider.notifier)
+                              .getMonthlyVisitList(month: selectedDate);
+
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder:
                                   (context) => AddVisitPage(
                                     date: selectedDate,
+                                    visitDomain: visitDomain,
+                                    currentMonthVisitList:
+                                        currentMonthVisitList,
                                     visitDataList: [],
                                   ),
                             ),
@@ -140,7 +160,7 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
 
                     // Get visit data (list of visit in a day)
                     List<Value> visits = List<Value>.from(
-                      data.fields?.visits?.arrayValue?.values ?? [],
+                      visitDomain.fields?.visits?.arrayValue?.values ?? [],
                     );
 
                     // Convert into List<Map<String, dynamic>>
@@ -148,13 +168,19 @@ class _VisitListFragment extends ConsumerState<VisitListFragment> {
                         _createVisitDataList(visits: visits);
 
                     setState(() {
-                      _addButtonFunction = () {
+                      _addButtonFunction = () async {
+                        final currentMonthVisitList = await ref
+                            .read(visitListControllerProvider.notifier)
+                            .getMonthlyVisitList(month: selectedDate);
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder:
                                 (context) => AddVisitPage(
                                   date: selectedDate,
+                                  visitDomain: visitDomain,
+                                  currentMonthVisitList: currentMonthVisitList,
                                   visitDataList: visitDataList,
                                 ),
                           ),
