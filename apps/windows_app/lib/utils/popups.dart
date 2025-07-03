@@ -3370,8 +3370,8 @@ Future<String?> showUnvisitedCustomerSelectorPopup({
                                   ),
                                   Text(
                                     visited
-                                        ? 'Sudah Dikunjungi'
-                                        : 'Belum Dikunjungi',
+                                        ? 'Sudah Dikunjungi Bulan Ini'
+                                        : 'Belum Dikunjungi Bulan Ini',
                                     style: TextStyle(
                                       color:
                                           visited
